@@ -1,0 +1,31 @@
+PRINT ROUTINES
+--------------
+The entry points for most print tasks are ex_print and
+ex_hprint.  These call print() which coordinates most of
+the real work.  
+
+Stage 1.  The top of the stack is fetch()'ed - so it
+stays on the stack and if it is a quad function or
+variable, fetch() will convert it into a number.  For
+data types, fpt_size() is called with every member of the 
+item as an argument.  The goal of this process is to
+calculate 4 parameters held in the structure "format" 
+Next fpt_adjust() is called to determine the width of 
+the print fields - each numeral will subsequently be printed
+in an identical field width.
+
+not sure what bidx does!!
+
+Stage 2 - The actual printing.  One bigish loop takes
+care of printing all the values in the data space.  
+Character and numeric data types are dealt with
+differently: character data is handled on the spot,
+numeric data requires a call to fpt2char().  After each
+value (character or numeral) is printed, a test is
+performed to see if a line feed is required.  For
+instance: if pagewidth is exceeded or if the end of
+a major block (ie "dimension") is reached.
+
+fpt_size(), fpt_adjust() and fpt2char are in the ../format
+directory.
+

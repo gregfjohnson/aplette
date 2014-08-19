@@ -1,0 +1,95 @@
+apl2741.fnt
+-----------
+The APL postscript font was obtained from watserv1.waterloo.edu
+where it was packaged with the following dedication:
+
+     An article about the development of this font, APL2741, 
+     may be found in:
+
+     Designing an APL Typeface Using a Partial Implementation
+     of Postscript in APL
+     by Adrian Smith
+     Vector, Vol.7 No.1 July 1990, pp 96-107.
+     ISSN 0955-1433.
+
+     (Vector is the journal of the British APL Association,
+     which a specialist group of the British Computer Society.)
+
+apl8x13.bdf
+-----------
+The X11 font was obtained from watserv1.waterloo.edu where it 
+was packaged as xfontapl.tar and included the dedication:
+
+     The font in this directory was supplied by Robert Metzger.
+
+aplox.*.bdf
+-----------
+This group of X11 fonts was created by Sam Sirlin by scaling up
+apl8x13.bdf.
+
+apl8x16.psf
+-----------
+The Linux console font was derived from the file aply16.psf in 
+the kbd package.  One of the readme files from that package
+attributes the original to Raul D. Miller.
+
+
+APL\11
+------
+APL\11 has a relatively long history.  The original program 
+was written by Ken Thompson at Bell Laboratories, apparently
+in the days before Version 6 UNIX.  
+
+It spent some time at Yale and finally arrived at Purdue University.  
+
+Since 1976 it has been modified by Jim Besemer and John Bruner, 
+graduate students at Purdue.  Based on the comments in the code, 
+John did a lot of work on making the interpreter more robust. 
+
+Anthony Reeves, then of the EE faculty at Purdue, whose name appears 
+on much of the documentation, provided direction. 
+          
+Mike Cain got a copy of the Purdue version from John while working 
+at Bell Labs, then carried it to Bellcore and U S WEST.  Mike cleaned
+it up, fixed several errors, wrote some new documentation, formatted
+a lot of the old Purdue documentation, and added some additional 
+functionality.  
+
+Marty Glopta at Bell Labs did a lot of the initial leg work 
+involved in getting approval to distribute the source.  
+
+It was put into the FTP archive at watserv1.waterloo.edu in the
+early 1990's.  While there, several new versions appeared which
+used different ASCII to APL character transliterations: these 
+included works by William Chang and Sam Sirlin. 
+
+In 1996, Branko Bratkovic recognised that the Linux console was
+an ideal means of generating APL character fonts on PC based
+equipment.  Branko selected the font apl2741 as the basis for
+an 8bit character encoding scheme and created screen font and
+keyboard files to support it.  The IO routines of APL\11 were
+then modified to accept 8bit encoded characters.  Branko then
+made further modifications to the body of APL\11 to make it
+more open.
+
+openAPL was released to the public in November 1998 for Alpha
+testing. During the Alpha trial, the following contributions
+were made:
+- a set of larger fonts by Sam Sirlin;
+- a replacement for ecvt() by Sam Sirlin; 
+- RedHat section for the Makefile by Robert Brown;
+- RH5.2 Makfile addition, ghost script filter patch, memory
+  leak fix by Gerald Jansen;
+- readline proof of concept by Gerald Jansen
+- Guy Larocque provided font files for LinuxPPC (Macintosh), 
+  plus assistance debugging that platform.
+- Tauno Ylinen provided numerous improvements that had been
+  developed for FreeAPL (Windows) including:
+  - special case of dyadic rho
+  - special case of dyadic equal and not-equal
+  - quad EX (expunge)
+  - quad AI
+
+--
+This file is subject to the restrictions and privileges of the
+GNU public license.

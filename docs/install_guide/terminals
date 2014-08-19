@@ -1,0 +1,324 @@
+Testing your APL terminal emulator
+----------------------------------
+Regardless of which terminal program you use, the drill for 
+testing it is the same.  The terminal is started without running
+the APL interpreter like this:
+
+	$> apl -on
+	
+Under X11, this will result in a call to the program rxvt4apl. 
+On a Linux virtual console, the APL font will be loaded.
+
+First you make sure that the output is 8 bit clean. Inside the
+resulting terminal, send the file 000-255.txt to the screen thus:
+
+	$> cd ...openAPL/terminal	# under the source directory
+or	$> cd /usr/doc/openAPL/terminal	# post-installation
+	$> cat 000-255.txt
+
+Expect a map consisting of ASCII control code names followed by the 
+usual ASCII characters followed by the APL characters (and others).
+For instance, location 0xE2 should contain the character iota (like
+a little "i" without the dot) and the location 0x95 should contain
+the character quad (like a little rectangle).  
+
+Second, check that user input is 8 bit clean (the effect of 
+"apl -on" is still there from the previous step, isn't it).  Get
+a printout of the keyboard overlay that is applicable to your
+keyboard. Use the cat command to echo your keystrokes to the screen:
+
+	$> cat
+	QWERTYUIOP
+	qwertyuiop
+	ASDFGHJKL
+	asdfghjkl
+	ZXCVBNM<>?
+	zxcvbnm,./
+	^C
+	$>
+
+For the Linux console, hold down one of the ALT keys; in the X11
+environment hold down the mode switch key - usually the right ALT key. 
+Now, type the keys on each row of the keyboard observing the keyboard
+overlay.  Finish the exercise with control-C (as shown above), this
+terminates the cat program.  
+
+On a Linux console, return the font to default thus:
+
+	$> apl -off
+
+If any of the above fails, read on....
+
+Theory of Operation
+-------------------
+Under openAPL, the APL interpreter does not produce the special
+APL characters directly.  It simply accepts 8 bit character codes
+from 'standard input' and sends its results to 'standard output'.
+The responsibility for interfacing between the interpreter and
+the user rests with a terminal program.  The most important
+criteria for a terminal to support openAPL is that it must be
+'8 bit clean', that is, it must produce 8 bit characters in 
+response to certain keystrokes and it must correctly display the
+same characters.  Most terminal devices are only guaranteed to
+produce a standard response for ASCII characters (which are 7 bits 
+long).  The appearance of 1 in the most significant bit position
+sometimes results in control/escape sequence or meta character
+markers.  Usually, the 8th bit is just stripped and the
+corresponding 7bit character is acted upon.  Of course, the 
+terminal must also accept changes to its character font and
+changes to the keyboard-to-character mapping.
+
+Two terminal emulators are bundled with openAPL.  The first is
+not really a terminal program at all, it's simply a trick played
+with the Linux EGA/VGA character display (often referred to as just
+the 'console').  The other option is the use of a terminal under
+X11.  Rxvt has been chosen for the role because it is 8 bit clean.
+
+
+LINUX CONSOLE
+-------------
+If you are not using Linux, or if you have no interest in running
+openAPL on the console, just skip to the XFREE86 heading.
+
+Theory of Operation
+-------------------
+The Linux console is naturally 8-bit clean, it is sufficient to
+load the APL character set into the EGA/VGA hardware.  This is
+all done for you through the apl script with calls to setfont
+and loadkeys, these are provided by the kbd package.
+
+Trouble Shooting on the Linux Console
+-------------------------------------
+Problem: 'apl -on' results in a complaint that either loadkeys or
+setfont cannot be found.
+Remedy: Install the kbd package.
+
+Problem: 'apl -on' results in a complaint that either apl8x16 or
+apl2741.map cannot be found.
+Diagnosis: Have a look inside the shell script 'apl'.
+Remedy: Fix the locations of $consolefont and/or $consolemap.
+
+Problem: In reference to the tests performed at the top of this file,
+the first step fails (character output).
+Diagnosis: Have a look inside the shell script 'apl' for $consolefont.
+Remedy: Fix the location of $consolefont.
+
+Problem: In reference to the tests performed at the top of this file,
+the second step fails (character input).
+Diagnosis: Have a look inside the shell script 'apl' for $consolemap.
+Remedy: Fix the location of $consolemap.
+
+Problem: after my APL session is finished, the APL characters are
+still hanging around, and/or the functions keys are still bound to
+the APL system commands.  
+Remedy: Use the command "apl -off"
+
+Problem: after using the command "apl -off", most things are back
+to normal but some characters are different.
+Diagnosis: in the "apl" shell script, the font pointed to by 
+$defaultfont is bad.
+Remedy: after a reboot, recreate this file using "setfont -o filename"
+PS there is a known bug with the hyphen symbol, see the BugList.
+
+Problem: after using the command "apl -off", most things are back
+to normal but some key bindings, function keys or compose rules are
+corrupt.
+Diagnosis: in the "apl" shell script, the map pointed to by 
+$defaultmap is bad.
+Remedy: after a reboot, recreate this file thus:
+
+	$> dumpkeys > default.map
+	$> cp default.map dest_dir
+	
+	Note: examine $defaultmap in script/apl to determine dest_dir
+
+
+XFREE86
+-------
+
+Theory of Operation
+-------------------
+X11 has been developed with national language support built in 
+so it is able to deal with 8 bit characters.  The problem is
+how to prevent it from using bit 8 as a signal that the character
+is part of a 16 or 24 bit sequence!  The terminal program 'rxvt' 
+and selected editors are known to work correctly.
+
+In addition to selecting 8 bit clean applications, it is necessary
+to provide APL character support.  This is a three part process. 
+First the X11 keyboard system must be told to recognise the 
+mode-switch key.  Non-english speaking users may already have 
+mode-switch programmed into their configuration, by convention the
+right ALT key is used.  Second, mode-switch-ed key strokes are mapped
+to APL characters.  OpenAPL uses two mapping files, one to map the
+mode-switch key, the other to map the APL characters.  The characters
+are all mapped on top of existing keys.  The third step loads the APL
+font.  By convention (it may be an unwritten convention) X11 programs
+accept the command line option '-fn fontname' to change their normal
+font to 'fontname'.  The apl shell script takes advantage of this by
+providing the '-fn' option to the rxvt terminal and to the EDITOR 
+environment variable.  It is both fortunate and regrettable that the
+character mapping process is effective for every X11 program in the 
+user's session.  Its fortunate because once set, it is not necessary 
+to repeat it when starting an editor.  Its regrettable because, 
+non-english speaking users are going to experience inappropriate
+remapping of their keyboards every time that openAPL is started. In 
+mitigation of this, these users are advised that the file apl2741.xmap
+can be edited to move any offending characters onto keys that do not 
+interfere with their national language.  (How are commercial APL
+keyboards mapped in these countries?)
+
+The terminal program rxvt is used to support the APL interpreter.
+One of the major design goals of rxvt is for it to be small and
+efficient.  At the same time, its author has written numerous
+features that would make rxvt large if implemented simultaneously.
+In order to meet the first goal, the features can be switched on or 
+off before compilation.  The result is that any given copy of a rxvt 
+executable is not guaranteed to work with openAPL because it may or
+may not respond to the 8th bit.  During alpha trials, this resulted in
+major problems!  The current approach is in two parts.  The end user 
+is instructed to check his or her copy of rxvt for compatibility.  If
+it fails, a compatible patched source of rxvt can be obtained from 
+the same location as the openAPL source.  As rxvt may be compiled
+for different roles, sometimes on the same system, the copy used
+by openAPL is given the unique name 'rxvt4apl'.
+
+
+Trouble Shooting X11 Environment for openAPL
+--------------------------------------------
+Start X11 and use an xterm to work through the following steps.
+
+Font
+----
+To check that the font is installed, run the command:
+
+	$> xfd -fn apl8x13
+	
+Observe the APL character set - two of its characters are described
+under the general trouble shooting instructions near the top of
+this file. 
+
+Problem: xfd (or anything else for that matter) cannot find the
+apl font/s.
+Diagnostics: make sure that the file "apl8x13.pcf" is within
+the font path which is defined in XF86Config.  Note that
+"apl8x13.pcf" is created from "apl8x13.bdf" using bdftopcf(1)
+and mkfontdir must be run in the applicable font directory. Also,
+refer to the Installation file for instructions on using xset.
+
+Problem: Although the apl fonts are in the correct directory,
+they are not compressed like other fonts (ie .gz or .Z as
+applicable to your system).
+Diagnostics:  This can happen with a custom ./configure file
+in which the user has made a new font directory for APL and
+the automatic configure program cannot find similar fonts to
+determine what compression method to use.
+Remedy 1: Edit the Makefile and give the COMPRESS variable
+the value "gzip -f" (if other fonts have .gz extensions) or
+"compress" (if other fonts have .Z extensions).  Then run
+"make install" again.
+Remedy 2: Manually compress the fonts.
+
+Mode Switch Key
+---------------
+To check that the mode switch key is functional, run the commands:
+
+	$> xmodmap /usr/X11R6/lib/X11/modeswitch.xmap
+	$> xev
+
+	Note: The path may need to be adjusted to suit your machine.
+
+Move the cursor into the EventTester (ie xev) and observe
+what is reported as the right ALT key is pressed and released.
+If the key is recognised as Mode_Switch, then all is well, skip this
+section.  To change the mapping of the Mode_Switch key, edit the file
+"modeswitch.xmap" and rerun the xmodmap command.  To help achieve 
+your goal, consider the output from the command:
+
+	$> xmodmap -pm
+
+Your edits must satisfy two conditions:
+- a keycode for the chosen mode switch key must be defined (ie the
+  right ALT key) refer to the next section on keyboard mapping, and
+- one of the modifiers (Mod1 to Mod5) must be assigned "Mode_switch".
+Also, make sure that your chosen modifier is not mapped to any other
+action or to any other modifier; consider the 'clear' directive to
+remedy such problems.  
+
+Keyboard Mapping
+----------------
+Run the commands:
+
+	$> xmodmap /usr/X11R6/lib/X11/apl2741.xmap
+	$> xev
+
+	Note: The path may need to be adjusted to suit your machine.
+
+Move the cursor into the EventTester (ie xev) then observe what is
+reported while the right ALT key is held down and keys on each row 
+of the keyboard are pressed and released.  If "xev" can report that 
+characters can be resolved from each keypress that corresponds to 
+the keyboard overlay, then all is well.
+
+If the APL characters cannot be produced according to the keyboard 
+overlay, it will be necessary to debug and edit the file
+"apl2741.xmap".  To examine the modifier map use the command:
+
+	$> xmodmap -pk
+or	$> xmodmap -pke
+
+You may find that the keyboard is totally scrambled after loading
+"apl2741.xmap"! This will require a little patience to generate a
+mapping file suited to your machine.  Shutdown X11 with the mouse 
+then restart and create a default mapping file with the command 
+
+	$> xmodmap -pke > temp.xmap
+	
+Now examine the file "apl2741.xmap" observe how keycodes are
+associated with one or more letters or control actions. 
+Furthermore, many lines end with with some hex codes, these are
+the codes for the APL 2741 encoding.  Now examine "temp.xmap", 
+chances are that the combinations of keycodes and characters in
+temp.xmap are different to those in apl2741.xmap.  So here's your 
+objective: create a new .xmap file which uses the keycodes from
+your machine combined with the hex encodings for APL.
+
+Trouble Shooting rxvt4apl
+-------------------------
+To check that the font and mapping files work with rxvt4apl run
+the command: 
+
+	$> rxvt4apl --meta8 -fn apl8x13 -ls &
+	
+Inside the resulting terminal, run the general trouble shooting
+instructions near the top of this file.
+
+Diagnostics: the above tests may point to problems with the font
+or keyboard mapping, double check the earlier steps in this file.
+In addition, if rxvt4apl is not 8bit clean, you will see meta codes
+instead of APL characters.
+Remedy: If your rxvt4apl is a copy of an existing rxvt, assume
+that it is not 8 bit clean; obtain a copy of rxvt4apl from the same
+location as openAPL and recompile it.
+
+Next try the command
+
+	$> apl -on
+	
+Repeat the general trouble shooting instructions inside the resulting 
+terminal. If an APL 2741 emulated terminal is not observed, note the 
+output from the command 
+
+	$> apl -on -n
+
+Diagnostics: use the reported variable settings from the above command
+to manually execute the commands seen in the shell script "apl".  
+Remedy: Rectify the any problems by altering the variables' values 
+in /etc/apl.sh (any changes made inside the shell script "apl" may 
+get overwritten by a subsequent reissue or re-installation of openAPL).
+
+Good Luck!
+
+--
+This file is subject to the restrictions and privileges of the
+GNU General Public License.

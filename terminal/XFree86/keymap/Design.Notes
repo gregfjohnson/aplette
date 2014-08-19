@@ -1,0 +1,29 @@
+Unlike the Linux console, X11 does not support the full set of
+SHIFT, CTRL, and ALT combinations.  It recognises shifted and meta
+characters plus an alternative produced by the 'Mode Switch' key.  
+This key can itself be mapped to one of several physical keys. 
+
+OpenAPL under X11 does not support composed symbols (as of this 
+release).  The 'Mode Switch' key is used to produce the APL special 
+characters.
+
+Two files are provided for mapping the keyboard.  Firstly the 
+APL character mapping is provided with apl2741.xmap.  Second, 
+modeswitch.xmap is used to set the mode switch key to right ALT.  
+Both of these must be loaded with xmodmap , once per X11 session is
+sufficient but repeating the command for every client does no 
+(additional) harm.  
+
+You may want to change the mode switch key to your preference.  Note
+that any shift or meta action associated with your preferred key must 
+first be removed with the 'clear' command.
+
+Backspace Key:
+After having problems with an inoperative Backspace key under rxvt,
+the FAQ for rxvt was consulted, it contained a fix for Linux/X11R6 
+(ie that keycode 22 be mapped to BackSpace by xmodmap). Accordingly, 
+the file apl2741.xmap does just that!
+
+--
+This file is subject to the restrictions and privileges of the
+GNU General Public License.

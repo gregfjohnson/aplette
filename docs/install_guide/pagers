@@ -1,0 +1,31 @@
+
+FILE PAGERS KNOWN TO WORK WITH APL2741 ENCODING
+-----------------------------------------------
+One would not normally want to page APL files under an 
+openAPL session.  However, functions can be written out
+to unix files; some of the documentation and all of the QA
+test files are encoded in APL2741 so the use of a pager
+can be convient at times. Note: in order to to use a pager
+to view APL2741 encoding, you should be running a shell
+inside an emulated APL terminal, ie following the command:
+
+	$> apl -on
+
+more
+----
+The classic Unix pager "more" does not attempt to change the
+8th bit which is used to represent APL characters.  That is, 
+it displays raw characters and so is suitable for viewing
+APL2741 encoded files.
+Tested on version 5.19 (Berkeley) 6/29/88 on a Debian system.
+
+less 
+----
+The more clone "less" can be made to display raw characters
+with the option -r.  Ease of use can be improved by setting
+the environment variable LESS to include this option.
+Tested on version 332
+
+--
+This file is subject to the restrictions and privileges of the
+GNU General Public License.

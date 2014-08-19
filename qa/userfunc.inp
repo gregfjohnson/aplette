@@ -1,0 +1,105 @@
+¦User Defined Functions
+¦----------------------
+)load userfunc.ws
+
+¦ Niladic
+)vars
+)list nap
+nap
+
+)list nalcv
+nalcv
+
+)list nalcvlab
+nalcvlab
+
+)list nalab
+nalab
+
+)vars
+
+¦ Monadic
+)vars
+)list map
+map 2
+
+)list malcv
+malcv 3
+
+)list malcvlab
+malcvlab 4
+
+)list malab
+malab 5
+
+)vars
+
+¦ Dyadic
+)vars
+)list dyp
+1 dyp 2
+
+)list dylcv
+2 dylcv 3
+
+)list dylcvlab
+3 dylcvlab 4
+
+)list dylab
+4 dylab 5
+
+)vars
+
+¦ Niladic with returned result
+)vars
+)list rnap
+ûrnap
+
+)list rnalcv
+ûrnalcv
+
+)list rnalcvlab
+ûrnalcvlab
+
+)list rnalab
+ûrnalab
+
+)vars
+
+¦ Monadic with returned result
+)vars
+)list rmap
+10’•rmap 2
+
+)list rmalcv
+10’•rmalcv 3
+
+)list rmalcvlab
+10’•rmalcvlab 4
+
+)list rmalab
+10’•rmalab 5
+
+)vars
+
+¦ Dyadic with returned result
+)vars
+)list rdyp
+10’•1 rdyp 2
+
+)list rdylcv
+10’•2 rdylcv 3
+
+)list rdylcvlab
+10’•3 rdylcvlab 4
+
+)list rdylab
+10’•4 rdylab 5
+
+)vars
+
+¦ User Function Errors
+
+¦ undefined function argement
+)list map
+map er1

@@ -1,0 +1,23 @@
+# Makefile for quad_var (quad variables) 
+
+include ../include/makefile.common
+
+OBJECTS = ex_quad.o ex_qquad.o \
+	ex_qav.o ex_qct.o ex_qio.o ex_qlx.o ex_qpp.o ex_qpw.o \
+	ex_qts.o ex_qai.o
+
+
+Q.o:	$(OBJECTS)
+	$(LD) -r -o Q.o $(OBJECTS)
+
+$(OBJECTS):	apl.h
+
+# Things that depend on characters
+ex_qav.o ex_qlx.o ex_qpp.o ex_qpw.o ex_quad.o :	char.h
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	rm -f $(OBJECTS) core
+

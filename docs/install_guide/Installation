@@ -1,0 +1,240 @@
+
+BUILDING AND INSTALLING OPENAPL
+
+Prerequisites
+-------------
+To compile apl11, the usual development tools must be available
+including bison (or yacc).
+
+To use openAPL under X11, the terminal program rxvt is required.
+However, some versions of rxvt are not 8 bit clean.  If your's 
+does not pass the test, a copy of rxvt4apl source code should
+be downloaded from the same place as your copy of openAPL.
+
+To use openAPL on the Linux console, the keyboard package 'kbd' 
+must be installed - being part of the basic fileset of most
+distributions, it should be on your machine by now, to find out:
+
+	$> which loadkeys
+
+Make a printout of the keyboard overlay diagram.  Select from
+one of the following: 
+...openAPL/terminal/linux-i386/symbols/PC-101key.ps
+...openAPL/terminal/SunOS/symbols/SPARCtype5.ps
+...openAPL/terminal/XFree86/symbols/PC-101key.ps
+
+Configure
+---------
+Go the the top level openAPL directory and edit the file 'configure'
+according to the following guides:
+- To use directories that agree with the Linux File System Standard,
+  uncomment the lines that provide --prefix=/usr and --sysconfdir=/etc
+- In order to avoid installation in system directories for which you
+  may not have write privileges, uncomment and edit the line containing 
+  'prefix', then uncomment the three lines containing 'wsdir', 'fontdir'
+  and 'x11share'.  Later on you will have to adjust the X11 fontpath.
+- If you have a Epson(TM) compatible printer uncomment --enable-epson
+- If you have a PostScript(TM) compatible printer: --enable-ghostscript
+
+You will notice that openAPL now allows its files to be installed into
+directories of your choice.  If a previously installed openAPL has used 
+locations other that what you have now selected, then the previous 
+version should be uninstalled.  If you have adopted the above suggestion 
+to use the Linux File System Standard, then this warning can be ignored.
+
+Still in the top level openAPL directory, issue the command:
+
+	$> ./configure
+
+Optional - you could get the same results and/or select additional
+options by adding parameters to the above command, for instructions:
+
+	$> ./configure --help
+
+After a little more than a screenfull of messages, check that
+'Makefile' has been created.  Examine this file; near the top you
+will see a list under the heading 'Makefile variables'.  These 
+should all point to valid directories on your system.  If for 
+whatever reason you decide to edit these lines, it is essential
+that you make equivalent changes to files in the cross references
+that are described above some variables.
+
+Compilation
+-----------
+Again, from the top level openAPL directory, issue the command:
+
+	$> make
+
+Expect a lot of warning messages while the process is in the
+./apl11 directory.
+
+Check the contents of the ./apl11 directory for the creation of
+an executable named "apl11".
+
+Installation
+------------
+If you have any doubts about the destination directories selected
+during the configure step, use the following to examine where
+things would be placed:
+
+	$> make -n install
+
+Log-in (or su) as root, then:
+
+	#> cd ...openAPL
+	#> make install
+
+If the above was done under X11, then it will be necessary to 
+cause the font server to synchronise with the newly installed
+fonts.  A sure way is to exit and restart X11.
+
+Custom Font Directory
+---------------------
+If you don't have root access for the purpose of installing the
+APL font, it will be necessary to set the variable 'fontdir' 
+(from within the configure file) to a suitable alternative.  This
+_may_ have the side effect that the configure program cannot
+determine how fonts are compressed on your machine.  If you later
+get a message like "cannot find font..." consult the terminals
+file in the install_guide directory.
+
+After 'make install', use the following command to update your 
+X11 font path:
+
+	$> xset fp+ your_directory
+	
+This will need to be done once per login or it may be put into
+your ~/.aplrc file.  By the way, make sure that you include a
+trailing "/" in the "your_directory" argument to xset.
+
+Terminal Support
+----------------
+Although you could probably just start apl at this point, its best
+to ensure that the APL characters are properly supported by whatever
+terminal you intend to use.  Refer to the file 'terminals' located 
+in the same location as this file.  
+
+If you are on a Linux virtual console (ie not X11), just run the two 
+tests for 8 bit clean operation as described at the start of the 
+terminals file.
+
+Using openAPL under X11 requires a program named rxvt4apl.  It has 
+been reported that rxvt in the RedHat distribution is 8 bit clean
+and works with openAPL straight out of the box.  If using a RedHat
+system its certainly worth trying it out.  Copy rxvt to a file of the 
+name 'rxvt4apl' in a directory that appears in your $path environment
+variable.  Then, from within an xterm, the response to 'apl -on' will
+be rxvt inside of which you should run the tests at the start of the
+terminals file.  
+
+If the above is not applicable or has not worked out for you, obtain
+a copy of the source for rxvt4apl - it has been published in the same 
+location as the source for openAPL so it should appear on your local 
+mirror site.  Unpack it and follow the directions for compiling and 
+installation.  As before, from within an xterm, try 'apl -on', expect 
+a rxvt terminal, run the tests at the start of the terminals file.
+
+Resolve any problems in accordance with the directions in the
+terminals file.
+
+First Time Use
+--------------
+First, make sure that you have a copy of the keyboard overlay 
+in accordance with the instructions at the top of this file.
+Next type the command:
+
+	$> apl
+
+When openAPL is run for the first time like this, the setup
+wizard will take over and do the following:
+
+- A directory named ~/apl will be created (ie a subdirectory under
+  your home directory).  This will contain the workspace 'continue'
+  which will cause a welcome notice to be displayed.  The notice
+  can later be disabled by deleting the 'continue' workspace.
+
+- If readline support is available, the file ~/.inputrc will be
+  created (or if it exists, it will be edited).  The result will
+  be that the 8 bit apl characters will work correctly with
+  command line editing and history.
+
+- The file ~/.aplrc will be created.
+
+- You will be asked for your choice of text editor(s).  You may
+  select the defaults and come back to this step with the command:
+
+	$> apl -setup
+  
+Important notes: 
+- in order to exit an apl session, use the ")off" command
+- the Linux character console uses either ALT key to select the
+  APL characters.
+- the X11 terminal uses the "mode switch" key to select the APL 
+  characters - this is mapped to the right ALT key on most systems.
+
+Post-installation Chores
+------------------------
+When you get to the stage where you want to edit apl functions, take
+a look at the file "editors" then run the set-up wizard as above.
+
+To get your PostScript(TM) or Epson(TM) printer to print APL
+characters, look at the instructions in the file "printers".
+
+If you need to page through files containing APL 8bit characters,
+consult the file "pagers"
+
+Quality Assurance
+-----------------
+This step is optional - it demonstrates that the software
+just built performs as it did on the developer's machine.
+
+	$> cd ...openAPL/qa
+	$> make
+
+Expect about a screenfull of messages.  At the end, a set of files
+with the extension .dif should have been created all with zero length.
+If not, examine the corresponding *.ref and *.out files to determine 
+the cause of the differences. (*.ref are reference files, *.out 
+were created by the make command).
+
+
+Configuration Files
+-------------------
+OpenAPL is invoked through the shell script "apl".  This sets up
+several environment variables, sources the system configuration file
+"/etc/apl.sh", and the user configuration file "~/.aplrc", creates an
+APL terminal and invokes apl11 with any flags that it hasn't used from 
+the command line.  You can customise openAPL by editing the user 
+configuration file or by creating and editing the system configuration
+file.
+
+The apl setup wizard will modify the variables $editor and 
+$x11editor in the user configuration file.  If the wizard cannot 
+find them, it will append a copy at the bottom of the file - have
+a look there if you are editing these variables and nothing seems 
+to be changing.  
+
+The configuration files contain plain old shell script commands,
+however they are "sourced" from the "apl" wrapper so are not
+executable in their own right.  Try the command "apl -n" to see
+what values the variables would have without actually starting APL.
+
+Example:
+You decide that the default X11 font (apl8x13) looks too small on
+your display.  Looking inside the file /usr/bin/apl reveals that
+the variable $x11font specifies the font passed to rxvt4apl (and any
+function editor).  Furthermore, several additional apl font files are
+available, eg aplox.108, aplox.150, aplox.216 and aplox.300 - look
+in the source tree under terminal/XFree86/fonts or installed under
+X11/fonts/misc.  Examine these fonts using:
+
+	$> xfd -fn aplox.??? 
+	
+For instance, to take advantage of aplox.150, you would add the
+following line:
+
+	x11font=aplox.150
+
+--
+This file is subject to the restrictions and privileges of the
+GNU General Public License.

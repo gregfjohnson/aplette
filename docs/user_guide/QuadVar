@@ -1,0 +1,45 @@
+
+•av
+Atomic Vector.  A 256 literal vector containing all the 8 bit
+characters from 0 to 255.  •av cannot be reassigned another 
+value by the user.  Warning: the first 32 of these represent
+control codes and printing these may have strange effects on your
+terminal.  On the Linux console, about the worst that happens is
+that the code corresponding to ^G creates a beep.  However, rxvt
+gets glitched by it!  Try the following for cosmetic effect:
+	
+	14 16û32‹•av
+
+•ct
+Comparison Tolerance.  Used to determine if two numbers can
+be considered equal.  The algorithm concerned takes into
+account the relative magnitudes of the numbers being compared.
+It is NOT a simple difference between the two.
+
+•io
+Index Origin. Defines the starting number for monadic iota and 
+in indexed expressions.
+
+•lx
+Latent eXpression. If this literal vector is present in a WorkSpace,
+it will be executed when that WorkSpace is opened with )load.  Note
+that SandBox mode will be active in this situation.  
+
+•pp
+Print Precision.   Defines the number of significant digits that
+are displayed. Allowable range is from 1 to 20.
+
+•pw
+Page Width. Defines the length of displayed lines.
+Allowable range is from 10 to 132.
+
+•ts
+Time Stamp.  A seven element vector consisting of:
+	the year
+	the month of the year
+	the day of the month
+	the hour
+	the minute
+	the second
+	the number of milliseconds at the last 'tick'
+•ts cannot be reassigned another value by the user.

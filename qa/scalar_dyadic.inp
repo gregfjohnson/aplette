@@ -1,0 +1,97 @@
+¦ Monadic Dyadic Functions
+•pp6
+•A ı1E7 ı200 ı1.5 ı1 0 1, (1ö3), .5 7 2000
+•B(ı3+â4),2ö3
+
+¦Plus
+Bø.+B
+
+¦Minus
+Bø.-B
+
+¦Times
+Bø.’B
+
+¦divide
+0 1 2 3 4 ø.ö1 2 3 4
+
+¦Maximum
+Bø.B
+
+¦Minimum
+Bø.B
+
+¦Power
+•pp12
+2*32
+4*0.5
+•pp6
+
+¦Logarithm
+10 2 10 0.1 ‰ 2 65536 1E15 1E15
+
+¦Residue (note that ş should not be confused with | )
+•ct1Eı10
+7 ı7 ø.ş31 28 ı30
+0.2 ş 1.4 1.5 1.6
+1ş1E30 1Eı30 ı1Eı30 .99999999999
+•ct0
+•pp16
+1ş1E30 1Eı30 ı1Eı30 .99999999999
+•ct1Eı10
+•pp9
+
+¦Binomial
+0 1 2 3 4ø.! 0 1 2 3 4
+
+¦Circular Functions - also see trig tests
+2 ù ı1 ù .6
+2 ù 0
+3 ùùö4
+6 ù 0
+
+¦And
+0 1 ø.^ 0 1
+¦LCM is not implemented
+
+¦Or
+0 1 ø . ú 0 1
+¦GCD is not implemented
+
+¦Nand
+0 1 ø . ê 0 1
+
+¦Nor
+0 1 ø . å 0 1
+
+¦Equal
+1 2 3 ø.= 1 2 3
+•ct1Eı13
+4 = 4 + 5Eı13 2Eı13 ı2Eı13 ı5Eı13
+0 = ı1Eı20 1Eı20 0
+¦3 = 'A3'
+'A'=â128
+(â128)='a'
+
+
+¦Less Than
+1 2 3 ø.< 1 2 3
+0 1 ø.< 0 1
+
+¦Less than or equal to
+1 2 3 ø.ó 1 2 3
+0 1 ø.ó 0 1
+
+¦Not equal
+1 2 3 ø.† 1 2 3
+0 1 ø.† 0 1
+
+¦Greater than or equal to
+1 2 3 ø.ò 1 2 3
+0 1 ø.ò 0 1
+
+¦Greater than
+1 2 3 ø.> 1 2 3
+0 1 ø.> 0 1
+
+

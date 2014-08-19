@@ -1,0 +1,52 @@
+FREQUENTLY ASKED QUESTIONS ON APL
+---------------------------------
+The FAQ for APL has this to say about the waterloo site from 
+which most of the material for openAPL was sourced:
+
+"archive.uwaterloo.ca or watserv1.waterloo.edu
+ (watserv1.uwaterloo.ca), L.J. Dickey's collection. Current J
+   distribution for many machines (and J source, including
+   LinkJ), APL\11, CAPL, IAPL, TryAPL, RatAPL, APL fonts, TeX
+   macros and fonts, the Toronto toolkit, some other WS, archives
+   of comp.lang.apl, the APL standard, an Introduction to J, and
+   this FAQ. These are in directories starting from directory
+   languages/apl "
+
+   (Note that the quoted reference to "this FAQ" is not to this
+   document, rather to a FAQ at the above location).
+
+The URL for the FAQ is:
+
+  ftp://archive.uwaterloo.ca/ftparch/languages/apl/faq
+
+UPDATES TO OPENAPL
+------------------
+If and when incremental releases to openAPL are published, they
+will be made available at: 
+
+    ftp://sunsite.unc.edu/pub/Linux/Incoming/openAPL-x.y.tgz
+or  ftp://sunsite.unc.edu/pub/Linux/devel/lang/apl/openAPL-x.y.tgz
+where x.y are version and revision numbers.
+
+REFERENCE MANUAL
+----------------
+OpenAPL comes with no language manual. You may be able to use
+a copy of the latest standard for this role providing that you
+are prepared to disregard any references to features not present 
+in openAPL (it is after all a standard for an extended APL). 
+Also, be warned that it is a Postscript document that will require
+the best part of a ream of paper to print.  The URL for "Programming
+Language APL, Extended..." is:
+
+ ftp://archive.uwaterloo.ca
+      /ftparch/languages/apl/standards/dis/apldis.ps.gz
+
+FONTPRINT
+---------
+Files containing 8bit encoded openAPL characters may be printed on
+an Epson(TM) or compatible printer (or converted into a GIF file) 
+using the fontprint package which is not specifically targeted at
+APL.  The URL for fontprint is:
+
+  ftp://sunsite.unc.edu/pub/Linux/utils/text/fprint-3.0.2.tar.gz
+

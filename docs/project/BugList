@@ -1,0 +1,113 @@
+
+001 "Default Font not Returned Correctly"
+After an APL session has finished, the default font is returned to
+the Linux console.  However, some characters are corrupt (notably
+the hyphen used in the man pages). This ought to be easy to fix
+just by recreating a default font file but something in setfont()
+is not quite right: the output from "setfont -o filename" does 
+not represent the font that the console started off with.
+
+002 "X11 APL Keymap Affects other Programs"
+OpenAPL modifies the keymap table in order to produce the APL 
+special characters.  This is global and will have an effect on
+other programs that are running under the same X11 session.
+
+005 "Integer Performance is Poor"
+All arithmetic in apl11 is performed in floating point.
+
+006 "System Functions Cannot Accept Optional Arguments"
+For instance: the )copy system command can be used on an
+entire workspace but not on individual functions and variables
+such as ")copy x y z".
+
+007 "Trace and Stop Apply Cannot be Applied to Individual Lines"
+As editing a function could change its line numbering, it is
+difficult to maintain a list of trace and stop lines for functions.
+
+008 "Error Reporting After the Parser Does not use Caret"
+If your command contains a syntax error, the parser stage will
+identify it and produce an error message along with a pointer
+to the offending token.  Once parsed, execute errors do not
+provide such diagnostics.
+
+009 "Indexed Assignment to Quad Variables"
+For instance, it is not possible to assign to individual locations
+in Quad LX.
+
+010 "Warnings During Compilation"
+The documentation from the original apl\11 has this to say:
+" The APL\11 source shows its age in several ways.  First,
+  it's K&R rather than ANSI C.  Second, it predates the void
+  data type, so is full of functions of type int that should
+  be type void.  Third, it goes back to the bad old days when
+  pointers and ints were treated as though they were
+  interchangeable.  Because of these things, running the code
+  through a modern C compiler results in a lot of warnings. "
+
+011 ")script Command is Gone"
+When the printing code was rationalised to deal with 8 bit 
+characters, the ability to tee output to a separate file was
+lost.  A workaround is described in the file:
+...openAPL/docs/user_guide/Printing
+
+012 "State Indicator is not Saved"
+The documentation from the original apl\11 has this to say:
+ "A saved workspace includes function definitions and
+  variables.  If there are suspended functions, all of the
+  local variables for those functions are also saved.
+  However, the APL state indicator is not saved, so that those
+  variables become global in scope when the saved workspace is
+  loaded.  Trying to save the state indicator is very hard in
+  the current version of the interpreter because of the way
+  the main program loop is implemented.  Someone should fix
+  this sometime. "
+
+013a "Botch Errors"
+In some places, it was not clear to the original programmers how
+errors should be classified.  Although many error diagnostics 
+have since been updated, some sanity checking and possibly
+unreachable code still reports Botch errors.  As these come
+to light, the context that caused them should be identified 
+and and submitted for investigation leading to more meaningful
+diagnostics.  
+
+014 "Unicode is Not Supported"
+The 8bit encoding scheme used in version 0 of openAPL is not
+compatible with future migration to 16 bit encoding.  In order
+to later convert to Unicode, it will be necessary to 
+translate applications created under the 8 bit scheme.
+
+015 "apl2741.fnt Cannot Print Percent Symbol"
+The PostScript(TM) font file apl2741.fnt has a bug in it which
+causes it to print the percent symbol incorrectly.  This file
+is covered by a copyright that prevents it being modified
+and redistributed so each user has to apply their own patch
+as follows:
+  Change lines 275 and 276 
+  From:  180 500 80 360 0 arc stroke
+         480 100 80 360 0 arc stroke
+  To:    180 500 80 0 360 arc stroke
+         480 100 80 0 360 arc stroke
+
+022 "Arbitrary limit on number of labels"
+The maximum number of labels is set by the constant MAXLAB 
+in apl.h.
+
+023 "Long user defined functions"
+Long user defined functions cause stack underflow.
+
+024 "Clash between Local and Workspace Variables"
+When a function declares a local variable in its header and that
+variable has the same name as a global variable, then unexpected
+errors are reported.
+
+025 "Inner Product may Result in a Scalar"
+When a one element vector is the result of a inner product operation
+it get converted into a scalar.
+
+026 "System Commands with Execute Function"
+The execute primative function (uptack jot) does not work with
+system commands.
+
+027 "Binomial function with negative numbers"
+The ! scalar function does not support negative arguments properly.

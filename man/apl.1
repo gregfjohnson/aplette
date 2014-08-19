@@ -1,0 +1,130 @@
+.\" Copyright (C) Branko Bratkovic 1998, 1999
+.\" This file is free software and is covered by the GNU General
+.\" Public License.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+.\"
+.\" For more details see the GNU General Public License (GPL) in
+.\" the docs directory.
+.TH apl 1 "25 July 1999" "openAPL"
+.SH NAME
+apl (A Programming Language) 
+.SH SYNOPSIS
+apl
+[
+.I -help | -h
+] [
+.I -on
+] [
+.I -off
+] [
+.I -setup
+] [
+.I -n
+] [ arguments to apl11 ]
+
+.SH DESCRIPTION
+The language APL uses a special character set.
+.I apl
+will create a terminal that provides this character set.
+Then if -on, -off or -n were specified an exit is taken. 
+Otherwise, the working directory is set to $HOME/apl
+(creating 'apl' in the users home directory if necessary)
+and the executable
+.I apl11 
+is invoked with any remaining options.  
+.I apl
+supports two interfaces: the Linux console and X11.
+
+
+.SH OPTIONS
+.TP
+.B " -help | -h "
+provide a summary of command line options.
+
+.TP
+.B " -on "
+create a terminal that provides the APL character set, 
+but apl11 is not started.
+
+.TP
+.B " -off "
+return the character set back to default (Linux console only).
+Normally, 
+.I apl
+will set the console back to default when the session has
+finished.  There are two situations in which the
+.B -off
+option may be necessary.  One: if abnormal termination has
+prevented the default being replaced.  Two: you may be
+switching between virtual consoles during a running APL
+session. 
+
+.TP
+.B " -n "
+like make -n , display the internal variables but
+nothing actually gets done.
+Useful when making changes to /etc/apl.sh or ~/.aplrc .
+
+.TP
+.B " -setup "
+configure the user environment
+including creation of ~/.aplrc file
+and selection of function editors.
+
+
+.SH CONFIGURATION
+.LP
+If the file
+.I ~/.inputrc
+exists and looks as if it may have been configured to support
+8 bit clean input and output via readline, then the flag 
+.I -r
+will be passed to apl11.  If apl11 has been compiled with
+readline support, then command line editing and history
+will be available.  
+See readline(1) or bash(1) for more information about 
+readline command input.
+
+The files
+.I /etc/apl.sh
+and
+.I ~/.aplrc
+are sourced after internal variables are created, 
+but before any actions are taken.  
+This enables the system administrator or user to customise things 
+such as the location of support files (fonts and keyboard maps).
+WARNING: do not put anything in these files that would write
+to stdout because these files are sourced by the print filers
+.I apl2epson
+and
+.I apl2gs
+which pipe stdout to a printer.
+
+You can edit these files in order to modify any variables
+that appear in:
+.I apl
+,
+.I apl2epson
+, and
+.I apl2gs
+
+.SH NOTES
+.LP
+The X11 interface will change the keyboard mapping table.
+This is a global effect that may impact on other applications
+running under the same X11 session. 
+Specifically, the modifier map has the Mode_Switch action
+assigned to the right ALT key, 
+and many of the numeric and alpha keys are assigned APL
+characters under the switched mode.
+
+.LP
+The Linux console interface uses the kbd package and requires
+loadkeys(1) to function.
+
+.SH "SEE ALSO"
+apl11(1), loadkeys(1), xmodmap(1)
+

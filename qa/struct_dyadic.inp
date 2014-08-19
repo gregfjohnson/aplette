@@ -1,0 +1,27 @@
+¦Dyadic Structural Primitives
+)load makeN.ws
+
+¦Reshape
+•N213makeN 2 1 3
+2 4ûN213
+û0û'ABCD'
+b1E2 1E2 1E2 0 1E2 1E2 1E2 û 42
+ûb
+''ûN213
+
+¦Join
+•N233makeN 2 3 3
+•N23makeN 2 3
+N233,N23
+N233,[3]N23
+N233,[2]N23
+N233,[1]N23
+•N33makeN 3 3
+N233,[1]N33
+•io0
+N233,[3]N23
+N233,[2]N23
+N233,[1]N23
+N233,[0]N33
+
+

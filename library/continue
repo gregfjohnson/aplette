@@ -1,0 +1,9 @@
+apl\11
+tolerance 1e-13
+origin 1
+width 72
+digits 9
+CH copyright 2 11 63
+openAPL, Copyright (C) Branko Bratkovic 1998, 1999                                                                            This program is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                                                                          Use the command ")license" to examine the license conditions   attached to this program.                                      Use the command ")lib" to determine which APL workspaces are   available.  This notice is part of the "continue" workspace.   Use the command ")off" to log off.                             
+CH •lx 1 9
+copyright

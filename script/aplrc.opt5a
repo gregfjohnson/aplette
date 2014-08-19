@@ -1,0 +1,15 @@
+# $consolefont is the apl font used on the Linux character console
+#consolefont=
+
+# $defaultfont is used to return Linux console font to normal.
+#defaultfont=
+
+# $consolemap converts Linux console keystokes into APL characters.
+#consolemap=
+
+# $defaultmap is used to return the Linux console keyboard to normal.
+#defaultmap=
+
+# $editor is used with the Linux console to edit apl functions
+#editor=
+

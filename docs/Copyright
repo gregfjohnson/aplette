@@ -1,0 +1,30 @@
+openAPL, Copyright (C) Branko Bratkovic 1998
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+
+openAPL is free software and is covered by the GNU General
+Public License; for more details see the file "GPL".
+
+----------------------------------------------------------
+openAPL is based on apl\11.  Conditions of use for apl\11 are
+described in the file "License.original" which provides for 
+apl\11 to be sublicensed.  apl\11 has been modified to create 
+openAPL which has been sublicensed with the additional 
+provisions of the GPL applied.
+
+The copyright holder for apl\11 is:
+
+        U S WEST Advanced Technologies
+        4001 Discovery Drive, Boulder, Colorado, 80303
+
+----------------------------------------------------------
+The owners and origins of the fonts that were used in the 
+integration of apl\11 onto the Linux console and into X11
+are described in the file "project/Credits".
+
+----------------------------------------------------------
+The Postscript(TM) file apl2741.fnt is subject to a copyright
+that prevents it being modified.
+

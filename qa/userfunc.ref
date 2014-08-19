@@ -1,0 +1,340 @@
+clear ws
+	¶User Defined Functions
+	¶----------------------
+	)load userfunc.ws
+  20:30.27 04/23/00 userfunc.ws
+	
+	¶ Niladic
+	)vars
+
+	)list nap
+
+	Ïnap
+[1]	'plain niladic function'
+[2]	Ï
+
+	nap
+plain niladic function
+	
+	)list nalcv
+
+	Ïnalcv ; a;b
+[1]	aê5
+[2]	bê1E4
+[3]	'niladic function with local variables'
+[4]	Ï
+
+	nalcv
+niladic function with local variables
+	
+	)list nalcvlab
+
+	Ïnalcvlab ; a
+[1]	L1:aê5
+[2]	'niladic function with a local variable and a label'
+[3]	Ï
+
+	nalcvlab
+niladic function with a local variable and a label
+	
+	)list nalab
+
+	Ïnalab
+[1]	L1:'niladic function'
+[2]	L2:'with labels'
+[3]	Ï
+
+	nalab
+niladic function
+with labels
+	
+	)vars
+
+	
+	¶ Monadic
+	)vars
+
+	)list map
+
+	Ïmap a
+[1]	'plain monadic function'
+[2]	aí2
+[3]	Ï
+
+	map 2
+plain monadic function
+4
+	
+	)list malcv
+
+	Ïmalcv a; b;c
+[1]	bê5
+[2]	cê1E4
+[3]	'monadic function with local variables'
+[4]	aí2
+[5]	Ï
+
+	malcv 3
+monadic function with local variables
+6
+	
+	)list malcvlab
+
+	Ïmalcvlab a ; b
+[1]	L1:bê5
+[2]	'monadic function with a local variable and a label'
+[3]	aí4
+[4]	Ï
+
+	malcvlab 4
+monadic function with a local variable and a label
+16
+	
+	)list malab
+
+	Ïmalab a
+[1]	L1:'monadic function'
+[2]	L2:'with labels'
+[3]	L1+L2+aí3
+[4]	Ï
+
+	malab 5
+monadic function
+with labels
+18
+	
+	)vars
+
+	
+	¶ Dyadic
+	)vars
+
+	)list dyp
+
+	Ïa dyp b
+[1]	'plain dyadic function'
+[2]	aˆb
+[3]	Ï
+
+	1 dyp 2
+plain dyadic function
+0.5
+	
+	)list dylcv
+
+	Ïa dylcv b ; c;d
+[1]	cê5
+[2]	dê1E4
+[3]	'dyadic function with local variables'
+[4]	a+b
+[5]	Ï
+
+	2 dylcv 3
+dyadic function with local variables
+5
+	
+	)list dylcvlab
+
+	Ï a dylcvlab b ; c
+[1]	L1:cê5
+[2]	'dyadic function with a local variable and a label'
+[3]	aíb
+[4]	Ï
+
+	3 dylcvlab 4
+dyadic function with a local variable and a label
+12
+	
+	)list dylab
+
+	Ïa dylab b
+[1]	L1:'dyadic function'
+[2]	L2:'with labels'
+[3]	a-bíL1+L2
+[4]	Ï
+
+	4 dylab 5
+dyadic function
+with labels
+˝11
+	
+	)vars
+
+	
+	¶ Niladic with returned result
+	)vars
+
+	)list rnap
+
+	Ïrêrnap
+[1]	rê'plain niladic function'
+[2]	Ï
+
+	˚rnap
+22
+	
+	)list rnalcv
+
+	Ïrêrnalcv ; a;b
+[1]	aê5
+[2]	bê1E4
+[3]	rê'niladic function with local variables'
+[4]	Ï
+
+	˚rnalcv
+37
+	
+	)list rnalcvlab
+
+	Ïrêrnalcvlab ; a
+[1]	L1:aê5
+[2]	rê'niladic function with a local variable and a label'
+[3]	Ï
+
+	˚rnalcvlab
+50
+	
+	)list rnalab
+
+	Ïrêrnalab
+[1]	L1:rê'niladic function'
+[2]	L2:rêr,' with labels'
+[3]	Ï
+
+	˚rnalab
+28
+	
+	)vars
+
+	
+	¶ Monadic with returned result
+	)vars
+
+	)list rmap
+
+	Ïrêrmap a
+[1]	'plain monadic function'
+[2]	rêaí2
+[3]	Ï
+
+	10íïêrmap 2
+plain monadic function
+4
+40
+	
+	)list rmalcv
+
+	Ïrêrmalcv a; b;c
+[1]	bê5
+[2]	cê1E4
+[3]	'monadic function with local variables'
+[4]	rêaí2
+[5]	Ï
+
+	10íïêrmalcv 3
+monadic function with local variables
+6
+60
+	
+	)list rmalcvlab
+
+	Ïrêrmalcvlab a ; b
+[1]	L1:bê5
+[2]	'monadic function with a local variable and a label'
+[3]	rêaí4
+[4]	Ï
+
+	10íïêrmalcvlab 4
+monadic function with a local variable and a label
+16
+160
+	
+	)list rmalab
+
+	Ïrêrmalab a
+[1]	L1:'monadic function'
+[2]	L2:'with labels'
+[3]	rêaí3
+[4]	Ï
+
+	10íïêrmalab 5
+monadic function
+with labels
+15
+150
+	
+	)vars
+
+	
+	¶ Dyadic with returned result
+	)vars
+
+	)list rdyp
+
+	Ïrêa rdyp b
+[1]	'plain dyadic function'
+[2]	rêaˆb
+[3]	Ï
+
+	10íïê1 rdyp 2
+plain dyadic function
+0.5
+5
+	
+	)list rdylcv
+
+	Ïrêa rdylcv b ; c;d
+[1]	cê5
+[2]	dê1E4
+[3]	'dyadic function with local variables'
+[4]	rêa+b
+[5]	Ï
+
+	10íïê2 rdylcv 3
+dyadic function with local variables
+5
+50
+	
+	)list rdylcvlab
+
+	Ïrê a rdylcvlab b ; c
+[1]	L1:cê5
+[2]	'dyadic function with a local variable and a label'
+[3]	rêaíb
+[4]	Ï
+
+	10íïê3 rdylcvlab 4
+dyadic function with a local variable and a label
+12
+120
+	
+	)list rdylab
+
+	Ïrê a rdylab b
+[1]	L1:'dyadic function'
+[2]	L2:'with labels'
+[3]	rêa-b
+[4]	Ï
+
+	10íïê4 rdylab 5
+dyadic function
+with labels
+˝1
+˝10
+	
+	)vars
+
+	
+	¶ User Function Errors
+	
+	¶ undefined function argement
+	)list map
+
+	Ïmap a
+[1]	'plain monadic function'
+[2]	aí2
+[3]	Ï
+
+	map er1
+Botch Error: prolog problem.
+	

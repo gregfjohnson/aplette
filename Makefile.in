@@ -1,0 +1,214 @@
+# Top Level Makefile for openAPL 
+
+# Copyright (C) Branko Bratkovic 1998, 1999
+# This file is free software and is covered by the GNU General
+# Public License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+#
+# For more details see the GNU General Public License (GPL) in
+# the docs directory.
+
+# Makefile variables
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+bindir		= @bindir@
+# $sysconfdir used in: script/apl printer/apl2gs printer/apl2epson
+sysconfdir	= @sysconfdir@
+# $wsdir used in: script/apl-setup
+wsdir		= @wsdir@
+man1dir		= @mandir@/man1
+# $keytabledir used in: script/apl
+keytabledir	= @keytabledir@
+# $consolefontdir used in: script/apl printer/apl2epson
+consolefontdir	= @consolefontdir@
+# $gsfontdir used in: printer/apl2gs
+gsfontdir	= @gsfontdir@
+# x11share used in: script/apl
+x11share	= @x11share@
+x11fontdir	= @x11fontdir@
+
+# required to compress the X11 font
+COMPRESS	= @compress@
+
+# installation scripts
+INSTALL=@install@
+INSTALL_DATA=@INSTALL_DATA@
+
+# Source Locations
+srcdir		= .
+x11keysrc	= $(srcdir)/terminal/@keytype@/keymap/apl2741.xmap
+x11modesrc	= $(srcdir)/terminal/@keytype@/keymap/modeswitch.xmap
+confontsrc	= $(srcdir)/terminal/@machinetype@/fonts/apl8x16.psf
+keymapsrc	= $(srcdir)/terminal/@machinetype@/keymap/apl2741.map
+
+# Things that need to be built before "make install" can be done
+#----------------------------------------------------------
+first:	apl11/apl11
+
+apl11/apl11:
+	cd apl11 ; $(MAKE)
+
+# Installation
+#--------------------------------------------------------
+# Consequences of "./configure --enable.. & --with.." are in this line.
+install:	apl11 apl @with_console@ x11 @with_ghostscript@ @with_epson@
+
+apl11:		$(bindir)/apl11 $(man1dir)/apl11.1
+
+apl:		$(bindir)/apl $(bindir)/apl-setup $(man1dir)/apl.1 \
+		$(wsdir)/aplrc $(wsdir)/continue
+
+console:	$(consolefontdir)/apl8x16.psf $(keytabledir)/apl2741.map
+
+x11:		$(x11share)/apl2741.xmap @do_modeswitch@ \
+		$(x11fontdir)/fonts.dir 
+
+ghostscript:	$(bindir)/apl2gs $(man1dir)/apl2gs.1
+
+epson:		$(bindir)/apl2epson $(man1dir)/apl2epson.1 \
+		$(consolefontdir)/apl8x16.psf
+
+# create directories as requried
+$(bindir) $(man1dir) $(wsdir) $(consolefontdir) \
+$(keytabledir) $(gsfontdir) $(x11share) $(x11fontdir):
+	$(INSTALL) -d $@
+
+# If more than one of the above point to the same directory
+# (for instance use of a common $fontdir) then the following
+# target may result in a warning.  Its safe to ignore it.
+
+# apl11 - the binary
+$(bindir)/apl11:	apl11/apl11 $(bindir)
+	$(INSTALL) apl11/apl11 $(bindir)
+
+$(man1dir)/apl11.1:	man/apl11.1 $(man1dir)
+	$(INSTALL_DATA) man/apl11.1 $(man1dir)
+
+# apl shell script
+$(bindir)/apl:		script/apl $(bindir)
+	$(INSTALL) script/apl $(bindir)
+
+$(man1dir)/apl.1:	man/apl.1 $(man1dir)
+	$(INSTALL_DATA) man/apl.1 $(man1dir)
+
+# first time user set-up wizzard
+$(bindir)/apl-setup:	script/apl-setup $(bindir)
+	$(INSTALL) script/apl-setup $(bindir)
+
+# first time user workspace
+$(wsdir)/continue:	library/continue $(wsdir)
+	$(INSTALL_DATA) library/continue $(wsdir)
+
+# skeleton user confuguration file
+$(wsdir)/aplrc:		script/aplrc $(wsdir)
+	$(INSTALL_DATA) script/aplrc $(wsdir)
+   
+# Epson filter
+$(bindir)/apl2epson:	printer/apl2epson $(bindir)
+	$(INSTALL) printer/apl2epson $(bindir)
+
+$(man1dir)/apl2epson.1:	man/apl2epson.1 $(man1dir)
+	$(INSTALL_DATA) man/apl2epson.1 $(man1dir)
+
+# Ghostscript filter
+$(bindir)/apl2gs:	printer/apl2gs $(bindir)
+	$(INSTALL) printer/apl2gs $(bindir)
+
+$(man1dir)/apl2gs.1: 	man/apl2gs.1 $(man1dir)
+	$(INSTALL_DATA) man/apl2gs.1 $(man1dir)
+
+# linux console font
+$(consolefontdir)/apl8x16.psf:	$(confontsrc) $(consolefontdir)
+	$(INSTALL_DATA)	$(confontsrc) $(consolefontdir)
+
+# linux keyboard map
+$(keytabledir)/apl2741.map:	$(keymapsrc) $(keytabledir)
+	$(INSTALL_DATA) $(keymapsrc) $(keytabledir)
+
+# the ghostscript font
+$(gsfontdir)/apl2741.fnt: printer/apl2741.fnt $(gsfontdir)
+	$(INSTALL_DATA) printer/apl2741.fnt $(gsfontdir)
+
+# X11 keyboard map
+$(x11share)/apl2741.xmap:  $(x11keysrc) $(x11share) 
+	$(INSTALL_DATA) $(x11keysrc) $(x11share)
+
+# X11 keyboard modeswitch
+$(x11share)/modeswitch.xmap:  $(x11modesrc) $(x11share) 
+	$(INSTALL_DATA) $(x11modesrc) $(x11share)
+
+# X11 apl font (although apl8x13 is the only target,
+# others are also installed)
+$(x11fontdir)/apl8x13.pcf: terminal/XFree86/fonts/apl*.pcf $(x11fontdir) 
+	for name in terminal/XFree86/fonts/apl*.pcf ; do \
+	  $(INSTALL_DATA) $$name $(x11fontdir) ; \
+	done
+
+$(x11fontdir)/fonts.dir:	$(x11fontdir)/apl8x13.pcf
+	$(COMPRESS) $(x11fontdir)/apl*.pcf
+	cd $(x11fontdir) ; mkfontdir
+
+
+# Distribution tar file (login or su as root)
+#--------------------------------------------------------
+tar:	mirror
+	cd /tmp ; tar -cvf openapl.tar ./openAPL/*
+	mv /tmp/openapl.tar \
+           /tmp/openapl-0`cut -c2-4 apl11/include/patchlevel.h`.tar
+	gzip /tmp/openapl-0*.tar
+
+mirror:	
+	rm -rf /tmp/openAPL
+	find ./[a-z]* ./README ./Makefile* -print \
+		| cpio -pdmv /tmp/openAPL
+	cd /tmp/openAPL ; $(MAKE) clean ; $(MAKE) tidy
+	cd /tmp ; chmod 775 openAPL ;\
+		chown -R nobody openAPL ;\
+		chgrp -R nogroup openAPL
+
+# To remove everything made through the Makefile 
+#--------------------------------------------------------
+clean:	
+	cd apl11 ; $(MAKE) clean
+	cd qa ; $(MAKE) clean
+
+# To remove everything created by autoconf/configure
+#--------------------------------------------------------
+tidy:	
+	cd autoconf ; rm -f config.* 
+	rm -f apl11/include/config.h
+	rm -f apl11/include/makefile.common
+	rm -f Makefile
+	rm -f qa/Makefile
+	rm -f script/apl
+	rm -f script/apl-setup
+	rm -f script/aplrc
+	rm -f printer/apl2gs
+	rm -f printer/apl2epson
+
+uninstall:
+	rm -rf \
+	$(bindir)/apl11 \
+	$(man1dir)/apl11.1 \
+	$(bindir)/apl \
+	$(man1dir)/apl.1 \
+	$(bindir)/apl-setup \
+	$(wsdir)/aplrc \
+	$(wsdir)/continue \
+	$(bindir)/apl2epson \
+	$(man1dir)/apl2epson.1 \
+	$(bindir)/apl2gs \
+	$(man1dir)/apl2gs.1 \
+	$(consolefontdir)/apl8x16.psf \
+	$(keytabledir)/apl2741.map \
+	$(gsfontdir)/apl2741.fnt \
+	$(x11share)/apl2741.xmap \
+	$(x11share)/modeswitch.xmap \
+	$(x11fontdir)/apl*.pcf \
+	$(x11fontdir)/apl*.pcf.gz \
+	$(x11fontdir)/apl*.pcf.Z 
+	cd $(x11fontdir) ; mkfontdir
+	rmdir $(wsdir)

@@ -1,0 +1,5 @@
+CC= @CC@
+CFLAGS= @CFLAGS@
+LIBS= @LIBS@
+YACC= @YACC@
+

@@ -1,0 +1,55 @@
+It is assumed that you have installed one of the print filters
+according to the directions at: 
+...openAPL/docs/install_guide/Printer
+
+PRINTING AN APL FUNCTION
+------------------------
+This example shows how to print an APL function starting from 
+within an APL session:
+
+	)fns
+your_function	other	functions
+	)write your_function
+	)shell
+$ ls
+file1       file2      your_function
+$ apl2gs your_function | lpr
+$ exit
+        )lib
+file1      file2       your_function
+	)drop your_function
+	)lib
+file1      file2
+
+
+PRINTING THE OUTPUT FROM OPENAPL
+--------------------------------
+This example shows how to capture an APL session for subsequent
+editing and print.  Unfortunately, it is necessary to bypass the
+convenience of the "apl" wrapper file in order to take advantage
+of the Unix script(1) utility.
+
+$ apl -on 
+Loading /usr/share/keytables/apl2741.map
+$ script tempfile
+Script started, output file is tempfile
+$ apl11
+openAPL Version x.y
+clear ws
+        3 3ыв9
+1 2 3
+4 5 6
+7 8 9
+	)off
+$ exit
+exit
+Script done, output file is tempfile
+$ ls
+file1       file2      tempfile
+$ apl2gs tempfile | lpr
+
+If you needed to capture the results from an APL session already
+running, use )continue to suspend the session.   Invoke the script
+utility as above.  When apl11 is restarted, it will resume its
+workspace from where you left off.  Remember to delete the files
+"continue" and "tempfile" after the session has ended.

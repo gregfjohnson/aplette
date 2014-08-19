@@ -1,0 +1,16 @@
+DYNAMIC MEMORY MANAGEMENT
+-------------------------
+(This file consists of an attempt to analyse the memory
+management functions from apl\11.)  
+
+Throughout the client routines, memory is obtained and released
+with alloc() and aplfree().  These are wrappers for malloc(3)
+and free(3) and include some additional overheads.
+
+The module afreset() is used by ws_clear... this provides the
+clue to the overheads.  afreset() is able to clear all dynamic
+memory because a linked list of allocated blocks is maintained
+by alloc() and aplfree().
+
+The clients which use these functions the most are in the 
+../data subdirectory.  

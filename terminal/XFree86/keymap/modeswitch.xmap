@@ -1,0 +1,10 @@
+! A file to use with xmodmap to convert the right ALT key
+! into the "Mode Switch" key.  
+! There are other ways to obtain a Mode Switch key on your
+! X11 keyboard, eg through the XF86Config file or XKB, if 
+! you use one of these, then loading this file is not 
+! necessary.
+
+keycode 113 = Mode_switch
+clear Mod3
+add Mod3 = Mode_switch

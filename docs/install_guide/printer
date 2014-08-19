@@ -1,0 +1,48 @@
+
+Two print methods are available, they are both optioned out by
+default and need to be turned on by editing the file configure
+in the top level openAPL directory BEFORE running ./configure 
+and "make install".
+
+
+PRINTING APL TEXT ON A GHOSTSCRIPT PRINTER
+------------------------------------------
+The shell script "apl2gs" provides a means of printing APL2741
+encoded text on a Postscript(TM) printer.  Apl2gs may be used 
+in the same way as a2gs(1).  Indeed, apl2gs uses a2gs and the 
+command line options given to apl2gs are simply passed to a2gs 
+for reuse. 
+
+The postscript font file "apl2741.fnt" must be installed somewhere
+on your machine.  Normally the Makefile will take care of this, 
+however if you store it elsewhere, edit apl2gs or /etc/apl.sh to
+point "$gsfont" at the actual location. 
+
+
+PRINTING APL TEXT ON AN EPSON PRINTER
+-------------------------------------
+The shell script "apl2epson" provides a means of printing APL2741
+encoded text on an Epson(TM) printer (or clone).  It uses fontprint
+which is dependent on the Linux console font "apl8x16.psf".  If
+fontprint isn't part of your distribution download a copy from
+sunsite and compile it (look for fprint).
+
+If you intend to use an Epson printer with openAPL on a non Linux
+system, it will be necessary to store the psf font file somewhere
+on your machine.  In most cases autoconf/configure and the Makefile
+will take care of this.  However, if it breaks and you need to fix
+it after installation, check that $consolefontdir in apl, and 
+apl2epson are in agreement with the location of "apl8x16.psf".
+
+
+INSTRUCTIONS
+------------
+Examples on how to print openAPL 8 bit encoded text are provided
+at ...openAPL/docs/user_guide/Printing .
+
+POSTINSTALLATION
+---------------
+The Postscript(TM) font file apl2741.fnt contains a bug that
+(due to copyright reasons) cannot be corrected and redistributed.
+It affects the percent symbol and instructions for fixing it
+locally can be found in the BugList file.

@@ -1,0 +1,46 @@
+#!/bin/sh
+# A print filter for APL character files in openAPL
+# User beware: any changes you make to the following,
+# could be destroyed when the Makefile is re-run.
+# Refer to the printer directory in the source.
+#
+# Copyright (C) Branko Bratkovic 1998
+# This file is free software and is covered by the GNU General
+# Public License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+#
+# For more details see the GNU General Public License (GPL) in
+# the docs directory.
+
+# Declare the defaults
+a2gsoptions="-p"
+# Note that $a2gsoptions is applied in addition to any command line
+# arguments provided when this script is invoked.  This parameter
+# is provided so that apl.sh and .aplrc may specify any commonly
+# used flags.
+
+prefix=@prefix@
+sysconfdir=@sysconfdir@
+gsfont=@gsfontdir@/apl2741.fnt
+
+# Implement site specific customisation
+if [ -r $sysconfdir/apl.sh ]
+then
+   . $sysconfdir/apl.sh
+fi
+
+# Implement user specific customisation
+if [ -r $HOME/.aplrc ]
+then
+   . $HOME/.aplrc
+fi
+
+
+# Now do it, the subject text is read from stdin and passes to stdout
+echo '%!PS'
+cat $gsfont
+a2gs $a2gsoptions $* | sed "s/\/Courier findfont/\/APL-2741 findfont/"
+

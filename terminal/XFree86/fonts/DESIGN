@@ -1,0 +1,99 @@
+DESIGN NOTES FOR THE X11 APL FONT
+---------------------------------
+The original file from which this font was adapted came from the
+waterloo site as apl8.bdf.  The character sequence has been re-ordered 
+to match the 2741 encoding scheme.  
+
+To make a .bdf file available to X windows, these additional steps
+are required:
+
+1. Convert the .bdf to .pcf with the utility bdftocpf .
+2. Copy the result to a directory within your $FONTPATH, a good choice 
+for X11R6 under the Linux File System Standard is:
+	/usr/X11R6/lib/X11/fonts/misc
+3. Run mkfontdir in that directory.
+4. Test it.  The X11 utility xfd is good for this because it can be 
+used before the keyboard translation is in place.  
+5. Load the keyboard mapping files, now test the result with a client
+program that does both display and entry, and is 8 bit clean: xedit 
+is known to work.  
+
+The original 8x13 font has been scaled up to produce the aplox fonts
+which are more suited to larger screens.
+
+
+README FOR APLOX FONT
+---------------------
+12/27/1998  S. W. Sirlin 
+
+These files are for the aplox font, a font created by S. W. Sirlin for
+X11 and OpenAPL. This font is based on the public domain apl8x13.bdf .
+
+The proceedure I followed was:
+
+1. bdfresize to scale up the 8x13 font by 4. The bdfresize program
+   needed some fixing. There was some hand editing of the bdf file to
+   change swidth
+
+2. pdftogf to transform the scaled bdf into a gf file   
+
+3. xbfe to edit the gf file. Various smoothing was done on almost all
+   the characters, and certain characters were changed - asterix
+   became the more familiar 5 pointed star, and the log was also
+   modified to be 5 pointed. Iota, alpha, omega and ampersand were
+   changed somewhat. This was the most time consuming part of the
+   process, and could of course continue...
+   
+4. limn was used to fit bezier curves to the gf file, and then bzrto
+   was used to generate an mf (TeX scalable font) file.
+
+limn  \
+     -line-threshold 0.1 \
+     -reparameterize-threshold 10 \
+     -error-threshold 0.2 \
+
+5. mf was used to generate tfm, gf, and pk files in various sizes.
+
+mf '\mode:=localfont; designsize:=10; input aplox'
+mf '\mode:=localfont; designsize:=10; mag= 1.44; input aplox'
+
+6. mftobdf was used to generate bdf files. Note that it can only
+   reduce by integer sizes.
+
+mftobdf -scaled 1000 -mag 1000 aplox
+mftobdf -scaled 1000 -mag  500 aplox
+mftobdf -scaled 1440 -mag  500 aplox
+mftobdf -scaled 1440 -mag  250 aplox
+
+7. The resulting bdf files were missing the space character (ascii 32)
+   which was then added back in by hand.  
+
+
+The results are :
+
+               size in pixels
+aplox.300.bdf  25x36
+aplox.216.bdf  16x26
+aplox.150.bdf  13x18
+aplox.108.bdf  10x13
+
+Other sizes can be easily generated from the mf file with steps 6,7.  
+
+
+The programs used were all freely available on the net:
+
+- bdfresize, bdf2gf; from the utils package *
+- xbfe, limn, bzrto; from the gnu fontutils package *
+- mf, gftopk; from standard tex distribution
+- mftobdf; from the SeeTeX package *
+- gnu emacs 
+
+(* needed modifications)
+
+This was done on a machine running FreeBSD 2.2.7.
+
+S. W. Sirlin
+
+--
+This file is subject to the restrictions and privileges of the
+GNU General Public License.

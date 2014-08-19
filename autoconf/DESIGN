@@ -1,0 +1,54 @@
+Design Notes for autoconf implementation in openAPL
+---------------------------------------------------
+
+The autoconf files are in a directory of their own under the root
+openAPL directory for no better reason than cosmetics, ie to keep
+the top level directory clean.  In order to support this, the 
+AC_INIT() and AC_OUTPUT() macros use one level up references "../"
+
+A package supported by autoconf works like this:
+- the maintainer writes 'configure.in'
+- the maintainer runs autoconf which creates 'configure' from
+  'configure.in'
+- the maintainer writes files like 'Makefile.in'
+- at this point the package is distributed
+- the person compiling the code on his or her machine runs the
+  'configure' in the distribution dierctory (hence the need to provide
+  absolute pathname './configure'
+- the 'configure' script creates files like 'Makefile' from files like
+  'Makefile.in'
+- usually 'make' is run with the resulting 'Makefile' to build the
+  package
+
+Note the following aspects of this implementation:
+- autoconf is used to set variables in various shell scripts (not 
+  _just_ the 'Makefile').  This is enabled by the AC_SUBST() macro.
+- Autoconf is good at finding variables in library files, however, one
+  of the major requirements in openAPL is for keeping track of
+  directories that hold the various font and mapping files.  Finding
+  these directories has to be done by writing the tests in shell
+  script.  This is the major part of the configure.in file.
+- The top level openAPL direcory contains a dummy './configure' script
+  that cd's to autoconf and runs the real configure.
+
+Here are the special variables that glue openAPL together
+$prefix
+$bindir
+$man1dir		on line manual pages location
+(the above come with autoconf, the rest had to be hand coded)
+
+$consolefontdir		used by kbd package under Linux
+$keytabledir		ditto
+$defaultfont		ditto - used to get the console back to normal
+
+$gsfontdir		a place to keep ghostscript font files
+
+$x11lib			the root directory for various X11 support
+			files, used by openAPL to keep keyboard
+			mapping files
+
+$x11fontdir		a place to keep X11 font files
+
+$wsdir			a place to keep the APL workspace files
+			such as the first time user workspace
+

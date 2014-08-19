@@ -1,0 +1,9 @@
+Some of the files in this directory contain characters
+encoded for apl2741 font (specifically the files QuadVars
+and QuadFunc).
+
+In order to see the APL characters properly, use the command
+"apl -on" then view the file with an 8-bit clean pager or
+editor.  Advice on 8-bit clean programs can be found in the
+install_guide directory.
+

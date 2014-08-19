@@ -1,0 +1,73 @@
+QUALITY ASSURANCE PROCEDURE
+---------------------------
+
+The QA directory contains a number of tests that can be run
+individually or batched through the Makefile.  Several uses
+for these files are:
+
+-  As new versions of apl\11 are prepared for release, the 
+   Makefile supported test run should be conducted (simply
+   with the command 'make').  If there are no problems, the
+   process will finish silently.  If the behaviour of the
+   latest version of apl11 is different, make will be 
+   aborted at the first discrepancy that it finds.
+
+-  For testing isolated aspects of apl11, it is possible to
+   run make with an additional argument that specifies just
+   one test.
+
+-  Before major hacking is attempted on a source file, a 
+   baseline test file should be written and used to produce
+   a reference file *.ref, see below.  After the change is
+   developed, the test file could be rerun and the results 
+   compared to the reference.
+
+-  Demonstration of features to someone new to APL.
+
+These are the file types and their roles (replace "foobar"
+with the name of the test case).
+
+foobar.in	- the raw input
+foobar.ref	- the result of running foobar.in at some
+		  previous time and manually checking the 
+		  results.
+foobar.out	- a file created through Makefile that 
+		  consists of the output from apl11 when 
+		  given foobar.in as stdin.
+foobar.dif	- the difference between foobar.out and
+		  foobar.ref . This file should be empty,
+		  if not, the test foobar had failed.
+foobar.dat	- data files, (do not delete).
+
+
+RUNNING THE TESTS THROUGH THE MAKEFILE
+--------------------------------------
+Generate test case foobar output
+$> make foobar.out 
+
+Validate test case foobar
+$> make foobar.dif 
+
+Create a new reference file
+$> chmod +w foobar.ref
+$> cp foobar.out foobar.ref
+$> chmod a-w foobar.ref
+
+Run all the tests
+$> make	clean
+$> make	
+
+Remove all *.out and *.dif files
+$> make clean 
+
+
+USING THE FILES FROM THE KEYBOARD
+---------------------------------
+Start 2741 terminal emulation
+$> apl -on
+
+Examine a test run in progress
+$> apl11 < foobar.in | more
+
+Stop 2741 terminal emulation
+$> apl -off

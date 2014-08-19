@@ -1,0 +1,72 @@
+¦Quad Input
+a•
+12
+a
+b•
+(12’3)+4
+b
+
+¦Quad Output
+•aöb
+c2+•4*5
+c
+
+¦Quote Quad Input
+a—
+abcd
+a
+
+¦Quote quad Output
+—'give me a number: '
+a—
+12345
+a
+b—'another please: '
+a—
+98765
+b
+
+—'abc'
+—'def'
+a—
+xyz
+
+—'1234567890123456789012345678901234567890'
+a—
+xyz
+
+—'12345678901234567890123456789012345678901'
+a—
+xyz
+
+—12
+—3 3û'abcdefghi'
+
+¦Print Precision
+•pp
+a•1ö3
+•pp15
+a
+
+¦Comparision Tolerance
+•ct
+
+¦Atomic Vector
+14 16û32‹•av
+
+¦Index Origin
+•io
+â3
+•io0
+â3
+
+¦Page Width
+•pw
+â30
+•pw50
+â30
+•pw
+
+¦Time Stamp
+û•ts
+

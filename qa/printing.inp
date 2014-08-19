@@ -1,0 +1,91 @@
+¦Integers
+a1 100 5000 123456789 ı2 ı400
+a
+a*2
+
+¦Real Numbers
+öa
+
+¦Literals
+'a'
+z'abcdefghijklmnopqrstuvwxyz'
+100ûz
+4 4ûz
+tab•av[10]
+z[5]tab
+z
+
+
+¦Vectors
+â50
+öâ10
+
+¦Arrays
+3 3ûâ9
+3 3 3ûâ3*3
+
+¦Page Width
+•pw
+•pw50
+â40
+
+¦Print Precision
+•pp
+•pp4
+öâ40
+
+¦WARING: setting •pp over 15 may show up differences
+¦        between FPUs of different machines
+•pp15
+öâ10
+
+•pp10
+•pw72
+
+¦E format
+1eı7 1eı23 1eı123
+1.1eı7 1.1eı23 1.1eı123
+
+¦Three digit exponent
+a1E99
+b1Eı99
+a
+a’10
+a’a’a
+b
+bö10
+b’b’b
+
+¦Cascade carry forward
+0.99999999999999999
+23.9999999999999999
+ı2.99999999999999999
+
+¦Quad Output
+•3 4ûâ12
+
+¦Semicolon Output
+â10 ; 300+â12 ; 'asdf'
+
+¦Mixing E format with rational format
+•pp9
+a(0 1 2 3 4)ø.öâ4
+a
+10000’a
+1e9’a
+ı1e9’a
+aö10000
+
+¦Pushing both ends
+b4 1ûı1.234eı56 1.2 0 1e9
+b
+b’1000
+bö1000
+b,b,b
+
+¦Column Formatting
+m0.78901’(10*â6)ø.’1 1eı10 1eı6 0.01 .1
+m
+•pp4
+m
+

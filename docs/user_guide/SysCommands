@@ -1,0 +1,156 @@
+)clear        
+This command is used to completely initialize an APL workspace. 
+Usually when APL is started, it will print: "clear ws".  This 
+means that no internal variables or functions are defined.  
+Sometimes, it is desirable to completely erase everything, and 
+this command serves that purpose.  To let you know that 
+everything has been erased, APL will output the message "clear ws".  
+                        
+)erase list   
+This command is handy when it is desirable to get rid of parts 
+of a workspace without using ")clear" to eliminate all of it.  A 
+list of function and variable names (separated by spaces or tabs)
+may be specified.  The named functions and variables will be deleted 
+from the internal workspace.  The remainder of the workspace will 
+not be affected.  
+                        
+)save xxx     
+This command causes APL to write its internal workspace into a UNIX 
+file.  This allows the current session to be resumed at a later time.
+If the save is successful, APL will output the date and time.  
+This command is unavailable during SandBox mode.
+                        
+)load xxx     
+This command is used to tell APL to load the UNIX file "xxx" into 
+APL as a workspace.  After the file is loaded, APL's internal 
+workspace will be the same as it was when the workspace file was 
+saved with ")save", and that previous APL session may be resumed.  
+If the workspace file exists and is successfully loaded, APL will
+print the time and date that the workspace was last saved.  
+                        
+)copy xxx     
+This command instructs APL to locate the UNIX file "xxx" and load 
+it into its internal workspace, similar to the ")load" command.  The 
+difference between ")load" and ")copy" is that ")load" will replace 
+the current internal workspace with the one being read in, while 
+")copy" merges the current internal workspace with the one being 
+read in.  Functions and variables which are loaded from the file take 
+precedence over functions and variables of the same name existing 
+already in the internal workspace.  
+                        
+)off          
+Terminate the APL session.  
+
+)continue     
+")continue" is a combination of the ")save" and ")off" commands.  
+The internal workspace is saved in a file named "continue", and then 
+APL is terminated.  Since APL will by default look for the file 
+"continue" in the current directory when it is next run, this provides a
+convenient method of suspending and resuming an APL session.  
+
+)fns          
+This command causes APL to list the names of all of the functions 
+which are defined in its internal workspace.  
+
+)vars         
+This command causes APL to list the names of all of the variables 
+which are defined in its internal workspace.  
+
+)lib          
+This command is similar to the UNIX "ls".  It causes APL to list the 
+names of all of the UNIX files in the current directory.  Long 
+file names tend to result in ugly output. Names are truncated to 
+14 characters and don't always line up nicely in columns.  
+
+)read xxx     
+At times it is desirable to read a function which is stored in 
+an ASCII file into the internal workspace without editing it.  The 
+")read" command causes APL to read the file named "xxx" into 
+the workspace as a function.  Note that ")read" and ")load" 
+are NOT the same thing.  ")load" reads a complete new workspace
+into APL from a workspace-format file, while ")read" reads a function 
+from an ASCII file and adds it to the current workspace.  
+
+)write xxx    
+This command is the complement of ")read".  It takes the function 
+"xxx" from the current workspace and writes it to an ASCII file named 
+"xxx".  This is useful for writing functions which will be ")read" 
+later into other workspaces or which will be printed on the line printer. 
+This command is unavailable during SandBox mode.
+
+)edit xxx     
+Invoke the editor on the UNIX file named "xxx", and when the editing 
+is complete, read that file into the workspace.  
+This command is unavailable during SandBox mode.
+
+)drop list    
+This command performs the same function as UNIX "rm".  The names of 
+the files to be deleted should be separated by spaces or tabs.
+The files may be APL workspaces, ASCII files, or any other type of file.  
+This command is unavailable during SandBox mode.
+
+)trace        
+This command turns on APL's internal "trace" mode.  When tracing is 
+turned on, APL will report the function name and line number of 
+each line in every function executed.  Thus, the flow of execution 
+from the start to the end of a run can be followed.  
+
+)untrace      
+This command turns off "trace" mode.  
+
+)si           
+This command is useful when something goes wrong.  When an error 
+occurs, the function that was executing is "suspended".  The ")si" 
+command causes APL to print a traceback of the suspended functions.  
+Each function is listed, in the reverse order that it was called.  The 
+current line number for each function is also printed.  Functions 
+followed by an asterisk ("*") were suspended due to an error; these 
+were called by functions listed on the following lines whose names 
+are not followed by an asterisk.  
+
+)sic        
+This command is used to clear the state indicator.  All suspended 
+functions are reset.  APL returns to the global level.  
+
+)shell        
+This command is useful when it is desired to escape from the APL
+environment temporarily without having to save the current internal 
+workspace, exit APL, and later re-enter APL and reload the workspace.
+")shell" invokes the UNIX shell indicated by the SHELL environment 
+variable.  If SHELL is not defined, the shell defaults to "/bin/sh".  
+When you exit the shell, you return to APL.  
+This command is unavailable during SandBox mode.
+
+)list xxx     
+This command causes APL to print out the function named "xxxx".  
+This is very handy for looking at a function without having to use 
+the editor -- especially when an error has occurred and you want to 
+look at a function without disturbing the state indicator.  
+
+)prws         
+This command causes APL to print the contents of the workspace in a 
+readable format.  Nonscalar variables are displayed along with 
+their dimensions; functions are displayed as via the ")list" system 
+command.  
+
+)debug        
+This command invokes "debug mode."  In this mode, every action which 
+APL takes is logged on the terminal.  This mode is excellent for 
+generating reams of hopelessly cryptic output and exists only to 
+facilitate APL development.  It is not intended for general use.  Debug 
+mode can be turned off by issuing the ")debug" system command a 
+second time.  
+
+)code fn      
+This command causes APL to print the compiled internal code for 
+the function "fn".  This is also intended for APL system development 
+and not for general use.  
+
+)memory       
+The result of this command is a report on current dynamic memory 
+allocation.  
+
+)license
+As recommended by the GNU General Public License (GPL), this command
+will display the copyright notice and a pointer to the GPL. 
+

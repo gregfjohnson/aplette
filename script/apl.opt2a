@@ -1,0 +1,35 @@
+# Now do it for Linux console
+if [ "$interface" = console ]
+then  
+
+   # Set the font
+   if [ "$font_only" != "off" ] ; then
+      # load the apl font
+      setfont $consolefont
+
+      # load the key translation table
+      loadkeys $consolemap
+
+      # select user defined key map
+      echo -e \\033\(K
+   fi
+
+   # run the program (unless -on or -off were given)
+   if [ "$font_only" = "" ] ; then
+      if [ "$editor" != "" ] ; then
+         EDITOR=$editor
+         export EDITOR
+      else
+         echo Warning: cannot edit functions until \$editor is set.
+         echo Use: apl -setup
+      fi
+      $aplexe $arglist $rl_flag
+   fi
+
+   # Finish off
+   if [ "$font_only" != "on" ] ; then
+      setfont $defaultfont
+      loadkeys $defaultmap
+      echo -e \\033c
+   fi
+fi

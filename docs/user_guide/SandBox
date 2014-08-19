@@ -1,0 +1,33 @@
+SandBox Mode
+-----------
+
+SandBox Mode is an attempt to reduce the risk of damage to external files by
+hostile programs.  
+
+SandBox mode becomes active when:
+1. the -s flag is provided in the argument list when apl11 is invoked.
+2. Quad LX (Latent eXpression) is executed through the )load command
+
+Situation 2. is the main reason for the existence of SandBox mode, it is
+intended to be a defense against macro style viruses.  However, it should
+not be regarded as total security by users who receive APL programs from
+outside their control.  It does not prevent a user run program from
+doing damage after being started by a legitimate method, ie 'Trojan Horse'
+attack.  Furthermore, damage within the user's workspace should not be 
+dismissed as trivial (which SandBox mode does not guard against).  
+
+By design, SandBox mode cannot be tested or set within a session.  This is 
+intended to prevent a hostile program from adjusting its behaviour:
+once a prohibited operation is attempted during SandBox mode, control is
+returned to the user.
+
+OpenAPL could be set up by the administrator to run in SandBox mode by
+putting -s on the argument list in /etc/apl.sh.  This would be easy to
+bypass.  Slightly more confidence could be had by editing apl.c, to
+set sandboxflg to 1 and recompiling.  
+
+Nobody can guarantee that openAPL or APL/11 is, or can be made, secure.
+The contributers and developers of this package do not accept any 
+responsibility for loss and/or damage caused by the use of this package
+by anyone at all.
+

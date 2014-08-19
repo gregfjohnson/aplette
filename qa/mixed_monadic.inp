@@ -1,0 +1,24 @@
+¶Execute ordinary expressions
+ı'3 4˚‚12'
+ı'1+(2í3)'
+
+¶Nested execute
+ı'2+ı''1+(2í3)'''
+nê'1+(2í3)'
+ı'2íın'
+
+¶Execute with local variables
+aê1
+bê2
+¶The following 2 lines should not cause a value to be printed
+¶Bug List 021
+ı'aê3'
+ı'cê4'
+a ; b ; c
+
+¶Execute quad variables
+ı'ïpp'
+ı'ïpwê70'
+ïpp
+ïpw
+

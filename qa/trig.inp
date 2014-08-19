@@ -1,0 +1,41 @@
+¦ Circular Functions
+
+A  ı5 ı2 ı1.75 ı1.5 ı1 ı.5 
+B  0, (1ö3), .5, (2ö3), .75 .9 1 1.1 1.5 1.75
+C  2 3 10
+multiples  (A,B,C)ø.’â1
+radians  ùmultiples
+
+•pp4
+¦ output is restricted to 4 decimal places
+¦ as exposing too much accuracy can lead to false errors
+¦ due to differences between FPUs on different machines
+
+¦ Sine
+6 2 9 4 8 4 8 4ômultiples,radians,(1ùradians),ı1ù1ùradians
+
+¦ Cosine
+6 2 9 4 8 4 8 4ômultiples,radians,(2ùradians),ı2ù2ùradians
+
+¦ Hyperbolic Sine
+6 2 7 2 12 ı4 6 2ômultiples,radians,(5ùradians),ı5ù5ùradians
+
+¦ Hyperbolic Cosine
+6 2 7 2 12 ı4 6 2ômultiples,radians,(6ùradians),ı6ù6ùradians
+
+A  ı5 ı2 ı1.75 ı1    ¦ For tan() which is infinity at piö2 
+multiples  (A,B,C)ø.’â1
+radians  ùmultiples
+
+¦ Tangent
+6 2 9 4 8 4 8 4ômultiples,radians,(3ùradians),ı3ù3ùradians
+
+¦ Hyperbolic Tangent
+6 2 7 2 8 4 6 2ômultiples,radians,(7ùradians),ı7ù7ùradians
+¦ In the above, some of the 1.0000's are actually 0.999999xyz
+
+¦ Checking for infinity from tan()
+ù1
+ù1.5
+3ùù1.5
+

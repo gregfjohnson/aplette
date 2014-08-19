@@ -1,0 +1,228 @@
+Version 0.14
+- Fixed bug in ceiling function.
+- Now catenate "," accepts an index which responds to
+  io-origin. 
+  (Thanks Paul K for the above 2 fixes, plus the next 2 
+  bug reports.)
+- Fixed the bug that string constants longer then 127
+  characters would cause a crash.  The LINEMAX limit still
+  applies (except through readline input).  Refer to apl.h
+  to change LINEMAX. 
+- Fixed bad date format in system functions )load )continue
+  and )save 
+- Updated QA tests for scalar functions
+- Found and fixed a bug in the residue function
+- Introduced a special case of dyadic rho where left
+  arg is a char null element.  
+- Introduced special cases of dyadic equal and not equal
+  where one argument is a single character and the other
+  is numeric.
+- Valid range for quad-IO changed from anything to 0 or 1
+- Introduced quad-EX (ie expunge)
+- Introduced quad-AI (ie Accounting Information)
+  (Thanks TY for previous 5 changes)
+
+Version 0.13
+- Internal change: the op-code EOF was renamed END to
+  avoid potential problems with the real EOF.
+- Font files for Linux PPC now recognised by ./configure
+- Internal change: userfunction compiler code cleaned up
+  and error diagnostics report which pass is at fault.
+
+Version 0.12
+- Font files for Linux PPC (macintosh) included but not
+  used.
+- Significant internal changes to the way that the pseudo
+  code is managed - no effect on user interface.
+- Some of the quad functions that implement Unix system calls
+  used a buggy version of iofname() which returned a local
+  variable resulting in erratic failures.  Fixed.
+
+Version 0.11
+Minor bug fixes such as:
+- The first time user script works with old fashioned /bin/sh
+  (because Sun systems don't come with bash)
+- The -r (readline) flag does not force secure mode.
+
+Version 0.10
+- Introduced autoconf into the build process; consequently:
+  - no need to manually set paths in the Makefile
+  - openAPL can be installed under an arbitrary $prefix
+  - on non-Linux systems, inactive support for the console does
+    not appear in the shell scripts.
+  - readline is automatically detected and incorporated (before
+    it had to be manually selected)
+- Rewrote the Installation instructions to reflect the new way
+  of doing things with autoconf/configure.
+- Moved detailed instructions about rxvt4apl out of the package
+  into a patched version of rxvt which will now live as a
+  stand alone separate to openAPL.
+- Fixed a problem whereby after reporting an error during 
+  function execution apl11 would keep executing lines (and
+  reporting more errors) until something crashed.
+- Created the script apl-setup to deal with first time user chores 
+  such as ~/apl directory and ~/.aplrc including selection of a
+  function editor.
+- "pico" has been added to the list of editors.
+- Non-X11 editors such as pico and elvis now appear inside their
+  own rxvt terminal when run under X11.
+- The system configuration file /etc/apl.sh is no longer installed
+  (but should the SA put one there, it will be used).
+- Reworked the user configuration file ~/.aplrc so that it now 
+  contains descriptions of setable options.
+- Added )license system command in accordance with the GPL.
+- The apl shell script will now stop if it cannot find either
+  X11 environment or Linux console (ie xset or setfont).
+- when quad and quote-quad input are from a pipe or file, their
+  values are printed on stdout - this helps with the QA scripts.
+
+Version 0.9
+- Fixed catenate so that when presented with mixed types it now
+  reports domain error.  Previously it would silently convert
+  character type into data (Bug018).
+- Fixed quote-quad so that when a character array is assigned 
+  to QQ, it is used as the prompt for the next QQ input. (Bug020)
+- Removed all reference to the variable name "quad" because of a
+  report that types.h on a solaris system uses that symbol to
+  represent long precision - thanks Sam S.
+- Fixed a bug that caused crashes when )clear or )load were
+  used after function edits - thanks Gerald J. (At least that
+  was the reported problem, the bug may have manifest itself in 
+  other ways).
+- Fixed memory leaks during user function compilation (Bug019)
+- Fixed Syntax errors message "aplfree bad block address" 
+
+Version 0.8
+- Updated the installation instructions for making the
+  X11 terminal program "rxvt4apl".  The previous instructions
+  were based on rxvt-2.20, the current ones are applicable to
+  rxvt-2.4.5.
+- Some contributed code for readline support is provided
+  but requires the user to activate it.  Refer to the
+  file README.readline in ....apl11/main . Thanks to
+  Gerald Jansen.
+- Rewrote (again) the print formatting code. Now it
+  obeys the Standard with respect to the criteria
+  by which exponential or rational format are selected.
+- Rewrote the dyadic format function.  Now it deals with
+  any-rank arrays.  It obeys the Standard with respect
+  to the padding and alignment of fields.  It now does
+  exponential format.
+- As a result of rewriting the format code, fixed the bug
+  introduced in v0.7 to fix the 0.99999 bug. 
+- Fixed a bug in ceiling and log_e introduced at V0.6 .
+- Reported by a tester using a Caldera distribution that
+  the make crashed in the parser subdir.  Determined that 
+  Caldera yacc was not installed nor aliased to bison.  
+  Edited the parser/Makefile - this may hurt systems that 
+  don't have bison.
+
+Version 0.7
+- Fixed a bug reported on usenet that 0.999999 would
+  print as 0.1 .
+- New instructions in the install guide for Trial Run and
+  First Time User.  The user is now encouraged to run the
+  test files in the quality assurance directory as part 
+  of installation.
+- The printing routines have been rewritten so that displayed
+  results are much more like traditional APLs and the examples
+  in the Standard.  Previously, apl11 would switch to E format
+  whenever any element of a vector was too large for {quad}pp.
+  Now, elements of vectors and entire columns of arrays are
+  printed in the same width and format with decimal points
+  aligned vertically.
+
+Version 0.6
+- When alloc() fails upon allocating a large array, it now calls 
+  error() whereas previously it would call abort().  Still not 
+  guaranteed of a graceful response in all cases.
+- New Support statement to extend ALPHA period to mid 1999.
+- Input range to {*} ie power, is now 709 - in line with 
+  data type double.  Expect follow on effects to functions that
+  use exp(). (This plus next one thanks to Sam Sirlin)
+- The result of {floor}/{iota}0 is now MAXDOUBLE ie 1.79E+308
+  the result of {ceiling}/{iota}0 is now MINDOUBLE ie 2.2E-308
+- As a necessity of the above, 3 digit exponents are printable.
+- Applied a patch for a memory leak.  Previously the data portion 
+  of memory was not being released by aplfree(). 
+- Makefile includes RedHat 5.2 update.
+- printer/05g includes a patch to get the rhs-printfilter
+  to recognize the input as postscript.
+  (The above 3 patches thanks to Gerald Jansen)
+- Fixed another memory leak reported by Gerald. Previously memory
+  was not being released upon )erase of variables.
+- In the process of tracking down the )erase related leak, 
+  introduced i-beam 4 for tracking user defined names and wrote
+  up some reverse engineering of nlist, see ...data/DESIGN .
+- Fixed )VARS bug; previously any variable starting with 'L'
+  would not get printed. (Legacy from old ASCII based apl\11 which
+  used 'L' to represent quad)
+
+Version 0.5
+- Added a RedHat section to the Makefile.
+- Incorporated a replacement for ecvt() contributed by Sam
+  Sirlin; this library function is implemented differently between
+  BSD and GNU systems and its inclusion as source will enable 
+  FreeBSD platforms to compile without errors.
+- Fixed monadic format: previously it would print the 
+  numerals but pass a blank character array.
+- Swapped the symbol names for UP/DOWN-TACK and UP/DOWN-TACK-JOT
+  this is in accordance with the standard but at odds with the
+  file apl2741.fmt. (Internal effect only, no user impact).
+  
+Version 0.4
+- Fixed the month in []ts (range was 0-11, now 1-12)
+- Added milliseconds to []ts
+- When $EDITOR is not specified, apl11 will now respond with an
+  error message instead of using "vi". The Makefile will attempt
+  to write an editor name into the script "apl" (better an error 
+  message than a broken default).
+- Fixed a bug that prevented niladic user defined functions
+  from being run.
+- First time that a user defined function is edited, the whole
+  user typed header is copied into the temporary file.  
+  Previously, it was thrown away.
+- Fixed a bug (introduced 0.3) that caused uptack-jot and
+  Quad-LX to fail.  Anyone running openAPL for the first time 
+  would have see a very broken copyright message.
+- Removed a recursive loop from the signal handling code.
+- Corrected response to the interrupt signal.
+- Added fonts aplox.108 aplox.150 aplox.216 aplox.300
+  including design disclosure (thanks SWS) and
+  instructions for selecting these.
+- APL fonts are now gzipped upon "make install" (compressed
+  for SunOS).
+
+Version 0.3
+- The error() routine was modified to accept an additional
+  argument; this required each call to error() to be visited.
+  In many places, the error diagnostic message was improved.
+- Minor typos corrected.
+- The quality assurance directory has a few name changes and
+  a Makefile for running the tests has been started.
+
+Version 0.2
+- A problem uploading to sunsite required a fresh version to
+  overwrite 0.1.  
+
+Version 0.1
+- Ispell has been run on most of the documentation (discovered
+  typos in the process of posting announcement of V0.0 on USENET).
+- User defined functions that return no result will now print OK
+
+Version 0.0
+The changes listed against V0.0 relate to the differences between
+openAPL and the original apl\11 obtained from the waterloo FTP site.
+- Obviously support for the APL character set is new.  Both upper
+  and lower cases are available, previously, uppercase was used to
+  represent the APL symbols. 
+- Comment-only lines do not cause an error message.
+- Some of the system functions have been deleted, specifically:
+  )PCOPY which has a different use in other APL's compared to apl\11.
+  )DIGITS )ORIGIN )WIDTH, replaced with Quad Variables.
+  )EDITF, replaced with the del function
+  )SCRIPT, lost when the input routines were converted to 8 bit
+- I-Beams reworked:
+  The time related IBs were superseded by quad TS
+  Debugging IBs reassigned single digit numbers.
+

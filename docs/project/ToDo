@@ -1,0 +1,30 @@
+To Do List, version 0.0
+-----------------------
+This list describes what I intend to get done during the ALPHA testing
+period.  The overall goal is to create a useable APL for GNU/Linux -
+diversions for enhancements will be resisted.  The list is in
+approximate priority order (highest first), however, it could change
+in response to something that the ALPHA testers may discover.  
+--
+Branko
+
+List begins:
+Rewrite the Quality Assurance (QA) scripts to cover as much APL
+as possible.
+
+Improve error reporting beyond the parser.  Refer BugList(008)
+
+Introduce )WSID system function
+
+Adapt the parser to enable system functions to use variable
+length argument lists.  Refer BugList(006)
+
+Create )IMPORT and )EXPORT system functions to deal with
+APLASCII and )IN )OUT to deal with *.ATF files.
+
+Download computer based training from the waterloo site, 
+import into openAPL and test.
+
+Introduce a plotting function: possibly shelling out to gnuplot.
+
+Create the quad expunge function (QuadEX) from existing )erase code.

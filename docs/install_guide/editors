@@ -1,0 +1,72 @@
+FUNCTION EDITOR FOR OPENAPL
+---------------------------
+APL\11 does not have a built-in editor.  Instead, whenever 
+editing is required, it writes the function out to a temporary
+file and invokes an external editor on it. 
+
+Set-up Wizard
+-------------
+The user set-up wizard may be invoked with the command:
+
+	$> apl -setup
+
+The wizard will attempt to select default editors for you based 
+on those that are known to be 8 bit clean and present on your 
+distribution.  The setup wizard will also add the string 
+"-fn $x11font" to the $x11editor variable so it will use the 
+same font as your terminal emulation.  
+
+Manual Selection
+----------------
+Should you want to use an editor of your choice, edit the
+following lines in the file .aplrc in your home directory: 
+
+	editor="<an_alternative_editor>"
+and/or	x11editor="<an_alternative_editor>"
+
+where <an_alternative_editor> includes any additional flags that 
+may be required to get it to work with 8 bit characters. 
+
+Testing
+-------
+Testing is similar to that for terminals: use the editor to 
+examine the file "000-255.txt", then attempt to type the ALT (or
+mode switch key) characters on each row of the keyboard.  
+
+EDITORS KNOWN TO WORK WITH APL2741 ENCODING
+-------------------------------------------
+
+axe
+---
+The X11 program "axe" is 8-bit clean, it can be used to edit 
+openAPL functions.  
+Tested on Debian 1.3. 
+
+elvis
+-----
+The "vi" clone "elvis", can be made 8-bit clean by editing the 
+configuration file "elvis.ini" . Near the top of this file
+under LOCAL DEFAULTS add the line "set! nonascii=all" .
+Tested on Debian 1.3 and 2.0 - look for /etc/elvis/elvis.ini .  
+
+elvis-tiny
+----------
+The "vi" clone "elvis-tiny" is 8-bit clean, it can be used
+to edit openAPL functions.  
+Tested on Debian 1.3 and 2.0. 
+
+xedit
+-----
+The X11 program "xedit" is 8-bit clean, it can be used to edit 
+openAPL functions.  
+Tested on Debian 1.3. 
+
+pico
+----
+The editor that comes with the newsreader "pine" is 8-bit clean,
+it can be used to edit openAPL functions.
+Tested on Debian 2.1.
+
+--
+This file is subject to the restrictions and privileges of the
+GNU General Public License.

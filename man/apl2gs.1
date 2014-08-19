@@ -1,0 +1,48 @@
+.\" Copyright (C) Branko Bratkovic 1998
+.\" This file is free software and is covered by the GNU General
+.\" Public License.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+.\"
+.\" For more details see the GNU General Public License (GPL) in
+.\" the docs directory.
+.TH apl2gs 1 "6 December 1998" "openAPL"
+.SH NAME
+apl2gs
+.SH SYNOPSIS
+apl2gs 
+[
+.I options to a2gs
+] 
+[ filename ]
+
+.SH DESCRIPTION
+The language APL uses a special character set.
+.I apl2gs
+is a print filter that will convert APL text 
+(which must be encoded by the 2741 system used in openAPL)
+into a Ghostscript file. 
+If a filename is provided, that file will be converted,
+otherwise stdin is used.
+
+.SH OPTIONS
+apl2gs uses a2gs(1) and any options provided on the 
+command line will be passed to a2gs.
+
+.SH CONFIGURATION
+.LP
+If the files 
+.I /etc/apl.sh
+or 
+.I .aplrc
+(in the users home directory) exit,
+they will be sourced after internal variables are created, 
+but before any actions are taken.  
+This enables the system administrator or user to specify a list
+of options to pass to a2gs.
+
+.SH "SEE ALSO"
+apl(1), apl11(1)
+

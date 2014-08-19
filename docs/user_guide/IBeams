@@ -1,0 +1,104 @@
+I-Beam functions should be avoided if you intend to write 
+applications that are portable and/or that conform to the 
+Standard.
+
+I-beams are used to provide access to features that are unique
+to the operating system or that provide the language developer
+with tools to investigate internal properties.
+
+There is no guarantee that any of the following will appear in
+future versions of openAPL.  Some provide features that will be
+converted to quad functions in order to conform to the standard;
+when that happens, the corresponding i-beam will be deleted.
+
+-------------------------------------------------------------------
+
+The following monadic i-beam functions are available: 
+
+1   This i-beam toggles the state of the code trace flag.
+    When active, the pseudo code is displayed during
+    execution.
+
+2   This i-beam toggles the state of the stack trace flag.
+    When active, the stack contents are displayed at every
+    step during execution.
+
+3   This i-beam toggles the state of the memory trace flag.
+    When active, memory allocation and deallocation are displayed 
+    during execution.  This can be used to check that alloc() and 
+    aplfree() are working in unison, if not, they are leaking
+    memory!
+
+4   This i-beam toggles the state of the variables trace flag.
+    When active, all user variables are displayed upon every
+    new assignment.
+
+21  This i-beam returns the total amount of CPU time used 
+    by the current APL session in 1/60 seconds.  This 
+    includes the amount of time spent by the system performing
+    I/O (sys time) and computational time ("user" time).  
+               
+22  This i-beam returns the number of 8-bit bytes which are
+    left in the workspace.  However, this value is not 
+    really meaningful since the in-core workspace will be 
+    expanded, if possible, when full.  
+               
+26  This i-beam returns the line number in the function 
+    currently being executed.  Thus, if it is used in line 
+    3 of a function, it will return 3.  
+               
+27  This i-beam returns a vector of the line numbers in 
+    pending functions (functions which called the current 
+    function and are  waiting for its completion).  
+               
+32  This i-beam returns the number of workspace bytes which
+    are being used.  It is the complement of i-beam 22, 
+    which tells how many bytes are unused.  Thus, the 
+    maximum workspace size (in bytes) can be calculated by 
+    adding i-beams 22 and 32.  
+               
+36  This i-beam returns the second element of the vector 
+    returned by i-beam 27 -- that is, it returns the line 
+    number of the function which called the current function.  
+               
+40  This i-beam returns the total amount of CPU time spent 
+    by any child processes of APL.  Children of APL include
+    the editor, the shell if ")shell" is used, anything run
+    by "•run", and any processes executed using "•fork".  
+               
+41  This i-beam returns the total amount of "user" time 
+    spent by APL and all of its children.  
+               
+42  This i-beam returns the total "system" time spent by 
+    APL and all of its children.  
+               
+43  This i-beam returns the total amount of "user" time 
+    (computational time) spent by APL.  
+               
+44  This i-beam returns the total amount of "sys" (I/O and 
+    other system calls) time spent by APL.  
+               
+-------------------------------------------------------------------
+          
+The following dyadic i-beam functions are available.
+The function is specified by the right argument, the left
+argument is a parameter to that function.  
+               
+34   This i-beam implements the system "nice" function.  The
+     "nice" of the APL process will be set to the value 
+     specified by the left argument.  A zero will be 
+     returned for success, a -1 is returned for failure.  
+     This is intended for background processing, not 
+     interactive use of APL.  
+               
+35   This i-beam implements the system "sleep" function.  
+     APL will suspend itself for the number of seconds 
+     specified (by the left argument).  The value returned 
+     is the value of the left argument.  
+               
+63   This i-beam implements the system "empty" function.  
+     The left argument specifies a file descriptor of a 
+     pipe.  If the pipe is empty, a 1 will be returned, if 
+     not-empty, a 0 will be returned.  A -1 will be returned
+     if the file descriptor is illegal or is not a pipe.  
+               

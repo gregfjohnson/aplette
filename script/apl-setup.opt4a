@@ -1,0 +1,28 @@
+# look for .inputrc file support for readline
+if [ -r $HOME/.inputrc ]
+then
+  if ! { grep "\$if openapl" $HOME/.inputrc > /dev/null ;}
+  then 
+  # add meta character support to ~.inputrc file
+    cat <<-STOP >> $HOME/.inputrc
+	\$if openapl
+	set editing-mode emacs
+	set convert-meta off
+	set input-meta on
+	set output-meta on
+	\$endif
+	STOP
+    echo -n Added meta character support to ~.inputrc for openapl
+  fi
+else
+# create ~.inputrc file
+  cat <<-STOP > $HOME/.inputrc
+	\$if openapl
+	set editing-mode emacs
+	set convert-meta off
+	set input-meta on
+	set output-meta on
+	\$endif
+	STOP
+    echo -n Created ~.inputrc with meta character support for openapl
+fi

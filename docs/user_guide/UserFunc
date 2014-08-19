@@ -1,0 +1,47 @@
+          
+APL\11 does not include a built-in editing capability.  All 
+functions are edited by dumping the source code into a 
+temporary file and then invoking the user's editor of choice 
+on that temporary file.  The temporary file is created in 
+/tmp.  
+
+To edit a function, type the del character followed by the
+function name.  If the function name does not exist, a 
+blank file will be created.
+
+The header line of a function must begin with a del symbol.
+The last line of a function may consist of a del symbol on 
+its own - its optional.
+
+The new function definition is read back in when the editing
+process terminates.  Any errors in the function header will
+be detected and the function will not be permitted to execute.
+The body of the function is not compiled into byte codes until
+the function is called, hence syntax errors in the source will
+not be detected until then.
+
+If during function editing, you change the function's name,
+then upon reading the file back in, a new function will appear
+in the workspace.  The old function will be intact.
+          
+APL will not allow the user to edit suspended functions.  If
+the user attempts to do so, APL responds with the message 
+"si damage -- type ')reset'".  There isn't any actual damage
+to the state indicator, although the message might be 
+interpreted that way.  
+
+Which editor is invoked is determined by the value of
+the shell variable EDITOR.  If EDITOR is not defined, apl
+will refuse to edit your functions! The editor must be a
+TEXT editor (repagination or special control characters are
+not tolerated) and it must be 8 bit clean (so that it may
+display the APL special characters correctly).  The EDITOR
+variable may be changed by:
+- editing the file .aplrc in the users' home directory
+- editing the file apl.sh in the system configuration directory
+  (usually /etc), or
+- through the user set-up wizard which can be invoked by the 
+  command:
+  
+	$> apl -s
+

@@ -1,0 +1,256 @@
+# an APL keymap overlay
+# When used with the apl8x16 fontfile this will turn a PC101 keyboard
+# into an APL keyboard while preserving the meaning of marked keys.
+# As such it is not a true 'union' keyboard, that's why its called
+# an overlay. 
+
+# This file will _append_ key translations to the existing key table
+# which means that if you have already modified your keyboard then
+# the effect of loading this file will not destroy previous key bindings
+# except for those that conflict with the APL overlay.  
+
+# See loadkeys(1) and keytables(5)
+
+# compose key, this is used to create overstrike symbols
+# AltEsc (a short cut for APL users, keep the alt key pressed and hit Esc)
+	Alt	keycode 1 = Compose
+	AltGr	keycode 1 = Compose
+# CtlMinus (a popular compose key for non-english keyboard users) is
+# unaffected by the above definition, you may use either compose key.
+
+#keycode 2, numeral 1
+	Alt	keycode 2 = 0x9a	# DIERESIS
+	AltGr	keycode 2 = 0x9a	# DIERESIS
+
+# keycode 3, numeral 2
+	Alt	keycode 3 = 0xfd 	# HIGHBAR
+	AltGr	keycode 3 = 0xfd 	# HIGHBAR
+
+# keycode 4, numeral 3
+	Alt	keycode 4 = 0x3c	# LESSTHAN
+	AltGr	keycode 4 = 0x3c	# LESSTHAN
+
+# keycode 5, numeral 4
+	Alt	keycode 5 = 0xf3	# LE
+	AltGr	keycode 5 = 0xf3	# LE
+
+# keycode 6, numeral 5
+	Alt	keycode 6 = equal
+	AltGr	keycode 6 = equal
+	Shift	Alt	keycode 6 = 0xf0	# EQUALUNDERBAR
+	Shift	AltGr	keycode 6 = 0xf0	# EQUALUNDERBAR
+
+# keycode 7, numeral 6
+	Alt	keycode 7 = 0xf2	# GE
+	AltGr	keycode 7 = 0xf2	# GE
+
+# keycode 8, numeral 7
+	Alt	keycode 8 = 0x3e	# GT
+	AltGr	keycode 8 = 0x3e	# GT
+
+# keycode 9, numeral 8
+	Alt	keycode 9 = 0x86	# NE
+	AltGr	keycode 9 = 0x86	# NE
+
+# keycode 10, numeral 9
+	Alt	keycode 10 = 0xfa	# OR
+	AltGr	keycode 10 = 0xfa	# OR
+	Shift	Alt	keycode 10 = 0xe5	# NOR
+	Shift	AltGr	keycode 10 = 0xe5	# NOR
+
+# keycode 11, numeral 0
+	Alt	keycode 11 = 0x5e	# AND
+	AltGr	keycode 11 = 0x5e	# AND
+	Shift	Alt	keycode 11 = 0xea	# NAND
+	Shift	AltGr	keycode 11 = 0xea	# NAND
+
+# keycode 12, symbol minus
+	Alt	keycode 12 = 0xf6	# DIVIDE
+	AltGr	keycode 12 = 0xf6	# DIVIDE
+
+# keycode 13, symbol equal
+	Alt	keycode 13 = 0x92	# MULTIPLY
+	AltGr	keycode 13 = 0x92	# MULTIPLY
+
+# keycode 43, symbol backslash
+	Alt	keycode 43 = 0xa8	# DIAMOND 
+	AltGr	keycode 43 = 0xa8	# DIAMOND 
+
+# keycode 16 letter Q
+	Alt	keycode	16 = 0x3f	# "?"
+	AltGr	keycode	16 = 0x3f	# "?"
+
+# keycode 17 letter W
+	Alt	keycode	17 = 0xf7	# OMEGA
+	AltGr	keycode	17 = 0xf7	# OMEGA
+
+# keycode 18 letter E
+	Alt	keycode	18 = 0xee	# EPSILON
+	AltGr	keycode	18 = 0xee	# EPSILON
+
+# keycode 19 letter R
+	Alt	keycode	19 = 0xfb	# RHO
+	AltGr	keycode	19 = 0xfb	# RHO
+
+# keycode 20 letter T
+	Alt	keycode	20 = asciitilde
+	AltGr	keycode	20 = 0x7e	# "~"
+	Shift	Alt	keycode	20 = 0x96	# DEL TILDE
+	Shift	AltGr	keycode	20 = 0x96	# DEL TILDE
+
+# keycode 21 letter Y
+	Alt	keycode	21 = 0x8c	# UPARROW
+	AltGr	keycode	21 = 0x8c	# UPARROW
+
+# keycode 22 letter U
+	Alt	keycode	22 = 0x8b	# DOWNARROW
+	AltGr	keycode	22 = 0x8b	# DOWNARROW
+
+# keycode 23 letter I
+	Alt	keycode	23 = 0xe2	# IOTA
+	AltGr	keycode	23 = 0xe2	# IOTA
+
+# keycode 24 letter O
+	Alt	keycode	24 = 0xf9	# CIRCLE
+	AltGr	keycode	24 = 0xf9	# CIRCLE
+	Shift	Alt	keycode	24 = 0x89	# CIRCLE STAR
+	Shift	AltGr	keycode	24 = 0x89	# CIRCLE STAR
+
+# keycode 26 symbol "["
+	Alt	keycode	26 = 0x90	# LEFT ARROW
+	AltGr	keycode	26 = 0x90	# LEFT ARROW
+	Shift	Alt	keycode	26 = 0x85	# RIGHT ARROW
+	Shift	AltGr	keycode	26 = 0x85	# RIGHT ARROW
+
+# keycode 27 symbol "]"
+	Alt	keycode	27 = 0x81	# LEFT TACK
+	AltGr	keycode	27 = 0x81	# LEFT TACK
+	Shift	Alt	keycode	27 = 0x80	# RIGHT TACK
+	Shift	AltGr	keycode	27 = 0x80	# RIGHT TACK
+
+# keycode 30 letter A
+	Alt	keycode	30 = 0xe0	# ALPHA
+	AltGr	keycode	30 = 0xe0	# ALPHA
+
+# keycode 31 letter S
+	Alt	keycode	31 = 0x8d	# UPSTILE
+	AltGr	keycode	31 = 0x8d	# UPSTILE
+
+# keycode 32 letter D
+	Alt	keycode	32 = 0x8f	# DOWNSTILE
+	AltGr	keycode	32 = 0x8f	# DOWNSTILE
+
+# keycode 33 letter F
+	Alt	keycode	33 = 0x5f	# UNDERBAR
+	AltGr	keycode	33 = 0x5f	# UNDERBAR
+
+# keycode 34 letter G
+	Alt	keycode	34 = 0xec	# DEL
+	AltGr	keycode	34 = 0xec	# DEL
+	Shift	Alt	keycode	34 = 0x9d	# DELSTILE
+	Shift	AltGr	keycode	34 = 0x9d	# DELSTILE
+
+# keycode 35 letter H
+	Alt	keycode	35 = 0x91	# DELTA
+	AltGr	keycode	35 = 0x91	# DELTA
+	Shift	Alt	keycode	35 = 0x93	# DELTASTILE
+	Shift	AltGr	keycode	35 = 0x93	# DELTASTILE
+
+# keycode 36 letter J
+	Alt	keycode	36 = 0xf8	# JOT
+	AltGr	keycode	36 = 0xf8	# JOT
+
+# keycode 37 letter K
+	Alt	keycode	37 = apostrophe
+	AltGr	keycode	37 = apostrophe
+	Shift	Alt	keycode	37 = 0x97	# QUADQUOTE
+	Shift	AltGr	keycode	37 = 0x97	# QUADQUOTE
+
+# keycode 38 letter L
+	Alt	keycode	38 = 0x95	# QUAD
+	AltGr	keycode	38 = 0x95	# QUAD
+
+# keycode 44 letter Z
+	Alt	keycode	44 = 0x82	# LEFTSHOE
+	AltGr	keycode	44 = 0x82	# LEFTSHOE
+
+# keycode 45 letter X
+	Alt	keycode	45 = 0x83	# RIGHTSHOE
+	AltGr	keycode	45 = 0x83	# RIGHTSHOE
+
+# keycode 46 letter C
+	Alt	keycode	46 = 0xef	# UPSHOE
+	AltGr	keycode	46 = 0xef	# UPSHOE
+	Shift	Alt	keycode	46 = 0xa6	# LAMP
+	Shift	AltGr	keycode	46 = 0xa6	# LAMP
+
+# keycode 47 letter V
+	Alt	keycode	47 = 0xfc	# DOWNSHOE
+	AltGr	keycode	47 = 0xfc	# DOWNSHOE
+
+# keycode 48 letter B
+	Alt	keycode	48 = 0xe6	# BASE
+	AltGr	keycode	48 = 0xe6	# BASE
+	Shift	Alt	keycode	48 = 0xf5	# EXECUTE
+	Shift	AltGr	keycode	48 = 0xf5	# EXECUTE
+
+# keycode 49 letter N
+	Alt	keycode	49 = 0xe7	# ENCODE
+	AltGr	keycode	49 = 0xe7	# ENCODE
+	Shift	Alt	keycode	49 = 0xf4	# FORMAT
+	Shift	AltGr	keycode	49 = 0xf4	# FORMAT
+
+# keycode 50 letter M
+	Alt	keycode	50 = 0xfe	# STILE
+	AltGr	keycode	50 = 0xfe	# STILE
+
+# Function Key assignements
+
+	string F1 = ")vars"
+	string F2 = ")fns"
+	string F3 = ")lib"
+	string F4 = ")off"
+	string F5 = ")load"
+	string F6 = ")save"
+	string F8 = ")continue"
+
+# Compose overstrike characters.
+# In order to see these properly, the apl font must be loaded
+# and your editor must be 8 bit clean.
+
+	compose 'ï' '\''  to 'ó'
+	compose '\''  'ï' to 'ó'
+	compose 'ï' 'ˆ'  to 'ò'
+	compose 'ˆ'  'ï' to 'ò'
+	compose '˘' '*' to 'â'
+	compose '*' '˘' to 'â'
+	compose '=' '/' to 'Ü'
+	compose '/' '=' to 'Ü'
+	compose 'Ï' '˛' to 'ù'
+	compose '˛' 'Ï' to 'ù'
+	compose 'ë' '˛' to 'ì'
+	compose '˛' 'ë' to 'ì'
+	compose '˘' '˛' to 'Ë'
+	compose '˛' '˘' to 'Ë'
+	compose '\\' '˘' to 'Ì'
+	compose '˘' '\\' to 'Ì'
+	compose '˘' '-' to 'È'
+	compose '-' '˘' to 'È'
+	compose '/' '-' to 'Î'
+	compose '-' '/' to 'Î'
+	compose '\\' '-' to 'ß'
+	compose '-' '\\' to 'ß'
+	compose 'Ê' '¯' to 'ı'
+	compose '¯' 'Ê' to 'ı'
+	compose 'Á' '¯' to 'Ù'
+	compose '¯' 'Á' to 'Ù'
+	compose 'Ô' '¯' to '¶'
+	compose '¯' 'Ô' to '¶'
+	compose 'Ê' 'Á' to 'Ñ'
+	compose 'Á' 'Ê' to 'Ñ'
+	compose '˙' '~' to 'Â'
+	compose '~' '˙' to 'Â'
+	compose '^' '~' to 'Í'
+	compose '~' '^' to 'Í'
+	
+

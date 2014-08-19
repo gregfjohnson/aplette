@@ -1,0 +1,74 @@
+Here's what some of the documentation from apl\11 said:
+-------------------------------------------------------
+Portability is a relative thing.  Successfully moving a 
+piece of code from one machine to another involves many 
+different factors.  This section discusses some of the 
+assumptions made by the APL\11 source code.  Moving the 
+interpreter to a machine on which some of those assumptions 
+are no longer true will probably be quite painful.  This 
+material is intended to help you decide if you are in that 
+situation, or if there's still some hope of an "easy" fix.  
+          
+The APL\11 source shows its age in several ways.  First, 
+it's K&R rather than ANSI C.  Second, it predates the void 
+data type, so is full of functions of type int that should 
+be type void.  Third, it goes back to the bad old days when 
+pointers and ints were treated as though they were 
+interchangeable.  Because of these things, running the code 
+through a modern C compiler results in a lot of warnings.  
+
+The assumption that pointers (all types of pointers) and 
+ints are interchangeable is critical.  I seriously doubt 
+that the code could ever be ported to an environment where 
+this is not true.  Some of the MS-DOS compiler models do not
+satisfy this condition.  The code also does a lot of pointer
+arithmetic and comparisons.  If pointers can't be treated as
+ints, these are apt to be a source of problems.  Again, 
+situations like the MS-DOS segmented models should be 
+avoided.  
+
+While the code doesn't use very many different types of 
+structures, it does some fairly ugly things with the ones 
+that are defined.  I believe that the following is the worst
+case.  If your compiler doesn't mess this up, it probably 
+won't mess up the other structures.  
+
+struct item
+{
+int   rank;
+int   type;
+int   size;
+int   index;
+data *datap;
+int   dim[MRANK];
+};
+
+Trivial types use only an item descriptor - the above structure.
+Types DA and CH (double float and character) also use a data
+area to which datap points.
+
+Another assumption made by the code is that doubles (or 
+floats in the case of a single-precision version) do not 
+have any alignment requirements.  Some machines, for example, 
+require that a double begin at an address that is a multiple 
+of eight.  Compilation of constant numeric expressions into 
+byte code will be broken if the machine has alignment 
+requirements.  Fortunately, starting a double at an arbitrary 
+location is okay with most contemporary processors.  However, 
+some optimizing compilers may force alignment in order to 
+improve execution speed.  
+
+As previously mentioned, exceptions are an area where it is 
+hard to write portable code.  I have attempted to make the 
+source code portable in the compiler sense by #ifdef'ing 
+each use of an exception name (or signal name, if you 
+prefer).  For example, 
+
+#ifdef SIGPIPE
+signal(SIGPIPE, panic);
+#endif
+
+This makes the compiler happy, but is not enough to 
+guarantee that the interpreter will do the expected thing in
+all exception cases.  
+

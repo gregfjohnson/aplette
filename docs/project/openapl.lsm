@@ -1,0 +1,27 @@
+
+Begin3
+Title:          openAPL
+Version:        0.14
+Entered-date:   01MAY00
+Description:    A Programming Language (APL) allows the user
+		to manipulate multi-dimensional arrays through
+		a grammar that uses special character symbols
+		to represent functions and operators.  openAPL
+		is a package that provides the special APL font
+		plus some enhancements for APL\11 - a very old
+		version of APL.  Both the Linux console and X11
+		can be used to host this font.
+		This is an ALPHA version.
+Keywords:       apl APL array vector matrix
+Author:         
+Maintained-by:  see the Support file 
+Primary-site:	metalab.unc.edu /pub/Linux/devel/lang/apl
+		319k openapl-0.13.tar.gz
+Alternate-site: 
+Original-site:  
+Platforms:      Linux console - requires kbd package
+		X11 - requires specially compiled rxvt 
+		Postscript printer - requires a2gs
+		Epson printer - requires fontprint
+Copying-policy: GPL
+End

@@ -1,0 +1,36 @@
+# Makefile for for testing apl11
+
+# point to the just built copy (not the installed version)
+APLEXE = ../apl11/apl11
+
+DIFF = @diff@
+
+OBJECTS = printing.dif quad_vars.dif quad_fns.dif \
+	userfunc.dif format.dif trig.dif errors.dif \
+	sys_commands.dif debug.dif ibeams.dif nesting.dif \
+	scalar_monadic.dif scalar_dyadic.dif \
+        mixed_monadic.dif mixed_dyadic.dif \
+	struct_monadic.dif struct_dyadic.dif
+
+# Keep *.out files
+.PRECIOUS:	%.out
+
+# As long as the following is the first target,
+# everything will get tested
+now:	$(OBJECTS)
+
+%.dif:	%.out
+	$(DIFF) $< $*.ref > $@
+
+%.out:	%.inp $(APLEXE)
+	$(APLEXE) < $<  | tail +2 > $@
+
+# Kludge required because save command prints the date 
+sys_commands.out:	sys_commands.inp $(APLEXE)
+	$(APLEXE) < sys_commands.inp \
+	            | tail +2 \
+	            | egrep -v "saved deleteme" > $@
+
+clean:
+	rm -f *.dif *.out clean_dir/aplws.abort clean_dir/core
+

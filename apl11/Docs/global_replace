@@ -1,0 +1,12 @@
+#! /bin/sh
+
+find_string='contemp'
+replace_string='thisContext'
+
+for file in */*.c ; do
+  if (grep $find_string $file > /dev/null ) then
+     echo $file
+     cat $file | sed "s/$find_string/$replace_string/g" > temp
+     mv temp $file
+  fi
+done

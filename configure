@@ -1,0 +1,33 @@
+#! /bin/sh
+## This is a BOGUS configure script!
+## The REAL configure script is in the autoconf directory
+## (where the log and cache files are concealed).
+args=''
+
+## Uncomment and edit the following to change prefix from /usr/local
+#args="$args --prefix=/usr"
+
+## Uncomment and edit the following to change configuration
+## directory from $prefix/etc 
+#args="$args --sysconfdir=/etc"
+
+## You would uncomment the previous two options in order to install
+## openAPL according to the Linux File System Standard. If that is
+## your goal, then leave the next group alone.
+
+## Uncomment the following to force all support files to go under 
+## $prefix ; or leave them commented and ./autoconf/configure will guess 
+## where they should go according to similar files on your machine.
+#export wsdir ; wsdir='${prefix}/share/openAPL'
+#export x11share ; x11share='${prefix}/X11'
+#export fontdir ; fontdir=${x11share}/fonts
+
+# Uncomment the following to install epson compatible print filter
+#args="$args --enable-epson"
+
+# Uncomment the following to install ghostscript compatible print filter
+#args="$args --enable-ghostscript"
+
+## STOP no more user options below this point.
+cd autoconf
+./configure $args $* 

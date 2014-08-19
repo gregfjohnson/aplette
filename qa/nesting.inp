@@ -1,0 +1,31 @@
+¦Nesting of Functions and others
+¦-------------------------------
+)load nesting.ws
+
+¦ State Indicator Following an Error
+)list parent
+)list child
+)vars
+parent
+)si
+)vars
+)sic
+)si
+)vars
+)sic
+
+¦ Resume suspended function
+parent
+…0
+)si
+…0
+parent
+parent
+…
+…
+…
+
+¦ Test of )COPY with suspended funcitions
+parent
+)copy deleteme
+

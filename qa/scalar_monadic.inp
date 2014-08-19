@@ -1,0 +1,50 @@
+¦ Monadic Scalar Functions
+•pp6
+•A ı1E7 ı200 ı1.5 ı1 0 1, (1ö3), .5 7 2000
+
+¦Conjugate - not implemented
+
+¦Negative
+-A
+
+¦Direction
+’A
+
+¦Reciprocal
+ö(A†0)/A
+öı.25 .5 1 2 ı4
+ö0
+
+¦Floor
+•ct1Eı10
+0.999999999
+0.9999999999
+ı3.1416 3.1416 .99999999999 5E20 ı0.5Eı10
+
+¦Ceiling
+•ct1Eı10
+5.000000001
+5.0000000001
+ı3.1416 3.1416 5.00000000001
+
+¦Exponential
+* ı1E50 ı2 ı1 0 1 2
+* .693147
+
+¦Natural Logarithm
+‰2.71828459045 2 1 1Eı50 1E50
+‰*1
+
+¦Magnitude
+ş1 ı0.5 0.33 ı0.25 0 1Eı20
+
+¦Factorial
+! 0,â9
+!ı.5
+5 1û! - 1.502 1.503 1.504 1.505 1.506
+
+¦PI times (see also trig tests)
+ù1 10 100
+
+¦Not
+~0 1 1Eı11 .999999999999

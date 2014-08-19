@@ -1,0 +1,25 @@
+clear ws
+	¦ I-Beam 26 line number of current function
+	¦ I-Beam 36 line number of called function
+	)load userfunc.ws
+  20:30.27 04/23/00 userfunc.ws
+	)list first
+
+	ìfirst
+[1]	¦ for testing I-beams
+[2]	second
+[3]	„26
+[4]	ì
+[5]	
+
+	)list second
+
+	ìsecond
+[1]	„36
+[2]	ì
+
+	first
+2
+3
+	
+	

@@ -1,0 +1,500 @@
+clear ws
+	¶Tests of System Commands for Debugging
+	)load userfunc.ws
+  20:30.27 04/23/00 userfunc.ws
+	)list nap
+
+	Ïnap
+[1]	'plain niladic function'
+[2]	Ï
+
+	)code nap
+ [p]  elid end
+ [1]  quot-plain niladic function  print end
+ [2]  comnt end
+ [e]  eol nilret end
+
+	)list nalcvlab
+
+	Ïnalcvlab ; a
+[1]	L1:aê5
+[2]	'niladic function with a local variable and a label'
+[3]	Ï
+
+	)code nalcvlab
+ [p]  auto-a auto-L1 const name-L1 label elid end
+ [1]  const name-a asgn end
+ [2]  quot-niladic function with a local variable and a label  print end
+ [3]  comnt end
+ [e]  rest-L1 rest-a eol nilret end
+
+	)list map
+
+	Ïmap a
+[1]	'plain monadic function'
+[2]	aí2
+[3]	Ï
+
+	)code map
+ [p]  arg1-a elid end
+ [1]  quot-plain monadic function  print end
+ [2]  const name-a mul print end
+ [3]  comnt end
+ [e]  rest-a eol nilret end
+
+	)list dyp
+
+	Ïa dyp b
+[1]	'plain dyadic function'
+[2]	aˆb
+[3]	Ï
+
+	)code dyp
+ [p]  arg2-b arg1-a elid end
+ [1]  quot-plain dyadic function  print end
+ [2]  name-b name-a div print end
+ [3]  comnt end
+ [e]  rest-a rest-b eol nilret end
+
+	)list dylcvlab
+
+	Ï a dylcvlab b ; c
+[1]	L1:cê5
+[2]	'dyadic function with a local variable and a label'
+[3]	aíb
+[4]	Ï
+
+	)code dylcvlab
+ [p]  arg2-b arg1-a auto-c auto-L1 const name-L1 label elid end
+ [1]  const name-c asgn end
+ [2]  quot-dyadic function with a local variable and a label  print end
+ [3]  name-b name-a mul print end
+ [4]  comnt end
+ [e]  rest-L1 rest-c rest-a rest-b eol nilret end
+
+	)list rdylcv
+
+	Ïrêa rdylcv b ; c;d
+[1]	cê5
+[2]	dê1E4
+[3]	'dyadic function with local variables'
+[4]	rêa+b
+[5]	Ï
+
+	)code rdylcv
+ [p]  arg2-b arg1-a auto-d auto-c auto-r elid end
+ [1]  const name-c asgn end
+ [2]  const name-d asgn end
+ [3]  quot-dyadic function with local variables  print end
+ [4]  name-b name-a add name-r asgn end
+ [5]  comnt end
+ [e]  eol rval-r rest-r rest-c rest-d rest-a rest-b end
+
+	)clear
+clear ws
+	
+	ïchdir 'clean_dir'
+0
+	)load ulam.ws
+  20:43.06 01/04/99 ulam.ws
+	)vars
+
+	)fns
+spiral	copies	primes	linear	ulam	
+	)list ulam
+
+	Ï ulam A ;y;x;n
+[1]	n  ê A
+[2]	ï ê y  ê spiral 2 4 ˚ ˝1 0 1 0 0 1 0 ˝1
+[3]	ï ê x  ê primes y
+[4]	' *'[1 + x]
+[5]	Ï
+
+	)trace
+	ulam 3
+
+trace: fn ulam entered: 
+trace: fn ulam[0]: 
+trace: fn ulam[1]: 
+trace: fn ulam[2]: 
+trace: fn spiral entered: 
+trace: fn spiral[0]: 
+trace: fn spiral[1]: 
+trace: fn spiral[2]: 
+trace: fn copies entered: 
+trace: fn copies[0]: 
+trace: fn copies[1]: 
+trace: fn copies[2]: 
+trace: fn copies exits 
+trace: fn spiral[3]: 
+trace: fn spiral[4]: 
+trace: fn spiral[5]: 
+trace: fn linear entered: 
+trace: fn linear[0]: 
+trace: fn linear[1]: 
+trace: fn linear[2]: 
+trace: fn linear[3]: 
+trace: fn linear exits 
+trace: fn spiral[6]: 
+trace: fn spiral exits 9 2 3
+8 1 4
+7 6 5
+
+trace: fn ulam[3]: 
+trace: fn primes entered: 
+trace: fn primes[0]: 
+trace: fn primes[1]: 
+trace: fn primes[2]: 
+trace: fn primes[3]: 
+trace: fn primes exits 0 1 1
+0 0 0
+1 0 1
+
+trace: fn ulam[4]:  **
+   
+* *
+
+trace: fn ulam[5]: 
+trace: fn ulam exits 	
+	)untrace
+	)debug
+   exec end
+	ulam 3
+ const fun-ulam print eol end
+   exec const
+   exec fun
+ arg1-A auto-n auto-x auto-y elid end
+   exec arg1
+   exec auto
+   exec auto
+   exec auto
+   exec elid
+   exec end
+ name-A name-n asgn end
+   exec name
+   exec name
+   exec asgn
+   exec end
+ const const drho fun-spiral name-y asgn quad asgn end
+   exec const
+   exec const
+   exec drho
+   exec fun
+ arg1-l auto-e auto-g auto-c auto-a auto-z elid end
+   exec arg1
+   exec auto
+   exec auto
+   exec auto
+   exec auto
+   exec auto
+   exec elid
+   exec end
+ const name-n mul miot name-a asgn end
+   exec const
+   exec name
+   exec mul
+   exec miot
+   exec name
+   exec asgn
+   exec end
+ name-a scan sub abs name-a fun-copies const mod name-c asgn end
+   exec name
+   exec scan
+   exec abs
+   exec name
+   exec fun
+ arg2-b arg1-a auto-c elid end
+   exec arg2
+   exec auto
+   exec elid
+   exec end
+ name-b const cat scan add const add const drop name-b red add miot eps scan add name-a index name-c asgn end
+   exec name
+   exec const
+   exec cat
+   exec scan
+   exec const
+   exec add
+   exec const
+   exec drop
+   exec name
+   exec red
+   exec miot
+   exec eps
+   exec scan
+   exec name
+   exec index
+   exec name
+   exec asgn
+   exec end
+ comnt end
+   exec comnt
+   exec end
+ eol rval-c rest-c rest-a rest-b end
+   exec eol
+   exec rval
+   exec rest
+   exec rest
+   exec rest
+   exec end
+   exec const
+   exec mod
+   exec name
+   exec asgn
+   exec end
+ const name-n div const add floor name-g asgn end
+   exec const
+   exec name
+   exec div
+   exec const
+   exec add
+   exec floor
+   exec name
+   exec asgn
+   exec end
+ name-c const eq const mul name-c add name-n name-n mul const add take elid name-l index name-e asgn end
+   exec name
+   exec const
+   exec eq
+   exec const
+   exec mul
+   exec name
+   exec add
+   exec name
+   exec name
+   exec mul
+   exec const
+   exec add
+   exec take
+   exec elid
+   exec name
+   exec index
+   exec name
+   exec asgn
+   exec end
+ name-e const cat scan add name-g const drho oprod add const dtrn fun-linear gdu name-n const drho drho name-z asgn end
+   exec name
+   exec const
+   exec cat
+   exec scan
+   exec name
+   exec const
+   exec drho
+   exec oprod
+   exec const
+   exec dtrn
+   exec fun
+ arg1-m auto-l elid end
+   exec arg1
+   exec auto
+   exec elid
+   exec end
+ const name-m sub name-n base const add name-l asgn end
+   exec const
+   exec name
+   exec sub
+   exec name
+   exec base
+   exec const
+   exec add
+   exec name
+   exec asgn
+   exec end
+ comnt end
+   exec comnt
+   exec end
+ comnt end
+   exec comnt
+   exec end
+ eol rval-l rest-l rest-m end
+   exec eol
+   exec rval
+   exec rest
+   exec rest
+   exec end
+   exec gdu
+   exec name
+   exec const
+   exec drho
+   exec drho
+   exec name
+   exec asgn
+   exec end
+ comnt end
+   exec comnt
+   exec end
+ eol rval-z rest-z rest-a rest-c rest-g rest-e rest-l end
+   exec eol
+   exec rval
+   exec rest
+   exec rest
+   exec rest
+   exec rest
+   exec rest
+   exec rest
+   exec end
+   exec name
+   exec asgn
+   exec quad
+   exec asgn
+9 2 3
+8 1 4
+7 6 5
+   exec end
+ name-y fun-primes name-x asgn quad asgn end
+   exec name
+   exec fun
+ arg1-a auto-s auto-x elid end
+   exec arg1
+   exec auto
+   exec auto
+   exec elid
+   exec end
+ name-a rav mrho red add name-s asgn end
+   exec name
+   exec rav
+   exec mrho
+   exec red
+   exec name
+   exec asgn
+   exec end
+ name-s miot name-s miot name-s miot oprod mod const eq red0 add const eq com name-a eps name-x asgn end
+   exec name
+   exec miot
+   exec name
+   exec miot
+   exec name
+   exec miot
+   exec oprod
+   exec const
+   exec eq
+   exec red0
+   exec const
+   exec eq
+   exec com
+   exec name
+   exec eps
+   exec name
+   exec asgn
+   exec end
+ comnt end
+   exec comnt
+   exec end
+ eol rval-x rest-x rest-s rest-a end
+   exec eol
+   exec rval
+   exec rest
+   exec rest
+   exec rest
+   exec end
+   exec name
+   exec asgn
+   exec quad
+   exec asgn
+0 1 1
+0 0 0
+1 0 1
+   exec end
+ name-x const add quot- *  index print end
+   exec name
+   exec const
+   exec add
+   exec quot
+   exec index
+   exec print
+ **
+   
+* *
+   exec end
+ comnt end
+   exec comnt
+   exec end
+ rest-y rest-x rest-n rest-A eol nilret end
+   exec rest
+   exec rest
+   exec rest
+   exec rest
+   exec eol
+   exec nilret
+   exec end
+   exec print
+   exec eol
+   exec end
+	)debug
+ immed-debug end
+   exec immed
+	ulam 4
+10 11 12 13
+ 9  2  3 14
+ 8  1  4 15
+ 7  6  5 16
+0 1 0 1
+0 1 1 0
+0 0 0 0
+1 0 1 0
+ * *
+ ** 
+    
+* * 
+	)code ulam
+ [p]  arg1-A auto-n auto-x auto-y elid end
+ [1]  name-A name-n asgn end
+ [2]  const const drho fun-spiral name-y asgn quad asgn end
+ [3]  name-y fun-primes name-x asgn quad asgn end
+ [4]  name-x const add quot- *  index print end
+ [5]  comnt end
+ [e]  rest-y rest-x rest-n rest-A eol nilret end
+
+	)clear
+clear ws
+	)read lemming
+	)trace
+	)debug
+   exec end
+	lemming
+ fun-lemming print eol end
+   exec fun
+[  elid end ]
+[  eol nilret end ]
+
+trace: fn lemming entered: 
+trace: fn lemming[0]:  elid end
+   exec elid
+   exec end
+
+trace: fn lemming[1]:  comnt end
+   exec comnt
+   exec end
+
+trace: fn lemming[2]:  const name-a asgn end
+   exec const
+   exec name
+   exec asgn
+   exec end
+
+trace: fn lemming[3]:  const name-a div print end
+   exec const
+   exec name
+   exec div
+Implicit Error: division by 0 attempted.
+at	lemming[3]
+	)si
+ immed-sicom end
+   exec immed
+lemming[3]   *
+   exec end
+	)vars
+ immed-vars end
+   exec immed
+a	
+   exec end
+	)fns
+ immed-fns end
+   exec immed
+lemming	
+   exec end
+	
+ comnt end
+   exec comnt
+   exec end
+	

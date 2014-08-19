@@ -1,0 +1,51 @@
+DEBUGGING TOOLS
+---------------
+
+(These are tools for debugging the internal workings of
+apl\11.  They are not of any use to the user for debugging
+his or her APL program.)
+
+The tool kit consists of: code_dump, stack_dump and mem_dump.
+These are activated by Ibeam functions 1,2 and 4 respectively;
+a subsequent call to Ibeams 1 and 2 toggles the activation off.
+
+Ibeam 3 is also a toggle, however, it doesn't have any source
+code in the debug directory - its service routines reside
+inside the modules alloc() and aplfree().
+
+The state of the toggles from Ibeams 1,2 and 3 is kept in the 
+global variables code_trace, stack_trace and mem_trace.  Note 
+that Ibeam 4 is not a toggle.
+
+Code_dump() is usually called by execute() to display a human
+readable version of the compiled code from the parser.  
+Furthermore, execute() will also display the name of each command
+before it is executed whenever the *_trace flag is active.
+
+Stack_dump() is also called by execute() but before every command
+is called.
+
+Mem_dump is a once off.  When called it does an immediate dump of
+the allocated dynamic memory.  By the way, its also called by one
+of the error handlers just before abnormal exit.
+
+If you really want to see what is going on inside the interpreter,
+turn on Ibeams 1,2 and 3.  Then as each token in every line of APL
+is executed, observe the effects of the stack, the allocation and 
+deallocation of memory blocks and the contents of dynamic memory.
+
+Diagnostics
+-----------
+As each line of code is executed, the stack grows and shrinks.
+Eventually there is only one item left on the stack, this is 
+finally pop()'ed from the stack by the "eol" op-code.  If you see
+more than one item left on the stack before the "eol" (ie the 
+[-1]th item) then suspect a problem.
+
+Unless some data is assigned to a variable, in most simple 
+statements, every alloc() is balanced by an aplfree(). As above,
+inconsistent status after the final "eol" could indicate a problem.
+
+
+
+

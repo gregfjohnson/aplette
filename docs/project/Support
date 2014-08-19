@@ -1,0 +1,67 @@
+SUPPORT
+-------
+OpenAPL version 0.0, ALPHA release was made available in November
+1998.  Although I intended to work up to a BETA release in February
+1999, this hasn't happened and the ALPHA period will be extended to
+mid 1999.  By about June 1999 I will publish a BETA release, beyond 
+that you may be on your own.  Look for the support statement in the 
+latest release of openAPL at:
+
+ftp://sunsite.unc.edu/pub/Linux/devel/lang/apl/openapl-x.y.tar.gz
+
+OpenAPL will be announced on the USENET groups:
+	comp.os.linux.announce
+and	comp.lang.apl
+
+The second one of these will be used to announce minor releases.
+
+I may be contacted by email to "branko at senet dot com dot au"
+(please don't publish my email address on the Internet in any form
+that a spam-bot can read).
+
+
+BUG REPORTS
+-----------
+So you found a bug, good! that's what ALPHA testing is all about.
+
+First make sure that it hasn't already been recognised by checking the
+BugList in the latest version on the sunsite FTP archive.
+
+Next, reduce the bug to a simple statement that results in an obvious
+mistake or an error message.  Then convert that statement to ASCII, 
+use '{' and '}' to delimit written names of APL characters.  
+
+Finally, send it to me.  Extract my email address from this file.
+
+
+PUBLIC ASSISTANCE
+-----------------
+Although the ToDo document indicates that work on enhancements will be
+resisted, if you are willing to create, test and document etc new
+functionality, by all means submit it to me for consideration in the
+next release.
+
+However, what I would really like during the ALPHA test period is
+assistance from previous APL users to exercise everything in the
+search for bugs.  The ToDo list describes my intention to import
+some computer based training, further testing may be required for
+this.
+
+
+COPYRIGHT
+---------
+openAPL, Copyright (C) Branko Bratkovic 1998, 1999
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or (at
+your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.

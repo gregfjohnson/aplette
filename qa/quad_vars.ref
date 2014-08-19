@@ -1,0 +1,114 @@
+clear ws
+	¦Quad Input
+	a•
+•:	12
+	a
+12
+	b•
+•:	(12’3)+4
+	b
+40
+	
+	¦Quad Output
+	•aöb
+0.3
+	c2+•4*5
+1024
+	c
+1026
+	
+	¦Quote Quad Input
+	a—
+abcd
+	a
+abcd
+	
+	¦Quote quad Output
+	—'give me a number: '
+	a—
+give me a number: 12345
+	a
+12345
+	b—'another please: '
+	a—
+another please: 98765
+	b
+another please: 
+	
+	—'abc'
+	—'def'
+Limit Error: quote quad prompt not empty.
+	a—
+abcxyz
+	
+	—'1234567890123456789012345678901234567890'
+	a—
+1234567890123456789012345678901234567890xyz
+	
+	—'12345678901234567890123456789012345678901'
+Limit Error: assign value too long.
+	a—
+xyz
+	
+	—12
+Domain Error: assign value not character.
+	—3 3û'abcdefghi'
+Rank Error: rank of assign value too large.
+	
+	¦Print Precision
+	•pp
+9
+	a•1ö3
+0.333333333
+	•pp15
+	a
+0.333333333333333
+	
+	¦Comparision Tolerance
+	•ct
+1Eı13
+	
+	¦Atomic Vector
+	14 16û32‹•av
+ !"#$%&'()*+,-./
+0123456789:;<=>?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\]^_
+`abcdefghijklmno
+pqrstuvwxyz{|}~
+€‚ƒ„…†‡ˆ‰Š‹Œ
+‘’“”•–—˜™š›œŸ
+ ¡¢£¤¥¦§¨©ª«¬­®¯
+°±²³´µ¶·¸¹º»¼½¾¿
+ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ
+ĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß
+àáâãäåæçèéêëìíîï
+ğñòóôõö÷øùúûüışÿ
+	
+	¦Index Origin
+	•io
+1
+	â3
+1 2 3
+	•io0
+	â3
+0 1 2
+	
+	¦Page Width
+	•pw
+72
+	â30
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+         27 28 29
+	•pw50
+	â30
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+         20 21 22 23 24 25 26 27 28 29
+	•pw
+50
+	
+	¦Time Stamp
+	û•ts
+7
+	
+	

@@ -1,0 +1,18 @@
+In order for readline to work, you need to have a ~/.inputrc 
+file that contains the following:
+
+	$if openapl
+	set editing-mode emacs
+	set convert-meta off
+	set input-meta on
+	set output-meta on
+	$endif
+
+(You can 'set editing-mode vi' if preferred.)
+
+If the apl script detects an .inputrc file it will pass -r to
+apl11 which will then use readline during execution.  
+
+If your .inputrc file does not have the above but you include -r
+on the command line, then the special APL characters will not work.
+

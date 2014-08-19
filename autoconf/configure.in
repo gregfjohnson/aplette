@@ -1,0 +1,365 @@
+dnl Process this file with autoconf to produce a configure script.
+
+dnl To make sure that this is the correct configure.in for openAPL
+AC_INIT(../apl11/include/apl.h)
+AC_CONFIG_HEADER(../apl11/include/config.h)
+
+dnl Checks for programs.
+AC_PROG_YACC
+AC_PROG_CC
+AC_PROG_INSTALL
+
+dnl compensate for install-sh being in a subdirectory
+if test `echo $INSTALL | cut -c1-9` = "./install" ; then
+  install=./autoconf/`echo $INSTALL | cut -c3-`
+else
+  install=${INSTALL}
+fi
+AC_SUBST(install)
+
+
+dnl Checks for libraries.
+AC_CHECK_LIB(m, exp)
+AC_CHECK_LIB(readline, readline)
+AC_PATH_X
+AC_SUBST(x_libraries)
+
+dnl Checks for header files.
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_CHECK_HEADERS(limits.h sys/time.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_TIME
+AC_STRUCT_TM
+
+dnl Checks for library functions.
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS(gettimeofday)
+
+dnl Does the user want ghostscript?
+AC_ARG_ENABLE(ghostscript,
+[  --enable-ghostscript    Support for PostScript(TM) compatible printer],
+with_ghostscript='ghostscript')
+AC_SUBST(with_ghostscript)
+
+dnl Does the user want epson?
+AC_ARG_ENABLE(epson,
+[  --enable-epson          Support for Epson(TM) compatible printer],
+with_epson='epson')
+AC_SUBST(with_epson)
+
+dnl Should the file ~/.inputrc be setup for each user?
+if ( echo $LIBS | grep readline 2>/dev/null 1>&2 ) ; then
+  option_4=$srcdir./script/apl-setup.opt4a
+else
+  option_4=$srcdir./script/apl-setup.opt4b
+fi
+AC_SUBST_FILE(option_4)
+
+dnl Consider a directory in which to put shared APL workspaces
+dnl and other things such as fonts iff $fontdir points to $wsdir
+if test -z "$wsdir" ; then
+  dnl Look for wsdir
+  AC_MSG_CHECKING(for a directory in which to put APL workspaces)
+  for search_dir in $prefix/share /usr/share /usr/local/share /var/local
+  do
+    if test -d "$search_dir" ; then 
+      wsdir=$search_dir
+      break
+    fi
+  done
+  if test "${wsdir}" = ""; then
+    AC_MSG_ERROR([
+          Oops nowhere to put first time user workspace])
+  else
+    wsdir=$wsdir/openAPL
+    AC_MSG_RESULT($wsdir)
+  fi
+else
+  AC_MSG_WARN(setting work space directory to $wsdir)
+fi
+AC_SUBST(wsdir)
+  
+AC_CHECK_PROGS(have_kbd, setfont ,"")
+if test "${have_kbd}" = ""; then
+  AC_MSG_WARN(kbd package is missing! skipping unnecessary tests)
+  option_1=$srcdir./script/apl.opt1b
+  option_2=$srcdir./script/apl.opt2b
+  option_3=$srcdir./script/apl-setup.opt3b
+  option_5=$srcdir./script/aplrc.opt5b
+else
+  with_console='console'
+  AC_SUBST(with_console)
+  option_1=$srcdir./script/apl.opt1a
+  option_2=$srcdir./script/apl.opt2a
+  option_3=$srcdir./script/apl-setup.opt3a
+  option_5=$srcdir./script/aplrc.opt5a
+fi
+AC_SUBST_FILE(option_1)
+AC_SUBST_FILE(option_2)
+AC_SUBST_FILE(option_3)
+AC_SUBST_FILE(option_5)
+
+if test "${with_console}" != ""; then
+  if test -z "$fontdir"; then
+    AC_MSG_CHECKING(for kbd key tables directory)
+    for search_dir in $prefix/share/keytables /usr/share/keytables \
+    /usr/local/share/keytables /usr/lib/kbd/keytables
+    do
+      if test -d "$search_dir" ; then 
+        keytabledir=$search_dir
+        break
+      fi
+    done
+    if test "${keytabledir}" = ""; then
+      AC_MSG_RESULT(Doh!)
+      AC_MSG_WARN(kbd package may be incomplete)
+    else
+      AC_MSG_RESULT($keytabledir)
+    fi
+  else
+    keytabledir=$fontdir
+    AC_MSG_WARN(setting keytable directory to $fontdir)
+  fi
+  AC_SUBST(keytabledir)
+fi
+
+if test "${with_console}" != "" || test "${with_epson}" != "" ; then
+  if test -z "$fontdir"; then
+    AC_MSG_CHECKING(for kbd console font directory)
+    for search_dir in $prefix/share/consolefonts /usr/share/consolefonts \
+    /usr/local/share/consolefonts /usr/lib/kbd/consolefonts
+    do
+      if test -d "$search_dir" ; then 
+        consolefontdir=$search_dir
+        break
+      fi
+    done
+    if test "${consolefontdir}" = ""; then
+      AC_MSG_RESULT(Doh!)
+      AC_MSG_WARN(kbd package may be incomplete)
+      if test ${with_epson} != "" ; then
+        AC_MSG_WARN(Forcing console font directory to $sysconfdir)
+        consolefontdir=$sysconfdir
+        AC_SUBST(consolefontdir)
+      fi
+    else
+      AC_MSG_RESULT($consolefontdir)
+    fi
+  else
+    consolefontdir=$fontdir
+    AC_MSG_WARN(setting consolefont directory to $fontdir)
+  fi
+  AC_SUBST(consolefontdir)
+fi
+  
+if test "${with_console}" != ""; then
+  AC_MSG_CHECKING(for kbd default font)
+  for search_dir in $prefix/share/consolefonts /usr/share/consolefonts \
+  /usr/local/share/consolefonts /usr/lib/kbd/consolefonts
+  do
+    for search_file in default8x16 default8x9 
+    do
+      if test -f "$search_dir/$search_file" || \
+      test -f "$search_dir/$search_file.gz" ; then 
+        defaultfont=$search_dir/$search_file
+        break 2
+      fi
+    done
+  done
+  if test "${defaultfont}" = ""; then
+    AC_MSG_RESULT(Doh!)
+    AC_MSG_WARN(kbd package may be incomplete)
+  else
+    AC_MSG_RESULT($defaultfont)
+    AC_SUBST(defaultfont)
+  fi
+fi
+  
+if test "${with_console}" != ""; then
+  AC_MSG_CHECKING(for kbd default keyboard map)
+  for search_dir in $sysconfdir/kbd /etc/kbd $prefix/share/keytables \
+  /usr/lib/kbd/keytables /usr/share/keytables /usr/local/share/keytables 
+  do
+    for search_file in default.map us.map
+    do
+      if test -f "$search_dir/$search_file" || \
+      test -f "$search_dir/$search_file.gz" ; then 
+        defaultmap=$search_dir/$search_file
+        break 2
+      fi
+    done
+  done
+  if test "${defaultmap}" = ""; then
+    AC_MSG_RESULT(Doh!)
+    AC_MSG_WARN(kbd package may be incomplete)
+  else
+    AC_MSG_RESULT($defaultmap)
+    AC_SUBST(defaultmap)
+  fi
+fi
+  
+if test -z "$x11share"; then
+  AC_MSG_CHECKING(for x11 applications shared directory)
+  for search_dir in $prefix/X11 $x_libraries/X11
+  do
+    for search_subdir in fonts locale nls xserver
+    do
+      if test -d "$search_dir/$search_subdir" ; then 
+        x11share=$search_dir
+        break 2
+      fi
+    done
+  done
+  if test "${x11share}" = ""; then
+    AC_MSG_ERROR(cannot find where X11 font directories are kept!)
+  else
+    AC_MSG_RESULT($x11share)
+  fi
+else
+  AC_MSG_WARN(using $x11share for X11 applications shared directory)
+fi
+AC_SUBST(x11share)
+
+dnl Look for somewhere to put the APL font
+if test -z "$fontdir"; then
+  AC_MSG_CHECKING(for x11 font directory)
+  for search_dir in $x11share/fonts
+  do
+    for search_subdir in misc
+    do
+      if test -d "$search_dir/$search_subdir" ; then 
+        x11fontdir=$search_dir/$search_subdir
+        break 2
+      fi
+    done
+  done
+  AC_MSG_RESULT($x11fontdir)
+  if test "${x11fontdir}" = ""; then
+    x11fontdir=$x11share/fonts/misc
+    AC_MSG_WARN([forcing apl X11 font directory to $x11fontdir])
+  fi
+else
+  x11fontdir=$fontdir
+  AC_MSG_WARN(setting X11 font directory to $x11fontdir)
+fi
+AC_SUBST(x11fontdir)
+
+AC_MSG_CHECKING(for method used to compress X11 fonts)
+for d1 in $prefix/X11 $x_libraries/X11
+do
+  for d2 in fonts locale nls xserver
+  do
+    for d3 in misc 75dpi 100dpi Type1 Type2
+    do
+      if test -d "$d1/$d2/$d3" ; then
+        if { ls $d1/$d2/$d3/* | grep .gz > /dev/null; }
+        then 
+          compress='gzip -f'
+          break
+        fi
+        if { ls $d1/$d2/$d3/* | grep .Z > /dev/null; }
+        then 
+          compress=compress
+          break
+        fi
+      fi
+    done
+  done
+done
+if test "${compress}" = ""; then
+  AC_MSG_WARN(maybe X11 font files are not compressed on this system!)
+  dnl the following is just an innocuous alternative to a real command
+  compress=touch
+  AC_SUBST(compress)
+else
+  AC_MSG_RESULT($compress)
+  AC_SUBST(compress)
+fi
+
+dnl Required by the ghostscript print driver
+if test -z "$fontdir"; then
+  AC_MSG_CHECKING(for ghostscript font directory)
+  for search_dir in $prefix/lib/ghostscript/fonts\
+                    /usr/lib/ghostscript/fonts /usr/share/ghostscript/fonts
+  do
+    if test -d "$search_dir" ; then
+      if { file $search_dir/* | grep PostScript > /dev/null; }
+      then 
+        gsfontdir=$search_dir
+        break
+      fi
+    fi
+  done
+  if test "${gsfontdir}" = ""; then
+    AC_MSG_WARN([forcing ghostscript font directory to $x11fontdir])
+    gsfontdir=$x11fontdir
+  else
+    AC_MSG_RESULT($gsfontdir)
+  fi
+else
+  gsfontdir=$fontdir
+  AC_MSG_WARN(setting ghostscript font directory to $gsfontdir)
+fi
+AC_SUBST(gsfontdir)
+
+dnl What X11 keyboard layout to use?
+dnl Used in Makefile under Source Locations
+dnl The only two options as of this version are XFree86 and SunOS
+AC_MSG_CHECKING(for type of X11 keyboard layout)
+platform=`uname`
+case "$platform" in
+SunOS )
+  keytype="SunOS"
+;;
+  * )
+  keytype="XFree86"
+  do_modeswitch='$(x11share)/modeswitch.xmap'
+;;
+esac
+AC_MSG_RESULT($keytype)
+
+dnl What Linux keyboard encoding to use?
+dnl Used in Makefile under Source Locations
+dnl The only two options as of this version are i386 and ppc
+case "$platform" in
+Linux | linux )
+  AC_MSG_CHECKING(for type of keyboard encoding)
+  machine=`uname --machine`
+  case "$machine" in
+  i386 | i486 | i586 | pentium | Pentium )
+    machinetype="linux-i386"
+  ;;
+  PPC | ppc )
+    machinetype="linux-ppc"
+    keytype="XFree86-ppc"
+  ;;
+  * )
+    AC_MSG_WARN(Unrecognised machine type $machine forcing to i386)
+    machinetype="linux-i386"
+  ;;
+  esac
+  AC_MSG_RESULT($machinetype)
+  AC_SUBST(machinetype)
+;;
+esac
+
+AC_SUBST(keytype)
+AC_SUBST(do_modeswitch)
+
+dnl Required by ../qa/Makefile
+AC_MSG_CHECKING(for -a flag with diff for non-ascii comparision)
+if ( diff -a configure.in configure.in 2> /dev/null 1>&2 )
+then
+  diff='diff -a'
+else
+  diff='diff'
+fi
+AC_MSG_RESULT($diff)
+AC_SUBST(diff)
+
+AC_OUTPUT( ../Makefile ../apl11/include/makefile.common \
+           ../qa/Makefile  ../script/apl ../script/apl-setup \
+	   ../script/aplrc ../printer/apl2gs ../printer/apl2epson )
+

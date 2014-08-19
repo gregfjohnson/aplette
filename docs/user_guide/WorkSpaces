@@ -1,0 +1,21 @@
+          
+Workspaces are simply UNIX data files.  The name of the 
+workspace is the same as the file name.  
+
+A saved workspace includes function definitions and 
+variables.  If there are suspended functions, all of the 
+local variables for those functions are also saved.  
+However, the APL state indicator is not saved, so that those
+variables become global in scope when the saved workspace is
+loaded.  Trying to save the state indicator is very hard in 
+the current version of the interpreter because of the way 
+the main program loop is implemented.
+
+The first time you run apl, a directory named "apl" will
+be created in your $HOME directory, this contains the
+workspace "continue" which is in turn automatically loaded
+on startup - it displays the copyright message.  Delete the
+file "continue" when you have had enough of it; however, 
+the "apl" directory in your $HOME directory should remain as
+a place to keep openAPL workspaces.   
+

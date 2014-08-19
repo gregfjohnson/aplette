@@ -1,0 +1,178 @@
+
+Quad Functions for dealing with Variables
+-----------------------------------------
+                                  
+•nc 'arg'
+This function can be used to determine what type of variable an APL 
+symbol is.  The apl symbol must be specified inside quote marks, as 
+shown.  The returned value will be: 
+	0 -- symbol is undefined 
+	2 -- symbol is a label or variable 
+	3 -- symbol is a function name 
+	4 -- unknown type (should not occur)
+                                  
+•nl arg
+The argument should be a scalar or vector with components 1, 2, or 3.  
+This function returns a two-dimensional character array containing 
+the names of all items whose types are specified in the vector (same 
+type definitions as for "•nc" above).  The ordering of names in 
+the matrix is fortuitous.  
+
+                                  
+Quad Functions for working with User Defined Functions
+------------------------------------------------------
+                                  
+•cr 'name'
+The result of "•cr" is a character array containing the function whose 
+name is passed as an argument.  
+                                  
+•fx newfn
+The contents of the character array specified as an argument are fixed 
+as an APL function.  
+                                  
+signal •sig action
+This quad function allows signal processing to be turned on and off 
+under APL function control.  The first argument is the signal whose 
+processing is to be changed.  The second argument specifies how the 
+signal will be processed -- if zero, the signal will cause termination 
+of APL and a possible core dump; if non-zero, the signal will be 
+ignored.  Note that the special way in which interrupts and other 
+signals are processed by APL is turned off by a call to "•sig" and 
+cannot be turned back on.  A -1 is returned on error, a positive number
+or zero for success.  
+
+
+Quad Functions for File I/O
+---------------------------
+Note: all of these are disabled during SandBox mode such as execution 
+from •lx.
+                                  
+•chdir 'directory'
+This quad function can be used to change APL to another directory.  
+Normally, the apl wrapper changes to a directory called "apl" in the
+user's home directory; the apl11 binary uses the current working 
+directory as a starting point.  The argument to this quad function
+is a character vector specifying  the new directory (there is NO
+way to default this).  A 0 is returned if the "chdir" was successful; 
+a -1 is returned if it failed.  
+                                  
+mode •open 'file'
+This function is dyadic.  It opens a UNIX file for use by an APL function
+with calls via "•read" and "•write".  The first argument is the mode for 
+the open (0=read, 1=write, 2=read/ write).  The second argument is a 
+character vector containing the file name.  The file descriptor of the 
+opened file is returned (-1 for error).  
+                                  
+•close fd
+This function complements "•open".  The argument is the file descriptor 
+of a UNIX file to be closed.  This function returns 0 for success or -1
+for failure.  
+                                  
+mode •creat 'file'
+This function creates a UNIX file.  If the file already exists, it is 
+truncated to zero length.  The creation mode is specified as the first 
+argument (see chmod(1) for mode description).  The filename is 
+specified in a character vector as the second argument.  The file 
+descriptor of the created file (or -1 for error) is returned.  
+                                  
+fd •read nbytes
+This function reads a specified number of bytes from a designated 
+file.  The first argument is the file descriptor; the second is the 
+number of bytes to be read.  The data which is read is returned.  
+Note that the returned vector is always character data -- to convert 
+to numeric format see the function "•float".  
+                                  
+fd •write data
+This function writes data to a specified file.  The first argument 
+is the file descriptor; the second is the data to be written.  The 
+number of bytes written is returned as the count.  Any type of data 
+(character or numeric) may be written in this manner.  
+                                  
+•seek (fd,pos,mode)
+This function executes the "seek" system call on a UNIX file.  The 
+argument to "•seek" is a three-element vector containing the file 
+descriptor, seek offset, and mode (see seek(2)).  A 0 is returned 
+for a successful seek; -1 is returned if an error is detected.  
+                                  
+•rd fd
+This function reads one line from the file descriptor specified.  If 
+the line is completely blank, a null string is returned.  An end-of-file 
+will also return a null string.  Otherwise, the returned value is the
+character string which was read.  
+
+•rm 'filename'
+The specified file will be removed, equivalent to )drop filename.  A 0 
+is returned for a successful remove; -1 is returned if the file could not
+be removed or does not exist.  
+
+•dup fd
+This function executes the "dup" system call.  It returns an integer 
+number which may be used as a file descriptor on later I/O calls.  The 
+new file descriptor is a duplicate of the argument "fd".  If the 
+argument file descriptor could not be duplicated, -1 is returned.  
+
+fd •ap 'string'
+This quad function is used to append a character string onto the end of a
+UNIX file.  The first argument specifies the file descriptor of the
+file (which should have been opened earlier).  The second argument is a 
+character array which is to be appended.  A carriage return is 
+automatically appended to the end of each row of the character array when
+it is appended to the end of the file.  
+                                  
+•float charvect
+This quad function is useful in conjunction with "•write" and "•read".
+While any type of data may be written to a UNIX file with "•write", 
+when it is read with "•read" it will be interpreted as character data.  
+This function will convert a character array into numeric form.  
+The array must be a multiple of 4 elements long for apl2 and 8 for 
+apl.  The converted array is the returned value.  
+
+Quad Functions for Unix Process Control
+---------------------------------------
+Note: all of these are disabled during SandBox mode such as execution 
+from •lx.
+                                  
+•run 'unix command'
+The argument passed to "•run" is executed as a UNIX shell command.  
+                                  
+•fork xx
+"xx" is a dummy argument.  A "fork" system call is performed.  This quad
+function should be used by experienced UNIX users only and 
+probably will be followed by a "•exec" quad function.  The process-
+id of the child is returned to the parent; a zero is returned to the 
+child.  
+                                  
+•exec matrix
+Takes a two-dimensional character matrix and formats it into a UNIX 
+"exec" system call.  The matrix passed as an argument must be two-
+dimensional, the rows must be zero terminated.  
+This quad function should be used by experienced UNIX users only.  
+                                  
+•wait xx
+This quad function is used in conjunction with "•fork" -- it returns 
+a 3-element vector of information about a child process which has 
+terminated.  The first element is either the PID of a completed child 
+process or -1 (no children).  The second is the status of the dead PID
+and the last is the completion code.
+This quad function should be used by experienced UNIX users only.  
+                                  
+•exit code
+This quad function is used to terminate the execution of the current 
+process, with the completion code "code".  It should be used to 
+terminate child processes and can be used to terminate an APL session; 
+however, it is recommended that "•exit" be used by experienced UNIX 
+users only.  
+
+•pipe xx
+This quad function can be used to set up a pipe (used for interprocess
+communication) It returns a 2-element vector containing the two 
+"pipe" file descriptors.  
+                                  
+pid •kill signal
+This function executes the "kill" system call.  The first argument 
+specifies what process is to be signalled.  The second argument 
+specifies what signal is to be sent.  A 0 is returned for a successful 
+"kill"; -1 is returned if the specified process could not be found or 
+is not owned by the current user.  For more information on signals, see
+kill(2).  
+

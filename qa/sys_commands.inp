@@ -1,0 +1,41 @@
+¦Tests of System Commands
+)license
+•chdir 'clean_dir'
+)lib
+)load ulam.ws
+)vars
+)fns
+)list spiral
+ulam 4
+)copy makeN.ws
+)erase copies linear
+)vars
+)fns
+)clear
+)fns
+)vars
+)write primes
+)save deleteme
+)lib
+)drop primes deleteme
+)lib
+)read lemming
+lemming
+)si
+)vars
+)fns
+)sic
+)vars
+)fns
+)clear
+)vars
+)fns
+¦Not tested:
+¦)shell
+¦)memory
+¦)edit
+¦Tested elsewhere
+¦)trace )untrace
+¦)debug
+¦)code
+
