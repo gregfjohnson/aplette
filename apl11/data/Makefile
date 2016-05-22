@@ -19,6 +19,11 @@ fetch.o :	char.h opt_codes.h
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
+unit_test: data_iterator_unit_test
+
+data_iterator_unit_test: data_iterator.c
+	$(CC) $(CFLAGS) -DUNIT_TEST -o data_iterator_unit_test data_iterator.c
+
 clean:
-	rm -f $(OBJECTS) core
+	rm -f $(OBJECTS) core data_iterator_unit_test
 
