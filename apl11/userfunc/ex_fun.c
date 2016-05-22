@@ -49,7 +49,7 @@ ex_fun()
          gsip->sp = sp;
          if (prolgerr) error(ERR_botch,"prolog problem");
       }
-      if(intflg) error(ERR_interupt,"");
+      if(intflg) error(ERR_interrupt,"");
 
    reenter:
       if(gsip->funlc <= 0 || gsip->funlc >= s) {

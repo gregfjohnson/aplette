@@ -46,7 +46,7 @@ struct Context *thisContext;
       lineNumber = -1;
       if(echoflg) echoflg = 1;   /* enabled echo echo suppress off */
       checksp();	/* check for stack overflow */
-      if(intflg) error(ERR_interupt,"");
+      if(intflg) error(ERR_interrupt,"");
 
       /*  get a line of input */
       gsip->text=getinput("\t"); 

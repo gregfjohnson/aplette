@@ -67,7 +67,7 @@ void error(int type, char *diagnostic)
      break;
 
    case ERR_length:
-     printf("Lenght Error");
+     printf("Length Error");
      break;
 
    case ERR_limit:
@@ -86,8 +86,8 @@ void error(int type, char *diagnostic)
      printf("Value Error");
      break;
 
-   case ERR_interupt:
-     printf("Interupt");
+   case ERR_interrupt:
+     printf("Interrupt");
      break;
 
    case ERR_botch:

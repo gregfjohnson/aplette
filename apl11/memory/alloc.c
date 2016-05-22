@@ -33,7 +33,7 @@ unsigned nbytes;
 failed:
    printf("Unable to obtain requested memory\n");
    printf("%d bytes were requested\n", nbytes);
-   error(ERR_interupt,"");
+   error(ERR_interrupt,"");
    //mem_dump();
    //abort();
 }
