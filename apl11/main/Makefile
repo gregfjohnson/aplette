@@ -2,7 +2,7 @@
 
 include ../include/makefile.common
 
-OBJECTS = mainloop.o exit.o apl.o getinput.o
+OBJECTS = mainloop.o exit.o apl.o getinput.o history.o ascii_input.o
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
