@@ -11,7 +11,7 @@ void intr()
    intflg = 1;
    /* legacy code: what is the following line supposed to do? */
    /* lseek(0, 0L, 2); */
-   error(ERR_interupt,"");
+   error(ERR_interrupt,"");
 }
 
 catchsigs()
