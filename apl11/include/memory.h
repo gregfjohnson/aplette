@@ -11,3 +11,5 @@ struct memblock {
 
 struct memblock *firstblock;
 extern int mem_trace;
+
+void aplfree(int *ap);

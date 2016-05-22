@@ -2,11 +2,12 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
-/* #include <stdio.h> */
+#include <stdio.h>
 #include "apl.h"
+#include "utility.h"
+#include "memory.h"
 
-pop()
-{
+void pop() {
    struct item *p;
 
    if(sp <= stack) error(ERR_botch,"pop - stack underflow");
@@ -26,8 +27,8 @@ pop()
 
       case DA:
       case CH:
-         aplfree(p->datap);
-         aplfree(p);
+         aplfree((int *) p->datap);
+         aplfree((int *) p);
          break;
 
       case QQ:
@@ -36,7 +37,7 @@ pop()
       case NIL:
       case QX:
       case QV:
-         aplfree(p);
+         aplfree((int *) p);
       }
    }
    sp--;

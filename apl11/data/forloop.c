@@ -4,9 +4,7 @@
  */
 #include "apl.h"
 
-forloop(co, arg)
-int (*co)();
-{
+void forloop(int (*co)(), int arg) {
    int i;
 
    if (idx.size == 0) return;

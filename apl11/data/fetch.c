@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include "apl.h"
+#include "data.h"
 #include "char.h"
 #include "opt_codes.h"
 
@@ -41,7 +42,7 @@ struct item *ip;
    struct item *p, *q;
    int i,c;
    struct nlist *n;
-   extern prolgerr;
+   extern int prolgerr;
 
    p = ip;
 

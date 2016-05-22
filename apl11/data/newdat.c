@@ -3,9 +3,10 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 
 struct item *
-newdat(type, rank, size)
+newdat(int type, int rank, int size)
 {
    int i;
    struct item *p;

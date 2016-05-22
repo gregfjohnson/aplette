@@ -3,11 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 
-putdat(ip, d)
-data d;
-struct item *ip;
-{
+void putdat(struct item *ip, data d) {
    struct item *p;
    int i;
 
