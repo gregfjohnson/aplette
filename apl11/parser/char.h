@@ -23,57 +23,33 @@
 #define C_RIGHTARROW	(char)133	/* Ö */
 #define S_RIGHTARROW	"Ö"
 #define C_NOTEQUAL	(char)134	/* Ü */
-		/*	(char)135 */
-		/*	(char)136 */
 #define C_CIRCLESTAR	(char)137	/* â */
-		/*	(char)138 */
 #define C_DOWNARROW	(char)139	/* ã */
 #define C_UPARROW	(char)140	/* å */
 #define C_UPSTILE	(char)141	/* ç */
-		/*	(char)142 */
 #define C_DOWNSTILE	(char)143	/* è */
 #define C_LEFTARROW	(char)144	/* ê */
 #define S_LEFTARROW	"ê"
 #define C_DELTA		(char)145	/* ë */
 #define C_MULTIPLY	(char)146	/* í */
 #define C_DELTASTILE	(char)147	/* ì */
-		/*	(char)148 */
 #define	C_QUAD		(char)149	/* ï */
 #define S_QUAD		"ï"
 #define C_DELTILDE	(char)150	/* ñ */
 #define C_QUOTEQUAD	(char)151	/* ó */
 #define S_QUOTEQUAD	"ó"
 #define C_QUADDIVIDE	(char)152	/* ò */
-		/*	(char)153 */
 #define C_DIERESIS	(char)154	/* ö */
 #define C_CENT		(char)155	/* õ the console treats this as ESC */
-		/*	(char)156 reserved - sterling */
 #define C_DELSTILE	(char)157	/* ù */
 #define C_COMMABAR	(char)158	/* û */
 #define C_DIERESISTILDE	(char)159	/* ü */
-		/*	(char)160
-			(char)161
-			(char)162
-			(char)163
-			(char)164
-			(char)165 */
 #define C_UPSHOEJOT	(char)166	/* ¶ */
 #define C_SLOPEBAR	(char)167	/* ß */
 #define C_DIAMOND	(char)168	/* ® */
-		/*	(char)169
-		 * to	(char)175 */
-
-		/*	(char)176
-		 * to	(char)178 grey scales */
-
-		/*	(char)179
-		 * to	(char)223 line draw */
-
 #define C_ALPHA		(char)224	/* ‡ */
 #define C_BETA		(char)225	/* · */
 #define C_IOTA		(char)226	/* ‚ */
-		/*	(char)227 */
-		/*	(char)228 */
 #define C_NOR		(char)229	/* Â */
 #define C_UPTACK	(char)230	/* Ê */
 #define C_DOWNTACK	(char)231	/* Á */

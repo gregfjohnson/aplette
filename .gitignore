@@ -1,0 +1,17 @@
+*.o
+apl
+rline
+aplws.abort
+Makefile
+apl11/apl11
+apl11/include/config.h
+apl11/include/makefile.common
+apl11/parser/y.tab.c
+apl11/parser/y.tab.h
+autoconf/config.cache
+autoconf/config.log
+autoconf/config.status
+printer/apl2epson
+printer/apl2gs
+script/apl-setup
+script/aplrc
