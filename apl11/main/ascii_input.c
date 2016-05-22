@@ -15,7 +15,7 @@ static bool inited = false;
 static int length(const char *input) {
 }
 
-void dbprint(const char *title, char *p) {
+static void dbprint(const char *title, char *p) {
     int i;
     fprintf(stderr, "%s >>", title);
     for (i = 0; i < strlen((char *) p); ++i) {
@@ -32,7 +32,6 @@ char *to_ascii_input(char *input) {
     int len = strlen(input);
     char *result = (char *) alloc(len + 2);
     if (!inited) init();
-    dbprint("to_ascii_input got", input);
     for (i = 0; i < len; ++i) {
         if (input[i] < 256) {
             result[i] = to_apl_symbol[input[i]];
@@ -41,7 +40,6 @@ char *to_ascii_input(char *input) {
         }
     }
     result[i] = '\0';
-    dbprint("to_ascii_input returns", result);
     return result;
 }
 
