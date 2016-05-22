@@ -4,8 +4,7 @@
  */
 #include "apl.h"
 
-topfix()
-{
+int topfix() {
    struct item *p;
    int i;
 

@@ -2,6 +2,8 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#ifndef APL_H
+#define APL_H
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -243,7 +245,7 @@ int    mem_trace;
 int    stack_trace;
 int    vars_trace;
 
-struct {
+typedef struct {
    char   rank;
    char   type;
    int    size;
@@ -252,10 +254,15 @@ struct {
    int    dim[MRANK];
    int    del[MRANK];
    int    idx[MRANK];
-} idx;
+   char   complete;
+} DataIterator;
+
+DataIterator idx;
 
 #define setexit()      setjmp(gbl_env)        /* "setexit" equivalent      */
 #define reset()        longjmp(gbl_env, 0)    /* "reset" equivalent        */
 #define equal(a,b)     (0 == strcmp(a,b))     /* character string equality */
 
 #define SECURITY_CHECK if ( sandbox ) error(ERR_security,"sand-box")
+
+#endif   // APL_H

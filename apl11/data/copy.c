@@ -4,9 +4,7 @@
  */
 #include "apl.h"
 
-int copy(type, from, to, size)
-char *from, *to;
-{
+int copy(int type, char *from, char *to, int size) {
    int i;
    char *a, *b;
    int s;

@@ -3,9 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 
-colapse(k)
-{
+void colapse(int k) {
    int i;
 
    if(k < 0 || k >= idx.rank) error(ERR_index,"collapse");

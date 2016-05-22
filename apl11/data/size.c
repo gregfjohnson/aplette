@@ -4,8 +4,7 @@
  */
 #include "apl.h"
 
-size()
-{
+int size() {
    int i, s;
 
    s = 1;
