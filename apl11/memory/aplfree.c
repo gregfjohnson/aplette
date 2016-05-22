@@ -5,9 +5,7 @@
 
 #include "memory.h"
 
-aplfree(ap)
-int *ap;
-{
+aplfree(int *ap) {
    struct memblock *item, *last;
 
    if (ap == 0) return 0;

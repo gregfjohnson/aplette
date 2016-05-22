@@ -4,9 +4,7 @@
  */
 #include "apl.h"
 
-bidx(ip)
-struct item *ip;
-{
+void bidx(struct item *ip) {
    struct item *p;
 
    p = ip;

@@ -4,8 +4,7 @@
  */
 #include "apl.h"
 
-access()
-{
+int access() {
    int i, n;
 
    n = 0;

@@ -11,12 +11,13 @@
  */
 
 #include "apl.h"
+#include "memory.h"
 
 void purge_name(np)
 struct nlist *np;
 {
    char *hash = "#";
 
-   aplfree(np->namep);
+   aplfree((int *) np->namep);
    np->namep=hash;
 }
