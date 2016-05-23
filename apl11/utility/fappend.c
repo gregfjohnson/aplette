@@ -3,11 +3,12 @@
  * subject to the conditions expressed in the file "License".
  */
  
+#include <unistd.h>
 #include "apl.h"
+#include "data.h"
+#include "utility.h"
 
-fappend(fd, ap)
-struct item *ap;
-{
+void fappend(int fd, struct item *ap) {
    struct item *p;
    char *p1;
    int i, dim0, dim1, sb[32];

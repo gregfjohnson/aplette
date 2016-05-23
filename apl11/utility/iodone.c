@@ -5,7 +5,7 @@
  
 #include "apl.h"
 
-iodone(ok)
+void iodone(ok)
 {
    struct item *p;
 

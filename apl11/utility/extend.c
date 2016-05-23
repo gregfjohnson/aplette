@@ -3,12 +3,11 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 
 /* extend - used by ex_base and ex_iprod */
 struct item *
-extend(ty, n, d)
-data d;
-{
+extend(int ty, int n, data d) {
    int i;
    struct item *q;
 

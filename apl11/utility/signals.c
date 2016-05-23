@@ -3,8 +3,11 @@
  * subject to the conditions expressed in the file "License".
  */
 #include <signal.h>
-#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 #include "apl.h"
+#include "utility.h"
 
 void intr()
 {
@@ -14,7 +17,7 @@ void intr()
    error(ERR_interrupt,"");
 }
 
-catchsigs()
+void catchsigs()
 {
    extern void intr();
    extern void panic();
@@ -59,7 +62,7 @@ void panic(unsigned signum)
 {
 
    int fd;
-   static insane = 0;         /* if != 0, die */
+   static int insane = 0;         /* if != 0, die */
    static char *abt_file = "aplws.abort";
    static char *errtbl[] = {
       "excessive eofs",
