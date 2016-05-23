@@ -1,15 +1,16 @@
 # Makefile for oper_monadic (monadic operators)
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS = ex_red.o ex_com.o ex_exd.o ex_scan.o 
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
-ex_red.o ex_scan.o:	opt_codes.h
+ex_red.o ex_scan.o:	../include/opt_codes.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

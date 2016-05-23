@@ -10,6 +10,8 @@
 #include <time.h>
 #include <setjmp.h>
 #include <values.h>
+#include <stdio.h>
+#include <string.h>
 
 /* Temp file names */
 #define WSFILE   ws_file                /* work space file */

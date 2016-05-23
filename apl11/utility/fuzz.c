@@ -4,7 +4,7 @@
  */
 #include "apl.h"
 
-fuzz(d1, d2)
+int fuzz(d1, d2)
 data d1, d2;
 {
    data f1, f2;
