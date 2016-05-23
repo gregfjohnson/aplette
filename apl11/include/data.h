@@ -19,6 +19,7 @@ int copy(int type, char *from, char *to, int size);
 void colapse(int k);
 void putdat(struct item *ip, data d);
 void pop();
+int size();
 
 void indexIterateInit(DataIterator *iter);
 bool indexIterate(DataIterator *iter);
