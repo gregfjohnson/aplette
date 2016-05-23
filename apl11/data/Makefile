@@ -11,10 +11,10 @@ OBJECTS = access.o dupdat.o getdata.o putdat.o top.o \
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
 # Things that depend on characters
-fetch.o :	char.h opt_codes.h
+fetch.o :	../include/char.h ../include/opt_codes.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

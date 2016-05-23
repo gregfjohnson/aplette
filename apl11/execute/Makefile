@@ -1,6 +1,7 @@
 # Makefile for execute 
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS = ex_dscal.o ex_botch.o ex_cdyad.o ex_ddyad.o execute.o \
           ex_mdyad.o
@@ -8,9 +9,9 @@ OBJECTS = ex_dscal.o ex_botch.o ex_cdyad.o ex_ddyad.o execute.o \
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
-execute.o:	opt_codes.h
+execute.o:	../include/opt_codes.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

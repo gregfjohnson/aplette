@@ -1,6 +1,7 @@
 # Makefile for I-Beam functions
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS = ex_dibm.o ex_mibm.o
 
@@ -8,7 +9,7 @@ OBJECTS = ex_dibm.o ex_mibm.o
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
