@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	)lib
 lemming	ulam.ws	makeN.ws	
 	)load ulam.ws
-  20:43.06 01/04/99 ulam.ws
+  hh:mm.ss mm/dd/yy ulam.ws
 	)vars
 
 	)fns
@@ -49,7 +49,7 @@ spiral	copies	primes	linear	ulam
     
 * * 
 	)copy makeN.ws
-  21:54.32 05/16/99 copy makeN.ws
+  hh:mm.ss mm/dd/yy copy makeN.ws
 	)erase copies linear
 	)vars
 

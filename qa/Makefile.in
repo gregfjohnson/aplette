@@ -23,7 +23,8 @@ now:	$(OBJECTS)
 	$(DIFF) $< $*.ref > $@
 
 %.out:	%.inp $(APLEXE)
-	$(APLEXE) < $<  | tail +2 > $@
+	$(APLEXE) < $<  | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
+	echo >> $@
 
 # Kludge required because save command prints the date 
 sys_commands.out:	sys_commands.inp $(APLEXE)

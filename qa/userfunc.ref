@@ -2,7 +2,7 @@ clear ws
 	¦User Defined Functions
 	¦----------------------
 	)load userfunc.ws
-  20:30.27 04/23/00 userfunc.ws
+  hh:mm.ss mm/dd/yy userfunc.ws
 	
 	¦ Niladic
 	)vars

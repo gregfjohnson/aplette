@@ -15,7 +15,7 @@ abcde
 	¶Quad Functions for use with User Defined Functions
 	¶--------------------------------------------------
 	)load makeN.ws
-  21:54.32 05/16/99 makeN.ws
+  hh:mm.ss mm/dd/yy makeN.ws
 	)fns
 makeN	
 	aêïcr 'makeN'
