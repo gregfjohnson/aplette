@@ -1,13 +1,14 @@
 # Makefile for memory 
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS =  afreset.o alloc.o aplfree.o
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h memory.h
+$(OBJECTS):	../include/apl.h ../include/memory.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

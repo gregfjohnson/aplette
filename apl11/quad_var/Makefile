@@ -1,6 +1,7 @@
 # Makefile for quad_var (quad variables) 
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS = ex_quad.o ex_qquad.o \
 	ex_qav.o ex_qct.o ex_qio.o ex_qlx.o ex_qpp.o ex_qpw.o \
@@ -10,10 +11,10 @@ OBJECTS = ex_quad.o ex_qquad.o \
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
 # Things that depend on characters
-ex_qav.o ex_qlx.o ex_qpp.o ex_qpw.o ex_quad.o :	char.h
+ex_qav.o ex_qlx.o ex_qpp.o ex_qpw.o ex_quad.o :	../include/char.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

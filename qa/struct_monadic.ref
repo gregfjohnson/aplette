@@ -1,7 +1,7 @@
 clear ws
 	¦Monadic Structural Primitives
 	)load makeN.ws
-  21:54.32 05/16/99 makeN.ws
+  hh:mm.ss mm/dd/yy makeN.ws
 	
 	¦Ravel
 	•N22makeN 2 2

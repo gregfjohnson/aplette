@@ -1,6 +1,7 @@
 # Makefile for scalar_dyadic (dyadic scalar functions)
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS = ex_cir.o ex_gt.o ex_min.o ex_ne.o ex_pwr.o ex_comb.o \
 	ex_le.o ex_minus.o ex_sub.o ex_div.o ex_log.o \
@@ -10,7 +11,7 @@ OBJECTS = ex_cir.o ex_gt.o ex_min.o ex_ne.o ex_pwr.o ex_comb.o \
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

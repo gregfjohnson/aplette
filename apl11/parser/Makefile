@@ -1,6 +1,7 @@
 # Makefile for parser 
 
 include ../include/makefile.common
+CFLAGS += -I../include
 
 OBJECTS = alpha.o genlab.o getquad.o name.o \
 	compile_old.o compile_new.o getnam.o invert.o yyerror.o \
@@ -11,10 +12,10 @@ OBJECTS = alpha.o genlab.o getquad.o name.o \
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h parser.h
+$(OBJECTS):	../include/apl.h parser.h
 
 genlab.o compile_old.o compile_new.o yylex.o lastcode.o apl.y \
-table_comm.o table_oper.o table_quad.o:	opt_codes.h
+table_comm.o table_oper.o table_quad.o:	../include/opt_codes.h
 
 y.tab.o: y.tab.c 
 	$(CC) $(CFLAGS) -c y.tab.c
@@ -28,7 +29,7 @@ y.tab.c y.tab.h: apl.y
 getquad.o compile_old.o compile_new.o getnam.o getnum.o yylex.o \
 table_oper.o table_comm.o table_quad.o:	y.tab.h
 
-getnum.o yylex.o table_oper.o:	char.h
+getnum.o yylex.o table_oper.o:	../include/char.h
 
 clean:
 	rm -f $(OBJECTS) core y.tab.c y.tab.h Q.o

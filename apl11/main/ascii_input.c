@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "apl.h"
 #include "ascii_input.h"
-#include "../parser/char.h"
+#include "char.h"
 
 void error(int type, char *diagnostic);
 

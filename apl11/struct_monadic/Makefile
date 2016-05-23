@@ -8,7 +8,7 @@ OBJECTS = ex_mrho.o ex_miot.o ex_rav.o
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	apl.h
+$(OBJECTS):	../include/apl.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
