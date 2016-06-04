@@ -3,9 +3,10 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <stdlib.h>
 #include "memory.h"
 
-afreset()
+void afreset()
 {
    struct memblock *item, *next_item;
 

@@ -3,12 +3,15 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "memory.h"
 
-aplfree(int *ap) {
+void aplfree(int *ap) {
    struct memblock *item, *last;
 
-   if (ap == 0) return 0;
+   if (ap == 0) return;
+
    last = 0;
    for (item=firstblock; item; item=item->next) {
       if (item->block == ap) {
