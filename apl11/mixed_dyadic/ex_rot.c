@@ -2,8 +2,9 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
-
 #include "apl.h"
+#include "utility.h"
+#include "data.h"
 
 ex_rot0()
 {

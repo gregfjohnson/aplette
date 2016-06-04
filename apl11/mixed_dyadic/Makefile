@@ -16,3 +16,5 @@ ex_base.o ex_index.o:	../include/opt_codes.h
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
+clean:
+	rm -f $(OBJECTS) core Q.o

@@ -4,6 +4,7 @@
  */
  
 #include "apl.h"
+#include "utility.h"
 
 data
 ex_recip(d)

@@ -28,7 +28,7 @@ file_io/Q.o:	file_io/*.c file_io/*.h
 debug/Q.o:	debug/*.c debug/*.h
 	cd debug ; $(MAKE)
 
-data/Q.o:	data/*.c data/*.h
+data/Q.o:	data/*.c
 	cd data ; $(MAKE)
 
 format/Q.o:	format/*.c

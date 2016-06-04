@@ -16,3 +16,5 @@ $(OBJECTS):	../include/apl.h
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
+clean:
+	rm -f $(OBJECTS) core Q.o

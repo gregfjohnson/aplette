@@ -14,5 +14,4 @@ $(OBJECTS):	../include/apl.h ../include/memory.h
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f $(OBJECTS) core
-
+	rm -f Q.o $(OBJECTS) core

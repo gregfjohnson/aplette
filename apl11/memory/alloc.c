@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include "apl.h"
+#include "utility.h"
 #include "memory.h"
 
 int * alloc(nbytes)

@@ -4,6 +4,7 @@
  */
  
 #include "apl.h"
+#include "utility.h"
    static char b[200];
 
 char *iofname(m)
