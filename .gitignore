@@ -2,7 +2,8 @@
 apl
 rline
 aplws.abort
-Makefile
+/Makefile
+qa/Makefile
 apl11/apl11
 apl11/include/config.h
 apl11/include/makefile.common

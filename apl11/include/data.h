@@ -23,5 +23,6 @@ int size();
 
 void indexIterateInit(DataIterator *iter);
 bool indexIterate(DataIterator *iter);
+void purge_name(struct nlist *np);
 
 #endif // DATA_H

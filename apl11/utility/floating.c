@@ -26,15 +26,12 @@ char *fpelist[] = {
    "floating underflow"
 };
 
-fpe(signo, param)
-unsigned param;
-{
+void fpe(int param) {
    signal(SIGFPE, fpe);
    if (param >= sizeof fpelist/sizeof fpelist[0]) error(ERR,"floating exception");
    else error(ERR,fpelist[param]);
 }
 
-fppinit()
-{
+void fppinit(int arg) {
    signal(SIGFPE, fpe);
 }

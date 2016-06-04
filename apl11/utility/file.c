@@ -3,15 +3,16 @@
  * subject to the conditions expressed in the file "License".
  */
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 #include "apl.h"
 #include "utility.h"
 
-opn(file, rw)
-char file[];
-{
+int opn( char file[], int rw) {
    int fd, (*p)();
    char f2[100];
-   extern open(), creat();
 
    p = (rw > 2 ? creat : open);
    if((fd = (*p)(file,rw)) < 0){
@@ -29,7 +30,7 @@ char file[];
 }
 
 
-empty(fd){
+int empty(int fd){
 
    struct stat sbuf;
    struct fds *fp;

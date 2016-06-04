@@ -11,10 +11,9 @@
 
 char *atfrom[] = {"at\t", "from\t", "", ""};
 
-tback(flag)
-{
-struct Context *thisContext;
-int i;
+void tback(int flag) {
+   struct Context *thisContext;
+   int i;
 
    if ( gsip == &prime_context ) 
       return;	/* don't attempt to trace state zero */

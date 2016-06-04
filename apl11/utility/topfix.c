@@ -4,6 +4,7 @@
  */
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 
 int topfix() {
    struct item *p;

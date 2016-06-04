@@ -4,12 +4,14 @@
  */
 #include <signal.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "apl.h"
+#include "data.h"
+#include "debug.h"
+#include "userfunc.h"
 
 /* print line and error pointer */
-pline(str, loc, ln)
-char *str;
-{
+void pline(char *str, int loc, int ln) {
    int c, l, col;
    col = 0;
    l = 0;
@@ -35,8 +37,7 @@ char *str;
    printf("^\n");
 }
 
-void error(int type, char *diagnostic)
-{
+void error(int type, char *diagnostic) {
    struct nlist *np;
 
    intflg = 0;

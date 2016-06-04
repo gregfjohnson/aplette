@@ -2,14 +2,16 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "apl.h"
 
 char *bad_fn  = "apl.badfn";
 
-badfnsv(fname)
-char *fname;
-{
+int badfnsv(char *fname) {
    /* This routine saves the contents of "fname" in the file
     * named in "bad_fn".  It is called by "funedit" if the
     * header of a function just read in is messed up (thus,
