@@ -4,7 +4,9 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 #include "opt_codes.h"
+#include "data.h"
 
 ex_red0()
 {

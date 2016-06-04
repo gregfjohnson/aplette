@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 #include "opt_codes.h"
 
 void execute()

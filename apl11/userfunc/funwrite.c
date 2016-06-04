@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
 void funwrite(char *fname)
 /* creates an ordinary file from a user defined function

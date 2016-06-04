@@ -4,6 +4,7 @@
  */
  
 #include "apl.h"
+#include "utility.h"
 /* #include <string.h> */
 #include <dirent.h> 
 

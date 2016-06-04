@@ -9,6 +9,7 @@
 #include <memory.h>
 #include "parser.h"
 #include "opt_codes.h"
+#include "data.h"
 %}
 
 /***************** YACC declarations **********************/
@@ -17,22 +18,22 @@
    char   charval;
 }
 /* terminal tokens */
-%term lex0, lex1, lex2, lex3, lex4, lex5
-%term lpar, rpar, lbkt, rbkt, eol, unk, dell
-%term null, dot, cln, semi, comnt, tran
-%term <charptr> strng nam, numb, nfun, mfun, dfun
-%term <charval> com, com0, q_var, asg
-%term <charval> comexpr, comnam, comnull, comlist
-%term <charval> dscal, mdscal
-%term <charval> m, d, md, msub, mdsub
+%term lex0 lex1 lex2 lex3 lex4 lex5
+%term lpar rpar lbkt rbkt eol unk dell
+%term null dot cln semi comnt tran
+%term <charptr> strng nam numb nfun mfun dfun
+%term <charval> com com0 q_var asg
+%term <charval> comexpr comnam comnull comlist
+%term <charval> dscal mdscal
+%term <charval> m d md msub mdsub
 
 /* non terminal tokens */
-%type <charptr> func, header, args, autos, labels, label
-%type <charptr> fstat, fstat0, stat, statement, output, expr
-%type <charptr> e1, e2, number, subs, sub, monadic
-%type <charptr> dyadic, subr, anyname, hprint
-%type <charval> comand, lsub, monad, smonad, sdyad
-%type <charval> comp, dyad, mdcom, mondya, scalar
+%type <charptr> func header args autos labels label
+%type <charptr> fstat fstat0 stat statement output expr
+%type <charptr> e1 e2 number subs sub monadic
+%type <charptr> dyadic subr anyname hprint
+%type <charval> comand lsub monad smonad sdyad
+%type <charval> comp dyad mdcom mondya scalar
 
 /******************** grammar specification *****************/
 /***************** line-at-a-time APL compiler **************/
@@ -461,7 +462,7 @@ number:
    numb
    {
       $$ = ccharp;
-      ccharp += copy(DA,&datum,ccharp,1);
+      ccharp += copy(DA, (char *) &datum, (char *) ccharp, 1);
    } ;
 
 /*

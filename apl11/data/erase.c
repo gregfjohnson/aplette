@@ -3,8 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "memory.h"
 
-erase(np)
+void erase(np)
 struct nlist *np;
 {
    int *p;
@@ -16,7 +17,7 @@ struct nlist *np;
       switch(np->use) {
       case CH:
       case DA:
-	 aplfree(itemp->datap);
+	 aplfree((int *) itemp->datap);
 	 break;
 
       case NF:

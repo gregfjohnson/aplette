@@ -4,7 +4,8 @@
  */
 
 #include "apl.h"
-
+#include "utility.h"
+#include "data.h"
 
 ex_rev0()
 {

@@ -12,6 +12,7 @@
 
 #include "apl.h"
 #include "format.h"
+#include "data.h"
 
 /* Print literals */
 int lt_print(struct item *p)

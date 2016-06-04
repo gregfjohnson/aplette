@@ -14,6 +14,7 @@
 #include <sys/time.h>
 /* #include <unistd.h> */
 #include "apl.h"
+#include "utility.h"
 
 struct item * ex_qts(io)
 int io; /* 0 = source, 1 = sink */

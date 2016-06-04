@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include "utility.h"
 #include "parser.h"
 #include "y.tab.h"
 

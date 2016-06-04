@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 #include <stdio.h>
 #include "char.h"
 

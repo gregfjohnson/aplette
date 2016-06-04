@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 
 /* execute dyadic scalar functions
  * this routine is called from execute() 

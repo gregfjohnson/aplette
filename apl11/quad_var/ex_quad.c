@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include "apl.h"
+#include "utility.h"
 #include "char.h"
 
 struct item * ex_quad(io)

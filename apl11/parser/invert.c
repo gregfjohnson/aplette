@@ -4,16 +4,8 @@
  */
 
 #include "parser.h"
-invert(a, b)
-{
-   flop(a, b);
-   flop(b, ccharp);
-   flop(a, ccharp);
-}
 
-flop(a, b)
-char *a, *b;
-{
+static void flop(char *a, char *b) {
    char *a1, *a2;
    int c;
 
@@ -26,3 +18,8 @@ char *a, *b;
    }
 }
 
+void invert(char *a, char *b) {
+   flop(a, b);
+   flop(b, ccharp);
+   flop(a, ccharp);
+}

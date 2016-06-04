@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
 int prolgerr;      /* Flag -- set if bad fetch in prologue 
                     * this variable is global so that fetch()

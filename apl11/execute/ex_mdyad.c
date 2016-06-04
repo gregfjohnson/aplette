@@ -1,4 +1,5 @@
 #include "apl.h"
+#include "utility.h"
 
 /* this routine deals with dyadic scalar functions
  * where one arguments is a single character 

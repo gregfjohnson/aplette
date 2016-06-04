@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "apl.h"
 #include "exit.h"
+#include "utility.h"
 
 mainloop()
 {

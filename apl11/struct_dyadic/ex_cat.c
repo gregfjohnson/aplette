@@ -4,6 +4,9 @@
  */
 
 #include "apl.h"
+#include "utility.h"
+#include "data.h"
+
 ex_cat()
 {
    struct item *p, *q, *r;

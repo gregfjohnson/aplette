@@ -5,6 +5,7 @@
 
 #include "parser.h"
 #include "opt_codes.h"
+#include "data.h"
 
 /*
  * genlab -- generates label code onto label stacks.
@@ -13,7 +14,7 @@
  *
  * epilog:   REST-lab
  */
-genlab(np)
+void genlab(np)
 struct nlist *np;
 {
    data lnumb;	//this used to be a global
@@ -22,20 +23,20 @@ struct nlist *np;
    /* label prologue */
 
    *labcpp++ = AUTO;
-   labcpp += copy(IN, &np, labcpp, 1);
+   labcpp += copy(IN, (char *) &np, (char *) labcpp, 1);
    *labcpp++ = CONST;
    *labcpp++ = 1;
    lnumb=(data)lineNumber;
-   labcpp += copy(DA, &lnumb, labcpp, 1);
+   labcpp += copy(DA, (char *) &lnumb, (char *) labcpp, 1);
    *labcpp++ = NAME;
-   labcpp += copy(IN, &np, labcpp, 1);
+   labcpp += copy(IN, (char *) &np, (char *) labcpp, 1);
    *labcpp++ = LABEL;
    *labcpp = END;
 
    /* label epilog */
 
    *labcpe++ = REST;
-   labcpe += copy(IN, &np, labcpe, 1);
+   labcpe += copy(IN, (char *) &np, (char *) labcpe, 1);
    *labcpe = END;
 }
 

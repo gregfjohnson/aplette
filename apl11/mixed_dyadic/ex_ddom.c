@@ -3,7 +3,10 @@
  * subject to the conditions expressed in the file "License".
  */
  
+#include <math.h>
 #include "apl.h"
+#include "utility.h"
+#include "utility.h"
 
 ex_ddom()
 {

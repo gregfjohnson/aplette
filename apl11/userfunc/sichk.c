@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
 sichk(n)
 struct nlist *n;
