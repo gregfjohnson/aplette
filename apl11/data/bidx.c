@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 
 void bidx(struct item *ip) {
    struct item *p;
@@ -10,7 +11,7 @@ void bidx(struct item *ip) {
    p = ip;
    idx.type = p->type;
    idx.rank = p->rank;
-   copy(IN, p->dim, idx.dim, idx.rank);
+   copy(IN, (char *) p->dim, (char *) idx.dim, idx.rank);
    size();
 }
 

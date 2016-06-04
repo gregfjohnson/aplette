@@ -7,6 +7,8 @@
 #include "apl.h"
 #include "data.h"
 #include "char.h"
+#include "utility.h"
+#include "memory.h"
 #include "opt_codes.h"
 
 /* The fetch routines are used to convert dummy types into 
@@ -55,7 +57,7 @@ loop:
 
    case QV:	/* Quad Variables */
       i=p->index; /* get the pointer to applicable quad service routine */
-      aplfree(p);
+      aplfree((int *) p);
       p=(struct item *)(*exop[i])(0);	/* call the service routine */
       goto loop;
 
@@ -94,8 +96,8 @@ loop:
       i = p->type;
       if(i == LBL) i = DA;         /* treat label as data */
       q = newdat(i, p->rank, p->size);
-      copy(IN, p->dim, q->dim, p->rank);
-      copy(i, p->datap, q->datap, p->size);
+      copy(IN, (char *) p->dim, (char *) q->dim, p->rank);
+      copy(i, (char *) p->datap, (char *) q->datap, p->size);
       return(q);
 
    default:
