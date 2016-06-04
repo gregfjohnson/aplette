@@ -13,9 +13,7 @@
 #include "apl.h"
 #include "memory.h"
 
-void purge_name(np)
-struct nlist *np;
-{
+void purge_name(struct nlist *np) {
    char *hash = "#";
 
    aplfree((int *) np->namep);

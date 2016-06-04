@@ -8,6 +8,7 @@ OBJECTS = badfnsv.o ex_auto.o ex_fun.o ex_nilret.o fundef.o reverse.o \
 	ex_arg1.o ex_br0.o ex_ibr0.o funread.o tback.o \
 	ex_arg2.o ex_label.o funcomp.o funwrite.o 
 
+all: Q.o
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)

@@ -14,5 +14,9 @@
 void error(int type, char *diagnostic);
 int topfix();
 int scalar(struct item *aip);
+void pline(char *str, int loc, int ln);
+int fix(data d);
+void checksp();
+void fppinit(int arg);
 
 #endif // UTILITY_H

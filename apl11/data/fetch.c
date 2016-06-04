@@ -56,10 +56,13 @@ loop:
       return(p);
 
    case QV:	/* Quad Variables */
+      #if 0
       i=p->index; /* get the pointer to applicable quad service routine */
       aplfree((int *) p);
       p=(struct item *)(*exop[i])(0);	/* call the service routine */
       goto loop;
+      #endif
+      error(ERR_botch, "quad variables are not implemented");
 
    case DA:	/* DAta type */
    case CH:	/* CHaracter type */

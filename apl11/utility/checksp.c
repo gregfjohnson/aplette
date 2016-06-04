@@ -5,8 +5,7 @@
 #include "apl.h"
 #include "utility.h"
 
-checksp()
-{
+void checksp() {
    if(sp >= &stack[STKS]) error(ERR,"stack overflow");
 }
 

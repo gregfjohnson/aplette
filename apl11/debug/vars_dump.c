@@ -12,8 +12,7 @@
 
 #include "apl.h"
 
-void vars_dump()
-{
+void vars_dump() {
 struct nlist *n;
    
    for(n=nlist; n->namep; n++) {
