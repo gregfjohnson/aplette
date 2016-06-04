@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "data.h"
 
 ex_take()
 {

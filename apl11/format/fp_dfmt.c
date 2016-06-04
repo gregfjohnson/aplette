@@ -12,6 +12,7 @@
 
 #include "apl.h"
 #include "format.h"
+#include "data.h"
 
 /* dyadic format for floating point data */
 

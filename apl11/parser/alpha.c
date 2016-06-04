@@ -4,9 +4,9 @@
  */
 
 #include "parser.h"
+#include "alpha.h"
 
-alpha(s)
-{
+bool alpha(int s) {
    int c;
 
    c = s; /* this used to be a mask that destroyed the 8th bit */

@@ -15,3 +15,5 @@ ex_asgn.o:	../include/char.h
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
+clean:
+	rm -f $(OBJECTS) core Q.o

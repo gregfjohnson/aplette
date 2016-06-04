@@ -5,6 +5,7 @@
 
 #include "apl.h"
 #include "opt_codes.h"
+#include "data.h"
 
 ex_index()
 {

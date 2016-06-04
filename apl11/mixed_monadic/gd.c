@@ -6,6 +6,7 @@
 /* gd0 and gd1 are used by both grade up and grade down */
 
 #include "apl.h"
+#include "data.h"
 
 gd0(k, f)
 int (*f)();

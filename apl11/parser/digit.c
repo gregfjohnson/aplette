@@ -4,6 +4,7 @@
  */
 
 #include "parser.h"
+
 digit(s)
 {
    int c;
