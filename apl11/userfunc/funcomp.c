@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include "apl.h"
+#include "utility.h"
 #include "opt_codes.h"
 
 /*
@@ -100,6 +101,7 @@ struct nlist *np;
       if ( MAXLAB <= (labcpe-labe)/5+1) {
          err_code=ERR_botch;
          err_msg="too many labels, edit MAXLAB in apl.h and recompile";
+#include "utility.h"
          goto out;
       }
       if(gsip->pcode == 0) {

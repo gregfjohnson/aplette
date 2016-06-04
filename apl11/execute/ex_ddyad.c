@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "utility.h"
 
 /* this routine deals with dyadic scalar functions
  * where both of the arguments are floating point (ie double)

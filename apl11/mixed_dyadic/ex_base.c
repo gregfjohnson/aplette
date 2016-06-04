@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 #include "opt_codes.h"
 
 char base_com[] = {ADD, MUL};

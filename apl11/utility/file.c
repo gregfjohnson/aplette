@@ -4,6 +4,7 @@
  */
 #include <stdio.h>
 #include "apl.h"
+#include "utility.h"
 
 opn(file, rw)
 char file[];

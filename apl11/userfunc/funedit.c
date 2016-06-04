@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
 /*
  * funedit -- edit a file and read it in.

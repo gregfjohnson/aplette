@@ -10,6 +10,7 @@
 
 #include <signal.h>
 #include "apl.h"
+#include "utility.h"
 
 char *fpelist[] = {
    "floating exception",

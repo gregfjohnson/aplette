@@ -12,6 +12,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include "apl.h"
+#include "utility.h"
 
 mainloop()
 {

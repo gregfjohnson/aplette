@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include "apl.h"
+#include "utility.h"
 
 struct item * ex_qquad(int io)
 {
