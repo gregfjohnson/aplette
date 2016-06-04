@@ -206,7 +206,7 @@ struct Context {
  * the table was moved to utility/optable.c
  */
 
-extern void   (*exop[])();
+extern int (*exop[])();
 
 double ltod();
 char   *rline();
