@@ -9,8 +9,10 @@
 
 #ifndef UTILITY_H
 #define UTILITY_H
+#include "apl.h"
 
 void error(int type, char *diagnostic);
 int topfix();
+int scalar(struct item *aip);
 
 #endif // UTILITY_H
