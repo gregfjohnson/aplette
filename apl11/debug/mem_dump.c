@@ -13,7 +13,7 @@
 #include "memory.h"
 #include "apl.h"
 
-mem_dump()
+void mem_dump()
 {
    struct memblock *item;
    printf("Dumping dynamic memory... \n");
