@@ -103,7 +103,7 @@ rl_readline_name = "openapl";
    sp = stack;
    fflag = 1;
    ifile = 0;
-   if (signal(SIGINT, intr) == -1) signal(SIGINT, SIG_IGN);
+   if (signal(SIGINT, intr) == SIG_ERR) signal(SIGINT, SIG_IGN);
    printf(headline);
    //setexit();
    if(fflag) {

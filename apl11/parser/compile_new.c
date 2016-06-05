@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include "utility.h"
 #include "parser.h"
 #include "y.tab.h"
 #include "opt_codes.h"
@@ -24,7 +25,7 @@ int     ilex[] =
 };
 
 
-void compile_new(int f)
+char *compile_new(int f)
 {
    char *p, *q;
 
@@ -39,7 +40,7 @@ void compile_new(int f)
       return(0);
    }
    *ccharp++ = END;
-   iline = p = alloc(ccharp-oline);
+   iline = p = (char *) alloc(ccharp-oline);
    for(q=oline; q<ccharp;) *p++ = *q++;
    gsip->pcode=iline;
    return(iline);

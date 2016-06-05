@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include "utility.h"
 #include "parser.h"
 #include "y.tab.h"
 #include "opt_codes.h"
@@ -19,16 +20,8 @@
  *   5 function body
  */
 extern int     ilex[];
-//int     ilex[] =
-//{
-   //lex0, lex1, lex2, lex3, lex4, lex5
-//};
 
-
-char *
-compile_old(s, f)
-char *s;
-{
+char *compile_old(char *s, int f) {
    char *p, *q;
 
    iline = s;
@@ -41,7 +34,7 @@ char *s;
       return(0);
    }
    *ccharp++ = END;
-   iline = p = alloc(ccharp-oline);
+   iline = p = (char *) alloc(ccharp-oline);
    for(q=oline; q<ccharp;) *p++ = *q++;
    return(iline);
 }

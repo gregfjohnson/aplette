@@ -41,24 +41,24 @@ struct Context *thisContext;
 
       if(gsip->pcode != 0){
          gsip->ptr=gsip->pcode;
-	 gsip->sp=sp;
+     gsip->sp=sp;
          execute();
-         aplfree(gsip->pcode);
-	 if(gsip->sp == sp ) ex_nilret();
+         aplfree((int *) gsip->pcode);
+     if(gsip->sp == sp ) ex_nilret();
       }
       else {
          gsip = thisContext->prev;      /* restore previous context */
-         aplfree(thisContext->text);
-	 aplfree(thisContext);
-	        
+         aplfree((int *) thisContext->text);
+         aplfree((int *) thisContext);
+
          error(ERR_implicit,"");
       }
       b += dim1;
       if(i < dim0-1) pop();
    }
-   aplfree(thisContext->text);
+   aplfree((int *) thisContext->text);
    gsip = thisContext->prev;      /* restore previous context */
-   aplfree(thisContext);
+   aplfree((int *) thisContext);
    p = *--sp;
    pop();
    *sp++ = p;
