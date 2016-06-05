@@ -4,6 +4,11 @@
  */
 #include <signal.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 #include "apl.h"
 #include "config.h"
 
@@ -17,9 +22,7 @@ char headline[] =
 #include "patchlevel.h"
 "\n";
 
-main(argc, argp)
-char **argp;
-{
+int main(int argc, char **argp) {
    int pid, sigs, file_id ;
    static int fflag;
    int intr();

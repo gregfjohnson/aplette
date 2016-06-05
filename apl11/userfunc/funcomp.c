@@ -2,11 +2,13 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
-
 #include <stdio.h>
+#include <unistd.h>
+
 #include "apl.h"
 #include "utility.h"
 #include "opt_codes.h"
+#include "memory.h"
 
 /*
  * funcomp - compile functions
@@ -20,9 +22,7 @@
 char *labcpp,*labcpe;
 extern char *catcode();
 
-funcomp(np)
-struct nlist *np;
-{
+void funcomp(struct nlist *np) {
    char labp[MAXLAB*20], labe[MAXLAB*4];
    char  *a, *c; 
    int  i, err, err_code, *p;
@@ -164,7 +164,7 @@ struct nlist *np;
       reverse(labe);
       c=Epilogue->pcode;
       Epilogue->pcode = catcode(labe, c);
-      aplfree(c);
+      aplfree((int *) c);
 
       phase="Phase 3c";
       /* At this point, we have:
@@ -193,7 +193,7 @@ struct nlist *np;
       /* Append the label-prologue to the Prologue */
       a = Prologue->pcode;
       Prologue->pcode = catcode(a,labp);
-      aplfree(a);
+      aplfree((int *) a);
    }
 
    if(code_trace) {
@@ -230,8 +230,8 @@ struct nlist *np;
 
 out:
 //printf("Phase out \n");
-   close(infile);
-   aplfree(iline);
+   fclose(infile);
+   aplfree((int *) iline);
    gsip=original_gsip;	
    if (err_code) {
       if (np->namep) printf("%s in function %s\n", phase, np->namep);

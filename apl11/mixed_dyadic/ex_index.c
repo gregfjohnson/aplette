@@ -8,8 +8,10 @@
 #include "opt_codes.h"
 #include "data.h"
 
-ex_index()
-{
+void ex_elid();
+void index1(int i, int f);
+
+void ex_index() {
    struct item *p, *q;
    int i, j, f, n, lv;
 
@@ -55,7 +57,7 @@ ex_index()
    }
    else {
       p = newdat(q->type, idx.rank, idx.size);
-      copy(IN, idx.dim, p->dim, idx.rank);
+      copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
       *sp++ = p;
       f = 0; /* v[i] */
    }
@@ -74,13 +76,11 @@ ex_index()
    }
 }
 
-ex_elid()
-{
+void ex_elid() {
    *sp++ = newdat(EL, 0, 0);
 }
 
-index1(i, f)
-{
+void index1(int i, int f) {
    struct item *p;
    int j, k;
 

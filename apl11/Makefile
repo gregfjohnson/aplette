@@ -21,10 +21,6 @@ clean:	tidy
 tidy:
 	rm -f $(OBJECTS) core parser/y.tab.* */*.o
 
-
-file_io/Q.o:	file_io/*.c file_io/*.h
-	cd file_io ; $(MAKE)
-
 debug/Q.o:	debug/*.c debug/*.h
 	cd debug ; $(MAKE)
 
@@ -91,6 +87,6 @@ utility/Q.o:	utility/*.c
 work_space/Q.o:	work_space/*.c
 	cd work_space ; $(MAKE)
 
-main/Q.o:	main/*.c main/*.h include/config.h
+main/Q.o: main/*.c include/config.h
 	cd main ; $(MAKE)
 

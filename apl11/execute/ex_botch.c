@@ -5,7 +5,6 @@
 #include "apl.h"
 #include "utility.h"
 
-ex_botch()
-{
+void ex_botch() {
    error(ERR_botch,"implementation");
 }

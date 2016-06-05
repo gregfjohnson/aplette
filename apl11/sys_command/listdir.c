@@ -2,15 +2,12 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <dirent.h> 
  
 #include "apl.h"
 #include "utility.h"
-/* #include <string.h> */
-#include <dirent.h> 
 
-
-listdir()
-{
+void listdir() {
    DIR *thisDirectory;
    struct dirent *entry;
    int widest, i;

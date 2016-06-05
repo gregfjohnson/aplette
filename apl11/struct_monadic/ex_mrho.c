@@ -3,9 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 
-ex_mrho()
-{
+void ex_mrho() {
    struct item *p, *q;
    data *dp;
    int i;
@@ -17,4 +17,3 @@ ex_mrho()
    pop();
    *sp++ = q;
 }
-

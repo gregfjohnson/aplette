@@ -9,6 +9,7 @@ OBJECTS = eval_qlx.o ex_crp.o ex_float.o ex_open.o ex_seek.o iofname.o \
 	ex_close.o ex_exit.o ex_nc.o ex_read.o ex_wait.o \
 	ex_create.o ex_fdef.o ex_nl.o ex_run.o ex_write.o ex_ex.o
 
+all: Q.o
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)

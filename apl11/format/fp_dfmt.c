@@ -14,6 +14,7 @@
 #include "utility.h"
 #include "format.h"
 #include "data.h"
+#include "memory.h"
 
 /* dyadic format for floating point data */
 

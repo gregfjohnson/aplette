@@ -2,14 +2,14 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+#include <fcntl.h>
+
 #include "apl.h"
 #include "utility.h"
 
 char *iofname();
 
-ex_open()
-{
+void ex_open() {
    struct item *p;
    int m;
 
@@ -17,4 +17,3 @@ ex_open()
    SECURITY_CHECK;
    iodone(open(iofname(), m));
 }
-

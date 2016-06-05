@@ -2,14 +2,14 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdio.h>
 
 #include "apl.h"
-#include <stdio.h>
+#include "data.h"
 #include "char.h"
 
-ex_prws()
 /* Print Workspace */
-{
+void ex_prws() {
    struct nlist *np;
    struct item *ip;
    int i;
@@ -27,7 +27,7 @@ ex_prws()
             for(i=0; i < ip->rank; i++) printf("%d ", ip->dim[i]);
             printf(S_RHO "\n");
          }
-         *sp++ = np;
+         *sp++ = (struct item *) np;
          ex_print();
          pop();
          putchar('\n');
@@ -36,7 +36,7 @@ ex_prws()
       case NF:
       case MF:
       case DF:
-         *sp++ = np;
+         *sp++ = (struct item *) np;
          ex_list();
          putchar('\n');
          break;

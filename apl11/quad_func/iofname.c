@@ -4,16 +4,16 @@
  */
  
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
    static char b[200];
 
-char *iofname(m)
-{
+char *iofname(int m) {
    struct item *p;
 
    p = fetch1();
    if(p->type != CH || p->rank > 1) error(ERR_implicit,"file name");
-   copy(CH, p->datap, b, p->size);
+   copy(CH, (char *) p->datap, (char *) b, p->size);
    b[p->size] = 0;
    pop();
    return(b);

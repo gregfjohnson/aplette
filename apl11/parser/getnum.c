@@ -7,7 +7,7 @@
 #include "char.h"
 #include "y.tab.h"
 
-getnum(ic)
+int getnum(ic)
 {
    double d1, d2;
    int c, n, n1, s, s1;

@@ -2,12 +2,13 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+#include <unistd.h>
+
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 
-ex_pipe()
-{
+void ex_pipe() {
    struct item *p;
    int pp[2];
 
@@ -21,4 +22,3 @@ ex_pipe()
    pop();
    *sp++ = p;
 }
-

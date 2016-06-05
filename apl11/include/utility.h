@@ -18,5 +18,9 @@ void pline(char *str, int loc, int ln);
 int fix(data d);
 void checksp();
 void fppinit(int arg);
+int fuzz(data d1, data d2);
+void map(int o);
+void iodone(int ok);
+int empty(int fd);
 
 #endif // UTILITY_H

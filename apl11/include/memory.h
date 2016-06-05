@@ -2,6 +2,8 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#ifndef MEMORY_H
+#define MEMORY_H
 
 struct memblock {
 	int *block;
@@ -13,4 +15,7 @@ struct memblock *firstblock;
 extern int mem_trace;
 
 void afreset();
+int *alloc();
 void aplfree(int *ap);
+
+#endif

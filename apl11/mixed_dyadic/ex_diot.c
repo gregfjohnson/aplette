@@ -4,16 +4,17 @@
  */
 
 #include "apl.h"
+#include "utility.h"
+#include "data.h"
 
-ex_diot()
-{
+void ex_diot() {
    struct item *p, *q, *r;
    int i, j;
 
    p = fetch2();
    q = sp[-2];
    r = newdat(DA, q->rank, q->size);
-   copy(IN, q->dim, r->dim, q->rank);
+   copy(IN, (char *) q->dim, (char *) r->dim, q->rank);
    for(i=0; i<q->size; i++) {
       datum = getdat(q);
       p->index = 0;

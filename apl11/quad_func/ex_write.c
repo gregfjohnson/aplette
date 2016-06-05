@@ -2,13 +2,14 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <unistd.h>
  
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
-ex_write()
-{
+void ex_write() {
    int fd, m;
    struct item *p;
    int mult;         /* Multiplier (data size) */
@@ -22,4 +23,3 @@ ex_write()
    pop();
    iodone(m);
 }
-

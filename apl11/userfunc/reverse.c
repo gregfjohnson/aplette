@@ -6,9 +6,7 @@
 #include "apl.h"
 #include "opt_codes.h"
 
-reverse(s)
-char *s;
-{
+void reverse(char *s) {
    char *p, *q, c;
    int j;
 
@@ -25,4 +23,3 @@ char *s;
       p -= j;
    }
 }
-

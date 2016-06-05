@@ -6,6 +6,8 @@ CFLAGS += -I../include
 OBJECTS = print.o ex_hprint.o ex_print.o\
 	fp_print.o lt_print.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

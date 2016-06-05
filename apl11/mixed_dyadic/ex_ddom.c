@@ -5,11 +5,17 @@
  
 #include <math.h>
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
-#include "utility.h"
+#include "memory.h"
 
-ex_ddom()
-{
+static int lsq(data *dmn, data *dn1, data *dn2, data *dn3, data *dm, int *in,
+        int n, int m, int p,
+        data *d1, data *d2);
+
+static void solve(int m, int n, data *dmn, data *dn2, int *in, data *dm, data *dn1);
+
+void ex_ddom() {
    struct item *p, *q;
    int a, b, m, n, o, *in;
    data *d1, *dmn, *dn1, *dn2, *dn3, *dm;
@@ -26,7 +32,7 @@ ex_ddom()
    if(m < n || m != p->dim[0]) error(ERR_rank,"domino - mismatch");
    o = 1;
    if(p->rank == 2) o = p->dim[1];
-   al = alloc(n*(SINT + SDAT*m + SDAT*3) + SDAT*m);
+   al = (char *) alloc(n*(SINT + SDAT*m + SDAT*3) + SDAT*m);
    if(al == 0) error(ERR,"domino - unable to allocate memory");
    dmn = (data *)al;
    dn1 = dmn + m*n;
@@ -39,7 +45,7 @@ ex_ddom()
       for(a=0; a<n; a++) dmn[a*m+b] = *d1++;
    }
    a = lsq(dmn, dn1, dn2, dn3, dm, in, m, n, o, p->datap, q->datap);
-   aplfree(dmn);
+   aplfree((int *) dmn);
    if(a) error(ERR,"domino - could not solve");
    sp--;
    pop();
@@ -48,10 +54,9 @@ ex_ddom()
    p->size = n*o;
 }
 
-lsq(dmn, dn1, dn2, dn3, dm, in, m, n, p, d1, d2)
-data *dmn, *dn1, *dn2, *dn3, *dm;
-data *d1, *d2;
-int *in;
+static int lsq(data *dmn, data *dn1, data *dn2, data *dn3, data *dm, int *in,
+        int n, int m, int p,
+        data *d1, data *d2)
 {
    data *dp1, *dp2;
    double f1, f2, f3, f4;
@@ -185,10 +190,7 @@ int *in;
    return(0);
 }
 
-solve(m, n, dmn, dn2, in, dm, dn1)
-data *dmn, *dn1, *dn2, *dm;
-int *in;
-{
+static void solve(int m, int n, data *dmn, data *dn2, int *in, data *dm, data *dn1) {
    data *dp1, *dp2;
    int i, j, k;
    double f1, f2;

@@ -3,10 +3,10 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 
-ex_drho()
-{
+void ex_drho() {
    struct item *p, *q, *r;
    int s, i;
    data *dp;
@@ -51,7 +51,7 @@ null_ok:
    while(s > 0) {
       i = s;
       if(i > q->size) i = q->size;
-      cp += copy(q->type, q->datap, cp, i);
+      cp += copy(q->type, (char *) q->datap, (char *) cp, i);
       s -= i;
    }
 end:	

@@ -2,17 +2,18 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdio.h>
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
-#include <stdio.h>
 #include "char.h"
+#include "memory.h"
 
-ex_crp() 
 /* quad CR - character representation
  * convert a function into a character array */
 
-{
+void ex_crp() {
    char name[NAMS], *iline, *c, *c2, *dp;
    struct nlist *np;
    struct item *p;
@@ -24,7 +25,7 @@ ex_crp()
       error(ERR_length, S_QUAD "cr");
 
    /* set up the name in search format     */
-   copy(CH, p->datap, name, p->size);
+   copy(CH, (char *) p->datap, (char *) name, p->size);
    name[p->size] = '\0';
    np = nlook(name);
 
@@ -45,7 +46,7 @@ ex_crp()
    /* look up function     */
    fseek( infile, (long)np->label, 0);
    
-   iline=alloc(LINEMAX);
+   iline = (char *) alloc(LINEMAX);
    /* alloc is a wrapper for malloc, probably takes care of
     * dynamic memory alloaction.
     */
@@ -78,11 +79,11 @@ ex_crp()
          else *dp++ = ' ';    /* fill w/blanks*/
       }
    }
-   aplfree(iline);
+   aplfree((int *) iline);
 
    /* put the new array on the stack       */
    *sp++ = p;
 
    /* reset the current file               */
-   close(infile);
+   fclose(infile);
 }

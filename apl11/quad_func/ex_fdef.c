@@ -2,13 +2,15 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <unistd.h>
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
+#include "memory.h"
 
-ex_fdef()
-{
+void ex_fdef() {
    struct item *p;
    char *p1, *p2;
    struct nlist *np;
@@ -36,15 +38,15 @@ ex_fdef()
    dim0 = p->dim[0];
    dim1 = p->dim[1];
    if(p->rank == 1) dim1 = dim0;
-   copy(CH, p->datap, b, dim1);
+   copy(CH, (char *) p->datap, (char *) b, dim1);
    b[dim1] = '\n';
 
    p2 = compile_old(b, 2);
    if(p2 != 0){
-      copy(IN, p2+1, &np, 1);
+      copy(IN, (char *) p2+1, (char *) &np, 1);
       erase(np);
       np->use = *p2;
-      aplfree(p2);
+      aplfree((int *) p2);
    
       np->label = lseek(wfile, 0L, 2);
       fappend(wfile, p);
@@ -53,4 +55,3 @@ ex_fdef()
    pop();
    *sp++ = newdat(DA, 1, 0);
 }
-

@@ -2,12 +2,12 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+#include <signal.h>
+
 #include "apl.h"
 #include "utility.h"
 
-ex_kill()
-{
+void ex_kill() {
    int pid, signo;
 
    SECURITY_CHECK;
@@ -16,4 +16,3 @@ ex_kill()
    kill(pid, signo);
    *sp++ = newdat(DA, 1, 0);
 }
-

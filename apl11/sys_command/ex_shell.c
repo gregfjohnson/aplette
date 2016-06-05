@@ -2,10 +2,11 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdlib.h>
 
 #include "apl.h"
 
-ex_shell(){
+void ex_shell() {
 
    /* If the environment variable SHELL is defined, attempt to
     * execute that shell.  If not, or if that exec fails, attempt

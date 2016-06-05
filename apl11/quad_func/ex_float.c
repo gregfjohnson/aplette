@@ -6,8 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-ex_float()
-{
+void ex_float() {
 
    /* Convert characters into either double-precision (apl)
     * or single-precision (apl2) format.  (Involves only
@@ -25,4 +24,3 @@ ex_float()
    p->size /= sizeof datum;                  /* Reduce size */
    p->type = DA;                           /* Change data type */
 }
-

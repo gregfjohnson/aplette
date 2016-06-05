@@ -10,18 +10,24 @@
  * the docs directory.
  */
 
+// #define ASCII_INPUT
+
 /* Use GNU readline routine to get a line of user input */
 /* Read a string, and return a pointer to it.  Returns NULL on EOF. */
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "apl.h"
+#include <stdlib.h>
+#include <unistd.h>
 #include "config.h"
 #include "history.h"
-#include "ascii_input.h"
+#include "memory.h"
+#include "apl.h"
 
-#define ASCII_INPUT
+#ifdef ASCII_INPUT
+#include "ascii_input.h"
+#endif
 
 /* A static variable for holding a line of user input */
 static char *line_read = (char *)NULL;
@@ -64,6 +70,7 @@ char *getinput(prompt)
 #warning Readline support has not been included!
   {
 #endif
+     char *line;
      printf("%s",prompt);
      /* Get a line from the user. */
 

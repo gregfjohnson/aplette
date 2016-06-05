@@ -5,6 +5,8 @@ CFLAGS += -I../include
 
 OBJECTS =  afreset.o alloc.o aplfree.o
 
+all : Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

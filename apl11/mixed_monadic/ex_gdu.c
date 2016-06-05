@@ -4,19 +4,18 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
-int   gdu();
+int gdu(int *p1, int *p2);
 
-ex_gdu()
-{
+void ex_gdu() {
    struct item *p;
 
    p = fetch1();
    gd0(p->rank-1, gdu);
 }
 
-ex_gduk()
-{
+void ex_gduk() {
    int k;
 
    k = topfix() - iorigin;
@@ -24,9 +23,7 @@ ex_gduk()
    gd0(k, gdu);
 }
 
-int gdu(p1, p2)
-int *p1, *p2;
-{
+int gdu(int *p1, int *p2) {
    struct item *p;
    data d1, d2;
 
@@ -41,4 +38,3 @@ int *p1, *p2;
    }
    return(*p1 - *p2);
 }
-

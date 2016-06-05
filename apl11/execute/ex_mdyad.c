@@ -1,4 +1,5 @@
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 
 /* this routine deals with dyadic scalar functions
@@ -7,11 +8,8 @@
  * it adjusts the shape of the arguments as required
  */
  
-
-ex_mdyad(f, ap, ap1)   /* function added by tyl */
-data (*f)();
-struct item *ap, *ap1;
-{
+/* function added by tyl */
+void ex_mdyad(data (*f)(), struct item *ap, struct item *ap1) {
    int i, j;
    struct item *p, *p1, *p2;
    data d;
@@ -60,4 +58,3 @@ struct item *ap, *ap1;
    pop();
    *sp++ = p2;
 }
-

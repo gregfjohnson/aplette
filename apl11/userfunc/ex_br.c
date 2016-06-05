@@ -5,12 +5,10 @@
 
 #include "apl.h"
 
-ex_br()
-{
+void ex_br() {
    struct item *p;
 
    p = fetch1();
    if(p->size == 0) return;
    gsip->funlc = fix(getdat(p));
 }
-

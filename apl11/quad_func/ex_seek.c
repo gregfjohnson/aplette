@@ -2,13 +2,14 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+#include <unistd.h>
+
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
-ex_seek()
-{
+void ex_seek() {
    struct item *p;
    int k1, k3;
    long k2;
@@ -25,4 +26,3 @@ ex_seek()
    pop();
    iodone(k1);
 }
-

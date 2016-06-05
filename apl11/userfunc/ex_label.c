@@ -12,8 +12,7 @@
  *   (where CONST is the label address)
  */
 
-ex_label()
-{
+void ex_label() {
    struct nlist *n;
 
    ex_asgn();
@@ -21,4 +20,3 @@ ex_label()
    n->itemp->type = LBL;         /* lock out assignments */
    sp--;                     /* discard stack */
 }
-

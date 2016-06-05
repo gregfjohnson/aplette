@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 
 /* this routine deals with dyadic scalar functions
@@ -10,10 +11,7 @@
  * it adjusts the shape of the arguments as required
  */
 
-ex_ddyad(f, ap, ap1)
-data (*f)();
-struct item *ap, *ap1;
-{
+void ex_ddyad(data (*f)(), struct item *ap, struct item *ap1) {
    int i;
    struct item *p;
    struct item *p1;
@@ -65,4 +63,3 @@ struct item *ap, *ap1;
    }
    pop();
 }
-

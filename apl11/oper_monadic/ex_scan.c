@@ -8,33 +8,31 @@
 #include "opt_codes.h"
 #include "data.h"
 
-ex_scn0()
-{
+void scan0(int k);
+void scan1(data *param[]);
+
+void ex_scn0() {
    fetch1();
    scan0(0);
 }
 
-ex_scan()
-{
+void ex_scan() {
    struct item *p;
 
    p = fetch1();
    scan0(p->rank-1);
 }
 
-ex_scnk()
-{
+void ex_scnk() {
    int i;
 
    i = topfix() - iorigin;
    scan0(i);
 }
 
-scan0(k)
-{
+void scan0(int k) {
    struct item *p, *q;
    data *param[2];
-   int scan1();
 
    p = fetch1();
    if(p->type != DA) error(ERR_domain,"not numeric data");
@@ -75,9 +73,7 @@ scan0(k)
    forloop(scan1, param);
 }
 
-scan1(param)
-data *param[];
-{
+void scan1(data *param[]) {
    int i, j;
    data *dp, *ip, d, (*f)();
 

@@ -2,14 +2,16 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdlib.h>
 
 #include "apl.h"
 #include "utility.h"
 #include "data.h"
 
-ex_take()
-{
-   int takezr();
+int td1(int tdmode);
+void takezr(int *fill);
+
+void ex_take() {
    int i, k, o, fill[MRANK], fflg;
 
    /* While TANSTAAFL, in APL there is a close approximation.  It
@@ -45,7 +47,7 @@ ex_take()
    }
 }
 
-ex_drop()
+void ex_drop()
 {
    int i, k, o;
 
@@ -60,8 +62,7 @@ ex_drop()
    map(o);
 }
 
-td1(tdmode)
-{
+int td1(int tdmode) {
    struct item *p, *q, *nq, *s2vect();
    int i, k;
    int r;               /* set to 1 if take > array dim */
@@ -97,9 +98,7 @@ td1(tdmode)
    return(r);
 }
 
-takezr(fill)
-int *fill;
-{
+void takezr(int *fill) {
    struct item *p;
    int i;
 

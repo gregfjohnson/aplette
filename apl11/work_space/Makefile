@@ -5,6 +5,8 @@ CFLAGS += -I../include
 
 OBJECTS = ws_clear.o ws_load.o ws_save.o fdat.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

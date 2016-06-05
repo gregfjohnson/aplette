@@ -5,8 +5,7 @@
  
 #include "apl.h"
 
-void iodone(int ok)
-{
+void iodone(int ok) {
    struct item *p;
 
    p = newdat(DA, 0, 1);

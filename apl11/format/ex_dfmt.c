@@ -11,6 +11,7 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "format.h"
 

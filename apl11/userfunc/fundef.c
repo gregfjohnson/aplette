@@ -2,9 +2,12 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdio.h>
+#include <unistd.h>
 
 #include "apl.h"
-#include <stdio.h>
+#include "data.h"
+#include "memory.h"
 
 /*
  * fundef - defines a function
@@ -16,8 +19,7 @@
  * It uses a mix of buffered and nonbuf IO.
  */
  
-int fundef(f)
-{
+int fundef(int f) {
    int a;
    char *iline, *status, *c;
    struct nlist *np;
@@ -26,7 +28,7 @@ int fundef(f)
 
    infile=fdopen(f,"r");	/* duplicate unbuffered file f into
    				 * buffered file infile */
-   iline=alloc(LINEMAX);
+   iline= (char *) alloc(LINEMAX);
    /* alloc is a wrapper for malloc, probably takes care of
     * dynamic memory alloaction.
     */
@@ -36,19 +38,19 @@ int fundef(f)
       return(0);
    };
    c = compile_old(iline, 2);
-   aplfree(iline);
+   aplfree((int *) iline);
    if (c == 0 ) goto out;
-   copy(IN, c+1, &np, 1);
+   copy(IN, (char *) c+1, (char *) &np, 1);
    sichk(np);
    erase(np);
    np->use = ((struct chrstrct *)c)->c[0];
-   aplfree(c);
+   aplfree((int *) c);
    np->label = lseek(wfile, 0L, 2);
    fseek(infile, 0L, 0); /* set file pointer to BOF */
    while((a=fread(b, 1, 512, infile)) > 0) write(wfile, b, a);
    write(wfile, "", 1);
 out:
-   close(infile);
+   fclose(infile);
    return(1);
 }
 

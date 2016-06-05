@@ -6,8 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-ex_menc()
 /* monadic encode */
-{
+void ex_menc() {
    error(ERR,"Monadic encode not supported");
 }

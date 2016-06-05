@@ -4,6 +4,7 @@
 #include "apl.h"
 #include "ascii_input.h"
 #include "char.h"
+#include "memory.h"
 
 void error(int type, char *diagnostic);
 

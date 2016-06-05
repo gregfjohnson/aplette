@@ -5,9 +5,7 @@
 
 #include "apl.h"
 
-ex_br0()
-{
+void ex_br0() {
    gsip->funlc = 0;
    ex_elid();
 }
-

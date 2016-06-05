@@ -2,12 +2,12 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <unistd.h>
 
 #include "apl.h"
 #include "utility.h"
 
-ex_dibm()
-{
+void ex_dibm() {
    int j, arg;
    struct item *p;
 
@@ -41,4 +41,3 @@ ex_dibm()
    p->datap[0] = datum;
    *sp++ = p;
 }
-

@@ -4,9 +4,9 @@
  */
 
 #include "apl.h"
+#include "data.h"
 
-ex_rest()
-{
+void ex_rest() {
    struct item *p;
    struct nlist *np;
 
@@ -47,7 +47,7 @@ ex_rest()
     *   --jjb
    if(p->type == LV) error(ERR_botch,"rest B");
     */
-   gsip->ptr += copy(IN, gsip->ptr, &np, 1);
+   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
    erase(np);
    np->itemp = sp[-2];
    np->use = 0;
@@ -55,4 +55,3 @@ ex_rest()
    sp--;
    sp[-1] = p;
 }
-

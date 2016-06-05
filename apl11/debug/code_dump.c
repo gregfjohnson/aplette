@@ -4,8 +4,10 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "char.h"
 #include "opt_codes.h"
+#include "data.h"
 
 /* WARNING, the following must agree with opt_codes.h and optcodes.c */
 
@@ -196,10 +198,7 @@ char *sysops[] = {
    "memory",	/* 32 */
 };
 
-
-void code_dump(cp, flag)
-char *cp;
-{
+void code_dump(char *cp, int flag) {
    char *s, *t;
    int i;
 
@@ -250,7 +249,7 @@ loop:
    case AUTO:
    case REST:
    case RVAL:
-      s += copy(IN, s, &cp, 1);
+      s += copy(IN, (char *) s, (char *) &cp, 1);
       putchar('-');
       t = ((struct nlist *)cp)->namep;
       while(*t) putchar(*t++);

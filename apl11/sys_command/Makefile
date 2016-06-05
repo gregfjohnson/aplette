@@ -5,6 +5,8 @@ CFLAGS += -I../include
 
 OBJECTS = ex_syscom.o ex_prws.o ex_shell.o listdir.o ex_list.o 
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

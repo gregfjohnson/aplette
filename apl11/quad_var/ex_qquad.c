@@ -9,10 +9,13 @@
  * For more details see the GNU General Public License (GPL) in
  * the docs directory.
  */
-
 #include <stdio.h>
+#include <unistd.h>
+
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
+#include "memory.h"
 
 struct item * ex_qquad(int io)
 {
@@ -27,8 +30,8 @@ char *iline,*getinput();
       if(iline == NULL) error(ERR,"user input was null");
       for(i=0; iline[i] != '\n'; i++) ;
       p=newdat(CH, 1, i);
-      copy(CH, iline, p->datap, i);
-      aplfree(iline);
+      copy(CH, (char *) iline, (char *) p->datap, i);
+      aplfree((int *) iline);
       iline=(char *)NULL;
       quote_quad_prompt[0]='\0';
       return(p);
@@ -42,7 +45,7 @@ char *iline,*getinput();
       if(p->size > quote_quad_limit ) error(ERR_limit,"assign value too long");
       if(quote_quad_prompt[0] != '\0' ) 
          error(ERR_limit,"quote quad prompt not empty");
-      copy(CH, p->datap, &quote_quad_prompt,p->size);
+      copy(CH, (char *) p->datap, (char *) &quote_quad_prompt,p->size);
       quote_quad_prompt[p->size]='\0';
       return(0);
    }

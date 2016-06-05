@@ -2,12 +2,13 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+#include <unistd.h>
+
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 
-ex_ap()
-{
+void ex_ap() {
    int i, fd;
    struct item *p;
 
@@ -20,4 +21,3 @@ ex_ap()
    pop();
    *sp++ = newdat(DA, 1, 0);
 }
-

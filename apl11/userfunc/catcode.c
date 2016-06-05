@@ -3,6 +3,8 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
+#include "memory.h"
 
 char *
 catcode(s1,s2)

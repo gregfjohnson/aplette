@@ -4,19 +4,18 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
 int   gdd();
 
-ex_gdd()
-{
+void ex_gdd() {
    struct item *p;
 
    p = fetch1();
    gd0(p->rank-1, gdd);
 }
 
-ex_gddk()
-{
+void ex_gddk() {
    int k;
 
    k = topfix() - iorigin;
@@ -24,9 +23,7 @@ ex_gddk()
    gd0(k, gdd);
 }
 
-gdd(p1, p2)
-int *p1, *p2;
-{
+int gdd(int *p1, int *p2) {
    struct item *p;
    data d1, d2;
 

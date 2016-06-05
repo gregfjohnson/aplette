@@ -5,6 +5,8 @@ CFLAGS += -I../include
 
 OBJECTS = ex_iprod.o ex_oprod.o ex_asgn.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

@@ -6,6 +6,7 @@
 #include "parser.h"
 #include "y.tab.h"
 #include "opt_codes.h"
+#include "memory.h"
 
 /*
  * s is statement

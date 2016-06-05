@@ -10,9 +10,7 @@
  * onto the stack
  */
 
-ex_nilret()
-{
+void ex_nilret() {
    checksp();
    *sp++ = newdat(NIL,0,0);
 }
-

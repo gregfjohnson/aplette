@@ -2,12 +2,15 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <unistd.h>
 
 #include "apl.h"
 #include "utility.h"
+#include "fdat.h"
 
-wssave(ffile)
-{
+int nsave(int ffile, struct nlist *an);
+
+void wssave(int ffile) {
    struct nlist *n;
 
    nsave(ffile, 0);
@@ -16,9 +19,7 @@ wssave(ffile)
    close(ffile);
 }
 
-nsave(ffile, an)
-struct nlist *an;
-{
+int nsave(int ffile, struct nlist *an) {
    char c, buffer[64];
    int i, n, size;
    struct item *p;

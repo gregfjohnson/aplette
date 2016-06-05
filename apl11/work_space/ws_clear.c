@@ -3,11 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
-/* #include <string.h>
-#include <dirent.h> */
+#include "memory.h"
 
-clear()
-{
+void clear() {
    struct nlist *n;
 
    for(n=nlist; n->namep; n++) {

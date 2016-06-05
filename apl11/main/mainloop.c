@@ -9,17 +9,17 @@
  * For more details see the GNU General Public License (GPL) in
  * the docs directory.
  */
+#include "memory.h"
 #include <signal.h>
 #include <stdio.h>
 #include "apl.h"
 #include "exit.h"
 #include "utility.h"
 
-mainloop()
-{
-int lineLength;
-char *getinput();
-struct Context *thisContext;
+void mainloop() {
+    int lineLength;
+    char *getinput();
+    struct Context *thisContext;
   
    while(1){
       /* return to this point after an error */
@@ -42,8 +42,8 @@ struct Context *thisContext;
       } 
 
       gsip->Mode=immed;
-      if (gsip->pcode) aplfree(gsip->pcode); gsip->pcode=(char *)NULL;
-      if (gsip->text) aplfree(gsip->text); gsip->text=(char *)NULL;
+      if (gsip->pcode) aplfree((int *) gsip->pcode); gsip->pcode=(char *)NULL;
+      if (gsip->text) aplfree((int *) gsip->text); gsip->text=(char *)NULL;
 
       lineNumber = -1;
       if(echoflg) echoflg = 1;   /* enabled echo echo suppress off */

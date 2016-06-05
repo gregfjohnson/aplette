@@ -4,14 +4,14 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "char.h"
 
 /*
  * check for latent expr quad LX and evaluate it if found
  */
 
-eval_qlx()
-{
+void eval_qlx() {
    struct nlist *n;
    struct item *p;
 
