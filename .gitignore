@@ -16,3 +16,5 @@ printer/apl2epson
 printer/apl2gs
 script/apl-setup
 script/aplrc
+qa/*.dif
+qa/*.out

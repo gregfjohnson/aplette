@@ -22,7 +22,8 @@ apl11
 is an implementation of APL that has been around since the 1970's.
 This incarnation has been developed to run on Linux, X11
 and any emulated terminal that can support eight bit characters
-and the unique APL font.
+and the unique APL font.  It also has an ascii-only mode, in
+which short ascii character sequences are mapped to APL characters.
 
 
 .SH OPTIONS
@@ -64,6 +65,15 @@ readline command input.
 .TP
 .B " -t "
 Create temporary files in $CWD rather than in /tmp .
+
+.TP
+.B " -a "
+Use standard 7-bit ASCII, and translate character sequences
+to the special APL characters.  For the most part, the character
+sequences match the locations of characters on an APL keyboard,
+except that the "@" character (which is not used in APL) is used
+instead of backspace.  For example, upper-case "R" maps to the APL
+"rho" character.  "O@*" maps to the apl "log" character.
 
 .TP
 .B " -s "

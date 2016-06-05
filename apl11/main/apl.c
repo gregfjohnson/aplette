@@ -56,6 +56,7 @@ rl_readline_name = "openapl";
    /* other flags... */
    echoflg = !isatty(0);
    use_readline=0;
+   ascii_characters=0;
 
    /* diagnostics */
    mem_trace = 0;	/* dynamic memory allocation */
@@ -72,6 +73,7 @@ rl_readline_name = "openapl";
       case 'D':   sigs = 0; break;
       case 'c':
       case 'C':   mkcore = 1;   break;
+      case 'a':   ascii_characters=1; break;
       case 'r':   use_readline=1; break;
       case 't':   scr_file  += 5;
                   ws_file += 5; break;

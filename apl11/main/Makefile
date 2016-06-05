@@ -3,7 +3,7 @@
 include ../include/makefile.common
 CFLAGS += -I../include
 
-OBJECTS = mainloop.o exit.o apl.o getinput.o
+OBJECTS = mainloop.o exit.o apl.o getinput.o history.o ascii_input.o
 
 all: Q.o
 
