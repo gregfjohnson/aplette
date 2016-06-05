@@ -6,14 +6,14 @@
 #include "utility.h"
 #include "data.h"
 
-ex_rot0()
-{
+static void rotk(int k);
+
+void ex_rot0() {
 	fetch2();
 	rotk(0);
 }
 
-ex_rotk()
-{
+void ex_rotk() {
 	int k;
 
 	k = topfix() - iorigin;
@@ -21,8 +21,7 @@ ex_rotk()
 	rotk(k);
 }
 
-ex_rot()
-{
+void ex_rot() {
 	struct item *p;
 
 	fetch2();
@@ -30,10 +29,10 @@ ex_rot()
 	rotk(p->rank-1);
 }
 
-rotk(k)
-{
+static void rotk(int k) {
 	struct item *p, *q;
-	int param, rot1();
+	int param;
+    void rot1();
 
 	p = sp[-1];
 	bidx(sp[-2]);
@@ -52,7 +51,7 @@ rotk(k)
 	pop();
 }
 
-rot1(param)
+void rot1(int param)
 {
 	struct item *p, *q;
 	int i;

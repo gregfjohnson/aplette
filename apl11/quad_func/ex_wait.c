@@ -3,14 +3,16 @@
  * subject to the conditions expressed in the file "License".
  */
 #include <signal.h>
+#include <sys/wait.h>
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 
-ex_wait()
-{
+void ex_wait() {
    struct item *p;
-   int (*sig)(), pid;
+   void (*sig)(int);
+   pid_t pid;
    int s;
 
    SECURITY_CHECK;
@@ -24,4 +26,3 @@ ex_wait()
    pop();      /* dummy arg */
    *sp++ = p;
 }
-

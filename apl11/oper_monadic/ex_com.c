@@ -7,14 +7,15 @@
 #include "utility.h"
 #include "data.h"
 
-ex_com0()
-{
+void com1(int k);
+void comk(int k);
+
+void ex_com0() {
    fetch2();
    comk(0);
 }
 
-ex_comk()
-{
+void ex_comk() {
    int k;
 
    k = topfix() - iorigin;
@@ -22,8 +23,7 @@ ex_comk()
    comk(k);
 }
 
-ex_com()
-{
+void ex_com() {
    struct item *q;
 
    fetch2();
@@ -31,11 +31,10 @@ ex_com()
    comk(q->rank-1);
 }
 
-comk(k)
-{
+void comk(int k) {
    struct item *p;
    data d;
-   int i, dk, ndk, com1();
+   int i, dk, ndk;
 
    p = sp[-1];
    bidx(sp[-2]);
@@ -83,7 +82,7 @@ comk(k)
       if(getdat(p)) ndk++;
    }
    p = newdat(idx.type, idx.rank, (idx.size/dk)*ndk);
-   copy(IN, idx.dim, p->dim, idx.rank);
+   copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
    p->dim[k] = ndk;
    *sp++ = p;
    forloop(com1, k);
@@ -93,8 +92,7 @@ comk(k)
    *sp++ = p;
 }
 
-com1(k)
-{
+void com1(int k) {
    struct item *p;
 
    p = sp[-2];
@@ -105,6 +103,3 @@ com1(k)
       putdat(sp[-1], getdat(p));
    }
 }
-
-
-

@@ -2,13 +2,14 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <unistd.h>
  
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
-ex_rd()
-{
+void ex_rd() {
    /* note:
     * an empty line is converted to NULL.
     * no '\n' chars are returned.
@@ -24,9 +25,8 @@ ex_rd()
    if(i == 200) error(ERR_limit,"input buffer overflow");
    if(i > 0){
       p = newdat(CH, 1, i);
-      copy(CH, buf, p->datap, i);
+      copy(CH, (char *) buf, (char *) p->datap, i);
    }
    else p = newdat(CH, 1, 0);
    *sp++ = p;
 }
-

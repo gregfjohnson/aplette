@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
@@ -11,8 +12,7 @@
  * immediate niladic branch -- reset SI
  */
 
-ex_ibr0()
-{
+void ex_ibr0() {
    struct Context *thisContext;
    int *p;
 
@@ -52,4 +52,3 @@ ex_ibr0()
       longjmp(cold_restart, 1);
    }
 }
-

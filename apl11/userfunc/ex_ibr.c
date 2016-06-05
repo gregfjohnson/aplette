@@ -4,16 +4,17 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
+#include "memory.h"
 
 /*
  * monadic immediate branch -- resume fn at specific line
  */
 
-ex_ibr()
-{
-struct Context *thisContext;
+void ex_ibr() {
+   struct Context *thisContext;
 
    if( gsip == &prime_context || gsip->prev->suspended == 0) {
       error(ERR_implicit,"no suspended fn");
@@ -22,7 +23,7 @@ struct Context *thisContext;
    /* throw away current context */
    thisContext=gsip;
    gsip=gsip->prev;
-   aplfree(thisContext);
+   aplfree((int *) thisContext);
 
    ex_br();
    if(gsip->sp == 0 || sp < gsip->sp) 
@@ -30,4 +31,3 @@ struct Context *thisContext;
    while(sp > gsip->sp) pop();
    longjmp(gsip->env, 0);         /* warp out */
 }
-

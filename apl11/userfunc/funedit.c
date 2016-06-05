@@ -2,6 +2,8 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdlib.h>
+#include <unistd.h>
 
 #include "apl.h"
 #include "utility.h"
@@ -16,9 +18,7 @@
 
 extern	char *bad_fn;
 
-funedit(fname, editor)
-char *fname;
-{
+void funedit(char *fname, char *editor) {
    struct item *p;
    int f, (*a)();
    char *c, cmd[128];

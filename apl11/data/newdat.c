@@ -4,6 +4,7 @@
  */
 #include "apl.h"
 #include "utility.h"
+#include "memory.h"
 
 struct item *
 newdat(int type, int rank, int size)

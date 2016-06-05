@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "opt_codes.h"
 
@@ -204,7 +205,7 @@ void execute()
       break;
 
       case RVAL:      /* de-referenced LVAL */
-         gsip->ptr += copy(IN, gsip->ptr, &p1, 1);
+         gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &p1, 1);
          if(((struct nlist *)p1)->use != DA) ex_nilret();      /* no fn rslt */
          else {
             *sp = fetch(p1);
@@ -213,7 +214,7 @@ void execute()
       break;
    
       case NAME:
-         gsip->ptr += copy(IN, gsip->ptr, sp, 1);
+         gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) sp, 1);
          sp++;
       break;
    
@@ -229,7 +230,7 @@ void execute()
          gsip->ptr++;	/* throw away vcount */
          opcode=strlen(gsip->ptr);
          p = newdat(j, opcode==1?0:1, opcode);
-         gsip->ptr += copy(j, gsip->ptr, p->datap, opcode);
+         gsip->ptr += copy(j, (char *) gsip->ptr, (char *) p->datap, opcode);
          gsip->ptr++;	/* jump past the null termination */
          *sp++ = p;
       break;
@@ -240,7 +241,7 @@ void execute()
       con:
          opcode=*gsip->ptr++;
          p = newdat(j, opcode==1?0:1, opcode);
-         gsip->ptr += copy(j, gsip->ptr, p->datap, opcode);
+         gsip->ptr += copy(j, (char *) gsip->ptr, (char *) p->datap, opcode);
          *sp++ = p;
       break;
    

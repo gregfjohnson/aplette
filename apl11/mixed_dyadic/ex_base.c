@@ -4,12 +4,13 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "opt_codes.h"
 
 char base_com[] = {ADD, MUL};
 
-ex_base()
+void ex_base()
 {
    struct item *extend();
    struct item *p, *q;

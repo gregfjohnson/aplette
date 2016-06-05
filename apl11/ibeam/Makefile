@@ -5,6 +5,7 @@ CFLAGS += -I../include
 
 OBJECTS = ex_dibm.o ex_mibm.o
 
+all: Q.o
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)

@@ -7,14 +7,15 @@
 #include "utility.h"
 #include "data.h"
 
-ex_exd0()
-{
+void exd1(int k);
+void exdk(int k);
+
+void ex_exd0() {
    fetch2();
    exdk(0);
 }
 
-ex_exdk()
-{
+void ex_exdk() {
    int k;
 
    k = topfix() - iorigin;
@@ -22,8 +23,7 @@ ex_exdk()
    exdk(k);
 }
 
-ex_exd()
-{
+void ex_exd() {
    struct item *q;
 
    fetch2();
@@ -31,11 +31,9 @@ ex_exd()
    exdk(q->rank-1);
 }
 
-exdk(k)
-{
+void exdk(int k) {
    struct item *p;
    int i, dk;
-   int exd1();
 
    p = sp[-1];
    bidx(sp[-2]);
@@ -46,7 +44,7 @@ exdk(k)
    idx.dim[k] = p->size;
    size();
    p = newdat(idx.type, idx.rank, idx.size);
-   copy(IN, idx.dim, p->dim, idx.rank);
+   copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
    *sp++ = p;
    forloop(exd1, k);
    sp--;
@@ -55,8 +53,7 @@ exdk(k)
    *sp++ = p;
 }
 
-exd1(k)
-{
+void exd1(int k) {
    struct item *p;
 
    p = sp[-2];

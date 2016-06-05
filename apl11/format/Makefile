@@ -6,6 +6,8 @@ CFLAGS += -I../include
 OBJECTS = ex_mfmt.o fp_mfmt.o fp_digits.o fp2char.o\
 	  ex_dfmt.o fp_dfmt.o fp2char_paded.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

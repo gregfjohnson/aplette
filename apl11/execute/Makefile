@@ -6,6 +6,8 @@ CFLAGS += -I../include
 OBJECTS = ex_dscal.o ex_botch.o ex_cdyad.o ex_ddyad.o execute.o \
           ex_mdyad.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

@@ -4,9 +4,10 @@
  */
 
 #include "apl.h"
+#include "utility.h"
+#include "data.h"
 
-ex_eps()
-{
+void ex_eps() {
    struct item *p, *q, *r;
    int i, j;
    data d;
@@ -14,7 +15,7 @@ ex_eps()
    p = fetch2();
    q = sp[-2];
    r = newdat(DA, p->rank, p->size);
-   copy(IN, p->dim, r->dim, p->rank);
+   copy(IN, (char *) p->dim, (char *) r->dim, p->rank);
    for(i=0; i<p->size; i++) {
       datum = getdat(p);
       d = zero;

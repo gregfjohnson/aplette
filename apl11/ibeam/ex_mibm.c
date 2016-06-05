@@ -8,8 +8,7 @@
 
 int afnfree, afnused;
 
-ex_mibm()
-{
+void ex_mibm() {
    struct tm *tp, *localtime();
    struct Context *gp;
    struct item *p;

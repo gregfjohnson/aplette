@@ -7,6 +7,7 @@ OBJECTS = ex_quad.o ex_qquad.o \
 	ex_qav.o ex_qct.o ex_qio.o ex_qlx.o ex_qpp.o ex_qpw.o \
 	ex_qts.o ex_qai.o
 
+all: Q.o
 
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)

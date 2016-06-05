@@ -5,8 +5,7 @@
 
 #include "parser.h"
 
-digit(s)
-{
+int digit(s) {
    int c;
 
    c = s;
@@ -14,11 +13,7 @@ digit(s)
    return(0);
 }
 
-
-int
-isodigit(c)
-int c;
-{
+int isodigit(int c) {
    if (c < '0') return 0;
    if (c > '7') return 0;
    return 1;

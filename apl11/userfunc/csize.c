@@ -8,9 +8,7 @@
 /*
  * csize -- return size (in bytes) of a compiled string
  */
-csize(s)
-char *s;
-{
+int csize(char *s) {
    int c,len;
    char *p;
    int i;

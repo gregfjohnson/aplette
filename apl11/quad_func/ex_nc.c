@@ -4,11 +4,11 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
-ex_nc()
-{
+void ex_nc() {
    struct nlist *np;
    struct item *p;
    int i;
@@ -17,7 +17,7 @@ ex_nc()
    p = fetch1();
    if(p->type != CH) error(ERR_domain,"");
    if(p->size >= 40 || p->rank > 1) error(ERR_rank,"");
-   copy(CH, p->datap, buf, p->size);
+   copy(CH, (char *) p->datap, (char *) buf, p->size);
    buf[p->size] = 0;
    np = nlook(buf);
    i = 0;

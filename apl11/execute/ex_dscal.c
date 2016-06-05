@@ -14,10 +14,7 @@
  * * ex_ddyad - floating point dyadic (ie type d)
  * * ex_mdyad - mixed dyadic
  */
-ex_dscal(m, f, p1, p2)
-int (*f)();
-struct item *p1, *p2;
-{
+void ex_dscal(int m, int (*f)(), struct item *p1, struct item *p2) {
    if(p1->type != p2->type) { 
       if(m==2) ex_mdyad(f,p1,p2); /* modified 9.8.1999/tyl */
       else error(ERR_domain,"dscal - types do not match");
@@ -28,4 +25,3 @@ struct item *p1, *p2;
    }
    else ex_ddyad(f, p1, p2);
 }
-

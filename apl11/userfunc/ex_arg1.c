@@ -4,16 +4,15 @@
  */
 
 #include "apl.h"
+#include "data.h"
 
-ex_arg1()
-{
+void ex_arg1() {
    struct item *p;
    struct nlist *np;
 
-   gsip->ptr += copy(IN, gsip->ptr, &np, 1);
+   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
    p = fetch1();
    sp[-1] = np->itemp;
    np->itemp = p;
    np->use = DA;
 }
-

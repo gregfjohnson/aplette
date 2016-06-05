@@ -4,15 +4,14 @@
  */
 
 #include "apl.h"
+#include "data.h"
 
-ex_auto()
-{
+void ex_auto() {
    struct nlist *np;
 
-   gsip->ptr += copy(IN, gsip->ptr, &np, 1);
+   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
    checksp();
    *sp++ = np->itemp;
    np->itemp = 0;
    np->use = 0;
 }
-

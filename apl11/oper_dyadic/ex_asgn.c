@@ -6,8 +6,9 @@
 #include "apl.h"
 #include "utility.h"
 #include "char.h"
-ex_asgn()
-{
+#include "data.h"
+
+void ex_asgn() {
    struct nlist *p;
    struct item *q;
    int i;
@@ -41,4 +42,3 @@ ex_asgn()
 
    if(vars_trace) vars_dump();
 }
-

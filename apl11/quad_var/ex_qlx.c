@@ -12,7 +12,9 @@
 
 #include <stdio.h>
 #include "apl.h"
+#include "data.h"
 #include "char.h"
+#include "memory.h"
 
 struct item * ex_qlx(io)
 int io; /* 0 = source, 1 = sink */
@@ -25,7 +27,7 @@ struct nlist *n;
       if(n){
          q = n->itemp;
          p = dupdat(q);
-         copy(q->type, q->datap, p->datap, q->size);
+         copy(q->type, (char *) q->datap, (char *) p->datap, q->size);
       }
       else p = newdat(CH, 1, 0);
       return(p);
@@ -36,7 +38,7 @@ struct nlist *n;
       if(n == 0){ /* allocate new name: */
          for(n=nlist; n->namep; n++) ;
          n->namep = (char *)alloc(4);
-         copy(CH, S_QUAD "lx", n->namep, 4);
+         copy(CH, (char *) S_QUAD "lx", (char *) n->namep, 4);
          n->type = LV;
          n->use = 0;
          n->itemp = newdat(CH, 0, 0);

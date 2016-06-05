@@ -6,9 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-funread(fname)
-char *fname;
-{
+void funread(char *fname) {
    struct item *p;
    int f, pid;
 
@@ -19,4 +17,3 @@ char *fname;
    f = opn(fname, 0);
    return(fundef(f));
 }
-

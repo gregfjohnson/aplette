@@ -4,9 +4,10 @@
  */
 
 #include "apl.h"
+#include "data.h"
 double  floor();
 
-ex_rep()
+void ex_rep()
 {
    struct item *p, *q, *r;
    double d1, d2, d3;
@@ -21,8 +22,8 @@ ex_rep()
    if(scalar(q)) q->rank = 0;
     */
    r = newdat(DA,  p->rank+q->rank,  p->size*q->size);
-   copy(IN, p->dim, r->dim, p->rank);
-   copy(IN, q->dim, r->dim+p->rank, q->rank);
+   copy(IN, (char *) p->dim, (char *) r->dim, p->rank);
+   copy(IN, (char *) q->dim, (char *) r->dim+p->rank, q->rank);
    p3 = &r->datap[r->size];
    for(p1 = &p->datap[p->size]; p1 > p->datap; ){
       d1 = *--p1;

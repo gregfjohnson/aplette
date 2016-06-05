@@ -7,8 +7,9 @@
 #include "utility.h"
 #include "data.h"
 
+static void trn0();
 
-ex_dtrn()
+void ex_dtrn()
 {
    struct item *p, *q;
    int i;
@@ -21,7 +22,7 @@ ex_dtrn()
    trn0();
 }
 
-ex_mtrn()
+void ex_mtrn()
 {
    struct item *p;
    int i;
@@ -32,7 +33,7 @@ ex_mtrn()
    trn0();
 }
 
-trn0()
+void trn0()
 {
    int i, j;
    int d[MRANK], r[MRANK];

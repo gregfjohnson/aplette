@@ -12,12 +12,11 @@
 
 #include "apl.h"
  
-fdat(f)
-{
+void fdat(int f) {
    struct stat b;
    struct tm *p, *localtime();
 
-   fstat(f,&b);
+   fstat(f, &b);
    p = localtime(&b.st_mtime);
 
    printf("  %02d:%02d.%02d",p->tm_hour,p->tm_min,p->tm_sec);

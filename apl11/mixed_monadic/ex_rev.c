@@ -7,14 +7,14 @@
 #include "utility.h"
 #include "data.h"
 
-ex_rev0()
-{
+void revk(int k);
+
+void ex_rev0() {
    fetch1();
    revk(0);
 }
 
-ex_revk()
-{
+void ex_revk() {
    int k;
 
    k = topfix() - iorigin;
@@ -22,16 +22,14 @@ ex_revk()
    revk(k);
 }
 
-ex_rev()
-{
+void ex_rev() {
    struct item *p;
 
    p = fetch1();
    revk(p->rank-1);
 }
 
-revk(k)
-{
+void revk(int k) {
    int o;
 
    bidx(sp[-1]);

@@ -2,13 +2,14 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdlib.h>
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
-ex_run()
-{
+void ex_run() {
    struct item *p;
    data *dp;
    char ebuf[100];
@@ -18,7 +19,7 @@ ex_run()
    p = fetch1();
    if(p->type != CH ) error(ERR_domain,"");
    if(p->rank != 1) error(ERR_rank,"");
-   copy(CH, p->datap, ebuf, p->size);
+   copy(CH, (char *) p->datap, (char *) ebuf, p->size);
    ebuf[p->size] = 0;
    val = system(ebuf);
    p = newdat(DA, 0, 1);
@@ -26,4 +27,3 @@ ex_run()
    pop();
    *sp++ = p;
 }
-

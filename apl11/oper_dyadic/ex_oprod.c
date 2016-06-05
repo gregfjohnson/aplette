@@ -6,8 +6,7 @@
 #include "utility.h"
 #include "data.h"
 
-ex_oprod()
-{
+void ex_oprod() {
    int i, j;
    data *dp, *dp1, *dp2;
    struct item *p, *q, *r;
@@ -26,7 +25,7 @@ ex_oprod()
    bidx(p);
    for(i=0; i<q->rank; i++) idx.dim[idx.rank++] = q->dim[i];
    r = newdat(DA, idx.rank, size());
-   copy(IN, idx.dim, r->dim, idx.rank);
+   copy(IN, (char *) idx.dim, (char *) r->dim, idx.rank);
    dp = r->datap;
    dp1 = p->datap;
    for(i=0; i<p->size; i++) {

@@ -9,6 +9,7 @@
  * For more details see the GNU General Public License (GPL) in
  * the docs directory.
  */
+#include <stdlib.h>
 
 #include "apl.h"
 #include "char.h"

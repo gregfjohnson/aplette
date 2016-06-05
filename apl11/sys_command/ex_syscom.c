@@ -2,13 +2,16 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #include "apl.h"
 #include "utility.h"
 #include "opt_codes.h"
+#include "data.h"
 
-ex_syscom()
-{
+void ex_syscom() {
    int i, *ip, j;
    struct item *p;
    struct nlist *n;
@@ -84,7 +87,7 @@ ex_syscom()
       p = sp[-1];
       sp--;
       purge_name(p);
-      erase(p);
+      erase((struct nlist *) p);
       if(vars_trace) vars_dump();
       return;
 

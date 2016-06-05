@@ -6,9 +6,13 @@
 #include "apl.h"
 #include "utility.h"
 #include "data.h"
+#include "memory.h"
 
-ex_cat()
-{
+static void cat0(int k);
+static int cat1(struct item *ip, int k);
+static void lam0(double d);
+
+void ex_cat() {
    struct item *p, *q, *r;
    int k;
 
@@ -28,8 +32,8 @@ ex_cat()
    else cat0(k-1);
 }
 
-ex_catk()	//cat along index [k]
-{
+//cat along index [k]
+void ex_catk() {
    int k;
    double d, top();
 
@@ -40,8 +44,7 @@ ex_catk()	//cat along index [k]
    else lam0(d);
 }
 
-cat0(k)
-{
+static void cat0(int k) {
    struct item *p, *q, *r;
    int i, a, b;
 
@@ -62,7 +65,7 @@ cat0(k)
    idx.dim[i] = a+b;
    size();
    r = newdat(p->type, idx.rank, idx.size);
-   copy(IN, idx.dim, r->dim, idx.rank);
+   copy(IN, (char *) idx.dim, (char *) r->dim, idx.rank);
    i = idx.del[i];
    a *= i;
    b *= i;
@@ -75,9 +78,7 @@ cat0(k)
    *sp++ = r;
 }
 
-cat1(ip, k)
-struct item *ip;
-{
+static int cat1(struct item *ip, int k) {
    struct item *p;
    int i, j, a;
 
@@ -100,9 +101,7 @@ struct item *ip;
    return(a);
 }
 
-lam0(d)		//laminate, similar to catenate but create a new dimension
-double d;
-{
+static void lam0(double d) {
    struct item *p, *q, *r;
    int i, j, k;
 
@@ -123,10 +122,10 @@ double d;
    if (i == k) idx.dim[j] = 1;
    size();
    r = newdat(idx.type, idx.rank, idx.size);
-   copy(IN, idx.dim, r->dim, idx.rank);
-   copy(idx.type, p->datap, r->datap, r->size);
+   copy(IN, (char *) idx.dim, (char *) r->dim, idx.rank);
+   copy(idx.type, (char *) p->datap, (char *) r->datap, r->size);
    if (p == sp[-1]) sp[-1] = r;
    else sp[-2] = r;
-   aplfree(p);
+   aplfree((int *) p);
    cat0(k);
 }

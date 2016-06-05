@@ -9,11 +9,14 @@
  * For more details see the GNU General Public License (GPL) in
  * the docs directory.
  */
-
 #include <stdio.h>
+#include <unistd.h>
+
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
+#include "memory.h"
 
 struct item * ex_quad(io)
 int io; /* 0 = source, 1 = sink */
@@ -45,9 +48,9 @@ struct Context *thisContext;
       //pcp = i;
       p = *--sp;
       gsip=thisContext->prev;      /* restore previous context */
-      aplfree(thisContext->text);
-      aplfree(thisContext->pcode);
-      aplfree(thisContext);
+      aplfree((int *) thisContext->text);
+      aplfree((int *) thisContext->pcode);
+      aplfree((int *) thisContext);
       //pcp = context->oldpcp;
       return(p);
    } else {

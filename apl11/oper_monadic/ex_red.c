@@ -8,22 +8,22 @@
 #include "opt_codes.h"
 #include "data.h"
 
-ex_red0()
-{
+void red0(int k);
+void red1(int param[]);
+
+void ex_red0() {
    fetch1();
    red0(0);
 }
 
-ex_red()
-{
+void ex_red() {
    struct item *p;
 
    p = fetch1();
    red0(p->rank-1);
 }
 
-ex_redk()
-{
+void ex_redk() {
    int i;
 
    i = topfix() - iorigin;
@@ -31,10 +31,9 @@ ex_redk()
    red0(i);
 }
 
-red0(k)
-{
+void red0(int k) {
    struct item *p, *q;
-   int param[3], red1();
+   int param[3];
 
    p = fetch1();
    if(p->type != DA) error(ERR_domain,"not numeric data");
@@ -78,7 +77,7 @@ red0(k)
       return;
    }
    q = newdat(idx.type, idx.rank, idx.size);
-   copy(IN, idx.dim, q->dim, idx.rank);
+   copy(IN, (char *) idx.dim, (char *) q->dim, idx.rank);
    param[0] = p->datap;
    param[1] = q;
    param[2] = exop[*gsip->ptr++];
@@ -87,9 +86,7 @@ red0(k)
    *sp++ = q;
 }
 
-red1(param)
-int param[];
-{
+void red1(int param[]) {
    int i;
    data *dp, d, (*f)();
 

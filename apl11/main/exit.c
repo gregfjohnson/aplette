@@ -4,10 +4,11 @@
  */
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "apl.h"
 
-Exit(s)
-{
+void Exit(int s) {
 
    int j;
 

@@ -4,19 +4,20 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
+#include "memory.h"
 
 int prolgerr;      /* Flag -- set if bad fetch in prologue 
                     * this variable is global so that fetch()
                     * is able to set it */
 
-ex_fun()
-{
+void ex_fun() {
    struct nlist *np;
    int *p, s;
    struct Context *thisContext;
 
-   gsip->ptr += copy(IN, gsip->ptr, &np, 1);
+   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
    
    //gsip->oldpcp=pcp;
 
@@ -63,7 +64,7 @@ ex_fun()
 
          gsip = gsip->prev;      /* restore state indicator to previous state */
          //pcp = gsip->oldpcp;
-	 aplfree(thisContext);
+	 aplfree((int *) thisContext);
          return;
       }
       pop();

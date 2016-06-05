@@ -4,15 +4,15 @@
  */
 
 #include "apl.h"
+#include "data.h"
 
-ex_arg2()
-{
+void ex_arg2() {
    struct item *p1, *p2;
    struct nlist *np1, *np2;
 
-   gsip->ptr += copy(IN, gsip->ptr, &np2, 1);   /* get first argument's name */
+   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np2, 1);   /* get first argument's name */
    gsip->ptr++;                     /* skip over ARG1 */
-   gsip->ptr += copy(IN, gsip->ptr, &np1, 1);   /* get second arg's name */
+   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np1, 1);   /* get second arg's name */
    p1 = fetch1();               /* get first expr to be bound to arg */
    p2 = fetch(sp[-2]);            /* get second one */
    sp[-1] = np1->itemp;         /* save old value of name on stack */
@@ -22,4 +22,3 @@ ex_arg2()
    np1->use = DA;               /* release safety catch */
    np2->use = DA;
 }
-

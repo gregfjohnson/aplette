@@ -8,8 +8,7 @@ char *ty[] = {
 0,"DA","CH","LV","QD","QQ","IN","EL","NF","MF","DF","QC","QV","NIL","QX","LB",
 };
 
-stack_dump()
-{
+void stack_dump() {
    struct item **p;
    int i,n;
 /*

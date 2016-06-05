@@ -30,8 +30,7 @@ int opn( char file[], int rw) {
 }
 
 
-int empty(int fd){
-
+int empty(int fd) {
    struct stat sbuf;
    struct fds *fp;
 

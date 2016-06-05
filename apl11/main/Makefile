@@ -5,6 +5,8 @@ CFLAGS += -I../include
 
 OBJECTS = mainloop.o exit.o apl.o getinput.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

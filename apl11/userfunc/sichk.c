@@ -6,9 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-sichk(n)
-struct nlist *n;
-{
+void sichk(struct nlist *n) {
    struct Context *p;
 
    p = gsip;
@@ -17,4 +15,3 @@ struct nlist *n;
       p = p->prev;
    }
 }
-

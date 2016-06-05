@@ -8,6 +8,8 @@ OBJECTS = access.o dupdat.o getdata.o putdat.o top.o \
 	colapse.o fetch.o nlook.o size.o pop.o purge_name.o \
 	data_iterator.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

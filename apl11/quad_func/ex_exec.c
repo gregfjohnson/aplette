@@ -2,15 +2,16 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+#include <unistd.h>
+
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
 #define MAXP 20
 
-ex_exec()
-{
+void ex_exec() {
    struct item *p;
    int i, j;
    char *cp, *argv[MAXP+1];
@@ -46,4 +47,3 @@ ex_exec()
    p = newdat(DA,0,0);
    *sp++ = p;
 }
-

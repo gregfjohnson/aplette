@@ -2,14 +2,17 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdlib.h>
+#include <unistd.h>
+#include <ctype.h>
+
 #include "apl.h"
 #include "utility.h"
-/* #include <string.h>
-#include <dirent.h> */
-#include <stdlib.h>	/* atof() */
+#include "memory.h"
+#include "fdat.h"
+#include "data.h"
 
-wsload(ffile)
-{
+void wsload(int ffile) {
    char buffer[64], flag, *gettoken(), c;
    int use, size, rank, i, dim[MRANK];
    struct nlist *n;
@@ -45,7 +48,7 @@ wsload(ffile)
             goto hokay;
          }
       }
-      n->namep = alloc(1+strlen(buffer));
+      n->namep = (char *) alloc(1+strlen(buffer));
       strcpy(n->namep, buffer);
 hokay:
       n->use = use;
@@ -98,17 +101,14 @@ hokay:
 
 
 /* static - this declaration produced a warning */
-char *
-gettoken(ffile, buffer)
-char *buffer;
-{
+char *gettoken(int ffile, char *buffer) {
    int i;
    char c;
 
    i = 0;
    while (1) {
       if (read(ffile, &c, 1) != 1) return 0;
-      if (isspace(c)) continue;
+      if (isspace((int) c)) continue;
       break;
    }
    buffer[i++] = c;
@@ -120,4 +120,3 @@ char *buffer;
    buffer[i] = 0;
    return buffer;
 }
-

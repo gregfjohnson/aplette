@@ -4,12 +4,10 @@
  */
 #include "apl.h"
 
-ex_print()
-{
+void ex_print() {
   if(print()) {	/* print() would only return 0 for type NIL */
      putchar('\n');
      column=0;
   }
   return(0);
 }
-

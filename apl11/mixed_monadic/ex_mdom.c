@@ -6,8 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-ex_mdom()
-{
+void ex_mdom() {
    data *dp;
    int a, i, j;
    struct item *p, *q;
@@ -29,4 +28,3 @@ ex_mdom()
    }
    ex_ddom();
 }
-

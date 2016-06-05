@@ -13,8 +13,17 @@
 /* Use GNU readline routine to get a line of user input */
 /* Read a string, and return a pointer to it.  Returns NULL on EOF. */
 #include <stdio.h>
-#include "apl.h"
+#include <stdlib.h>
+#include <unistd.h>
 #include "config.h"
+#include "memory.h"
+
+#ifdef HAVE_LIBREADLINE
+    #include <readline/readline.h>
+    #include <readline/history.h>
+#endif
+
+#include "apl.h"
 
 /* A static variable for holding a line of user input */
 static char *line_read = (char *)NULL;
@@ -51,11 +60,12 @@ char *getinput(prompt)
 #warning Readline support has not been included!
   {
 #endif
+     char *line;
      printf("%s",prompt);
      /* Get a line from the user. */
-     Length=(int)fgets(input_buffer,LINEMAX,stdin);
+     line=fgets(input_buffer,LINEMAX,stdin);
      /* check for EOF (which happens when stdin is from a file) */
-     if(Length==0) return(NULL);
+     if(line==0) return(NULL);
      /* convert static memory user_input into apl dynamic memory */
      Length=1+strlen(input_buffer);
      iline=(char*)alloc(Length);

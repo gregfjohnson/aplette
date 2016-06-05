@@ -6,10 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-ex_exit()
-{
+void ex_exit() {
    SECURITY_CHECK;
    Exit(topfix());
 }
-
-

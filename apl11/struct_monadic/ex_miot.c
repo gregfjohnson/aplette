@@ -5,8 +5,7 @@
 #include "apl.h"
 #include "utility.h"
 
-ex_miot()
-{
+void ex_miot() {
    struct item *p;
    data *dp;
    int i;
@@ -25,4 +24,3 @@ ex_miot()
    }
    *sp++ = p;
 }
-

@@ -13,6 +13,7 @@
 #include "apl.h"
 #include "format.h"
 #include "data.h"
+#include "memory.h"
 
 /* print floating point */
 

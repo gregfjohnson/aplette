@@ -3,14 +3,16 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include "memory.h"
 #include "utility.h"
 #include "parser.h"
+#include "data.h"
 #include "y.tab.h"
 
 extern	struct COMM comtab[];
 #define lv yylval
 
-getnam(ic)
+int getnam(int ic)
 {
    char name[NAMS], *cp;
    int c;
@@ -60,7 +62,7 @@ getnam(ic)
    }
 
    /* place the name in nlist */
-   np->namep = alloc(cp-name);
+   np->namep = (char *) alloc(cp-name);
    copy(CH, name, np->namep, cp-name);
    np->type = LV;
    lv.charptr = (char *)np;

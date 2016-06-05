@@ -9,6 +9,8 @@ OBJECTS = alpha.o genlab.o getquad.o name.o \
 	table_oper.o table_comm.o table_quad.o \
 	lastcode.o y.tab.o
 
+all: Q.o
+
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 

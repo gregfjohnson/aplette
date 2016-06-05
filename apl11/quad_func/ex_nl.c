@@ -4,11 +4,11 @@
  */
 
 #include "apl.h"
+#include "data.h"
 #include "utility.h"
 #include "char.h"
 
-ex_nl()
-{
+void ex_nl() {
 
    struct item *ip;
    struct nlist *np;
