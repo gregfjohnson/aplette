@@ -10,7 +10,7 @@
  * the docs directory.
  */
 
-// #define ASCII_INPUT
+#define ASCII_INPUT
 
 /* Use GNU readline routine to get a line of user input */
 /* Read a string, and return a pointer to it.  Returns NULL on EOF. */
