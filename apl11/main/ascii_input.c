@@ -5,18 +5,15 @@
 #include "ascii_input.h"
 #include "char.h"
 #include "memory.h"
-
-void error(int type, char *diagnostic);
+#include "utility.h"
 
 static void init();
+static char *rline(char *source);
 
 static char to_apl_symbol[256];
 static bool inited = false;
 
-static int length(const char *input) {
-}
-
-static void dbprint(const char *title, char *p) {
+void dbprint(const char *title, char *p) {
     int i;
     fprintf(stderr, "%s >>", title);
     for (i = 0; i < strlen((char *) p); ++i) {
@@ -29,18 +26,15 @@ static void dbprint(const char *title, char *p) {
 }
 
 char *to_ascii_input(char *input) {
-    int i;
-    int len = strlen(input);
-    char *result = (char *) alloc(len + 2);
     if (!inited) init();
+    char *result;
+    int i;
+    result = rline(input);
+    int len = strlen(result);
     for (i = 0; i < len; ++i) {
-        if (input[i] < 256) {
-            result[i] = to_apl_symbol[input[i]];
-        } else {
-            result[i] = input[i];
-        }
+        result[i] = to_apl_symbol[(unsigned char) result[i]];
     }
-    result[i] = '\0';
+
     return result;
 }
 
@@ -85,31 +79,31 @@ static struct {
     char out;
 } chartab[] =
 {
-    {"-/", C_SLASHBAR},        /* 0200 comprs */
-    {"-\\", C_SLOPEBAR},        /* 0201 expand */
-    {"\'L", C_QUOTEQUAD},        /* 0202 quote quad */
-    {"^~", C_NAND},        /* 0205 nand */
-    {"V~", C_NOR},        /* 0206 nor */
-    {"*O", C_CIRCLESTAR},        /* 0207 log */
-    {"-O", C_CIRCLESTILE},        /* 0211 rotate */
-    {"O\\", C_CIRCLESLOPE},        /* 0212 transpose */
-    {"BN", C_IBEAM},        /* 0213 i beam */
-    {"%L", C_QUADDIVIDE},        /* 0214 domino */
-    {"A|", C_DELTASTILE},        /* 0215 grade up */
-    {"V|", C_DELSTILE},        /* 0216 grade dn */
-    {"O|", C_CIRCLESTILE},        /* 0217 rotate */
-    {"<=", C_LESSOREQUAL},        /* 0220 less eq */
-    {"=>", C_GRATOREQUAL},        /* 0221 greater eq */
-    {"/=", C_NOTEQUAL},        /* 0222 not eq */
-    {"^~", C_NAND},        /* 0223 nand */
-    {"H|", C_DELTASTILE},        /* 0227 another grade up */
-    {"G|", C_DELSTILE},        /* 0230 another grade dn */
-    {"BJ", C_UPTACKJOT},        /* 0241 standard execute */
-    {"JN", C_DOWNTACKJOT},        /* 0242 format */
-    {"\0", '\0'}        /* two-characters of null ends list */
+    {"-/", C_SLASHBAR},                 /* 0200 comprs */
+    {"-\\", C_SLOPEBAR},                /* 0201 expand */
+    {"\'L", C_QUOTEQUAD},               /* 0202 quote quad */
+    {"^~", C_NAND},                     /* 0205 nand */
+    {"V~", C_NOR},                      /* 0206 nor */
+    {"*O", C_CIRCLESTAR},               /* 0207 log */
+    {"-O", C_CIRCLESTILE},              /* 0211 rotate */
+    {"O\\", C_CIRCLESLOPE},             /* 0212 transpose */
+    {"BN", C_IBEAM},                    /* 0213 i beam */
+    {"%L", C_QUADDIVIDE},               /* 0214 domino */
+    {"A|", C_DELTASTILE},               /* 0215 grade up */
+    {"V|", C_DELSTILE},                 /* 0216 grade dn */
+    {"O|", C_CIRCLESTILE},              /* 0217 rotate */
+    {"<=", C_LESSOREQUAL},              /* 0220 less eq */
+    {"=>", C_GRATOREQUAL},              /* 0221 greater eq */
+    {"/=", C_NOTEQUAL},                 /* 0222 not eq */
+    {"^~", C_NAND},                     /* 0223 nand */
+    {"H|", C_DELTASTILE},               /* 0227 another grade up */
+    {"G|", C_DELSTILE},                 /* 0230 another grade dn */
+    {"BJ", C_UPTACKJOT},                /* 0241 standard execute */
+    {"JN", C_DOWNTACKJOT},              /* 0242 format */
+    {"\0", '\0'}                        /* two-characters of null ends list */
 };
 
-void addChar(char **result, int *len, int *nextIndex, char ch) {
+static void addChar(char **result, int *len, int *nextIndex, char ch) {
     if (*result == NULL) {
         *result = (char *) alloc(32);
         *len = 32;
@@ -119,13 +113,14 @@ void addChar(char **result, int *len, int *nextIndex, char ch) {
         char *current = *result;
         *result = (char *) alloc(*len * 2);
         memcpy(*result, current, *len);
+        aplfree((int *) current);
         *len *= 2;
     }
 
     (*result)[(*nextIndex)++] = ch;
 }
 
-int twoCharCmp(const char *a, const char *b) {
+static int twoCharCmp(const char *a, const char *b) {
     register int c;
 
     c = (a[0] - b[0]);
@@ -134,7 +129,7 @@ int twoCharCmp(const char *a, const char *b) {
     return(a[1] - b[1]);
 }
 
-char getTwoferChar(char first, char second) {
+static char getTwoferChar(char first, char second) {
     int i;
     char pair[2];
     pair[0] = (first <= second ? first  : second);
@@ -148,63 +143,30 @@ char getTwoferChar(char first, char second) {
     return 0;
 }
 
-char *rline(int s) {
+static char *rline(char *source) {
     char *result = 0;
     int len = 32;
     int next = 0;
-    bool haveFirst = false;
-    char first;
-    char currentChar = getchar();
-    char peekAheadChar;
 
-    // if haveFirst is true, first is that character,
-    // we have read '@', and are looking for the second
-    // char of the pair.
-    // else, currentChar is the most recent char read.
-    // the string ends with '\n'.
-    do {
-        peekAheadChar = getchar();
-
-        // vanilla case..
-
-        if (!haveFirst && peekAheadChar != '@') {
-            addChar(&result, &len, &next, currentChar);
-
-            currentChar = peekAheadChar;
-        }
-
-        // notice based on peekAheadChar that currentChar
-        // is first of a pair..
-
-        else if (!haveFirst && peekAheadChar == '@') {
-            haveFirst = true;
-            first = currentChar;
-
-        // already have first of a pair...
+    for (int i = 0; source[i] != '\0'; ++i) {
+        if (source[i+1] != '@') {
+            addChar(&result, &len, &next, source[i]);
 
         } else {
-            char second = peekAheadChar;
-            char c = getTwoferChar(first, second);
+            char c = getTwoferChar(source[i], source[i+2]);
             if (c == '\0') {
-                // oops....
                 error(ERR_syntax, "");
                 break;
-
-            } else {
-                addChar(&result, &len, &next, c);
-                haveFirst = false;
-                // this will give us a char, since the string
-                // ends with '\n' and '\n' is not the second
-                // char of any twofer character.
-                currentChar = getchar();
             }
+            addChar(&result, &len, &next, c);
+            i += 2;
         }
-    } while (peekAheadChar != '\n');
+    }
 
     addChar(&result, &len, &next, '\n');
     addChar(&result, &len, &next, '\0');
 
-    // fprintf(stderr, "rline returns "); dbprint(result);
+    // dbprint("rline returns", result);
 
     return result;
 }

@@ -209,7 +209,6 @@ struct Context {
 extern int (*exop[])();
 
 double ltod();
-char   *rline();
 char   *compile();
 struct nlist *nlook();
 struct item *fetch(), *fetch1(), *fetch2(), *extend();
@@ -223,6 +222,7 @@ int    echoflg;
 int    sandbox;                         /* when set, some functions are barred */
 int    sandboxflg;                      /* when set, sandbox cannot be unset */
 int    use_readline;                    /* shows that the user has a valid .inputrc */
+int    ascii_characters;                /* use 7-bit ascii and map to APL characters */
 int    ifile;
 int    wfile;
 int    ttystat[3];

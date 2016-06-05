@@ -26,7 +26,7 @@ yylex()
       return(c);
    }
    while(litflag > 0) {         /* comment */
-      c = *iline++;
+      c = (unsigned char) *iline++;
       if(c == '\n') {
          nlexsym = 0;
          return(eol);
@@ -52,7 +52,7 @@ yylex()
 
    rval = unk;
    for(tp = tab; tp->input; tp++) {
-      if(tp->input == c) {
+      if((unsigned int) tp->input == (0xff & (unsigned char) c)) {
          lv.charval = tp->lexval;
          rval = tp->retval;
          break;

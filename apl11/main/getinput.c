@@ -24,6 +24,9 @@
 #include "history.h"
 #include "memory.h"
 #include "apl.h"
+#ifdef HAVE_LIBREADLINE
+#include <readline/readline.h>
+#endif
 
 #ifdef ASCII_INPUT
 #include "ascii_input.h"
@@ -39,30 +42,31 @@ char *getinput(prompt)
   char *iline;
   char input_buffer[LINEMAX];
 #ifdef HAVE_LIBREADLINE
-  char *readline();
   
   if(isatty(0) && use_readline) {
      /* Get a line from the user. */
      line_read=readline(prompt);
      /* check for EOF (unlikely from readline) */
      if (line_read == NULL) {
-        free(line_read);
         return(NULL);
      }
      /* readline admin */
      readline_add_history(line_read);
 
-     /* convert line_read into apl dynamic memory */
-     #ifdef ASCII_INPUT
+     /* convert line_read into apl dynamic memory,
+      * and (optionally) use ascii APL character mapping
+      */
+     if (ascii_characters) {
         iline = to_ascii_input(line_read);
-     #else
+
+     } else {
         Length=strlen(line_read);
         iline=(char*)alloc(Length+2);
         strncpy(iline,line_read,Length+1);
-     #endif
+        strcat(iline,"\n");	/* because readline zaps the \n */
+     }
 
      free(line_read);
-     strcat(iline,"\n");	/* because readline zaps the \n */
      return(iline);
   }
   else {
