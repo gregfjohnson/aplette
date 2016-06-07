@@ -1,4 +1,4 @@
-/* exit.h, Copyright (C) 2016, Greg Johnson
+/* work_space.h, Copyright (C) 2016, Greg Johnson
  * Released under the terms of the GNU GPL v2.0.
  *
  * This program is distributed in the hope that it will be useful,
@@ -6,9 +6,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifndef EXIT_H
-#define EXIT_H
+#ifndef WORK_SPACE_H
+#define WORK_SPACE_H
 
-void Exit(int s);
+void wssave(int ffile);
 
 #endif

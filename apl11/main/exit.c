@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "apl.h"
-#include "exit.h"
 
 void Exit(int s) {
 

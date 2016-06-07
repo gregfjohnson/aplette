@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -10,21 +11,32 @@
 #include "apl.h"
 #include "utility.h"
 
+static int openOrCreateFile(char *fileName, int mode) {
+    int fd;
+
+    if (mode != O_RDONLY && mode != O_WRONLY && mode != O_RDWR) {
+        fd = creat(fileName, mode);
+    } else {
+        fd = open(fileName, mode);
+    }
+
+    return fd;
+}
+
 int opn( char file[], int rw) {
    int fd, (*p)();
    char f2[100];
 
-   p = (rw > 2 ? creat : open);
-   if((fd = (*p)(file,rw)) < 0){
-      for(fd=0; fd<13; fd++) f2[fd] = "/usr/lib/apl/"[fd];
-      for(fd=0; file[fd]; fd++) f2[fd+13] = file[fd];
-      f2[fd+13] = 0;
-      if((fd = (*p)(f2, rw)) >= 0){
+   if ((fd = openOrCreateFile(file,rw)) < 0) {
+      strcpy(f2, "/usr/lib/apl/");
+      strncat(f2, file, sizeof(f2));
+
+      if ((fd = openOrCreateFile(f2, rw)) >= 0) {
          printf("[using %s]\n", f2);
-         return(fd);
+      } else {
+         printf("can't open file %s\n", file);
+         error(ERR,"");
       }
-      printf("can't open file %s\n", file);
-      error(ERR,"");
    }
    return(fd);
 }

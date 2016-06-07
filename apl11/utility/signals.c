@@ -8,6 +8,8 @@
 #include <fcntl.h>
 #include "apl.h"
 #include "utility.h"
+#include "main.h"
+#include "work_space.h"
 
 void intr(int s) {
    intflg = 1;
@@ -99,7 +101,7 @@ void panic(unsigned signum)
    if (!insane++){
       if ((fd=creat(abt_file, 0644)) >= 0){
          printf("[attempting ws dump]\n");
-         wssave(fd, 0);
+         wssave(fd);
          printf(" workspace saved in %s\n", abt_file);
          close(fd);
       }

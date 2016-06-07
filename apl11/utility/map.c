@@ -21,7 +21,14 @@ void map(int o) {
    p = newdat(idx.type, idx.rank, n);
    copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
    *sp++ = p;
-   if(n != 0) forloop(map1, o);
+
+    if (n != 0) {
+        indexIterateInit(&idx);
+        while (indexIterate(&idx)) {
+            map1(o);
+        }
+    }
+
    sp--;
    pop();
    *sp++ = p;

@@ -9,6 +9,7 @@
 #include "data.h"
 #include "debug.h"
 #include "userfunc.h"
+#include "main.h"
 
 /* print line and error pointer */
 void pline(char *str, int loc, int ln) {

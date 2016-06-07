@@ -43,7 +43,10 @@ void ex_take() {
 
    if (fflg){
       bidx(sp[-1]);
-      forloop(takezr, fill);
+      indexIterateInit(&idx);
+      while (indexIterate(&idx)) {
+        takezr(fill);
+    }
    }
 }
 

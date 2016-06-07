@@ -13,7 +13,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include "apl.h"
-#include "exit.h"
+#include "main.h"
 #include "utility.h"
 
 void mainloop() {
