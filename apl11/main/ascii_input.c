@@ -155,8 +155,9 @@ static char *rline(char *source) {
     char *result = 0;
     int len = 32;
     int next = 0;
+    int i;
 
-    for (int i = 0; source[i] != '\0'; ++i) {
+    for (i = 0; source[i] != '\0'; ++i) {
         if (source[i+1] != '@') {
             addChar(&result, &len, &next, source[i]);
 
