@@ -11,4 +11,7 @@
 
 void wssave(int ffile);
 
+void readErrorOnFailure(int fd, void *buf, size_t count);
+void writeErrorOnFailure(int fd, void *buf, size_t count);
+
 #endif

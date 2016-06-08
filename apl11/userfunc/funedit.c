@@ -7,6 +7,7 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "work_space.h"
 
 /*
  * funedit -- edit a file and read it in.
@@ -34,7 +35,7 @@ void funedit(char *fname, char *editor) {
    strcpy(cmd, c);
    strcat(cmd, " ");
    strcat(cmd, fname);
-   system(cmd);
+   if (system(cmd) < 0) error(ERR, "could not start editor");
 
    /* Read function into workspace.  If "funread" (which calls
     * "fundef") returns 0, an error occurred in processing the

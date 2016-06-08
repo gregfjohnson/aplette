@@ -7,6 +7,7 @@
 #include "apl.h"
 #include "data.h"
 #include "utility.h"
+#include "work_space.h"
 
 void fappend(int fd, struct item *ap) {
    struct item *p;
@@ -26,8 +27,8 @@ void fappend(int fd, struct item *ap) {
          copy(CH, p1, b, dim1);
          p1 += dim1;
          b[ dim1 ] = '\n';
-         write(fd, b, dim1+1);
+         writeErrorOnFailure(fd, b, dim1+1);
       }
    }
-   else write(fd, p->datap, dim0);
+   else writeErrorOnFailure(fd, p->datap, dim0);
 }

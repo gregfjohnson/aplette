@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "apl.h"
+#include "utility.h"
 
 void ex_shell() {
 
@@ -17,6 +18,6 @@ void ex_shell() {
 
    sh = getenv("SHELL");
    if (sh == 0) sh = "/bin/sh";
-   system(sh);
+   if (system(sh) == -1) error(ERR, "attempt to start shell failed");
 }
 

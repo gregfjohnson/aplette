@@ -12,6 +12,20 @@
 #include "fdat.h"
 #include "data.h"
 
+void readErrorOnFailure(int fd, void *buf, size_t count) {
+    int result = read(fd, buf, count);
+    if (result < 0) {
+        error(ERR, "attempt to read file failed");
+    }
+}
+
+void writeErrorOnFailure(int fd, void *buf, size_t count) {
+    int result = write(fd, buf, count);
+    if (result < 0) {
+        error(ERR, "attempt to write file failed");
+    }
+}
+
 void wsload(int ffile) {
    char buffer[64], flag, *gettoken(), c;
    int use, size, rank, i, dim[MRANK];
@@ -71,10 +85,13 @@ hokay:
          }
          p = newdat(use, rank, size);
          for (i=0; i<rank; i++) p->dim[i] = dim[i];
-         if (use == CH) read(ffile, (char *)p->datap, size);
-         else {
-            read(ffile, (data *)p->datap, size*sizeof(data));
+
+         if (use == CH) {
+            readErrorOnFailure(ffile, (char *)p->datap, size);
+         } else {
+            readErrorOnFailure(ffile, (data *)p->datap, size*sizeof(data));
          }
+
          n->itemp = p;
          break;
 
@@ -88,7 +105,7 @@ hokay:
                close(ffile);
                error(ERR,"wsload unexpected eof");
             }
-            write(wfile, &c, 1);
+            writeErrorOnFailure(wfile, &c, 1);
             if (c == 0) break;
          }
          break;

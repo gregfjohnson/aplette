@@ -10,6 +10,7 @@
 #include "utility.h"
 #include "opt_codes.h"
 #include "data.h"
+#include "work_space.h"
 
 void ex_syscom() {
    int i, *ip, j;
@@ -42,7 +43,7 @@ void ex_syscom() {
          protofile = opn(cp, 0644);
          printf("[new file]\n");
       }
-      write(protofile, "\t)script on\n", 12);
+      writeErrorOnFailure(protofile, "\t)script on\n", 12);
       return;
 
    case DEBUG:

@@ -6,6 +6,7 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "work_space.h"
 
 void funwrite(char *fname)
 /* creates an ordinary file from a user defined function
@@ -45,7 +46,7 @@ void funwrite(char *fname)
        * []lx or downtack-jot, the input line would not be
        * current_line and the following would break.
        */
-      write(fd1, gsip->text,strlen(gsip->text));
+      writeErrorOnFailure(fd1, gsip->text,strlen(gsip->text));
    break;
 
 
@@ -59,7 +60,7 @@ void funwrite(char *fname)
          cnt = read(fd2, buf, 512);
          if(cnt <= 0) error(ERR,"fnwrite eof");
          for(i=0; i<cnt; i++) if(buf[i] == 0) break;
-         write(fd1, buf, i);
+         writeErrorOnFailure(fd1, buf, i);
       } while(i == 512);
       close(fd2);
    break;

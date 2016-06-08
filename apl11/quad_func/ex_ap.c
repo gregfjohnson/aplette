@@ -7,6 +7,7 @@
 #include "apl.h"
 #include "data.h"
 #include "utility.h"
+#include "work_space.h"
 
 void ex_ap() {
    int i, fd;
@@ -17,7 +18,7 @@ void ex_ap() {
    p = fetch1();
    lseek(fd, 0L, 2);
    fappend(fd, p);
-   if(p->rank == 1) write(fd, "\n", 1);
+   if(p->rank == 1) writeErrorOnFailure(fd, "\n", 1);
    pop();
    *sp++ = newdat(DA, 1, 0);
 }

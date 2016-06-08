@@ -15,5 +15,5 @@ void funread(char *fname) {
    if(p->type != LV) error(ERR_value,"not a local varaible");
    if(fname == 0) fname = ((struct nlist *)p)->namep;
    f = opn(fname, 0);
-   return(fundef(f));
+   fundef(f);
 }

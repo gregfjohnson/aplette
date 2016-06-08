@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "apl.h"
+#include "work_space.h"
 
 char *bad_fn  = "apl.badfn";
 
@@ -23,7 +24,7 @@ int badfnsv(char *fname) {
    char buf[512];
 
    if ((fd1=open(fname, 0)) < 0 || (fd2=creat(bad_fn, 0644)) < 0) return(0);
-   while((len=read(fd1, buf, 512)) > 0) write(fd2, buf, len);
+   while((len=read(fd1, buf, 512)) > 0) writeErrorOnFailure(fd2, buf, len);
    close(fd1);
    close(fd2);
    return(1);

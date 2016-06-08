@@ -9,6 +9,7 @@
 #include "utility.h"
 #include "char.h"
 #include "memory.h"
+#include "work_space.h"
 
 void ex_fdef() {
    struct item *p;
@@ -50,7 +51,7 @@ void ex_fdef() {
    
       np->label = lseek(wfile, 0L, 2);
       fappend(wfile, p);
-      write(wfile,"",1);
+      writeErrorOnFailure(wfile,"",1);
    }
    pop();
    *sp++ = newdat(DA, 1, 0);

@@ -8,6 +8,7 @@
 #include "apl.h"
 #include "data.h"
 #include "memory.h"
+#include "work_space.h"
 
 /*
  * fundef - defines a function
@@ -47,8 +48,8 @@ int fundef(int f) {
    aplfree((int *) c);
    np->label = lseek(wfile, 0L, 2);
    fseek(infile, 0L, 0); /* set file pointer to BOF */
-   while((a=fread(b, 1, 512, infile)) > 0) write(wfile, b, a);
-   write(wfile, "", 1);
+   while((a=fread(b, 1, 512, infile)) > 0) writeErrorOnFailure(wfile, b, a);
+   writeErrorOnFailure(wfile, "", 1);
 out:
    fclose(infile);
    return(1);

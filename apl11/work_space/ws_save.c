@@ -7,6 +7,7 @@
 #include "apl.h"
 #include "utility.h"
 #include "fdat.h"
+#include "work_space.h"
 
 int nsave(int ffile, struct nlist *an);
 
@@ -25,15 +26,15 @@ int nsave(int ffile, struct nlist *an) {
    struct item *p;
 
    if (an == 0){
-      write(ffile, "apl\\11\n", 7);
+      writeErrorOnFailure(ffile, "apl\\11\n", 7);
       sprintf(buffer, "tolerance %lg\n", tolerance);
-      write(ffile, buffer, strlen(buffer));
+      writeErrorOnFailure(ffile, buffer, strlen(buffer));
       sprintf(buffer, "origin %d\n", iorigin);
-      write(ffile, buffer, strlen(buffer));
+      writeErrorOnFailure(ffile, buffer, strlen(buffer));
       sprintf(buffer, "width %d\n", pagewidth);
-      write(ffile, buffer, strlen(buffer));
+      writeErrorOnFailure(ffile, buffer, strlen(buffer));
       sprintf(buffer, "digits %d\n", PrintP);
-      write(ffile, buffer, strlen(buffer));
+      writeErrorOnFailure(ffile, buffer, strlen(buffer));
       return 0;
    }
 
@@ -46,46 +47,46 @@ int nsave(int ffile, struct nlist *an) {
 
       case DA:
       p = an->itemp;
-      if (p->type == DA) write(ffile, "DA ", 3);
-      else write(ffile, "CH ", 3);
-      write(ffile, an->namep, strlen(an->namep));
+      if (p->type == DA) writeErrorOnFailure(ffile, "DA ", 3);
+      else writeErrorOnFailure(ffile, "CH ", 3);
+      writeErrorOnFailure(ffile, an->namep, strlen(an->namep));
       sprintf(buffer, " %d", p->rank);
-      write(ffile, buffer, strlen(buffer));
+      writeErrorOnFailure(ffile, buffer, strlen(buffer));
       size = 1;
       for (i=0; i<p->rank; i++) {
          sprintf(buffer, " %d", p->dim[i]);
-         write(ffile, buffer, strlen(buffer));
+         writeErrorOnFailure(ffile, buffer, strlen(buffer));
          size *= p->dim[i];
       }
-      write(ffile, "\n", 1);
+      writeErrorOnFailure(ffile, "\n", 1);
       if (p->type == DA) {
          data *dp;
          dp = p->datap;
-         write(ffile, dp, size*sizeof(data));
+         writeErrorOnFailure(ffile, dp, size*sizeof(data));
       }
       else {
-         write(ffile, (char *)p->datap, size);
-         write(ffile, "\n", 1);
+         writeErrorOnFailure(ffile, (char *)p->datap, size);
+         writeErrorOnFailure(ffile, "\n", 1);
       }
       break;
 
       case NF:
-      write(ffile, "NF ", 3);
+      writeErrorOnFailure(ffile, "NF ", 3);
       goto real;
 
       case MF:
-      write(ffile, "MF ", 3);
+      writeErrorOnFailure(ffile, "MF ", 3);
       goto real;
 
       case DF:
-      write(ffile, "DF ", 3);
+      writeErrorOnFailure(ffile, "DF ", 3);
 real:
-      write(ffile, an->namep, strlen(an->namep));
-      write(ffile, "\n", 1);
+      writeErrorOnFailure(ffile, an->namep, strlen(an->namep));
+      writeErrorOnFailure(ffile, "\n", 1);
       lseek(wfile,(long)an->label,0);
       while (1) {
-         read(wfile, &c, 1);
-         write(ffile, &c, 1);
+         readErrorOnFailure(wfile, &c, 1);
+         writeErrorOnFailure(ffile, &c, 1);
          if (c == 0) break;
       }
       break;
