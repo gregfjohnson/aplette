@@ -2,6 +2,7 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <inttypes.h>
 #include "apl.h"
 
 char *ty[] = {
@@ -13,15 +14,15 @@ void stack_dump() {
    int i,n;
 /*
    printf("Dumping stack... \n");
-   printf("Stack limits are %XH and %XH \n", stack, stack + STKS - 1 );
+   printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
  */  
    for(p=sp, n=0; p >= stack; p--, n--){
-      printf("sp[%d]=%XH points to %XH ", n, p, *p );
+      printf("sp[%d]=%x points to %x ", n, (uintptr_t) p, (uintptr_t) *p );
       if( n == 0 ) {
          printf("\n");
       } else {
          printf("which is: type = ");
-         if((i=(*p)->type) >= 0 && i <= LBL && ty[i]) printf(ty[i]);
+         if((i=(*p)->type) >= 0 && i <= LBL && ty[i]) printf("%s", ty[i]);
          else printf("%d", (*p)->type);
          switch(i){
          default:

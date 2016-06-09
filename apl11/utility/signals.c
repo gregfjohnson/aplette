@@ -20,7 +20,6 @@ void intr(int s) {
 
 void catchsigs()
 {
-   extern void intr();
    extern void panic();
 
 #ifdef SIGINT
@@ -59,7 +58,7 @@ void catchsigs()
 #endif
 }
 
-void panic(unsigned signum)
+void panic(int signum)
 {
 
    int fd;

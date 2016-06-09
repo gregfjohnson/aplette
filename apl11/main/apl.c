@@ -11,6 +11,7 @@
 
 #include "apl.h"
 #include "config.h"
+#include "utility.h"
 
 #ifdef HAVE_LIBREADLINE
 #include <readline/readline.h>
@@ -25,7 +26,6 @@ char headline[] =
 int main(int argc, char **argp) {
    int pid, sigs, file_id ;
    static int fflag;
-   int intr();
    struct apl_statement *input_line;
 
 #ifdef HAVE_LIBREADLINE
@@ -93,7 +93,7 @@ rl_readline_name = "openapl";
    pi = 3.141592653589793238462643383;
 
    if (sigs) catchsigs();                  /*   Catch signals  */
-   fppinit();
+   fppinit(0);
 
    /*
     * open ws file
@@ -106,7 +106,7 @@ rl_readline_name = "openapl";
    fflag = 1;
    ifile = 0;
    if (signal(SIGINT, intr) == SIG_ERR) signal(SIGINT, SIG_IGN);
-   printf(headline);
+   printf("%s", headline);
    //setexit();
    if(fflag) {
       fflag = 0;

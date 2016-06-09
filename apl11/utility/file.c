@@ -29,7 +29,7 @@ int opn( char file[], int rw) {
 
    if ((fd = openOrCreateFile(file,rw)) < 0) {
       strcpy(f2, "/usr/lib/apl/");
-      strncat(f2, file, sizeof(f2));
+      strncat(f2, file, sizeof(f2) - 1);
 
       if ((fd = openOrCreateFile(f2, rw)) >= 0) {
          printf("[using %s]\n", f2);

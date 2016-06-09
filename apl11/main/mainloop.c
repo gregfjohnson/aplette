@@ -57,7 +57,7 @@ void mainloop() {
        * when input is from a file or a pipe
        */
       if (gsip->text == NULL ) Exit(0); 
-      if (echoflg) printf(gsip->text);
+      if (echoflg) printf("%s", gsip->text);
 
       /* compile the input */
       sandbox=sandboxflg;

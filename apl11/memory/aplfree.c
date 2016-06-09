@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <inttypes.h>
 #include "memory.h"
 
 void aplfree(int *ap) {
@@ -19,20 +20,20 @@ void aplfree(int *ap) {
          else firstblock = item->next;
 
          if (mem_trace) {
-            printf("[aplfree: %d bytes at %XH (data)",
-            item->nbytes, item->block);
+            printf("[aplfree: %d bytes at %x (data)",
+            item->nbytes, (uintptr_t) item->block);
          }
          free(item->block);
 
          if (mem_trace) {
-            printf(", %d bytes at %XH (memblock)]\n",
-            sizeof(struct memblock), item);
+            printf(", %d bytes at %x (memblock)]\n",
+            sizeof(struct memblock), (uintptr_t) item);
          }
          free(item);
          return;
       }
       last = item;
    }
-   printf("aplfree bad block address %XH\n", ap);
+   printf("aplfree bad block address %x\n", (uintptr_t) ap);
 }
 

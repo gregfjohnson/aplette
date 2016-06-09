@@ -23,4 +23,7 @@ void map(int o);
 void iodone(int ok);
 int empty(int fd);
 
+void intr(int s);
+void panic(int signum);
+
 #endif // UTILITY_H

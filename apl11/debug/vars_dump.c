@@ -10,15 +10,16 @@
  * the docs directory.
  */
 
+#include <inttypes.h>
 #include "apl.h"
 
 void vars_dump() {
 struct nlist *n;
    
    for(n=nlist; n->namep; n++) {
-      printf("%X:",n);
+      printf("%x:", (uintptr_t) n);
       printf(" namep=%s",n->namep);
-      printf(" itemp=%X",n->itemp);
+      printf(" itemp=%x", (uintptr_t) n->itemp);
       printf(" use=%d",n->use);
       printf(" type=%d",n->type);
 /*      printf(" label=%d",n->label); */

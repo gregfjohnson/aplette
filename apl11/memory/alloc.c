@@ -4,6 +4,7 @@
  */
 
 #include <stdlib.h>
+#include <inttypes.h>
 #include "apl.h"
 #include "utility.h"
 #include "memory.h"
@@ -17,15 +18,15 @@ unsigned nbytes;
    newblock = (struct memblock *)malloc(sizeof(struct memblock));
    if (newblock == 0) goto failed;
    if (mem_trace) {
-      printf("[alloc: %d bytes at %XH (memblock)",
-      sizeof(struct memblock), newblock);
+      printf("[alloc: %d bytes at %x (memblock)",
+             sizeof(struct memblock), (uintptr_t) newblock);
    }
    newblock->nbytes = nbytes;
    newblock->block = malloc(nbytes);
    if (newblock->block == 0) goto failed;
    if (mem_trace) {
-      printf(", %d bytes at %XH (data)]\n",
-      nbytes, newblock->block);
+      printf(", %d bytes at %x (data)]\n",
+             nbytes, (uintptr_t) newblock->block);
    }
    newblock->next = firstblock;
    firstblock = newblock;
