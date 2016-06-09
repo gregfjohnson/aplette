@@ -3,7 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
-#include "parser.h"
+#include "local_parser.h"
 
 int digit(s) {
    int c;

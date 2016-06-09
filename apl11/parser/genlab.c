@@ -3,7 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
-#include "parser.h"
+#include "local_parser.h"
 #include "opt_codes.h"
 #include "data.h"
 

@@ -14,7 +14,7 @@ all: Q.o
 Q.o:	$(OBJECTS)
 	$(LD) -r -o Q.o $(OBJECTS)
 
-$(OBJECTS):	../include/apl.h parser.h
+$(OBJECTS):	../include/apl.h local_parser.h
 
 genlab.o compile_old.o compile_new.o yylex.o lastcode.o apl.y \
 table_comm.o table_oper.o table_quad.o:	../include/opt_codes.h

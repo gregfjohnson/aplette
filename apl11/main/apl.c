@@ -12,6 +12,9 @@
 #include "apl.h"
 #include "config.h"
 #include "utility.h"
+#include "main.h"
+#include "work_space.h"
+#include "quad_func.h"
 
 #ifdef HAVE_LIBREADLINE
 #include <readline/readline.h>

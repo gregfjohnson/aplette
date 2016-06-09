@@ -2,6 +2,8 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#ifndef LOCAL_PARSER_H
+#define LOCAL_PARSER_H
 
 #include "../include/apl.h"
 
@@ -41,3 +43,5 @@ struct QUOD
    int   qtype;
    int   rtype;
 };
+
+#endif

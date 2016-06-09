@@ -7,7 +7,7 @@
 /******************* C declarations ************************/
 %{
 #include <memory.h>
-#include "parser.h"
+#include "local_parser.h"
 #include "opt_codes.h"
 %}
 

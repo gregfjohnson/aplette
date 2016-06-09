@@ -4,7 +4,7 @@
  */
 
 #include "utility.h"
-#include "parser.h"
+#include "local_parser.h"
 #include "y.tab.h"
 #include "opt_codes.h"
 #include "memory.h"

@@ -9,7 +9,7 @@
 #include "data.h"
 
 void red0(int k);
-void red1(int param[]);
+void red1(data *dp, struct item *result, data (*f)(data, data));
 
 void ex_red0() {
    fetch1();
@@ -33,10 +33,12 @@ void ex_redk() {
 
 void red0(int k) {
    struct item *p, *q;
-   int param[3];
+    data (*fn)(data, data);
 
    p = fetch1();
-   if(p->type != DA) error(ERR_domain,"not numeric data");
+
+   if(p->type != DA)
+    error(ERR_domain,"not numeric data");
    bidx(p);
    if (p->rank) colapse(k);
    else idx.dimk = idx.delk = 1;  /* (handcraft for scalars) */
@@ -60,12 +62,10 @@ void red0(int k) {
          break;
 
          case MIN:
-         //q->datap[0] = 1.0e38;
          q->datap[0] = MAXdata;
          break;
 
          case MAX:
-         //q->datap[0] = -1.0e38;
          q->datap[0] = MINdata;
          break;
 
@@ -76,27 +76,29 @@ void red0(int k) {
       *sp++ = q;
       return;
    }
-   q = newdat(idx.type, idx.rank, idx.size);
-   copy(IN, (char *) idx.dim, (char *) q->dim, idx.rank);
-   param[0] = p->datap;
-   param[1] = q;
-   param[2] = exop[*gsip->ptr++];
-   forloop(red1, param);
+    fn = (data (*)(data, data)) exop[*gsip->ptr++];
+
+    q = newdat(idx.type, idx.rank, idx.size);
+    copy(IN, (char *) idx.dim, (char *) q->dim, idx.rank);
+
+    indexIterateInit(&idx);
+    while (indexIterate(&idx)) {
+        red1(p->datap, q, fn);
+    }
+
    pop();
    *sp++ = q;
 }
 
-void red1(int param[]) {
-   int i;
-   data *dp, d, (*f)();
+void red1(data *dp, struct item *result, data (*f)(data, data)) {
+    register int i;
+    data d;
 
-   dp = param[0];
-   dp += access() + (idx.dimk-1) * idx.delk;
-   f = (data (*)())param[2];
-   d = *dp;
-   for(i=1; i<idx.dimk; i++) {
-      dp -= idx.delk;
-      d = (*f)(*dp, d);
-   }
-   putdat(param[1], d);
+    dp += access() + (idx.dimk-1) * idx.delk;
+    d = *dp;
+    for(i=1; i<idx.dimk; i++) {
+        dp -= idx.delk;
+        d = (*f)(*dp, d);
+    }
+    putdat(result, d);
 }

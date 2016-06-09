@@ -15,6 +15,8 @@
 #include "apl.h"
 #include "main.h"
 #include "utility.h"
+#include "parser.h"
+#include "execute.h"
 
 void mainloop() {
     int lineLength;

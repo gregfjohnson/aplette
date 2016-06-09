@@ -22,8 +22,10 @@ int fuzz(data d1, data d2);
 void map(int o);
 void iodone(int ok);
 int empty(int fd);
+int opn(char file[], int rw);
 
 void intr(int s);
 void panic(int signum);
+void catchsigs();
 
 #endif // UTILITY_H

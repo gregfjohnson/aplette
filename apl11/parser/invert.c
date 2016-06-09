@@ -3,7 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
-#include "parser.h"
+#include "local_parser.h"
 
 static void flop(char *a, char *b) {
    char *a1, *a2;

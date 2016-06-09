@@ -5,7 +5,7 @@
 
 #include "memory.h"
 #include "utility.h"
-#include "parser.h"
+#include "local_parser.h"
 #include "data.h"
 #include "y.tab.h"
 
