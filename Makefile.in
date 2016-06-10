@@ -46,9 +46,7 @@ keymapsrc	= $(srcdir)/terminal/@machinetype@/keymap/apl2741.map
 
 # Things that need to be built before "make install" can be done
 #----------------------------------------------------------
-first:	apl11/apl11
-
-apl11/apl11:
+all:
 	cd apl11 ; $(MAKE)
 
 # Installation

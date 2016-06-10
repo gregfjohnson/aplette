@@ -17,7 +17,7 @@ OBJECTS = printing.dif quad_vars.dif quad_fns.dif \
 
 # As long as the following is the first target,
 # everything will get tested
-now:	$(OBJECTS)
+all:	$(OBJECTS)
 
 %.dif:	%.out
 	$(DIFF) $< $*.ref > $@
