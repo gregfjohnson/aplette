@@ -13,9 +13,9 @@
 #include "apl.h"
 #include "utility.h"
 #include "format.h"
+#include "local_print.h"
 
-int print()
-{
+int print() {
    struct item *p;
 
    p = fetch1();

@@ -5,6 +5,7 @@
 #ifndef LOCAL_PARSER_H
 #define LOCAL_PARSER_H
 
+#include <stdbool.h>
 #include "../include/apl.h"
 
 int   vcount;
@@ -18,7 +19,20 @@ data   lnumb;           /* current label number */
 char   *labcpp;         /* label prologue */
 char   *labcpe;         /* label epilogue */
 int   immedcmd;         /* immediate command number */
+
+int yylex();
+
 char	*name();
+bool alpha(char s);
+int digit(char s);
+int isodigit(char c);
+int getquad();
+void yyerror(char *error);
+void genlab(struct nlist *np);
+void invert(char *a, char *b);
+int getnum(char ic);
+int getnam(char ic);
+int lastCode(char *s);
 
 /*static char oline[OBJS];*/
 char oline[OBJS];

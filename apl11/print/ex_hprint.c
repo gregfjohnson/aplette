@@ -4,6 +4,7 @@
  */
 #include "apl.h"
 #include "data.h"
+#include "local_print.h"
 
 void ex_hprint() {
    print();

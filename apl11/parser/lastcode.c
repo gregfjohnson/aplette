@@ -6,9 +6,7 @@
 #include "apl.h"
 #include "opt_codes.h"
 
-int lastCode(s)
-char *s;
-{
+int lastCode(char *s) {
    int code, j, last;
 
    code = 0;

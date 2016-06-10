@@ -4,16 +4,12 @@
  */
 
 #include "local_parser.h"
-#include "alpha.h"
 
-bool alpha(int s) {
-   int c;
-
-   c = s; /* this used to be a mask that destroyed the 8th bit */
+bool alpha(char s) {
    return(
-         (c >= 'a' && c <= 'z')
-      || (c >= 'A' && c <= 'Z')
-      || (litflag == -2 && ( c == '/' || c == '.' ))
+         (s >= 'a' && s <= 'z')
+      || (s >= 'A' && s <= 'Z')
+      || (litflag == -2 && ( s == '/' || s == '.' ))
    );
 }
 

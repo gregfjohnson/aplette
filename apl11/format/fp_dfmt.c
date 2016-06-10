@@ -18,8 +18,7 @@
 
 /* dyadic format for floating point data */
 
-struct item * fp_dfmt(struct item *f, struct item *p)
-{
+struct item * fp_dfmt(struct item *f, struct item *p) {
    char *charptr, *buffer;
    struct item *q;
    int i,j,k, total, ncol, nrow, rowsz ;

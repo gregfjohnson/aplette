@@ -1,4 +1,4 @@
-/* userfunc.h, Copyright (C) 2016, Greg Johnson
+/* local_print.h, Copyright (C) 2016, Greg Johnson
  * Released under the terms of the GNU GPL v2.0.
  *
  * This program is distributed in the hope that it will be useful,
@@ -6,13 +6,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifndef USERFUNC_H
-#define USERFUNC_H
+#ifndef LOCAL_PRINT_H
+#define LOCAL_PRINT_H
 
 #include "apl.h"
 
-void tback(int flag);
-void sichk(struct nlist *n);
-void ex_nilret();
+int print();
+int fp_print(struct item *p);
+int lt_print(struct item *p);
 
 #endif

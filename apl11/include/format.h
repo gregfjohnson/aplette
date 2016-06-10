@@ -9,6 +9,8 @@
  * For more details see the GNU General Public License (GPL) in
  * the docs directory.
  */
+#ifndef FORMAT_H
+#define FORMAT_H
 
 struct	FORMAT {
    int sign;	/* 1 if space for a minus sign is required */
@@ -27,5 +29,10 @@ struct	FORMAT {
 };
 
 char format_buffer[80];
-//char output_buffer[80];
+void fp_digits(data d, struct FORMAT *format);
+char *fp2char(data d, struct FORMAT *format);
+char *fp2char_paded(data d, struct FORMAT *format);
+struct item * fp_mfmt(struct item *p);
+struct item * fp_dfmt(struct item *f, struct item *p);
 
+#endif

@@ -7,6 +7,9 @@
 #include "data.h"
 #include "utility.h"
 #include "char.h"
+#include "memory.h"
+#include "execute.h"
+#include "userfunc.h"
 
 /*
  * immediate niladic branch -- reset SI
@@ -24,7 +27,7 @@ void ex_ibr0() {
 
    /* throw away current context */
    thisContext=gsip->prev;
-   aplfree(gsip);
+   aplfree((int *) gsip);
    gsip=thisContext;
 
    /* un-suspend what was the previous context */

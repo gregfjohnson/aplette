@@ -8,6 +8,7 @@
 #include "apl.h"
 #include "utility.h"
 #include "work_space.h"
+#include "userfunc.h"
 
 /*
  * funedit -- edit a file and read it in.

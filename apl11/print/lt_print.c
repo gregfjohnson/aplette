@@ -15,8 +15,7 @@
 #include "data.h"
 
 /* Print literals */
-int lt_print(struct item *p)
-{
+int lt_print(struct item *p) {
    int i, j;
 
    bidx(p);

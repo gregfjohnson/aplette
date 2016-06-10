@@ -4,6 +4,7 @@
  */
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -48,8 +49,8 @@ rl_readline_name = "openapl";
    pid = getpid();
    scr_file = malloc(32);
    ws_file = malloc(32);
-   sprintf(scr_file, "/tmp/apled.%d", pid);
-   sprintf(ws_file, "/tmp/aplws.%d", pid);
+   snprintf(scr_file, 32, "/tmp/apled.%d", pid);
+   snprintf(ws_file, 32, "/tmp/aplws.%d", pid);
 
    //input_line=(struct apl_statement *)alloc(sizeof(struct apl_statement));
    //current_line=&input_line;

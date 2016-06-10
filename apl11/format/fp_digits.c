@@ -22,8 +22,7 @@
  * either their old value or the required field width
  * for the new data item.
  */
-void fp_digits(data d, struct FORMAT *format)
-{
+void fp_digits(data d, struct FORMAT *format) {
    double value;
    int sign,exp_val,digits,n,exp_dig,exp_sign;
    int right_expn,left_expn,right_ratn,left_ratn;

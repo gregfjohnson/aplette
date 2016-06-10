@@ -289,7 +289,7 @@ labels:
 label:
    anyname cln
    {
-      if(labgen) genlab($1);
+      if(labgen) genlab((struct nlist *) $1);
    }  ;
 
 fstat0:

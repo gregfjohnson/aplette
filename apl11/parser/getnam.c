@@ -7,13 +7,13 @@
 #include "utility.h"
 #include "local_parser.h"
 #include "data.h"
+#include "userfunc.h"
 #include "y.tab.h"
 
 extern	struct COMM comtab[];
 #define lv yylval
 
-int getnam(int ic)
-{
+int getnam(char ic) {
    char name[NAMS], *cp;
    int c;
    struct nlist *np;

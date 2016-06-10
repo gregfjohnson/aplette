@@ -15,8 +15,7 @@ extern	struct OPER tab[];
 
 int xxpeek[2] = {0,0};
 
-yylex()
-{
+int yylex() {
    int c, rval;
    struct OPER *tp;
 

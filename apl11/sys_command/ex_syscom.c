@@ -11,6 +11,7 @@
 #include "opt_codes.h"
 #include "data.h"
 #include "work_space.h"
+#include "main.h"
 
 void ex_syscom() {
    int i, *ip, j;

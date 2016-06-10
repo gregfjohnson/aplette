@@ -3,8 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "local_print.h"
 
-void ex_print() {
+int ex_print() {
   if(print()) {	/* print() would only return 0 for type NIL */
      putchar('\n');
      column=0;

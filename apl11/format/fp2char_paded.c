@@ -18,8 +18,7 @@
  * do not delete trailing zeros
  * pad with blanks to the field width */
 
-char *fp2char_paded(data d, struct FORMAT *format)
-{
+char *fp2char_paded(data d, struct FORMAT *format) {
    double value;
    int sign,width,d_places,n,m;
 

@@ -5,6 +5,7 @@
  
 #include "apl.h"
 #include "utility.h"
+#include "main.h"
 
 void ex_exit() {
    SECURITY_CHECK;
