@@ -79,7 +79,8 @@ struct item * fp_dfmt(struct item *f, struct item *p) {
       }
    }
 
-   /* for debugging purposes only
+   // for debugging purposes only
+   #if 0
    format=format_list;
    for(i=0; i<ncol; i++) {
       printf("s %d, e %d, l_r %d, r_r %d, pp %d, l_e %d, r_e %d, d_e %d, dig %d\n",
@@ -89,7 +90,8 @@ struct item * fp_dfmt(struct item *f, struct item *p) {
       format->digits);
 
       format=format->next;
-   } /**/
+   }
+   #endif
 
    dp = p->datap;
    bidx(p);

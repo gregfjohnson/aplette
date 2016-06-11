@@ -9,6 +9,9 @@
 #include "utility.h"
 #include "opt_codes.h"
 #include "memory.h"
+#include "parser.h"
+
+static void reverse(char *s);
 
 /*
  * funcomp - compile functions
@@ -119,7 +122,8 @@ void funcomp(struct nlist *np) {
     */
     lineNumber++;
 
-   /* development aid.... * /
+   #if 0
+   // development aid....
    printf("At end of Phase 2...\n");
    for (i=lineNumber; i>1; i-- ) {
       printf("[%d] ",i-1);
@@ -128,7 +132,7 @@ void funcomp(struct nlist *np) {
    }
    printf("[p] "); code_dump(Prologue->pcode,0);
    printf("[0] %d\n",lineNumber);
-   /**/
+   #endif
    
    /* Phase 3 - dealing with labels */
    phase="Phase 3a";
@@ -214,7 +218,8 @@ void funcomp(struct nlist *np) {
    }
    p[0] = lineNumber;
 
-   /* development aid.... * /
+   #if 0
+   // development aid....
    printf("At end of Phase 4...\n");
    printf("[0] %d\n",p[0]);
    printf("[p] "); code_dump(p[1],0);
@@ -222,7 +227,7 @@ void funcomp(struct nlist *np) {
       printf("[%d] ",i-1);
       code_dump(p[i],0);
    }
-   /**/
+   #endif
 
    /* put the result into effect */
    np->itemp = (struct item *)p;
@@ -239,3 +244,20 @@ out:
    }
 }
 
+static void reverse(char *s) {
+   char *p, *q, c;
+   int j;
+
+   p = q = s;
+   while(*p != END) p++;
+   p -= 1+sizeof(char *);
+   while(q < p){
+      for(j=0; j<1+sizeof (char *); j++) {
+         c = p[j];
+         p[j] = q[j];
+         q[j] = c;
+      }
+      q += j;
+      p -= j;
+   }
+}

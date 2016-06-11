@@ -72,7 +72,6 @@ data      datum;
 data      getdat();
 int       funtrace;                     /* function trace enabled */
 int       labgen;                       /* label processing being done */
-/* int    apl_term;                     /* flag set if apl terminal mapping req'd */
 jmp_buf   cold_restart;                 /* Used for setexit/reset */
 jmp_buf   hot_restart;                  /* Used for setexit/reset */
 

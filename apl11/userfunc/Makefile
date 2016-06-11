@@ -3,7 +3,7 @@
 include ../include/makefile.common
 CFLAGS += -I../include
 
-OBJECTS = badfnsv.o ex_auto.o ex_fun.o ex_nilret.o fundef.o reverse.o \
+OBJECTS = badfnsv.o ex_auto.o ex_fun.o ex_nilret.o fundef.o \
 	csize.o catcode.o ex_br.o ex_ibr.o ex_rest.o funedit.o sichk.o \
 	ex_arg1.o ex_br0.o ex_ibr0.o funread.o tback.o \
 	ex_arg2.o ex_label.o funcomp.o funwrite.o 

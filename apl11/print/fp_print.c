@@ -69,12 +69,14 @@ int fp_print(struct item *p) {
 	 if(format->right_expn !=0) format->digits++;	//decimal point
       }
 
-      /* for debugging purposes only
+      // for debugging purposes only
+      #if 0
       printf("s %d, e %d, l_r %d, r_r %d, pp %d, l_e %d, r_e %d, d_e %d, dig %d\n",
       format->sign, format->exp,
       format->left_ratn, format->right_ratn, format->pp_ratn,
       format->left_expn, format->right_expn, format->digit_expn,
-      format->digits); /**/
+      format->digits);
+      #endif
 
       format=format->next;
    }
