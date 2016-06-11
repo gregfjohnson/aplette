@@ -42,9 +42,7 @@ newdat(int type, int rank, int size)
       break;
    }
 
-   /* create item, ask for as much space as size of item minus 
-    * those elements of the rank array that are not required.*/
-   p = (struct item *) alloc( sizeof *p - SINT * (MRANK-rank) );
+   p = (struct item *) alloc(sizeof(*p));
    /* populate it */
    p->rank = rank;
    p->type = type;
