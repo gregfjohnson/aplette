@@ -103,8 +103,8 @@ rl_readline_name = "openapl";
     * open ws file
     */
 
-   close(opn(WSFILE,0600));
-   wfile = opn(WSFILE,2);
+   close(opn(WSFILE, 0600));
+   wfile = opn(WSFILE, O_RDWR);
 
    sp = stack;
    fflag = 1;
@@ -114,7 +114,7 @@ rl_readline_name = "openapl";
    //setexit();
    if(fflag) {
       fflag = 0;
-      if(argc > 1 && (file_id = opn(argp[1], 0)) > 0){
+      if(argc > 1 && (file_id = opn(argp[1], O_RDONLY)) > 0){
          wsload(file_id);
          printf(" %s\n", argp[1]);
          close(file_id);

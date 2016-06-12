@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <fcntl.h>
 #include "apl.h"
 #include "utility.h"
 
@@ -14,6 +15,6 @@ void funread(char *fname) {
    sp--;
    if(p->type != LV) error(ERR_value,"not a local varaible");
    if(fname == 0) fname = ((struct nlist *)p)->namep;
-   f = opn(fname, 0);
+   f = opn(fname, O_RDONLY);
    fundef(f);
 }

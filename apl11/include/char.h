@@ -15,86 +15,86 @@
  * set the console to apl character mode and use an 8 bit editor.
  */
 
-#define C_LEFTTACK          ((unsigned char) 128)    /* Ä */
-#define C_RIGHTTACK         ((unsigned char) 129)    /* Å */
-#define C_LEFTSHOE          ((unsigned char) 130)    /* Ç */
-#define C_RIGHTSHOE         ((unsigned char) 131)    /* É */
-#define C_IBEAM             ((unsigned char) 132)    /* Ñ */
-#define C_RIGHTARROW        ((unsigned char) 133)    /* Ö */
+#define C_LEFTTACK          ((char) 128)    /* Ä */
+#define C_RIGHTTACK         ((char) 129)    /* Å */
+#define C_LEFTSHOE          ((char) 130)    /* Ç */
+#define C_RIGHTSHOE         ((char) 131)    /* É */
+#define C_IBEAM             ((char) 132)    /* Ñ */
+#define C_RIGHTARROW        ((char) 133)    /* Ö */
 #define S_RIGHTARROW        "Ö"
-#define C_NOTEQUAL          ((unsigned char) 134)    /* Ü */
-        /*                  ((unsigned char) 135)            */
-        /*                  ((unsigned char) 136)            */
-#define C_CIRCLESTAR        ((unsigned char) 137)    /* â */
-        /*                  ((unsigned char) 138)            */
-#define C_DOWNARROW         ((unsigned char) 139)    /* ã */
-#define C_UPARROW           ((unsigned char) 140)    /* å */
-#define C_UPSTILE           ((unsigned char) 141)    /* ç */
-        /*                  ((unsigned char) 142)            */
-#define C_DOWNSTILE         ((unsigned char) 143)    /* è */
-#define C_LEFTARROW         ((unsigned char) 144)    /* ê */
+#define C_NOTEQUAL          ((char) 134)    /* Ü */
+        /*                  ((char) 135)            */
+        /*                  ((char) 136)            */
+#define C_CIRCLESTAR        ((char) 137)    /* â */
+        /*                  ((char) 138)            */
+#define C_DOWNARROW         ((char) 139)    /* ã */
+#define C_UPARROW           ((char) 140)    /* å */
+#define C_UPSTILE           ((char) 141)    /* ç */
+        /*                  ((char) 142)            */
+#define C_DOWNSTILE         ((char) 143)    /* è */
+#define C_LEFTARROW         ((char) 144)    /* ê */
 #define S_LEFTARROW         "ê"
-#define C_DELTA             ((unsigned char) 145)    /* ë */
-#define C_MULTIPLY          ((unsigned char) 146)    /* í */
-#define C_DELTASTILE        ((unsigned char) 147)    /* ì */
-        /*                  ((unsigned char) 148)            */
-#define    C_QUAD           ((unsigned char) 149)    /* ï */
+#define C_DELTA             ((char) 145)    /* ë */
+#define C_MULTIPLY          ((char) 146)    /* í */
+#define C_DELTASTILE        ((char) 147)    /* ì */
+        /*                  ((char) 148)            */
+#define    C_QUAD           ((char) 149)    /* ï */
 #define S_QUAD              "ï"
-#define C_DELTILDE          ((unsigned char) 150)    /* ñ */
-#define C_QUOTEQUAD         ((unsigned char) 151)    /* ó */
+#define C_DELTILDE          ((char) 150)    /* ñ */
+#define C_QUOTEQUAD         ((char) 151)    /* ó */
 #define S_QUOTEQUAD         "ó"
-#define C_QUADDIVIDE        ((unsigned char) 152)    /* ò */
-        /*                  ((unsigned char) 153)            */
-#define C_DIERESIS          ((unsigned char) 154)    /* ö */
-#define C_CENT              ((unsigned char) 155)    /* õ the console treats this as ESC */
-        /*                  ((unsigned char) 156) reserved - sterling */
-#define C_DELSTILE          ((unsigned char) 157)    /* ù */
-#define C_COMMABAR          ((unsigned char) 158)    /* û */
-#define C_DIERESISTILDE     ((unsigned char) 159)    /* ü */
-        /*                  ((unsigned char) 160)
-                            ((unsigned char) 161)
-                            ((unsigned char) 162)
-                            ((unsigned char) 163)
-                            ((unsigned char) 164)
-                            ((unsigned char) 165)            */
-#define C_UPSHOEJOT         ((unsigned char) 166)    /* ¶ */
-#define C_SLOPEBAR          ((unsigned char) 167)    /* ß */
-#define C_DIAMOND           ((unsigned char) 168)    /* ® */
-        /*                  ((unsigned char) 169)
-         * to               ((unsigned char) 175)            */
-        /*                  ((unsigned char) 176)
-         * to               ((unsigned char) 178) grey scales */
-        /*                  ((unsigned char) 179)
-         * to               ((unsigned char) 223) line draw  */
-#define C_ALPHA             ((unsigned char) 224)    /* ‡ */
-#define C_BETA              ((unsigned char) 225)    /* · */
-#define C_IOTA              ((unsigned char) 226)    /* ‚ */
-        /*                  ((unsigned char) 227)            */
-        /*                  ((unsigned char) 228)            */
-#define C_NOR               ((unsigned char) 229)    /* Â */
-#define C_UPTACK            ((unsigned char) 230)    /* Ê */
-#define C_DOWNTACK          ((unsigned char) 231)    /* Á */
-#define C_CIRCLESTILE       ((unsigned char) 232)    /* Ë */
-#define C_CIRCLEBAR         ((unsigned char) 233)    /* È */
-#define C_NAND              ((unsigned char) 234)    /* Í */
-#define C_SLASHBAR          ((unsigned char) 235)    /* Î */
-#define C_DEL               ((unsigned char) 236)    /* Ï */
-#define C_CIRCLESLOPE       ((unsigned char) 237)    /* Ì */
-#define C_EPSILON           ((unsigned char) 238)    /* Ó */
-#define C_UPSHOE            ((unsigned char) 239)    /* Ô */
-#define C_EQUALUNDERBAR     ((unsigned char) 240)    /*  */
-#define C_DELTAUNDERBAR     ((unsigned char) 241)    /* Ò */
-#define C_GRATOREQUAL       ((unsigned char) 242)    /* Ú */
-#define C_LESSOREQUAL       ((unsigned char) 243)    /* Û */
-#define C_DOWNTACKJOT       ((unsigned char) 244)    /* Ù */
-#define C_UPTACKJOT         ((unsigned char) 245)    /* ı */
-#define C_DIVIDE            ((unsigned char) 246)    /* ˆ */
-#define C_OMEGA             ((unsigned char) 247)    /* ˜ */
-#define C_JOT               ((unsigned char) 248)    /* ¯ */
-#define C_CIRCLE            ((unsigned char) 249)    /* ˘ */
-#define C_OR                ((unsigned char) 250)    /* ˙ */
-#define C_RHO               ((unsigned char) 251)    /* ˚ */
+#define C_QUADDIVIDE        ((char) 152)    /* ò */
+        /*                  ((char) 153)            */
+#define C_DIERESIS          ((char) 154)    /* ö */
+#define C_CENT              ((char) 155)    /* õ the console treats this as ESC */
+        /*                  ((char) 156) reserved - sterling */
+#define C_DELSTILE          ((char) 157)    /* ù */
+#define C_COMMABAR          ((char) 158)    /* û */
+#define C_DIERESISTILDE     ((char) 159)    /* ü */
+        /*                  ((char) 160)
+                            ((char) 161)
+                            ((char) 162)
+                            ((char) 163)
+                            ((char) 164)
+                            ((char) 165)            */
+#define C_UPSHOEJOT         ((char) 166)    /* ¶ */
+#define C_SLOPEBAR          ((char) 167)    /* ß */
+#define C_DIAMOND           ((char) 168)    /* ® */
+        /*                  ((char) 169)
+         * to               ((char) 175)            */
+        /*                  ((char) 176)
+         * to               ((char) 178) grey scales */
+        /*                  ((char) 179)
+         * to               ((char) 223) line draw  */
+#define C_ALPHA             ((char) 224)    /* ‡ */
+#define C_BETA              ((char) 225)    /* · */
+#define C_IOTA              ((char) 226)    /* ‚ */
+        /*                  ((char) 227)            */
+        /*                  ((char) 228)            */
+#define C_NOR               ((char) 229)    /* Â */
+#define C_UPTACK            ((char) 230)    /* Ê */
+#define C_DOWNTACK          ((char) 231)    /* Á */
+#define C_CIRCLESTILE       ((char) 232)    /* Ë */
+#define C_CIRCLEBAR         ((char) 233)    /* È */
+#define C_NAND              ((char) 234)    /* Í */
+#define C_SLASHBAR          ((char) 235)    /* Î */
+#define C_DEL               ((char) 236)    /* Ï */
+#define C_CIRCLESLOPE       ((char) 237)    /* Ì */
+#define C_EPSILON           ((char) 238)    /* Ó */
+#define C_UPSHOE            ((char) 239)    /* Ô */
+#define C_EQUALUNDERBAR     ((char) 240)    /*  */
+#define C_DELTAUNDERBAR     ((char) 241)    /* Ò */
+#define C_GRATOREQUAL       ((char) 242)    /* Ú */
+#define C_LESSOREQUAL       ((char) 243)    /* Û */
+#define C_DOWNTACKJOT       ((char) 244)    /* Ù */
+#define C_UPTACKJOT         ((char) 245)    /* ı */
+#define C_DIVIDE            ((char) 246)    /* ˆ */
+#define C_OMEGA             ((char) 247)    /* ˜ */
+#define C_JOT               ((char) 248)    /* ¯ */
+#define C_CIRCLE            ((char) 249)    /* ˘ */
+#define C_OR                ((char) 250)    /* ˙ */
+#define C_RHO               ((char) 251)    /* ˚ */
 #define S_RHO               "˚"
-#define C_DOWNSHOE          ((unsigned char) 252)    /* ¸ */
-#define C_OVERBAR           ((unsigned char) 253)    /* ˝ */
-#define C_STILE             ((unsigned char) 254)    /* ˛ */
+#define C_DOWNSHOE          ((char) 252)    /* ¸ */
+#define C_OVERBAR           ((char) 253)    /* ˝ */
+#define C_STILE             ((char) 254)    /* ˛ */

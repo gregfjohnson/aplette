@@ -27,7 +27,7 @@ int yylex() {
       goto done;
    }
    while(litflag > 0) {         /* comment */
-      c = (unsigned char) *iline++;
+      c = *iline++;
       if(c == '\n') {
          nlexsym = 0;
          result = eol;
@@ -62,7 +62,7 @@ int yylex() {
 
    rval = unk;
    for(tp = tab; tp->input; tp++) {
-      if((unsigned int) tp->input == (0xff & (unsigned char) c)) {
+      if(tp->input == c) {
          lv.charval = tp->lexval;
          rval = tp->retval;
          break;
@@ -89,8 +89,6 @@ int yylex() {
    result = rval;
 
    done:
-   fprintf(stderr, "yylex returns %d\n", result);
 
    return result;
 }
-

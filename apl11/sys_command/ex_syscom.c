@@ -162,7 +162,7 @@ void ex_syscom() {
       goto warp1;            /* four lines down, or so... */
 
    case LOAD:
-      j = opn(vfname(fname), 0);
+      j = opn(vfname(fname), O_RDONLY);
       clear();
       wsload(j);
       printf(" %s\n", fname);
