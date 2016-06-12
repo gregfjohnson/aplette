@@ -16,37 +16,48 @@ extern	struct OPER tab[];
 int xxpeek[2] = {0,0};
 
 int yylex() {
+   int result;
    int c, rval;
    struct OPER *tp;
 
    if(nlexsym != -1) {            /* first token is lexical context */
       c = nlexsym;
       nlexsym = -1;
-      return(c);
+      result = c;
+      goto done;
    }
    while(litflag > 0) {         /* comment */
       c = (unsigned char) *iline++;
       if(c == '\n') {
          nlexsym = 0;
-         return(eol);
+         result = eol;
+         goto done;
       }
    }
    if(xxpeek[0] != 0){
       lv.charval = xxpeek[0];      /* may want charptr here */
       xxpeek[0] = 0;
-      return(xxpeek[1]);
+      result = xxpeek[1];
+      goto done;
    }
    do
       c = *iline++;
    while(c == ' ');
    if(c == '\n') {
       nlexsym = 0;
-      return(eol);
+      result = eol;
+      goto done;
    }
 
-   if(alpha(c)) return(getnam(c));
-   if(digit(c) || c == C_OVERBAR || (c=='.' && digit(*iline))) 
-      return(getnum(c));
+   if(alpha(c)) {
+       result = getnam(c);
+       goto done;
+   }
+
+   if(digit(c) || c == C_OVERBAR || (c=='.' && digit(*iline))) {
+      result = getnum(c);
+      goto done;
+   }
    /* C_OVERBAR is the negative number prefix */
 
    rval = unk;
@@ -64,13 +75,22 @@ int yylex() {
          c = *iline++;
          if (c == '\n') {
             nlexsym = 0;
-            return(eol);
+            result = eol;
+            goto done;
          }
       }
    }
 
-   if(lv.charval == QUAD) return(getquad());
+   if(lv.charval == QUAD) {
+       result = getquad();
+       goto done;
+   }
 
-   return(rval);
+   result = rval;
+
+   done:
+   fprintf(stderr, "yylex returns %d\n", result);
+
+   return result;
 }
 

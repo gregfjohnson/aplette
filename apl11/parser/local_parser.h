@@ -34,7 +34,6 @@ int getnum(char ic);
 int getnam(char ic);
 int lastCode(char *s);
 
-/*static char oline[OBJS];*/
 char oline[OBJS];
 
 struct OPER
