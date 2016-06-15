@@ -82,9 +82,14 @@ char *getinput(prompt)
      if(fgets(input_buffer,LINEMAX,stdin) == NULL) return(NULL);
 
      /* convert static memory user_input into apl dynamic memory */
-     Length=1+strlen(input_buffer);
-     iline=(char*)alloc(Length);
-     strncpy(iline,input_buffer,Length);
+     if (ascii_characters) {
+        iline = to_ascii_input(input_buffer);
+
+     } else {
+        Length=1+strlen(input_buffer);
+        iline=(char*)alloc(Length);
+        strncpy(iline,input_buffer,Length);
+     }
      return(iline);
   }
 }
