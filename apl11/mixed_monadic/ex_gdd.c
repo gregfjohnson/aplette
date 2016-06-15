@@ -5,6 +5,7 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "gd.h"
 
 int   gdd();
 

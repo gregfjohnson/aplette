@@ -7,6 +7,9 @@
 #include "data.h"
 #include "utility.h"
 #include "memory.h"
+#include "parser.h"
+#include "execute.h"
+#include "userfunc.h"
 
 /* the primitive function "execute" (uptack jot) */
 void ex_execute() {

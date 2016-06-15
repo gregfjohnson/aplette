@@ -5,14 +5,15 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "gd.h"
 
-int gdu(int *p1, int *p2);
+int gdu(const int *p1, const int *p2);
 
 void ex_gdu() {
    struct item *p;
 
    p = fetch1();
-   gd0(p->rank-1, gdu);
+   gd0(p->rank-1, (int(*)(const void *, const void *)) gdu);
 }
 
 void ex_gduk() {
@@ -20,10 +21,10 @@ void ex_gduk() {
 
    k = topfix() - iorigin;
    fetch1();
-   gd0(k, gdu);
+   gd0(k, (int(*)(const void *, const void *)) gdu);
 }
 
-int gdu(int *p1, int *p2) {
+int gdu(const int *p1, const int *p2) {
    struct item *p;
    data d1, d2;
 
