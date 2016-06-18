@@ -14,8 +14,7 @@
 #include "memory.h"
 #include "apl.h"
 
-void mem_dump()
-{
+void mem_dump() {
    struct memblock *item;
    printf("Dumping dynamic memory... \n");
    printf("firstblock, points to %x \n", (uintptr_t) firstblock );

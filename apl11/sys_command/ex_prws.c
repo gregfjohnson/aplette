@@ -7,6 +7,8 @@
 #include "apl.h"
 #include "data.h"
 #include "char.h"
+#include "ex_list.h"
+#include "print.h"
 
 /* Print Workspace */
 void ex_prws() {

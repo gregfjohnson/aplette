@@ -7,7 +7,7 @@
 #include "apl.h"
 #include "utility.h"
 
-void funread(char *fname) {
+int funread(char *fname) {
    struct item *p;
    int f, pid;
 
@@ -17,4 +17,6 @@ void funread(char *fname) {
    if(fname == 0) fname = ((struct nlist *)p)->namep;
    f = opn(fname, O_RDONLY);
    fundef(f);
+   close(f);
+   return f;
 }

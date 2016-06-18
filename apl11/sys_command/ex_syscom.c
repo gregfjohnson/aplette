@@ -12,6 +12,12 @@
 #include "data.h"
 #include "work_space.h"
 #include "main.h"
+#include "debug.h"
+#include "userfunc.h"
+#include "listdir.h"
+#include "ex_shell.h"
+#include "ex_list.h"
+#include "ex_prws.h"
 
 void ex_syscom() {
    int i, *ip, j;
@@ -71,14 +77,14 @@ void ex_syscom() {
       sp[0] = sp[-1];      /*   duplicate top of stack  */
       sp++;
       funwrite(scr_file);
-      funedit(scr_file, i);
+      funedit(scr_file);
       unlink(scr_file);
       return;
 
 
    case EDIT:
       SECURITY_CHECK;
-      funedit(0, i);
+      funedit(0);
       return;
 
    case READ:

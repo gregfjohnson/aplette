@@ -8,13 +8,11 @@
 #include "utility.h"
 #include "work_space.h"
 
-void funwrite(char *fname)
 /* creates an ordinary file from a user defined function
  * in order to enable the user to edit it through a subsequent
  * call to a text editor
  */
-
-{
+void funwrite(char *fname) {
    struct nlist *n;
    int i, cnt, fd1, fd2;
    char buf[512], *j;

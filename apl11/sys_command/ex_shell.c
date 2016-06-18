@@ -7,13 +7,11 @@
 #include "apl.h"
 #include "utility.h"
 
+/* If the environment variable SHELL is defined, attempt to
+* execute that shell.  If not, or if that exec fails, attempt
+* to execute the standard shell, /bin/sh
+*/
 void ex_shell() {
-
-   /* If the environment variable SHELL is defined, attempt to
-    * execute that shell.  If not, or if that exec fails, attempt
-    * to execute the standard shell, /bin/sh
-    */
-
    char *getenv(), *sh, cmd[128];
 
    sh = getenv("SHELL");

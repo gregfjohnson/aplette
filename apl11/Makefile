@@ -10,6 +10,8 @@ OBJECTS = debug/Q.o memory/Q.o parser/Q.o print/Q.o format/Q.o \
 	struct_dyadic/Q.o \
 	sys_command/Q.o userfunc/Q.o utility/Q.o work_space/Q.o main/Q.o 
 
+all: apl11
+
 apl11:	$(OBJECTS)
 	$(CC) -o apl11 $(OBJECTS) $(LIBS)
 

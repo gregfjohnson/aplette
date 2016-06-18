@@ -20,7 +20,7 @@
 
 extern	char *bad_fn;
 
-void funedit(char *fname, char *editor) {
+void funedit(char *fname) {
    struct item *p;
    int f, (*a)();
    char *c, cmd[128];

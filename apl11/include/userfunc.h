@@ -14,5 +14,11 @@
 void tback(int flag);
 void sichk(struct nlist *n);
 void ex_nilret();
+void funwrite(char *fname);
+void funedit(char *fname);
+int  funread(char *fname);
+void funcomp(struct nlist *np);
+void ex_ibr0();
+void eval_qlx();
 
 #endif

@@ -9,9 +9,8 @@
 #include "apl.h"
 #include "utility.h"
 
-void ex_list()
 /* List a function on the terminal */
-{
+void ex_list() {
    char lastc, c;
    struct nlist *n;
    int line;
