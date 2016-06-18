@@ -2,6 +2,7 @@
 
 # point to the just built copy (not the installed version)
 APLEXE = ../apl11/apl11
+FLAGS  = -r -a
 
 DIFF = @diff@
 
@@ -10,7 +11,8 @@ OBJECTS = printing.dif quad_vars.dif quad_fns.dif \
 	sys_commands.dif debug.dif ibeams.dif nesting.dif \
 	scalar_monadic.dif scalar_dyadic.dif \
         mixed_monadic.dif mixed_dyadic.dif \
-	struct_monadic.dif struct_dyadic.dif
+	struct_monadic.dif struct_dyadic.dif \
+	mixed_monadic.adif
 
 # Keep *.out files
 .PRECIOUS:	%.out
@@ -26,12 +28,20 @@ all:	$(OBJECTS)
 	$(APLEXE) < $<  | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
+%.adif:	%.aout
+	$(DIFF) $< $*.aref > $@
+
+%.aout:	%.ainp $(APLEXE)
+	$(APLEXE) $(FLAGS) < $<  | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
+	echo >> $@
+
 # Kludge required because save command prints the date 
 sys_commands.out:	sys_commands.inp $(APLEXE)
 	$(APLEXE) < sys_commands.inp \
-	            | tail +2 \
+	            | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' \
 	            | egrep -v "saved deleteme" > $@
 
 clean:
-	rm -f *.dif *.out clean_dir/aplws.abort clean_dir/core
+	rm -f *.dif *.out aplws.abort clean_dir/aplws.abort \
+	      *.adif clean_dir/core.* core.*
 
