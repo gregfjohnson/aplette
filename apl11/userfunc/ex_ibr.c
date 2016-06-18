@@ -8,6 +8,7 @@
 #include "utility.h"
 #include "char.h"
 #include "memory.h"
+#include "userfunc.h"
 
 /*
  * monadic immediate branch -- resume fn at specific line

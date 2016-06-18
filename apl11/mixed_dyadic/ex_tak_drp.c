@@ -114,7 +114,7 @@ void takezr(int *fill) {
     */
 
    for(i=0; i<idx.rank; i++) {
-      if (fill[i] > 0 && idx.idx[i] >= fill[i] || fill[i] < 0 && idx.idx[i] < -fill[i]){
+      if ((fill[i] > 0 && idx.idx[i] >= fill[i]) || (fill[i] < 0 && idx.idx[i] < -fill[i])) {
          p = sp[-1];
          p->index = access();
          putdat(p, (p->type==DA) ? zero : (data)' ');

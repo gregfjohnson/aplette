@@ -8,7 +8,7 @@
 #include "utility.h"
 
 void ex_dibm() {
-   int j, arg;
+   int arg;
    struct item *p;
 
    /* Dyadic i-beam functions.  I-beam 63 assumes that the

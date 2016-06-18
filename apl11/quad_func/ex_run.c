@@ -11,9 +11,8 @@
 
 void ex_run() {
    struct item *p;
-   data *dp;
    char ebuf[100];
-   int i, val;
+   int val;
 
    SECURITY_CHECK;
    p = fetch1();

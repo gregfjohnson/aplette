@@ -28,4 +28,6 @@ void intr(int s);
 void panic(int signum);
 void catchsigs();
 
+void fappend(int fd, struct item *ap);
+
 #endif // UTILITY_H

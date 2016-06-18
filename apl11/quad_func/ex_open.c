@@ -10,7 +10,6 @@
 char *iofname();
 
 void ex_open() {
-   struct item *p;
    int m;
 
    m = topfix();

@@ -10,5 +10,6 @@
 #define PARSER_H
 
 char *compile_new(int f);
+char *compile_old(char *s, int f);
 
 #endif

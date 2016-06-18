@@ -4,6 +4,7 @@
  */
 #include "apl.h"
 #include "utility.h"
+#include "execute.h"
 
 /* execute dyadic scalar functions
  * this routine is called from execute() 

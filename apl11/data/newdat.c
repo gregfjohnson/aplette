@@ -9,7 +9,6 @@
 struct item *
 newdat(int type, int rank, int size)
 {
-   int i;
    struct item *p;
    void *q;
 

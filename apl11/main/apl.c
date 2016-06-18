@@ -30,7 +30,6 @@ char headline[] =
 int main(int argc, char **argp) {
    int pid, sigs, file_id ;
    static int fflag;
-   struct apl_statement *input_line;
 
 #ifdef HAVE_LIBREADLINE
 /* Allow conditional parsing of the ~/.inputrc file. */

@@ -5,6 +5,7 @@
 #include "apl.h"
 #include "data.h"
 #include "memory.h"
+#include "userfunc.h"
 
 char *
 catcode(s1,s2)

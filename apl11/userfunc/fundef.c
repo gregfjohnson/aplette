@@ -10,6 +10,7 @@
 #include "memory.h"
 #include "work_space.h"
 #include "userfunc.h"
+#include "parser.h"
 
 /*
  * fundef - defines a function

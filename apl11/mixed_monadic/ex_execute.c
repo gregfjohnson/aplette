@@ -14,7 +14,7 @@
 /* the primitive function "execute" (uptack jot) */
 void ex_execute() {
 struct item *p;
-int i, j, dim0, dim1;
+int i, dim0, dim1;
 char *b;
 struct Context *thisContext;
 

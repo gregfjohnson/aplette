@@ -24,7 +24,7 @@ static int openOrCreateFile(char *fileName, int mode) {
 }
 
 int opn( char file[], int rw) {
-   int fd, (*p)();
+   int fd;
    char f2[100];
 
    if ((fd = openOrCreateFile(file,rw)) < 0) {
@@ -44,7 +44,6 @@ int opn( char file[], int rw) {
 
 int empty(int fd) {
    struct stat sbuf;
-   struct fds *fp;
 
    /* Simulate the Rand Corp.'s "empty" system call on a
     * V7 system by seeing if the given fd is a pipe, and if

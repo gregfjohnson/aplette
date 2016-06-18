@@ -10,7 +10,7 @@ extern	struct QUOD qtab[];
 #define lv yylval
 
 int getquad() {
-   char c, *p1;
+   char *p1;
    struct QUOD *p2;
    char qbuf[10];
 

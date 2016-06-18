@@ -10,7 +10,7 @@
 #include "work_space.h"
 
 void ex_ap() {
-   int i, fd;
+   int fd;
    struct item *p;
 
    SECURITY_CHECK;

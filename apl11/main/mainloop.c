@@ -19,7 +19,6 @@
 #include "execute.h"
 
 void mainloop() {
-    int lineLength;
     char *getinput();
     struct Context *thisContext;
   

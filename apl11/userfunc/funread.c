@@ -4,12 +4,14 @@
  */
 
 #include <fcntl.h>
+#include <unistd.h>
 #include "apl.h"
 #include "utility.h"
+#include "userfunc.h"
 
 int funread(char *fname) {
    struct item *p;
-   int f, pid;
+   int f;
 
    p = sp[-1];
    sp--;

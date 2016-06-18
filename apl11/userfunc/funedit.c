@@ -4,6 +4,7 @@
  */
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "apl.h"
 #include "utility.h"
@@ -18,11 +19,11 @@
  * the namep of the function is used for the file name.
  */
 
-extern	char *bad_fn;
+static char *bad_fn  = "apl.badfn";
+static int badfnsv(char *fname);
 
 void funedit(char *fname) {
    struct item *p;
-   int f, (*a)();
    char *c, cmd[128];
 
    p = sp[-1];
@@ -50,3 +51,20 @@ void funedit(char *fname) {
    }
 }
 
+
+/* This routine saves the contents of "fname" in the file
+* named in "bad_fn".  It is called by "funedit" if the
+* header of a function just read in is messed up (thus,
+* the entire file is not lost).  Returns 1 if successful,
+* 0 if not.
+*/
+static int badfnsv(char *fname) {
+   int fd1, fd2, len;
+   char buf[512];
+
+   if ((fd1=open(fname, 0)) < 0 || (fd2=creat(bad_fn, 0644)) < 0) return(0);
+   while((len=read(fd1, buf, 512)) > 0) writeErrorOnFailure(fd2, buf, len);
+   close(fd1);
+   close(fd2);
+   return(1);
+}

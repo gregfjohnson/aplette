@@ -22,7 +22,7 @@ void wssave(int ffile) {
 
 int nsave(int ffile, struct nlist *an) {
    char c, buffer[64];
-   int i, n, size;
+   int i, size;
    struct item *p;
 
    if (an == 0){

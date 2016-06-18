@@ -3,23 +3,18 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <sys/times.h>
 #include "apl.h"
 #include "utility.h"
 
 int afnfree, afnused;
 
 void ex_mibm() {
-   struct tm *tp, *localtime();
+   struct tm *localtime();
    struct Context *gp;
    struct item *p;
    int i;
-   long tvec;
-   struct {
-      long proc_user_time;
-      long proc_system_time;
-      long child_user_time;
-      long child_system_time;
-   } t;
+   struct tms t;
 
    switch(topfix()) {
 
@@ -48,7 +43,7 @@ void ex_mibm() {
 
    case 21:		/* CPU time */
       times(&t);
-      datum = t.proc_user_time+t.proc_system_time;
+      datum = t.tms_utime+t.tms_stime;
       break;
 
    case 22:		/* ws bytes unused */
@@ -96,27 +91,27 @@ void ex_mibm() {
 
    case 40:		/* Total accumulated child's time */
       times(&t);
-      datum = t.child_user_time+t.child_system_time;
+      datum = t.tms_cutime+t.tms_cstime;
       break;
 
    case 41:		/* Total accumulated user time -- including all kids */
       times(&t);
-      datum = t.proc_user_time+t.child_user_time;
+      datum = t.tms_utime+t.tms_cutime;
       break;
 
    case 42:		/* Total system time -- including all kids */
       times(&t);
-      datum = t.proc_system_time+t.child_system_time;
+      datum = t.tms_stime+t.tms_cstime;
       break;
 
    case 43:		/* User time -- parent only */
       times(&t);
-      datum = t.proc_user_time;
+      datum = t.tms_utime;
       break;
 
    case 44:		/* System time -- parent only */
       times(&t);
-      datum = t.proc_system_time;
+      datum = t.tms_stime;
       break;
 
    }

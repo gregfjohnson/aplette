@@ -10,7 +10,6 @@
 
 void ex_fork() {
    int pid;
-   struct item *p;
 
    SECURITY_CHECK;
    if ((pid = fork()) == -1) error(ERR,"could not fork");

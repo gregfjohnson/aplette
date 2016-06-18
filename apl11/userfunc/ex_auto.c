@@ -5,6 +5,7 @@
 
 #include "apl.h"
 #include "data.h"
+#include "utility.h"
 
 void ex_auto() {
    struct nlist *np;

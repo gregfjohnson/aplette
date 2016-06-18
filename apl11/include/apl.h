@@ -246,8 +246,8 @@ int    stack_trace;
 int    vars_trace;
 
 typedef struct {
-   char   rank;
-   char   type;
+   int    rank;
+   int    type;
    int    size;
    int    dimk;
    int    delk;

@@ -23,7 +23,6 @@ void ex_syscom() {
    int i, *ip, j;
    struct item *p;
    struct nlist *n;
-   double f;
    char fname[64];                  /* Array for filename */
    char *cp, *vfname();
 

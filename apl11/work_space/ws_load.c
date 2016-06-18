@@ -27,7 +27,7 @@ void writeErrorOnFailure(int fd, void *buf, size_t count) {
 }
 
 void wsload(int ffile) {
-   char buffer[64], flag, *gettoken(), c;
+   char buffer[64], *gettoken(), c;
    int use, size, rank, i, dim[MRANK];
    struct nlist *n;
    struct item *p;

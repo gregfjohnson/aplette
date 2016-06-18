@@ -74,7 +74,6 @@ char *getinput(prompt)
 #warning Readline support has not been included!
   {
 #endif
-     char *line;
      printf("%s",prompt);
      /* Get a line from the user. */
 

@@ -5,6 +5,7 @@
 #include "apl.h"
 #include "data.h"
 #include "utility.h"
+#include "execute.h"
 
 /* this routine deals with dyadic scalar functions
  * where both arguments are type char

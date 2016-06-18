@@ -6,11 +6,14 @@
 #include "data.h"
 #include "utility.h"
 #include "opt_codes.h"
+#include "userfunc.h"
+#include "debug.h"
+#include "execute.h"
 
 void execute()
 {
    int opcode, i, j;
-   data *dp, d;
+   data *dp;
    struct item *p, *p1;
    data (*f)();
    extern char *opname[];
@@ -238,7 +241,6 @@ void execute()
       case CONST:
          j = DA;
    
-      con:
          opcode=*gsip->ptr++;
          p = newdat(j, opcode==1?0:1, opcode);
          gsip->ptr += copy(j, (char *) gsip->ptr, (char *) p->datap, opcode);

@@ -6,6 +6,8 @@
 #include "apl.h"
 #include "data.h"
 #include "char.h"
+#include "print.h"
+#include "mixed_monadic.h"
 
 /*
  * check for latent expr quad LX and evaluate it if found

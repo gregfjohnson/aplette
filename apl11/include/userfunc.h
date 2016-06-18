@@ -13,12 +13,19 @@
 
 void tback(int flag);
 void sichk(struct nlist *n);
+int  csize(char *s);
 void ex_nilret();
+
 void funwrite(char *fname);
 void funedit(char *fname);
 int  funread(char *fname);
+int  fundef(int f);
 void funcomp(struct nlist *np);
+
 void ex_ibr0();
+void ex_br();
+void ex_br0();
+
 void eval_qlx();
 
 #endif

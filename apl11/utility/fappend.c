@@ -12,7 +12,7 @@
 void fappend(int fd, struct item *ap) {
    struct item *p;
    char *p1;
-   int i, dim0, dim1, sb[32];
+   int i, dim0, dim1;
    char b[200];
 
    p = ap;

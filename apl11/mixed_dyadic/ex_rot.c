@@ -30,7 +30,7 @@ void ex_rot() {
 }
 
 static void rotk(int k) {
-	struct item *p, *q;
+	struct item *p;
 	int param;
     void rot1();
 

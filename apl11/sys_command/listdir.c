@@ -10,7 +10,7 @@
 void listdir() {
    DIR *thisDirectory;
    struct dirent *entry;
-   int widest, i;
+   int i;
 
    thisDirectory = opendir(".");
    if (thisDirectory == 0) error(ERR_botch,"could not open CWD");

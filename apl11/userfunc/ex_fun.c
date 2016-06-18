@@ -7,6 +7,8 @@
 #include "data.h"
 #include "utility.h"
 #include "memory.h"
+#include "userfunc.h"
+#include "execute.h"
 
 int prolgerr;      /* Flag -- set if bad fetch in prologue 
                     * this variable is global so that fetch()

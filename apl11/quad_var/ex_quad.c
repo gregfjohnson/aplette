@@ -17,6 +17,9 @@
 #include "utility.h"
 #include "char.h"
 #include "memory.h"
+#include "parser.h"
+#include "execute.h"
+#include "print.h"
 
 struct item * ex_quad(io)
 int io; /* 0 = source, 1 = sink */

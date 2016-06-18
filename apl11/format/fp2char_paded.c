@@ -20,7 +20,7 @@
 
 char *fp2char_paded(data d, struct FORMAT *format) {
    double value;
-   int sign,width,d_places,n,m;
+   int width, d_places, n, m;
 
    value = d;
 

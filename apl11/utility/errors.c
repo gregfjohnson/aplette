@@ -13,8 +13,7 @@
 
 /* print line and error pointer */
 void pline(char *str, int loc, int ln) {
-   int c, l, col;
-   col = 0;
+   int c, l;
    l = 0;
 
    /* print line number if applicable */
@@ -28,7 +27,6 @@ void pline(char *str, int loc, int ln) {
    do {
       c = *str++;
       l++;
-      if(l == loc) col = column;
       putchar(c);
    } while(c != '\n');
 

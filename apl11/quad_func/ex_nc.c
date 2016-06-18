@@ -12,7 +12,7 @@ void ex_nc() {
    struct nlist *np;
    struct item *p;
    int i;
-   char buf[40], *q;
+   char buf[40];
 
    p = fetch1();
    if(p->type != CH) error(ERR_domain,"");

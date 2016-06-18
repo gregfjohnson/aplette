@@ -9,14 +9,15 @@
 #include "utility.h"
 #include "char.h"
 #include "memory.h"
+#include "parser.h"
 #include "work_space.h"
 
 void ex_fdef() {
    struct item *p;
-   char *p1, *p2;
+   char *p2;
    struct nlist *np;
    char b[512];
-   int i, dim0, dim1;
+   int dim0, dim1;
 
    p = fetch1();
    if( p->rank != 2 && p->rank != 1 ) error(ERR_rank,"");

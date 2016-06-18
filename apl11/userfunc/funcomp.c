@@ -10,6 +10,8 @@
 #include "opt_codes.h"
 #include "memory.h"
 #include "parser.h"
+#include "userfunc.h"
+#include "debug.h"
 
 static void reverse(char *s);
 

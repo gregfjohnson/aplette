@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "utility.h"
 
 /* ex_nilret() is called when a user defined function
  * does not return a value.  It just puts an empty vector

@@ -7,6 +7,7 @@
 #include "utility.h"
 #include "char.h"
 #include "data.h"
+#include "debug.h"
 
 void ex_asgn() {
    struct nlist *p;

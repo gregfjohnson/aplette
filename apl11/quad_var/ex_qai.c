@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <sys/time.h>
+#include <sys/times.h>
 #include <unistd.h>
 #include "apl.h"
 #include "utility.h"
@@ -19,25 +20,21 @@
 struct item * ex_qai(io)
 int io; /* 0 = source, 1 = sink */
 {
-   struct {
-      long proc_user_time;
-      long proc_system_time;
-      long child_user_time;
-      long child_system_time;
-   } t;
+   struct tms t;
    struct item *p;
    long tv;
+
    if (io==0) {
       time(&tv);
       times(&t);
       p=newdat(DA,1,4);
-      p->datap[0]=(data)geteuid();
-      p->datap[1]=t.proc_user_time+t.child_user_time;
-      p->datap[3]=tv-startTime;
-      p->datap[2]=t.proc_system_time+t.child_system_time;
+      p->datap[0] = (data) geteuid();
+      p->datap[1] = t.tms_utime + t.tms_cutime;
+      p->datap[3] = tv - startTime;
+      p->datap[2] = t.tms_stime + t.tms_cstime;
       return(p);
+
    } else {
       error(ERR_implicit,"cannot change accounting info");
    };
 }
-

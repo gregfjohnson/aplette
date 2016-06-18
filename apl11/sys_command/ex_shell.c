@@ -12,7 +12,7 @@
 * to execute the standard shell, /bin/sh
 */
 void ex_shell() {
-   char *getenv(), *sh, cmd[128];
+   char *getenv(), *sh;
 
    sh = getenv("SHELL");
    if (sh == 0) sh = "/bin/sh";

@@ -17,7 +17,7 @@ void map(int o) {
 
    n = 1;
    for(i=0; i<idx.rank; i++) n *= idx.dim[i];
-   if(n == 0) idx.rank == 0;
+   if(n == 0) idx.rank = 0;
    p = newdat(idx.type, idx.rank, n);
    copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
    *sp++ = p;

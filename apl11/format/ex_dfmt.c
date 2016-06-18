@@ -19,11 +19,9 @@
 void ex_dfmt()
 {
    struct item *rp, *lp, *q;
-   int ncol;
 
    lp = fetch2();
    rp = sp[-2];
-   ncol = rp->rank ? rp->dim[rp->rank-1] : 1;
 
    switch (lp->type) {
    case DA:

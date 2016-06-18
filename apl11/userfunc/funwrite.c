@@ -15,7 +15,7 @@
 void funwrite(char *fname) {
    struct nlist *n;
    int i, cnt, fd1, fd2;
-   char buf[512], *j;
+   char buf[512];
 
    n = (struct nlist *)sp[-1];
    sp--;

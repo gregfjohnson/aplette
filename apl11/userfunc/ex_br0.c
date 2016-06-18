@@ -4,8 +4,3 @@
  */
 
 #include "apl.h"
-
-void ex_br0() {
-   gsip->funlc = 0;
-   ex_elid();
-}

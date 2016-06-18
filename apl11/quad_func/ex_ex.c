@@ -10,7 +10,7 @@ void ex_ex(void)
    struct item *p, *ip;
    int i, nlen;
    int j, n;
-   char buf[40], *q;
+   char buf[40];
 
    p = fetch1();
    if(p->type != CH) error(ERR_domain,"");

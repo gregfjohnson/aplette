@@ -13,7 +13,7 @@ void index1(int i, int f);
 
 void ex_index() {
    struct item *p, *q;
-   int i, j, f, n, lv;
+   int i, j, f, n;
 
    n = *gsip->ptr++;
    f = *gsip->ptr;

@@ -7,6 +7,7 @@
 #include "data.h"
 #include "utility.h"
 #include "opt_codes.h"
+#include "oper_dyadic.h"
 
 char base_com[] = {ADD, MUL};
 

@@ -38,12 +38,9 @@ struct item * fetch2()
    return(p);
 }
 
-struct item * fetch(ip)
-struct item *ip;
-{
+struct item * fetch(struct item *ip) {
    struct item *p, *q;
-   int i,c;
-   struct nlist *n;
+   int i;
    extern int prolgerr;
 
    p = ip;
@@ -103,5 +100,6 @@ loop:
    default:
       error(ERR_botch,"fetch");
    }
+   return NULL; // never reached because of default above..
 }
 
