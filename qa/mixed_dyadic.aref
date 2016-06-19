@@ -1,0 +1,14 @@
+clear ws
+	pi ê 3 1 4 1 5 9 2 6
+
+	left  ê 1
+
+	right ê -1
+
+	left  Ë pi
+
+1 4 1 5 9 2 6 3
+	right Ë pi
+
+6 3 1 4 1 5 9 2
+	

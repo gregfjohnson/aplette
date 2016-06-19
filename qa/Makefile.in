@@ -1,3 +1,4 @@
+# Generated automatically from Makefile.in by configure.
 # Makefile for for testing apl11
 
 # point to the just built copy (not the installed version)
@@ -12,7 +13,8 @@ OBJECTS = printing.dif quad_vars.dif quad_fns.dif \
 	scalar_monadic.dif scalar_dyadic.dif \
         mixed_monadic.dif mixed_dyadic.dif \
 	struct_monadic.dif struct_dyadic.dif \
-	mixed_monadic.adif
+	mixed_monadic.adif struct_monadic.adif \
+	mixed_dyadic.adif
 
 # Keep *.out files
 .PRECIOUS:	%.out
