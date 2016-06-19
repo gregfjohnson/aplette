@@ -7,6 +7,7 @@
 #include "data.h"
 
 static void rotk(int k);
+static void rot1(int k);
 
 void ex_rot0() {
 	fetch2();
@@ -31,33 +32,37 @@ void ex_rot() {
 
 static void rotk(int k) {
 	struct item *p;
-	int param;
-    void rot1();
+	int isDyadicRotate;
 
 	p = sp[-1];
 	bidx(sp[-2]);
 	if(k < 0 || k >= idx.rank) error(ERR_index,"");
-	param = 0;
+	isDyadicRotate = 0;
 	colapse(k);
 	if(idx.size != p->size) {
 		if(p->size != 1) error(ERR_length,"");
-		param++;
+		isDyadicRotate = 1;
 		datum = getdat(p);
 	}
 	p = newdat(idx.type, 1, idx.dimk);
 	*sp++ = p;
-	forloop(rot1, param);
+
+    indexIterateInit(&idx);
+    while (indexIterate(&idx)) {
+        rot1(isDyadicRotate);
+    }
+
 	pop();
 	pop();
 }
 
-void rot1(int param)
+static void rot1(int k)
 {
 	struct item *p, *q;
 	int i;
 	int o, n;
 
-	if(param == 0) datum = getdat(sp[-2]);
+	if(k == 0) datum = getdat(sp[-2]);
 	o = fix(datum);
 	if(o < 0) o = idx.dimk - (-o % idx.dimk);
 	q = sp[-1];

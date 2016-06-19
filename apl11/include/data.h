@@ -26,6 +26,4 @@ bool indexIterate(DataIterator *iter);
 void purge_name(struct nlist *np);
 void erase(struct nlist *np);
 
-void forloop(int (*co)(), int arg);
-
 #endif // DATA_H

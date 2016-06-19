@@ -105,14 +105,6 @@ void takezr(int *fill) {
    struct item *p;
    int i;
 
-   /* Zero appropriate elements of an array created by taking
-    * more than you originally had.  I apologize for the "dirty"
-    * argument passing (passing a pointer to an integer array
-    * through "forloop()" which treats it as an integer) and for
-    * the general dumbness of this code.
-    *               --John Bruner
-    */
-
    for(i=0; i<idx.rank; i++) {
       if ((fill[i] > 0 && idx.idx[i] >= fill[i]) || (fill[i] < 0 && idx.idx[i] < -fill[i])) {
          p = sp[-1];

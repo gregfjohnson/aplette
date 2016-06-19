@@ -4,7 +4,7 @@ include	../include/makefile.common
 CFLAGS += -I../include
 
 OBJECTS = access.o dupdat.o getdata.o putdat.o top.o \
-	bidx.o copy.o erase.o forloop.o newdat.o s2vect.o \
+	bidx.o copy.o erase.o newdat.o s2vect.o \
 	colapse.o fetch.o nlook.o size.o pop.o purge_name.o \
 	data_iterator.o
 

@@ -3,6 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 
+/* expand:  1 0 1 0 1 \ I3
+ */
+
 #include "apl.h"
 #include "utility.h"
 #include "data.h"
@@ -46,7 +49,12 @@ void exdk(int k) {
    p = newdat(idx.type, idx.rank, idx.size);
    copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
    *sp++ = p;
-   forloop(exd1, k);
+
+    indexIterateInit(&idx);
+    while (indexIterate(&idx)) {
+        exd1(k);
+    }
+
    sp--;
    pop();
    pop();

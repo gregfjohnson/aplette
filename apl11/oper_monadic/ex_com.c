@@ -85,7 +85,12 @@ void comk(int k) {
    copy(IN, (char *) idx.dim, (char *) p->dim, idx.rank);
    p->dim[k] = ndk;
    *sp++ = p;
-   forloop(com1, k);
+
+    indexIterateInit(&idx);
+    while (indexIterate(&idx)) {
+        com1(k);
+    }
+
    sp--;
    pop();
    pop();
