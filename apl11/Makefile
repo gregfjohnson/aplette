@@ -35,7 +35,11 @@ format/Q.o:	format/*.c
 memory/Q.o:	memory/*.c
 	cd memory ; $(MAKE)
 
-parser/Q.o:	parser/*.c parser/apl.y parser/*.h
+parser/Q.o: \
+    parser/alpha.c        parser/digit.c   parser/getnum.c     parser/lastcode.c    parser/table_oper.c  parser/yylex.c \
+    parser/compile_new.c  parser/genlab.c  parser/getquad.c    parser/name.c        parser/table_quad.c \
+    parser/compile_old.c  parser/getnam.c  parser/invert.c     parser/table_comm.c  parser/yyerror.c \
+    parser/apl.y parser/*.h
 	cd parser ; $(MAKE)
 
 print/Q.o:	print/*.c
