@@ -11,6 +11,7 @@
 #include "work_space.h"
 #include "userfunc.h"
 #include "parser.h"
+#include "main.h"
 
 /*
  * fundef - defines a function
@@ -36,10 +37,21 @@ int fundef(int f) {
     * dynamic memory alloaction.
     */
    status=fgets(iline,LINEMAX,infile);
-   if (status == NULL || 0 == strcmp(iline,(char *)&"\n") ) { 
+
+   if (ascii_characters) {
+        char *oldline = (char *) alloc(LINEMAX);
+        strncpy(oldline, iline, LINEMAX);
+        oldline[strlen(oldline) - 1] = '\0';
+        iline = to_ascii_input(oldline);
+        aplfree((int *) oldline);
+   }
+
+   if (status == NULL || 0 == strcmp(iline, "\n") ) { 
       printf("Blank function header. \n");
+      aplfree((int *) iline);
       return(0);
-   };
+   }
+
    c = compile_old(iline, 2);
    aplfree((int *) iline);
    if (c == 0 ) goto out;
@@ -56,4 +68,3 @@ out:
    fclose(infile);
    return(1);
 }
-

@@ -71,6 +71,8 @@ static struct {
     {'{', C_LEFTARROW},
     {'E', C_EPSILON},
     {'B', C_UPTACK},
+    {'G', C_DEL},
+    {'H', C_DELTA},
 };
 
 static void init() {
