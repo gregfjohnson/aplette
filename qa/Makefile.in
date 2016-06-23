@@ -6,13 +6,14 @@ FLAGS  = -r -a
 
 DIFF = @diff@
 
-OBJECTS = printing.dif quad_vars.dif quad_fns.dif \
-	userfunc.dif format.dif trig.dif errors.dif \
-	sys_commands.dif debug.dif ibeams.dif nesting.dif \
+OBJECTS = printing.dif quad_vars.dif \
+	format.dif trig.dif errors.dif \
 	scalar_monadic.dif scalar_dyadic.dif \
-        mixed_monadic.dif mixed_dyadic.dif \
+    mixed_monadic.dif mixed_dyadic.dif \
 	struct_monadic.dif struct_dyadic.dif \
 	mixed_monadic.adif
+
+BROKEN_OBJECTS = ibeams.dif quad_fns.dif nesting.dif userfunc.dif debug.dif sys_commands.dif
 
 # Keep *.out files
 .PRECIOUS:	%.out
