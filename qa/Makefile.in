@@ -44,6 +44,5 @@ sys_commands.out:	sys_commands.inp $(APLEXE)
 	            | egrep -v "saved deleteme" > $@
 
 clean:
-	rm -f *.dif *.out aplws.abort clean_dir/aplws.abort \
-	      *.adif clean_dir/core.* core.*
-
+	rm -f *.dif  *.out aplws.abort clean_dir/aplws.abort \
+	      *.adif *.aout clean_dir/core.* core.*
