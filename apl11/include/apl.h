@@ -21,7 +21,7 @@
 #define MRANK        8                  /* maximum rank, ie number of dimensions */
 #define STKS       500                  /* stack size */
 #define SYM_TAB_MAX        200                  /* number of local symbols, 
-                                         * ie varables and user functions, see nlist[SYM_TAB_MAX] */
+                                         * ie varables and user functions, see symbolTable[SYM_TAB_MAX] */
 #define NAMS        40                  /* maximum size of variable and user function names */
 #define OBJS       500                  /* space provided for p-code */
 #define MAXLAB     100                  /* maximum number of labels in one function */
@@ -154,24 +154,26 @@ struct item {
 /*
  * variable/fn (and file name) descriptor block.
  * contains useful information about all LVs.
- * Also kludged up to handle file names (only nlist.namep 
+ * Also kludged up to handle file names (only symbolTable.namep 
  * is then used.)
  *
- * For fns, nlist.itemp is an array of pointers to character
+ * For fns, symbolTable.itemp is an array of pointers to character
  * strings which are the compiled code for a line of the fn.
  * (Itemp == 0) means that the fn has not yet been compiled .
- * nlist.itemp[0] == the number of lines in the fn, and
- * nlist.itemp[1] == the function startup code, and
- * nlist.itemp[max] == the close down shop code.
+ * symbolTable.itemp[0] == the number of lines in the fn, and
+ * symbolTable.itemp[1] == the function startup code, and
+ * symbolTable.itemp[max] == the close down shop code.
  */
 
-struct nlist {
+typedef struct {
    int          use;
    int          type;
    struct item* itemp;
    char*        namep;
    int          label;
-} nlist[SYM_TAB_MAX];
+} SymTabEntry;
+
+SymTabEntry symbolTable[SYM_TAB_MAX];
 
 /* The context structure
  * pointed to by the State Indicator
@@ -193,7 +195,7 @@ struct Context {
     char*           pcode;              /* pseudo code */
     char*           xref;               /* cross reference text vs pcode */
     char*           ptr;                /* pointer to current token in pcode */
-    struct nlist*   np;                 /* current fn vital stats. */
+    SymTabEntry*    np;                 /* current fn vital stats. */
     int             funlc;              /* current fn current line number */
     struct item**   sp;                 /* top of operand stack upon fn entry */
     jmp_buf         env;                /* for restoration of local fn activation record */
@@ -209,7 +211,7 @@ extern int (*exop[])();
 
 double ltod();
 char   *compile();
-struct nlist *nlook();
+SymTabEntry *nlook();
 struct item *fetch(), *fetch1(), *fetch2(), *extend();
 struct item *newdat(), *dupdat();
 

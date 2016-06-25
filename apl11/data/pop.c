@@ -20,7 +20,7 @@ void pop() {
          break;
          
       case LBL:
-         ((struct nlist *)p)->use = 0;     /* delete label */
+         ((SymTabEntry *)p)->use = 0;     /* delete label */
 
       case LV:
          break;

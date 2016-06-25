@@ -28,7 +28,7 @@ int digit(char s);
 int isodigit(char c);
 int getquad();
 void yyerror(char *error);
-void genlab(struct nlist *np);
+void genlab(SymTabEntry *np);
 void invert(char *a, char *b);
 int getnum(char ic);
 int getnam(char ic);

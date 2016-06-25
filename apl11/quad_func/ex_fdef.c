@@ -15,7 +15,7 @@
 void ex_fdef() {
    struct item *p;
    char *p2;
-   struct nlist *np;
+   SymTabEntry *np;
    char b[512];
    int dim0, dim1;
 

@@ -26,7 +26,7 @@
 int fundef(int f) {
    int a;
    char *iline, *status, *c;
-   struct nlist *np;
+   SymTabEntry *np;
    char b[512];
    FILE *infile;
 

@@ -20,7 +20,7 @@ struct item * ex_qlx(io)
 int io; /* 0 = source, 1 = sink */
 {
 struct item *p, *q;
-struct nlist *n;
+SymTabEntry *n;
 
    if ( io == 0 ) { 
       n = nlook(S_QUAD "lx");
@@ -36,7 +36,7 @@ struct nlist *n;
       pop();
       n = nlook(S_QUAD "lx");
       if(n == 0){ /* allocate new name: */
-         for(n=nlist; n->namep; n++) ;
+         for(n=symbolTable; n->namep; n++) ;
          n->namep = (char *)alloc(4);
          copy(CH, (char *) S_QUAD "lx", (char *) n->namep, 4);
          n->type = LV;
@@ -46,7 +46,7 @@ struct nlist *n;
       q = fetch1();
       erase(n);
       n->use = DA;
-      ((struct nlist *)n)->itemp = q;
+      ((SymTabEntry *)n)->itemp = q;
       sp[-1] = (struct item *)n;
 
       return(0);

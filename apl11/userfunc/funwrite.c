@@ -13,11 +13,11 @@
  * call to a text editor
  */
 void funwrite(char *fname) {
-   struct nlist *n;
+   SymTabEntry *n;
    int i, cnt, fd1, fd2;
    char buf[512];
 
-   n = (struct nlist *)sp[-1];
+   n = (SymTabEntry *)sp[-1];
    sp--;
    if(n->type != LV) error(ERR_botch,"fnwrite");
    if(fname ==0) fname = n->namep;

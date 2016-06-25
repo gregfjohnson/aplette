@@ -12,19 +12,19 @@
 /* List a function on the terminal */
 void ex_list() {
    char lastc, c;
-   struct nlist *n;
+   SymTabEntry *n;
    int line;
 
    /* Check for valid function */
 
-   n = (struct nlist *)*--sp;
+   n = (SymTabEntry *)*--sp;
    if (n->type != LV) error(ERR_value,"function name not defined");
 
    /* If a function, locate it in workspace file and
     * print on the terminal in formatted form.
     */
 
-   switch(((struct nlist *)n)->use){
+   switch(((SymTabEntry *)n)->use){
    default:
       error(ERR_botch,"cannot find requested function");
 

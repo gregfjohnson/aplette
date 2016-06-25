@@ -6,7 +6,7 @@
 #include "apl.h"
 #include "utility.h"
 
-void sichk(struct nlist *n) {
+void sichk(SymTabEntry *n) {
    struct Context *p;
 
    p = gsip;

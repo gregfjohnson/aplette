@@ -27,7 +27,7 @@ static void reverse(char *s);
 char *labcpp,*labcpe;
 extern char *catcode();
 
-void funcomp(struct nlist *np) {
+void funcomp(SymTabEntry *np) {
    char labp[MAXLAB*20], labe[MAXLAB*4];
    char  *a, *c; 
    int  i, err, err_code, *p;

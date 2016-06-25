@@ -9,18 +9,18 @@
 #include "fdat.h"
 #include "work_space.h"
 
-int nsave(int ffile, struct nlist *an);
+int nsave(int ffile, SymTabEntry *an);
 
 void wssave(int ffile) {
-   struct nlist *n;
+   SymTabEntry *n;
 
    nsave(ffile, 0);
-   for(n=nlist; n->namep; n++) nsave(ffile, n);
+   for(n=symbolTable; n->namep; n++) nsave(ffile, n);
    fdat(ffile);
    close(ffile);
 }
 
-int nsave(int ffile, struct nlist *an) {
+int nsave(int ffile, SymTabEntry *an) {
    char c, buffer[64];
    int i, size;
    struct item *p;

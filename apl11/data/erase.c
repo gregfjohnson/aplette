@@ -5,7 +5,7 @@
 #include "apl.h"
 #include "memory.h"
 
-void erase(struct nlist *np) {
+void erase(SymTabEntry *np) {
     int *p;
     struct item *itemp;
 

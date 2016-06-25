@@ -14,7 +14,7 @@
  */
 
 void eval_qlx() {
-   struct nlist *n;
+   SymTabEntry *n;
    struct item *p;
 
    if((n=nlook(S_QUAD "lx")) && n->itemp->type == CH && n->itemp->size){

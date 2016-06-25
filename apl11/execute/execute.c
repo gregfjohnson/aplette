@@ -209,7 +209,7 @@ void execute()
 
       case RVAL:      /* de-referenced LVAL */
          gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &p1, 1);
-         if(((struct nlist *)p1)->use != DA) ex_nilret();      /* no fn rslt */
+         if(((SymTabEntry *)p1)->use != DA) ex_nilret();      /* no fn rslt */
          else {
             *sp = fetch(p1);
             sp++;

@@ -251,7 +251,7 @@ loop:
    case RVAL:
       s += copy(IN, (char *) s, (char *) &cp, 1);
       putchar('-');
-      t = ((struct nlist *)cp)->namep;
+      t = ((SymTabEntry *)cp)->namep;
       while(*t) putchar(*t++);
       break;
 

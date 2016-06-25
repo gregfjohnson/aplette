@@ -16,7 +16,7 @@ extern	struct COMM comtab[];
 int getnam(char ic) {
    char name[NAMS], *cp;
    int c;
-   struct nlist *np;
+   SymTabEntry *np;
 
    c = ic;
    cp = name;
@@ -36,7 +36,7 @@ int getnam(char ic) {
       immedcmd = lv.charval = comtab[c].ct_ylval;
       return(comtab[c].ct_ytype);
    }
-   for(np=nlist; np->namep; np++) {
+   for(np=symbolTable; np->namep; np++) {
       if(equal(np->namep, name)) {
          lv.charptr = (char *)np;
          switch(np->use) {
@@ -56,12 +56,12 @@ int getnam(char ic) {
          return(nam);
       }
    }
-   /* look for an unallocated line in nlist */
-   for(np=nlist; np->namep; np++) {
+   /* look for an unallocated line in symbolTable */
+   for(np=symbolTable; np->namep; np++) {
       if(equal(np->namep, "#"))break;
    }
 
-   /* place the name in nlist */
+   /* place the name in symbolTable */
    np->namep = (char *) alloc(cp-name);
    copy(CH, name, np->namep, cp-name);
    np->type = LV;

@@ -15,7 +15,7 @@ int prolgerr;      /* Flag -- set if bad fetch in prologue
                     * is able to set it */
 
 void ex_fun() {
-   struct nlist *np;
+   SymTabEntry *np;
    int *p, s;
    struct Context *thisContext;
 

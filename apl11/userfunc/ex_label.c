@@ -14,10 +14,10 @@
  */
 
 void ex_label() {
-   struct nlist *n;
+   SymTabEntry *n;
 
    ex_asgn();
-   n = (struct nlist *)sp[-1];
+   n = (SymTabEntry *)sp[-1];
    n->itemp->type = LBL;         /* lock out assignments */
    sp--;                     /* discard stack */
 }

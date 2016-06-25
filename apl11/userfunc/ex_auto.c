@@ -8,7 +8,7 @@
 #include "utility.h"
 
 void ex_auto() {
-   struct nlist *np;
+   SymTabEntry *np;
 
    gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
    checksp();

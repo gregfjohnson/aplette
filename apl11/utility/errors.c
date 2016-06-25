@@ -37,7 +37,7 @@ void pline(char *str, int loc, int ln) {
 }
 
 void error(int type, char *diagnostic) {
-   struct nlist *np;
+   SymTabEntry *np;
 
    intflg = 0;
    if(ifile) {
@@ -106,7 +106,7 @@ void error(int type, char *diagnostic) {
    else printf(": %s.\n",diagnostic);
 
    /* purge any unassigned names */
-   for(np=nlist; np->namep; np++) {
+   for(np=symbolTable; np->namep; np++) {
       if(np->use == 0 && !equal(np->namep, "#")) purge_name(np);
    }
    if(vars_trace) vars_dump();

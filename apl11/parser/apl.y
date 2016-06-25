@@ -289,7 +289,7 @@ labels:
 label:
    anyname cln
    {
-      if(labgen) genlab((struct nlist *) $1);
+      if(labgen) genlab((SymTabEntry *) $1);
    }  ;
 
 fstat0:

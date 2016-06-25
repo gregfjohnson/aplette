@@ -8,7 +8,7 @@
 
 void ex_arg2() {
    struct item *p1, *p2;
-   struct nlist *np1, *np2;
+   SymTabEntry *np1, *np2;
 
    gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np2, 1);   /* get first argument's name */
    gsip->ptr++;                     /* skip over ARG1 */

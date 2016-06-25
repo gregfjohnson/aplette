@@ -29,7 +29,7 @@ void stack_dump() {
             putchar('\n');
             break;
          case LV:
-            printf(",  n = %s\n", ((struct nlist *)*p)->namep);
+            printf(",  n = %s\n", ((SymTabEntry *)*p)->namep);
             break;
 
          case CH:

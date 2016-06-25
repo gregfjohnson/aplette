@@ -8,7 +8,7 @@
 
 void ex_rest() {
    struct item *p;
-   struct nlist *np;
+   SymTabEntry *np;
 
    p = sp[-1];
    /*
