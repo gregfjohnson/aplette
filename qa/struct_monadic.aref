@@ -1,0 +1,104 @@
+openAPL Version 0.14
+clear ws
+	¦ Monadic tructural Primitives
+
+	
+
+	Â¦ûavel
+
+	•  n22    2 2     û â 4
+
+1 2
+3 4
+	•  n222   2 2 2   û â 8
+
+1 2
+3 4
+
+5 6
+7 8
+	•  n2221  2 2 2 1 û â 8
+
+1
+2
+
+3
+4
+
+
+5
+6
+
+7
+8
+	
+
+	,n22
+
+1 2 3 4
+	,n222
+
+1 2 3 4 5 6 7 8
+	,n2221
+
+1 2 3 4 5 6 7 8
+	
+
+	¦ hape
+
+	•  n             1
+
+1
+	•  n3         â  3
+
+1 2 3
+	•  n34  3 4 û â 12
+
+1  2  3  4
+5  6  7  8
+9 10 11 12
+	
+
+	û   n
+
+
+	û,  n
+
+1
+	û û n
+
+0
+	û   n3
+
+3
+	û û n3
+
+1
+	û   n34
+
+3 4
+	
+
+	¦ ândex ìenerator
+
+	•io  0
+
+	â 4
+
+0 1 2 3
+	•io  1
+
+	â 4
+
+1 2 3 4
+	
+
+	¦ Table - not implemented
+
+	¦ epth - not implemented
+
+	¦ înlist - not implemented
+
+	
+
+	

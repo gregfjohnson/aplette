@@ -10,10 +10,11 @@ OBJECTS = printing.dif quad_vars.dif \
 	format.dif trig.dif errors.dif \
 	scalar_monadic.dif scalar_dyadic.dif \
     mixed_monadic.dif mixed_dyadic.dif \
-	struct_monadic.dif struct_dyadic.dif \
+	struct_monadic.adif struct_dyadic.adif \
 	mixed_monadic.adif
 
-BROKEN_OBJECTS = ibeams.dif quad_fns.dif nesting.dif userfunc.dif debug.dif sys_commands.dif
+BROKEN_OBJECTS = ibeams.dif quad_fns.dif nesting.dif userfunc.dif debug.dif sys_commands.dif \
+                 struct_monadic.dif struct_dyadic.dif
 
 # Keep *.out files
 .PRECIOUS:	%.out
