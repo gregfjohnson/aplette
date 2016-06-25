@@ -20,8 +20,8 @@
 #define NFDS        20                  /* Number of available file descriptors */
 #define MRANK        8                  /* maximum rank, ie number of dimensions */
 #define STKS       500                  /* stack size */
-#define NLS        200                  /* number of local symbols, 
-                                         * ie varables and user functions, see nlist[NLS] */
+#define SYM_TAB_MAX        200                  /* number of local symbols, 
+                                         * ie varables and user functions, see nlist[SYM_TAB_MAX] */
 #define NAMS        40                  /* maximum size of variable and user function names */
 #define OBJS       500                  /* space provided for p-code */
 #define MAXLAB     100                  /* maximum number of labels in one function */
@@ -171,7 +171,7 @@ struct nlist {
    struct item* itemp;
    char*        namep;
    int          label;
-} nlist[NLS];
+} nlist[SYM_TAB_MAX];
 
 /* The context structure
  * pointed to by the State Indicator

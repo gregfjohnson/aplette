@@ -43,7 +43,7 @@ void ex_nl() {
    }
 
    count = maxlen = 0;
-   for(np=nlist; np < &nlist[NLS]; np++){
+   for(np=nlist; np < &nlist[SYM_TAB_MAX]; np++){
       if (np->use < NTYPES && tlist[np->use]){
          count++;
          if ((i=strlen(np->namep)) > maxlen) maxlen = i;
@@ -56,7 +56,7 @@ void ex_nl() {
    ip->dim[1] = maxlen;
    cp = ip->datap;
 
-   for(np=nlist; np < &nlist[NLS]; np++) {
+   for(np=nlist; np < &nlist[SYM_TAB_MAX]; np++) {
       if (np->use < NTYPES && tlist[np->use]) {
          for(cp2 = &np->namep[i=0]; i < maxlen; i++) {
             if (*cp2) *cp++ = *cp2++;
