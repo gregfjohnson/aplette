@@ -17,40 +17,45 @@
 #define WSFILE   ws_file                /* work space file */
 
 /* Magic Numbers */
-#define NFDS        20                  /* Number of available file descriptors */
-#define MRANK        8                  /* maximum rank, ie number of dimensions */
-#define STKS       500                  /* stack size */
-#define SYM_TAB_MAX        200                  /* number of local symbols, 
+#define NFDS                   20       /* Number of available file descriptors */
+#define MRANK                   8       /* maximum rank, ie number of dimensions */
+#define STKS                  500       /* stack size */
+#define SYM_TAB_MAX           200       /* number of local symbols, 
                                          * ie varables and user functions, see symbolTable[SYM_TAB_MAX] */
-#define NAMS        40                  /* maximum size of variable and user function names */
-#define OBJS       500                  /* space provided for p-code */
-#define MAXLAB     100                  /* maximum number of labels in one function */
-#define LINEMAX    200                  /* length of line typed at the keyboard */
+#define NAMS                   40       /* maximum size of variable and user function names */
+#define OBJS                  500       /* space provided for p-code */
+#define MAXLAB                100       /* maximum number of labels in one function */
+#define LINEMAX               200       /* length of line typed at the keyboard */
 
 /* The basic type of float data in apl11 */
 #define data   double
 
 /* derived constants */
 #define SDAT    sizeof(data)
-#define SINT     sizeof(int)
-#define MAXEXP           709            /* the largest value such that exp(MAXEXP) is OK */
-#define MINdata    MINDOUBLE
-#define MAXdata    MAXDOUBLE
+#define SINT    sizeof(int)
+#define SPTR    sizeof(void *)
 
-#define INITIAL_tolerance    1.0e-13
+#define MAXEXP                709       /* the largest value such that exp(MAXEXP) is OK */
+#define MINdata         MINDOUBLE
+#define MAXdata         MAXDOUBLE
+
+#define INITIAL_tolerance 1.0e-13
 data tolerance;
 
-#define INITIAL_iorigin      1
+#define INITIAL_iorigin         1
 int iorigin;
 
-#define INITIAL_pagewidth   72
+#define INITIAL_pagewidth      72
 int pagewidth;
 
-#define INITIAL_PrintP       9
+#define INITIAL_PrintP          9
 int PrintP;
 
-#define quote_quad_limit    40
+#define quote_quad_limit       40
 char quote_quad_prompt[quote_quad_limit+1];
+
+typedef int  (*VoidToIntFn)();
+typedef data (*VoidToDataFn)();
 
 struct chrstrct {
    char c[2];
@@ -127,7 +132,8 @@ jmp_buf   hot_restart;                  /* Used for setexit/reset */
                                           * not return a value. */
 #define    QX     14                     /* latent expr. quad LX  */
 #define    LBL    15                     /* locked label value */
-#define    NTYPES 16                     /* number of defined types */
+#define    PTR    16                     /* generic pointer for copy() */
+#define    NTYPES 17                     /* number of defined types */
 
 /*
  * This is a descriptor for apl data, 
