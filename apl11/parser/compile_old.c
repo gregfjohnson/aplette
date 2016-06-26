@@ -23,6 +23,7 @@ extern int     ilex[];
 
 char *compile_old(char *s, int f) {
    char *p, *q;
+   int i;
 
    iline = s;
    ccharp = oline;
@@ -40,9 +41,12 @@ char *compile_old(char *s, int f) {
 
    iline = (char *) alloc(ccharp-oline);
 
-   p = iline;
-   for(q = oline; q < ccharp; ++q) *p++ = *q;
+   // p = iline;
+   // for(q = oline; q < ccharp; ++q) *p++ = *q;
+
+   for (i = 0; i < ccharp - oline; ++i) {
+       iline[i] = oline[i];
+   }
 
    return(iline);
 }
-

@@ -103,7 +103,7 @@ line:
    lex3 dell func |
 
    /* function epilog */
-   lex4 dell func |
+   lex4 dell eol |
 
    /* function body */
    lex5 fstat ;

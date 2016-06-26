@@ -249,7 +249,7 @@ loop:
    case AUTO:
    case REST:
    case RVAL:
-      s += copy(IN, (char *) s, (char *) &cp, 1);
+      s += copy(PTR, (char *) s, (char *) &cp, 1);
       putchar('-');
       t = ((SymTabEntry *)cp)->namep;
       while(*t) putchar(*t++);

@@ -15,7 +15,7 @@ int funread(char *fname) {
 
    p = sp[-1];
    sp--;
-   if(p->type != LV) error(ERR_value,"not a local varaible");
+   if(p->type != LV) error(ERR_value,"not a local variable");
    if(fname == 0) fname = ((SymTabEntry *)p)->namep;
    f = opn(fname, O_RDONLY);
    fundef(f);

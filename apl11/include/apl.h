@@ -160,23 +160,29 @@ struct item {
 /*
  * variable/fn (and file name) descriptor block.
  * contains useful information about all LVs.
- * Also kludged up to handle file names (only symbolTable.namep 
+ * Also kludged up to handle file names (only SymTab.namep 
  * is then used.)
  *
- * For fns, symbolTable.itemp is an array of pointers to character
+ * For fns, SymbolTable.FunctionPcode is an array of pointers to character
  * strings which are the compiled code for a line of the fn.
- * (Itemp == 0) means that the fn has not yet been compiled .
- * symbolTable.itemp[0] == the number of lines in the fn, and
- * symbolTable.itemp[1] == the function startup code, and
- * symbolTable.itemp[max] == the close down shop code.
+ * (function == 0) means that the fn has not yet been compiled .
+ * SymTabEntry.function.lineCount == the number of lines in the fn, and
+ * SymTabEntry.pcodeLines[0] == the function startup code, and
+ * SymTabEntry.pcodeLines[lineCount-1] == the close down shop code.
  */
 
 typedef struct {
-   int          use;
-   int          type;
-   struct item* itemp;
-   char*        namep;
-   int          label;
+    int lineCount;
+    char **pcodeLines;
+} FunctionPcode;
+
+typedef struct {
+    int            use;
+    int            type;
+    struct item*   itemp;
+    FunctionPcode* functionDefn;
+    char*          namep;
+    int label;
 } SymTabEntry;
 
 SymTabEntry symbolTable[SYM_TAB_MAX];
