@@ -31,7 +31,7 @@ void funcomp(SymTabEntry *np) {
    char labp[MAXLAB*20], labe[MAXLAB*4];
    char  *a, *c; 
    int  i, err, err_code, *p;
-   char	*iline, *status, *phase, *err_msg;
+   char    *iline, *status, *phase, *err_msg;
    struct Context *original_gsip, *FunctionLine, 
                   *Prologue, *Epilogue;
    FILE *infile;
@@ -39,7 +39,7 @@ void funcomp(SymTabEntry *np) {
    /* as gsip is used during compilation, we have to save the original
     * and restore it upon exit
     */
-   original_gsip=gsip;	
+   original_gsip=gsip;    
    err_code=0; err_msg="";
    infile = fdopen(wfile,"r");
    err=fseek(infile, (long)np->label, 0);
@@ -64,6 +64,7 @@ void funcomp(SymTabEntry *np) {
 
    /* get the first line */
    status=fgets(iline,LINEMAX,infile);
+   printf("iline:  %s\n", iline);
    if (ascii_characters) {
         char *oldline = (char *) alloc(LINEMAX);
         strncpy(oldline, iline, LINEMAX);
@@ -80,7 +81,7 @@ void funcomp(SymTabEntry *np) {
    Prologue->text=iline;
    gsip=Prologue;
    labgen = 0;
-   compile_new(3);	/* 3 = compile function prologue */
+   compile_new(3);    /* 3 = compile function prologue */
    if(gsip->pcode == 0) {
       err_code=ERR_implicit;
       err_msg="invalid header line";
@@ -96,6 +97,7 @@ void funcomp(SymTabEntry *np) {
 
    while (1) {
       status=fgets(iline,LINEMAX,infile);
+      printf("iline:  %s\n", iline);
    if (ascii_characters) {
         char *oldline = (char *) alloc(LINEMAX);
         iline[strlen(iline)-1] = '\0';
@@ -110,7 +112,7 @@ void funcomp(SymTabEntry *np) {
       FunctionLine=(struct Context *)alloc(sizeof(struct Context));
       FunctionLine->Mode=deffun;
       FunctionLine->suspended=0;
-      FunctionLine->prev=gsip;	/* link to previous */
+      FunctionLine->prev=gsip;    /* link to previous */
       FunctionLine->text=(char *)NULL;
       FunctionLine->pcode=(char *)NULL;
       //FunctionLine->xref=(char *)NULL;
@@ -119,7 +121,7 @@ void funcomp(SymTabEntry *np) {
 
       gsip=FunctionLine;
       lineNumber++;
-      compile_new(5);	/* 5 = compile function body */
+      compile_new(5);    /* 5 = compile function body */
       if ( MAXLAB <= (labcpe-labe)/5+1) {
          err_code=ERR_botch;
          err_msg="too many labels, edit MAXLAB in apl.h and recompile";
@@ -158,6 +160,7 @@ void funcomp(SymTabEntry *np) {
    /* generate the Epilogue */
    fseek(infile, (long)np->label, 0);
    status=fgets(iline,LINEMAX,infile);
+      printf("iline:  %s\n", iline);
    if (ascii_characters) {
         char *oldline = (char *) alloc(LINEMAX);
         iline[strlen(iline)-1] = '\0';
@@ -182,7 +185,7 @@ void funcomp(SymTabEntry *np) {
    Epilogue->sp=0;
    labgen = 0;
    gsip=Epilogue;
-   compile_new(4);	/* 4 = compile function epilogue */
+   compile_new(4);    /* 4 = compile function epilogue */
    if(gsip->pcode == 0) {
       err_code=ERR_implicit;
       err_msg="invalid header line";
@@ -229,8 +232,8 @@ void funcomp(SymTabEntry *np) {
    }
 
    if(code_trace) {
-      code_dump(Prologue->pcode, 1);	/* show the prologue */
-      code_dump(Epilogue->pcode, 1);	/* show the epilogue */
+      code_dump(Prologue->pcode, 1);    /* show the prologue */
+      code_dump(Epilogue->pcode, 1);    /* show the epilogue */
    }
 
   /* Phase 4 goes through the compiled lines
@@ -265,7 +268,7 @@ out:
 //printf("Phase out \n");
    fclose(infile);
    aplfree((int *) iline);
-   gsip=original_gsip;	
+   gsip=original_gsip;    
    if (err_code) {
       if (np->namep) printf("%s in function %s\n", phase, np->namep);
       error(err_code,err_msg);
