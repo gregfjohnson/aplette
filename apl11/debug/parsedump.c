@@ -1,4 +1,4 @@
-/* debug.h, Copyright (C) 2016, Greg Johnson
+/* parsedump.c, Copyright (C) 2016, Greg Johnson
  * Released under the terms of the GNU GPL v2.0.
  *
  * This program is distributed in the hope that it will be useful,
@@ -6,13 +6,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifndef DEBUG_H
-#define DEBUG_H
+#include <stdio.h>
+#include "apl.h"
 
-void vars_dump();
-void mem_dump();
-void code_dump(char *cp, int flag);
-void stack_dump();
-void parseDump(char *line, int len);
+void parseDump(char *line, int len) {
+    int i;
 
-#endif
+    if (!code_trace) return;
+
+    for (i = 0; i < len; ++i) {
+        fprintf(stderr, "%02x ", 0xff & line[i]);
+    }
+    fprintf(stderr, "\n");
+}

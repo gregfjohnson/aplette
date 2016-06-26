@@ -8,9 +8,9 @@
 #include "y.tab.h"
 #include "opt_codes.h"
 #include "memory.h"
+#include "debug.h"
 
-/*
- * s is statement
+/* s is statement
  * f is execution flag:
  *   0 compile immediate
  *   1 compile quad input
@@ -29,13 +29,20 @@ char *compile_old(char *s, int f) {
    litflag = 0;
    nlexsym = ilex[f];
    context = nlexsym;
+
    if(yyparse()) {
       pline(s, iline-s, lineNumber);	//print line and error pointer
       return(0);
    }
    *ccharp++ = END;
-   iline = p = (char *) alloc(ccharp-oline);
-   for(q=oline; q<ccharp;) *p++ = *q++;
+
+   parseDump(oline, ccharp-oline);
+
+   iline = (char *) alloc(ccharp-oline);
+
+   p = iline;
+   for(q = oline; q < ccharp; ++q) *p++ = *q;
+
    return(iline);
 }
 

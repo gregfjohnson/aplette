@@ -32,7 +32,7 @@ void execute()
          if(code_trace) printf(" opcode is %d \n", opcode );
          error(ERR_botch,"execute - unknown operand code");
       }
-      if(code_trace && opcode >= 0) printf("   exec %s\n", opname[opcode]);
+      if(code_trace && opcode >= 0) printf("   exec %s (0x%02x)\n", opname[opcode], opcode);
       switch(opcode)
       {
    
@@ -208,7 +208,7 @@ void execute()
       break;
 
       case RVAL:      /* de-referenced LVAL */
-         gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &p1, 1);
+         gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &p1, 1);
          if(((SymTabEntry *)p1)->use != DA) ex_nilret();      /* no fn rslt */
          else {
             *sp = fetch(p1);
@@ -217,7 +217,7 @@ void execute()
       break;
    
       case NAME:
-         gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) sp, 1);
+         gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) sp, 1);
          sp++;
       break;
    

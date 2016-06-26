@@ -51,9 +51,6 @@ rl_readline_name = "openapl";
    snprintf(scr_file, 32, "/tmp/apled.%d", pid);
    snprintf(ws_file, 32, "/tmp/aplws.%d", pid);
 
-   //input_line=(struct apl_statement *)alloc(sizeof(struct apl_statement));
-   //current_line=&input_line;
-  
    sigs = 1;
 
    /* other flags... */
@@ -62,8 +59,8 @@ rl_readline_name = "openapl";
    ascii_characters=0;
 
    /* diagnostics */
-   mem_trace = 0;	/* dynamic memory allocation */
-   code_trace = 0;	/* pseudo code */
+   mem_trace   = 0;	/* dynamic memory allocation */
+   code_trace  = 0;	/* pseudo code */
    stack_trace = 0;	/* local stack */
 
    while(argc > 1 && argp[1][0] == '-'){

@@ -64,6 +64,14 @@ void funcomp(SymTabEntry *np) {
 
    /* get the first line */
    status=fgets(iline,LINEMAX,infile);
+   if (ascii_characters) {
+        char *oldline = (char *) alloc(LINEMAX);
+        strncpy(oldline, iline, LINEMAX);
+        oldline[strlen(oldline) - 1] = '\0';
+        iline = to_ascii_input(oldline);
+        aplfree((int *) oldline);
+   }
+
    if ( 0 == strlen(iline) || status == NULL) {
       err_code=ERR_implicit;
       err_msg="empty header line";
@@ -88,7 +96,16 @@ void funcomp(SymTabEntry *np) {
 
    while (1) {
       status=fgets(iline,LINEMAX,infile);
-   if ( 0 == strlen(iline) || status == NULL) break;
+   if (ascii_characters) {
+        char *oldline = (char *) alloc(LINEMAX);
+        iline[strlen(iline)-1] = '\0';
+        strncpy(oldline, iline, LINEMAX);
+        oldline[strlen(oldline) - 1] = '\0';
+        iline = to_ascii_input(oldline);
+        aplfree((int *) oldline);
+   }
+
+      if ( 0 == strlen(iline) || status == NULL) break;
       /* create a new Context */
       FunctionLine=(struct Context *)alloc(sizeof(struct Context));
       FunctionLine->Mode=deffun;
@@ -141,6 +158,15 @@ void funcomp(SymTabEntry *np) {
    /* generate the Epilogue */
    fseek(infile, (long)np->label, 0);
    status=fgets(iline,LINEMAX,infile);
+   if (ascii_characters) {
+        char *oldline = (char *) alloc(LINEMAX);
+        iline[strlen(iline)-1] = '\0';
+        strncpy(oldline, iline, LINEMAX);
+        oldline[strlen(oldline) - 1] = '\0';
+        iline = to_ascii_input(oldline);
+        aplfree((int *) oldline);
+   }
+
    if ( 0 == strlen(iline) ) {
       err++;
       err_code=ERR_implicit;

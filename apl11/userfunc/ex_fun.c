@@ -19,7 +19,7 @@ void ex_fun() {
    int *p, s;
    struct Context *thisContext;
 
-   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
+   gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
    
    //gsip->oldpcp=pcp;
 

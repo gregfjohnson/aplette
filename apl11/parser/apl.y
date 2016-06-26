@@ -6,7 +6,8 @@
 
 /******************* C declarations ************************/
 %{
-#include <memory.h>
+#include "memory.h"
+#include "debug.h"
 #include "local_parser.h"
 #include "opt_codes.h"
 #include "data.h"

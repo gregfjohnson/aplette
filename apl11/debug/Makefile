@@ -3,7 +3,7 @@
 include ../include/makefile.common
 CFLAGS += -I../include
 
-OBJECTS = code_dump.o stack_dump.o mem_dump.o vars_dump.o
+OBJECTS = code_dump.o stack_dump.o mem_dump.o vars_dump.o parsedump.o
 
 all: Q.o
 

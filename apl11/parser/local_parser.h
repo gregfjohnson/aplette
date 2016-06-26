@@ -22,7 +22,7 @@ int   immedcmd;         /* immediate command number */
 
 int yylex();
 
-char	*name();
+char	*name(char *np, char c);
 bool alpha(char s);
 int digit(char s);
 int isodigit(char c);

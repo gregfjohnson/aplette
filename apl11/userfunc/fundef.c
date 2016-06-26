@@ -40,6 +40,7 @@ int fundef(int f) {
 
    if (ascii_characters) {
         char *oldline = (char *) alloc(LINEMAX);
+        iline[strlen(iline)-1] = '\0';
         strncpy(oldline, iline, LINEMAX);
         oldline[strlen(oldline) - 1] = '\0';
         iline = to_ascii_input(oldline);
