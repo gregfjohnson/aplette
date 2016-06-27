@@ -31,6 +31,8 @@ char *compile_old(char *s, int f) {
    nlexsym = ilex[f];
    context = nlexsym;
 
+   if (code_trace) fprintf(stderr, "\n\nabout to yyparse.. iline:  %s\n\n", iline);
+
    if(yyparse()) {
       pline(s, iline-s, lineNumber);	//print line and error pointer
       return(0);

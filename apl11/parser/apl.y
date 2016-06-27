@@ -103,7 +103,7 @@ line:
    lex3 dell func |
 
    /* function epilog */
-   lex4 dell eol |
+   lex4 dell func |
 
    /* function body */
    lex5 fstat ;
@@ -135,7 +135,7 @@ func:
    {
       if(context == lex3) *ccharp++ = ELID;
       if(context == lex4){
-         *ccharp++ = EOL;   /* pop previous result */
+         *ccharp++ = EOL;      / * pop previous result */
          *ccharp++ = NILRET;   /* return empty result */
       }
    } ;

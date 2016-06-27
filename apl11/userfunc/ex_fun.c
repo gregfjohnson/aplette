@@ -16,15 +16,16 @@ int prolgerr;      /* Flag -- set if bad fetch in prologue
 
 void ex_fun() {
    SymTabEntry *np;
-   int *p, s;
+   int s;
+   char **p;
    struct Context *thisContext;
 
    gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
    
    //gsip->oldpcp=pcp;
 
-   if(np->itemp == 0) funcomp(np);
-   p = (int *)np->itemp;
+   if(np->functionPcodeLines == NULL) funcomp(np);
+   p = np->functionPcodeLines;
 
    thisContext=(struct Context *)alloc(sizeof(struct Context));
    thisContext->prev = gsip;            /* setup new state indicator */
@@ -38,7 +39,7 @@ void ex_fun() {
    gsip = thisContext;
 
    prolgerr = 0;            /* Reset error flag */
-   s = p[0];
+   s = np->functionLineCount;
    checksp();
    if(funtrace) printf("\ntrace: fn %s entered: ", np->namep);
    if (setjmp(gsip->env)) goto reenter;
@@ -46,8 +47,8 @@ void ex_fun() {
       gsip->funlc++;
       if(funtrace) printf("\ntrace: fn %s[%d]: ", np->namep, gsip->funlc-1);
       //execute_old(p[si->funlc]);
-      gsip->pcode=p[gsip->funlc];
-      gsip->ptr=gsip->pcode;
+      gsip->pcode = p[gsip->funlc];
+      gsip->ptr = gsip->pcode;
       execute();
       if(gsip->funlc == 1){
          gsip->sp = sp;
@@ -60,16 +61,15 @@ void ex_fun() {
          gsip->funlc = 1;      /* for pretty traceback */
          if(funtrace) printf("\ntrace: fn %s exits ", np->namep);
          //execute_old(p[s+1]);
-         gsip->pcode=p[s+1];
-         gsip->ptr=gsip->pcode;
+         gsip->pcode = p[s+1];
+         gsip->ptr = gsip->pcode;
          execute();
 
          gsip = gsip->prev;      /* restore state indicator to previous state */
          //pcp = gsip->oldpcp;
-	 aplfree((int *) thisContext);
+	     aplfree((int *) thisContext);
          return;
       }
       pop();
    }
 }
-

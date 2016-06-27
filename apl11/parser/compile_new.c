@@ -31,6 +31,8 @@ char *compile_new(int f) {
    nlexsym = ilex[f];
    context = nlexsym;
 
+   if (code_trace) fprintf(stderr, "\n\nabout to yyparse.. iline:  %s\n\n", iline);
+
    if(yyparse()) {
       //print line and error pointer
       pline(gsip->text, iline-(gsip->text), lineNumber);	

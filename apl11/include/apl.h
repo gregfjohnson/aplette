@@ -172,17 +172,14 @@ struct item {
  */
 
 typedef struct {
-    int lineCount;
-    char **pcodeLines;
-} FunctionPcode;
-
-typedef struct {
     int            use;
     int            type;
     struct item*   itemp;
-    FunctionPcode* functionDefn;
     char*          namep;
+
     int label;
+    int functionLineCount;
+    char **functionPcodeLines;
 } SymTabEntry;
 
 SymTabEntry symbolTable[SYM_TAB_MAX];
@@ -205,7 +202,6 @@ struct Context {
 
     char*           text;               /* input line, plain text */
     char*           pcode;              /* pseudo code */
-    char*           xref;               /* cross reference text vs pcode */
     char*           ptr;                /* pointer to current token in pcode */
     SymTabEntry*    np;                 /* current fn vital stats. */
     int             funlc;              /* current fn current line number */
