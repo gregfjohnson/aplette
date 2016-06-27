@@ -10,7 +10,9 @@
 void pop() {
    struct item *p;
 
-   if(sp <= stack) error(ERR_botch,"pop - stack underflow");
+   if(sp <= stack) {
+      error(ERR_botch,"pop - stack underflow");
+   }
    p=sp[-1];
    if (p) {
       switch(p->type) {
