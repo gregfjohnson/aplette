@@ -1,0 +1,16 @@
+clear ws
+	¦ Test of )read.  function with no return value.
+
+	
+
+	•chdir 'clean_dir'
+
+0
+	
+
+	)read l1a
+
+	l1a
+
+1
+	
