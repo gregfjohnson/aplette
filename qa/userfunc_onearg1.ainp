@@ -1,0 +1,6 @@
+C@J Test of )read.  monadic function with a return value.
+
+Lchdir 'clean_dir'
+
+)read onearg
+onearg 5
