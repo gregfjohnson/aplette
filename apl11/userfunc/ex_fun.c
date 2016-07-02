@@ -16,38 +16,37 @@ int prolgerr;      /* Flag -- set if bad fetch in prologue
 
 void ex_fun() {
    SymTabEntry *np;
-   int s;
-   char **p;
+   int functionLineCount;
+   int functionPcodeLineLength;
+   char **pcodeLineArray;
    struct Context *thisContext;
 
    gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
    
-   //gsip->oldpcp=pcp;
-
    if(np->functionPcodeLines == NULL) funcomp(np);
-   p = np->functionPcodeLines;
+   pcodeLineArray = np->functionPcodeLines;
 
    thisContext=(struct Context *)alloc(sizeof(struct Context));
    thisContext->prev = gsip;            /* setup new state indicator */
    thisContext->Mode = deffun;
    thisContext->np = np;
-   //thisContext->oldsp = 0;   /* we can add a more complicated version, later */
    thisContext->sp = sp;    /* we can add a more complicated version, later */
-   //thisContext->oldpcp = pcp;
    thisContext->funlc = 0;
    thisContext->suspended = 0;
    gsip = thisContext;
 
    prolgerr = 0;            /* Reset error flag */
-   s = np->functionLineCount;
+
+   functionLineCount       = np->functionLineCount;
+   functionPcodeLineLength = np->functionPcodeLineLength;
+
    checksp();
-   if(funtrace) printf("\ntrace: fn %s entered: ", np->namep);
+   if(funtrace) printf("\ntrace: fn %s entered:\n", np->namep);
    if (setjmp(gsip->env)) goto reenter;
    while(1){
       gsip->funlc++;
-      if(funtrace) printf("\ntrace: fn %s[%d]: ", np->namep, gsip->funlc-1);
-      //execute_old(p[si->funlc]);
-      gsip->pcode = p[gsip->funlc];
+      if(funtrace) printf("\ntrace: fn %s[%d]:\n", np->namep, gsip->funlc-1);
+      gsip->pcode = pcodeLineArray[gsip->funlc-1];
       gsip->ptr = gsip->pcode;
       execute();
       if(gsip->funlc == 1){
@@ -57,11 +56,12 @@ void ex_fun() {
       if(intflg) error(ERR_interrupt,"");
 
    reenter:
-      if(gsip->funlc <= 0 || gsip->funlc >= s) {
+      if(gsip->funlc < 0 || gsip->funlc >= functionLineCount) {
          gsip->funlc = 1;      /* for pretty traceback */
-         if(funtrace) printf("\ntrace: fn %s exits ", np->namep);
-         //execute_old(p[s+1]);
-         gsip->pcode = p[s+1];
+
+         if(funtrace) printf("\ntrace: fn %s exits\n", np->namep);
+
+         gsip->pcode = pcodeLineArray[functionPcodeLineLength-1];
          gsip->ptr = gsip->pcode;
          execute();
 

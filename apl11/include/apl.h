@@ -133,6 +133,7 @@ jmp_buf   hot_restart;                  /* Used for setexit/reset */
 #define    QX     14                     /* latent expr. quad LX  */
 #define    LBL    15                     /* locked label value */
 #define    PTR    16                     /* generic pointer for copy() */
+
 #define    NTYPES 17                     /* number of defined types */
 
 /*

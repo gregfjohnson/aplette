@@ -28,6 +28,7 @@ char *labcpp,*labcpe;
 extern char *catcode();
 
 void funcomp(SymTabEntry *np) {
+   int linesRead = 0;
    char labp[MAXLAB*20], labe[MAXLAB*4];
    char  *a, *c; 
    int  i, err, err_code;
@@ -71,6 +72,8 @@ void funcomp(SymTabEntry *np) {
       err_code=ERR_implicit;
       err_msg="empty header line";
       goto out;
+   } else {
+    ++linesRead;
    }
 
    Prologue->text=iline;
@@ -94,7 +97,11 @@ void funcomp(SymTabEntry *np) {
 
    while (1) {
       status = readLine("funcomp function body", iline,LINEMAX,infile);
-      if ( 0 == strlen(iline) || status == NULL) break;
+      if ( 0 == strlen(iline) || status == NULL) {
+          break;
+      } else {
+        ++linesRead;
+      }
 
       /* create a new Context */
       FunctionLine=(struct Context *)alloc(sizeof(struct Context));
@@ -146,9 +153,13 @@ void funcomp(SymTabEntry *np) {
    phase="Phase 3a";
 
    /* generate the Epilogue */
+
+   // reset the file read pointer to the beginning of this function..
    fseek(infile, (long)np->label, 0);
 
-   status = readLine("funcomp epilog after rewinding to label", iline, LINEMAX, infile);
+   // we are rereading the first line of the function, so don't bump lineNumber.
+   status = readLine("funcomp epilog after rewinding to label",
+                     iline, LINEMAX, infile);
 
    if (0 == strlen(iline)) {
       err++;
@@ -223,27 +234,35 @@ void funcomp(SymTabEntry *np) {
        fprintf(stderr, "Phase 4 \n");
    }
    phase="Phase 4";
-   p = (char **)alloc((lineNumber+1)*SPTR);
+   p = (char **)alloc((linesRead + 1) * SPTR);
    FunctionLine = Epilogue;
-   for (i = lineNumber; i >= 0; --i) {
+   for (i = linesRead; i >= 0; --i) {
       p[i] = FunctionLine->pcode;
       FunctionLine=FunctionLine->prev;
    }
 
    if (code_trace) {
        fprintf(stderr, "At end of Phase 4...\n");
-       fprintf(stderr, "[0] %d\n",p[0]);
-       fprintf(stderr, "[p] "); code_dump(p[1],0);
-       for (i=2; i<=lineNumber; i++ ) {
-          fprintf(stderr, "[%d] ",i-1);
+       fprintf(stderr, "[p] "); code_dump(p[0],0);
+       for (i=1; i<linesRead; i++ ) {
+          fprintf(stderr, "[%d] ",i);
           code_dump(p[i],0);
        }
+       fprintf(stderr, "[e] "); code_dump(p[linesRead],0);
    }
 
    /* put the result into effect */
    // np->itemp = (struct item *)p;
-   np->functionLineCount = lineNumber - 1;
+
+   // functionLineCount is one larger than the APL function line number
+   // of the last line of this function.  i.e., if gsip->funlc >= functionLineCount
+   // or gsip->funlc <= 0, the function is done and should exit.
+   // if the function body goes from [1] to [N], we will have read N+1 lines
+   // counting the function header.  So, N+1 is the number we are looking for.
+
+   np->functionLineCount = linesRead;
    np->functionPcodeLines = p;
+   np->functionPcodeLineLength = linesRead + 1;
 
    err = 0;
 

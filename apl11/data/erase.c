@@ -14,24 +14,20 @@ void erase(SymTabEntry *np) {
         switch(np->use) {
         case CH:
         case DA:
-            p = (int *)np->itemp;
-            itemp = np->itemp;
-            aplfree((int *) itemp->datap);
-            aplfree((int *) p);
+            aplfree((int *) np->itemp->datap);
+            aplfree((int *) np->itemp);
             np->itemp = 0;
             break;
 
         case NF:
         case MF:
         case DF:
-            /* free the p-code that p[] points to. 
-             * p[0] is size of p minus 1, refer funcomp()
-             */
-            // for((*p)++; *p>0; (*p)--) aplfree((int *) p[*p]);
+            // free the p-code that np points to. 
             for (i = 0; i < np->functionPcodeLineLength; ++i) {
                 aplfree((int *) np->functionPcodeLines[i]);
             }
             aplfree((int *) np->functionPcodeLines);
+
             np->functionPcodeLines = NULL;
             np->functionLineCount  = 0;
             np->functionPcodeLineLength  = 0;
