@@ -8,9 +8,9 @@ clear ws
 0
 	
 
-	)read l1a
+	)read nilret1
 
-	l1a
+	nilret1
 
 1
 	

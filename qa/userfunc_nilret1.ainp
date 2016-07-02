@@ -2,5 +2,5 @@ C@J Test of )read.  function with no return value.
 
 Lchdir 'clean_dir'
 
-)read l1a
-l1a
+)read nilret1
+nilret1
