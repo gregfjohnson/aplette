@@ -62,6 +62,7 @@ rl_readline_name = "openapl";
    mem_trace   = 0;	/* dynamic memory allocation */
    code_trace  = 0;	/* pseudo code */
    stack_trace = 0;	/* local stack */
+   funtrace    = 0;
 
    while(argc > 1 && argp[1][0] == '-'){
       argc--;

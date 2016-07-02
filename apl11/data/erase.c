@@ -28,12 +28,13 @@ void erase(SymTabEntry *np) {
              * p[0] is size of p minus 1, refer funcomp()
              */
             // for((*p)++; *p>0; (*p)--) aplfree((int *) p[*p]);
-            for (i = 0; i < np->functionLineCount; ++i) {
+            for (i = 0; i < np->functionPcodeLineLength; ++i) {
                 aplfree((int *) np->functionPcodeLines[i]);
             }
             aplfree((int *) np->functionPcodeLines);
             np->functionPcodeLines = NULL;
             np->functionLineCount  = 0;
+            np->functionPcodeLineLength  = 0;
         }
     }
     np->use = 0;

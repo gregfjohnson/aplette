@@ -179,6 +179,7 @@ typedef struct {
 
     int label;
     int functionLineCount;
+    int functionPcodeLineLength;
     char **functionPcodeLines;
 } SymTabEntry;
 

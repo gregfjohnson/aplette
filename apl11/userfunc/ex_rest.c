@@ -47,7 +47,7 @@ void ex_rest() {
     *   --jjb
    if(p->type == LV) error(ERR_botch,"rest B");
     */
-   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
+   gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
    erase(np);
    np->itemp = sp[-2];
    np->use = 0;

@@ -64,6 +64,7 @@ line:
    lex0 eol
    {
       *ccharp++ = COMNT;
+      *ccharp++ = EOL;
    } |
    
    /* system commands are unlike ordinary expressions */
@@ -135,7 +136,7 @@ func:
    {
       if(context == lex3) *ccharp++ = ELID;
       if(context == lex4){
-         *ccharp++ = EOL;      / * pop previous result */
+         *ccharp++ = EOL;      /* pop previous result */
          *ccharp++ = NILRET;   /* return empty result */
       }
    } ;
