@@ -1,0 +1,16 @@
+clear ws
+	¦ Test of )read.  dyadic function with a return value.
+
+	
+
+	•chdir 'clean_dir'
+
+0
+	
+
+	)read twoargs
+
+	2 twoargs 5
+
+32
+	

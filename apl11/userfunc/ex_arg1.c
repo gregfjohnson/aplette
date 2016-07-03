@@ -8,9 +8,9 @@
 
 void ex_arg1() {
    struct item *p;
-   struct nlist *np;
+   SymTabEntry *np;
 
-   gsip->ptr += copy(IN, (char *) gsip->ptr, (char *) &np, 1);
+   gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
    p = fetch1();
    sp[-1] = np->itemp;
    np->itemp = p;

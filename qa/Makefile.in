@@ -7,43 +7,46 @@ FLAGS  = -r -a
 
 DIFF = @diff@
 
-OBJECTS = printing.dif quad_vars.dif quad_fns.dif \
-	userfunc.dif format.dif trig.dif errors.dif \
-	sys_commands.dif debug.dif ibeams.dif nesting.dif \
-	scalar_monadic.dif scalar_dyadic.dif \
-        mixed_monadic.dif mixed_dyadic.dif \
-	struct_monadic.dif struct_dyadic.dif \
-	mixed_monadic.adif struct_monadic.adif \
-	mixed_dyadic.adif
+OBJECTS = printing.dif quad_vars.dif \
+          format.dif trig.dif errors.dif \
+          scalar_monadic.dif scalar_dyadic.dif \
+          mixed_monadic.dif mixed_dyadic.dif \
+          struct_monadic.adif struct_dyadic.adif \
+          mixed_monadic.adif mixed_dyadic.adif \
+          userfunc_nilret1.adif userfunc_twoargs1.adif \
+          userfunc_onearg1.adif userfunc_withret1.adif
+
+BROKEN_OBJECTS = ibeams.dif quad_fns.dif nesting.dif userfunc.dif \
+                 debug.dif sys_commands.dif \
+                 struct_monadic.dif struct_dyadic.dif
 
 # Keep *.out files
-.PRECIOUS:	%.out
+.PRECIOUS: %.out
 
 # As long as the following is the first target,
 # everything will get tested
-all:	$(OBJECTS)
+all: $(OBJECTS)
 
-%.dif:	%.out
+%.dif: %.out
 	$(DIFF) $< $*.ref > $@
 
-%.out:	%.inp $(APLEXE)
+%.out: %.inp $(APLEXE)
 	$(APLEXE) < $<  | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
-%.adif:	%.aout
+%.adif: %.aout
 	$(DIFF) $< $*.aref > $@
 
-%.aout:	%.ainp $(APLEXE)
+%.aout: %.ainp $(APLEXE)
 	$(APLEXE) $(FLAGS) < $<  | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
 # Kludge required because save command prints the date 
-sys_commands.out:	sys_commands.inp $(APLEXE)
+sys_commands.out: sys_commands.inp $(APLEXE)
 	$(APLEXE) < sys_commands.inp \
-	            | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' \
-	            | egrep -v "saved deleteme" > $@
+        | sed -e '1d' -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' \
+        | egrep -v "saved deleteme" > $@
 
 clean:
-	rm -f *.dif *.out aplws.abort clean_dir/aplws.abort \
-	      *.adif clean_dir/core.* core.*
-
+	rm -f *.dif  *.out aplws.abort clean_dir/aplws.abort \
+          *.adif *.aout clean_dir/core.* core.*

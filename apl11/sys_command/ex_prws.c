@@ -12,14 +12,14 @@
 
 /* Print Workspace */
 void ex_prws() {
-   struct nlist *np;
+   SymTabEntry *np;
    struct item *ip;
    int i;
 
    printf( S_QUAD "io " S_LEFTARROW " %d\n", iorigin);
    printf( S_QUAD "pw " S_LEFTARROW " %d\n", pagewidth);
    printf( S_QUAD "pp " S_LEFTARROW " %d\n", PrintP);
-   for(np=nlist; np < &nlist[NLS]; np++) {
+   for(np=symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++) {
       switch(np->use){
       case CH:
       case DA:

@@ -2,23 +2,19 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
-
+#include "data.h"
 #include "local_parser.h"
-/*   Byte-order dependency here?  */
-/*   Potential alignment problem here?  */
-char * name(np, c)
-{
-   char *p, *npp;
-   int temp;
+#include "debug.h"
 
-   temp = np;
-   npp = (char *)&temp;
-   p = ccharp;
+char *name(char *np, char c) {
+   char *p = ccharp;
+
    *ccharp++ = c;
-   *ccharp++ = *npp++;
-   *ccharp++ = *npp++;
-   *ccharp++ = *npp++;
-   *ccharp++ = *npp++;
-   return(p);
+   copy(PTR, (char *) &np, ccharp, 1);
+   ccharp += SPTR;
+
+    parseDump(oline, ccharp-oline);
+
+   return p;
 }
 

@@ -37,17 +37,17 @@ with Ibeams 1 and 2.
 User Defined Names
 ------------------
 Names of variables and user defined functions are held in static
-memory in nlist which is an array of structure nlist.  (Note that
-nlist is both the name of a structure and an array of that 
-structure!).  nlist[] is of finite lenght, set in apl.h at 200 
+memory in symbolTable which is an array of structure symbolTable.  (Note that
+symbolTable is both the name of a structure and an array of that 
+structure!).  symbolTable[] is of finite lenght, set in apl.h at 200 
 elements.  
 
-Management of nlist crops up as an issue in several places.  As
-nlist[] is static and finite, when names are erased their memory
+Management of symbolTable crops up as an issue in several places.  As
+symbolTable[] is static and finite, when names are erased their memory
 is not released.  Instead, their name is converted into "#".  Next
 time that a variable name is required, parser/getnam.c looks for
 and "#", if one if found, it is used, if not, the next null element 
-of nlist[] is used.  Deleting variables is a two part process.
+of symbolTable[] is used.  Deleting variables is a two part process.
 First the name pointer is converted into a pointer to "#", next
 the actual data is erased.  
 

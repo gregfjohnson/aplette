@@ -1,4 +1,4 @@
-/* main.h, Copyright (C) 2016, Greg Johnson
+/* parsedump.c, Copyright (C) 2016, Greg Johnson
  * Released under the terms of the GNU GPL v2.0.
  *
  * This program is distributed in the hope that it will be useful,
@@ -6,11 +6,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifndef MAIN_LOOP_H
-#define MAIN_LOOP_H
+#include <stdio.h>
+#include "apl.h"
 
-void mainloop();
-void Exit(int s);
-char *to_ascii_input(char *input);
+void parseDump(char *line, int len) {
+    int i;
 
-#endif
+    if (!code_trace) return;
+
+    for (i = 0; i < len; ++i) {
+        fprintf(stderr, "%02x ", 0xff & line[i]);
+    }
+    fprintf(stderr, "\n");
+}

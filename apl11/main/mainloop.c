@@ -37,8 +37,8 @@ void mainloop() {
          thisContext->text=(char *)NULL;
          thisContext->pcode=(char *)NULL;
          //thisContext->xref=(char *)NULL;
-         //setjmp(thisContext->env);	/* come back here after longjmp() */
-	 thisContext->sp=sp;
+         //setjmp(thisContext->env);    /* come back here after longjmp() */
+         thisContext->sp=sp;
          gsip=thisContext;
       } 
 
@@ -48,7 +48,7 @@ void mainloop() {
 
       lineNumber = -1;
       if(echoflg) echoflg = 1;   /* enabled echo echo suppress off */
-      checksp();	/* check for stack overflow */
+      checksp();    /* check for stack overflow */
       if(intflg) error(ERR_interrupt,"");
 
       /*  get a line of input */
@@ -67,7 +67,7 @@ void mainloop() {
          error(ERR_syntax,"");  //control returns to top of this file
 
       /* execute the compiled pseudo code */
-      column=0;	/* prepare to print the results */
+      column=0;    /* prepare to print the results */
       execute();
    }
 }

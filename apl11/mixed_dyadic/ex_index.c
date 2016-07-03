@@ -21,8 +21,8 @@ void ex_index() {
    if(f == ASGN) {
       gsip->ptr++;
       if(p->type != LV) error(ERR_value,"not a local variable");
-      if(((struct nlist *)p)->use != DA) fetch1();
-      q = ((struct nlist *)p)->itemp;
+      if(((SymTabEntry *)p)->use != DA) fetch1();
+      q = ((SymTabEntry *)p)->itemp;
    }
    else q = fetch1();
    if(q->rank != n) error(ERR_index,"");
@@ -97,7 +97,7 @@ void index1(int i, int f) {
          datum = getdat(sp[-idx.rank-3]);
 
       case 2:
-         p = ((struct nlist *)sp[-2])->itemp;
+         p = ((SymTabEntry *)sp[-2])->itemp;
          p->index = access();
          putdat(p, datum);
          return;

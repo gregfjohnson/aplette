@@ -6,7 +6,7 @@
 
 void ex_ex(void)
 {
-   struct nlist *np;
+   SymTabEntry *np;
    struct item *p, *ip;
    int i, nlen;
    int j, n;

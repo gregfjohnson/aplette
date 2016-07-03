@@ -9,7 +9,7 @@
 #include "char.h"
 
 void ex_nc() {
-   struct nlist *np;
+   SymTabEntry *np;
    struct item *p;
    int i;
    char buf[40];

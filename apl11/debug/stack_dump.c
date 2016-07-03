@@ -12,12 +12,15 @@ char *ty[] = {
 void stack_dump() {
    struct item **p;
    int i,n;
+   printf("---- stack top ----\n");
 /*
-   printf("Dumping stack... \n");
    printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
  */  
-   for(p=sp, n=0; p >= stack; p--, n--){
-      printf("sp[%d]=%x points to %x ", n, (uintptr_t) p, (uintptr_t) *p );
+   for(p=sp-1, n=-1; p >= stack; p--, n--){
+      printf("sp[%d]=%XH\n", n, p);
+      continue;  // pointer size != sizeof(int) bugs break the code below.
+                 // remove this continue when it is fixed.
+
       if( n == 0 ) {
          printf("\n");
       } else {
@@ -29,7 +32,7 @@ void stack_dump() {
             putchar('\n');
             break;
          case LV:
-            printf(",  n = %s\n", ((struct nlist *)*p)->namep);
+            printf(",  n = %s\n", ((SymTabEntry *)*p)->namep);
             break;
 
          case CH:
@@ -63,4 +66,5 @@ void stack_dump() {
          }
       }
    }
+   printf("---- stack end ----\n");
 }

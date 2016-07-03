@@ -27,11 +27,13 @@ static void reverse(char *s);
 char *labcpp,*labcpe;
 extern char *catcode();
 
-void funcomp(struct nlist *np) {
+void funcomp(SymTabEntry *np) {
+   int linesRead = 0;
    char labp[MAXLAB*20], labe[MAXLAB*4];
    char  *a, *c; 
-   int  i, err, err_code, *p;
-   char	*iline, *status, *phase, *err_msg;
+   int  i, err, err_code;
+   char **p;
+   char    *iline, *status, *phase, *err_msg;
    struct Context *original_gsip, *FunctionLine, 
                   *Prologue, *Epilogue;
    FILE *infile;
@@ -39,7 +41,7 @@ void funcomp(struct nlist *np) {
    /* as gsip is used during compilation, we have to save the original
     * and restore it upon exit
     */
-   original_gsip=gsip;	
+   original_gsip=gsip;    
    err_code=0; err_msg="";
    infile = fdopen(wfile,"r");
    err=fseek(infile, (long)np->label, 0);
@@ -51,7 +53,9 @@ void funcomp(struct nlist *np) {
   /* Phase 1 creates the first of a linked list of compiled
    * function lines.  This first line will contain the prologue
    */
-   //printf("Phase 1 \n");
+   if (code_trace) {
+       fprintf(stderr, "Phase 1 \n");
+   }
    phase="Phase 1";
    Prologue=(struct Context *)alloc(sizeof(struct Context));
    Prologue->Mode=deffun;
@@ -59,20 +63,23 @@ void funcomp(struct nlist *np) {
    Prologue->prev=0;
    Prologue->text=(char *)NULL;
    Prologue->pcode=(char *)NULL;
-   //Prologue->xref=(char *)NULL;
    Prologue->sp=0;
 
    /* get the first line */
-   status=fgets(iline,LINEMAX,infile);
+   status = readLine("funcomp prolog line", iline, LINEMAX, infile);
+
    if ( 0 == strlen(iline) || status == NULL) {
       err_code=ERR_implicit;
       err_msg="empty header line";
       goto out;
+   } else {
+    ++linesRead;
    }
+
    Prologue->text=iline;
    gsip=Prologue;
    labgen = 0;
-   compile_new(3);	/* 3 = compile function prologue */
+   compile_new(3);    /* 3 = compile function prologue */
    if(gsip->pcode == 0) {
       err_code=ERR_implicit;
       err_msg="invalid header line";
@@ -80,83 +87,96 @@ void funcomp(struct nlist *np) {
    }
 
   /* Phase 2 compiles the body of the function */
-   //printf("Phase 2 \n");
+   if (code_trace) {
+       fprintf(stderr, "Phase 2 \n");
+   }
    phase="Phase 2";
    labcpp = labp;
    labcpe = labe;
    labgen = 1;
 
    while (1) {
-      status=fgets(iline,LINEMAX,infile);
-   if ( 0 == strlen(iline) || status == NULL) break;
+      status = readLine("funcomp function body", iline,LINEMAX,infile);
+      if ( 0 == strlen(iline) || status == NULL) {
+          break;
+      } else {
+        ++linesRead;
+      }
+
       /* create a new Context */
       FunctionLine=(struct Context *)alloc(sizeof(struct Context));
       FunctionLine->Mode=deffun;
       FunctionLine->suspended=0;
-      FunctionLine->prev=gsip;	/* link to previous */
+      FunctionLine->prev=gsip;    /* link to previous */
       FunctionLine->text=(char *)NULL;
       FunctionLine->pcode=(char *)NULL;
-      //FunctionLine->xref=(char *)NULL;
       FunctionLine->sp=0;
       FunctionLine->text=iline;
 
       gsip=FunctionLine;
       lineNumber++;
-      compile_new(5);	/* 5 = compile function body */
+      compile_new(5);    /* 5 = compile function body */
       if ( MAXLAB <= (labcpe-labe)/5+1) {
          err_code=ERR_botch;
          err_msg="too many labels, edit MAXLAB in apl.h and recompile";
-#include "utility.h"
          goto out;
       }
       if(gsip->pcode == 0) {
          err++;
       } 
    }
-   if ( err ) {
+
+   if (err) {
       err_code=ERR_implicit;
       err_msg="compilation errors";
       goto out;
    }
+
    /* At the end of this Phase, lineNumber=Maximum_No_of_lines
     * but we want to include the Prologue (line 0) and 
     * Epilogue (so add one to lineNumber)
     */
     lineNumber++;
 
-   #if 0
-   // development aid....
-   printf("At end of Phase 2...\n");
-   for (i=lineNumber; i>1; i-- ) {
-      printf("[%d] ",i-1);
-      code_dump(FunctionLine->pcode,0);
-      FunctionLine=FunctionLine->prev;
+   if (code_trace) {
+       fprintf(stderr, "At end of Phase 2...\n");
+       for (i=lineNumber; i>1; i-- ) {
+          fprintf(stderr, "[%d] ",i-1);
+          code_dump(FunctionLine->pcode,0);
+          FunctionLine=FunctionLine->prev;
+       }
+       fprintf(stderr, "[p] "); code_dump(Prologue->pcode,0);
+       fprintf(stderr, "[0] %d\n",lineNumber);
    }
-   printf("[p] "); code_dump(Prologue->pcode,0);
-   printf("[0] %d\n",lineNumber);
-   #endif
    
    /* Phase 3 - dealing with labels */
    phase="Phase 3a";
+
    /* generate the Epilogue */
+
+   // reset the file read pointer to the beginning of this function..
    fseek(infile, (long)np->label, 0);
-   status=fgets(iline,LINEMAX,infile);
-   if ( 0 == strlen(iline) ) {
+
+   // we are rereading the first line of the function, so don't bump lineNumber.
+   status = readLine("funcomp epilog after rewinding to label",
+                     iline, LINEMAX, infile);
+
+   if (0 == strlen(iline)) {
       err++;
       err_code=ERR_implicit;
       goto out;
    }
+
    Epilogue=(struct Context *)alloc(sizeof(struct Context));
    Epilogue->Mode=deffun;
    Epilogue->suspended=0;
    Epilogue->prev=gsip;
    Epilogue->text=iline;
    Epilogue->pcode=(char *)NULL;
-   //Epilogue->xref=(char *)NULL;
    Epilogue->sp=0;
    labgen = 0;
    gsip=Epilogue;
-   compile_new(4);	/* 4 = compile function epilogue */
+   compile_new(4);    /* 4 = compile function epilogue */
    if(gsip->pcode == 0) {
       err_code=ERR_implicit;
       err_msg="invalid header line";
@@ -203,43 +223,57 @@ void funcomp(struct nlist *np) {
    }
 
    if(code_trace) {
-      code_dump(Prologue->pcode, 1);	/* show the prologue */
-      code_dump(Epilogue->pcode, 1);	/* show the epilogue */
+      code_dump(Prologue->pcode, 1);    /* show the prologue */
+      code_dump(Epilogue->pcode, 1);    /* show the epilogue */
    }
 
   /* Phase 4 goes through the compiled lines
    * storing pointers to each pcode in p[]
    */
-   //printf("Phase 2a \n");
+   if (code_trace) {
+       fprintf(stderr, "Phase 4 \n");
+   }
    phase="Phase 4";
-   p = (int *)alloc((lineNumber+2)*SINT);
-   FunctionLine=Epilogue;
-   for (i=lineNumber+1; i>0; i-- ) {
+   p = (char **)alloc((linesRead + 1) * SPTR);
+   FunctionLine = Epilogue;
+   for (i = linesRead; i >= 0; --i) {
       p[i] = FunctionLine->pcode;
       FunctionLine=FunctionLine->prev;
    }
-   p[0] = lineNumber;
 
-   #if 0
-   // development aid....
-   printf("At end of Phase 4...\n");
-   printf("[0] %d\n",p[0]);
-   printf("[p] "); code_dump(p[1],0);
-   for (i=2; i<=lineNumber; i++ ) {
-      printf("[%d] ",i-1);
-      code_dump(p[i],0);
+   if (code_trace) {
+       fprintf(stderr, "At end of Phase 4...\n");
+       fprintf(stderr, "[p] "); code_dump(p[0],0);
+       for (i=1; i<linesRead; i++ ) {
+          fprintf(stderr, "[%d] ",i);
+          code_dump(p[i],0);
+       }
+       fprintf(stderr, "[e] "); code_dump(p[linesRead],0);
    }
-   #endif
 
    /* put the result into effect */
-   np->itemp = (struct item *)p;
+   // np->itemp = (struct item *)p;
+
+   // functionLineCount is one larger than the APL function line number
+   // of the last line of this function.  i.e., if gsip->funlc >= functionLineCount
+   // or gsip->funlc <= 0, the function is done and should exit.
+   // if the function body goes from [1] to [N], we will have read N+1 lines
+   // counting the function header.  So, N+1 is the number we are looking for.
+
+   np->functionLineCount = linesRead;
+   np->functionPcodeLines = p;
+   np->functionPcodeLineLength = linesRead + 1;
+
    err = 0;
 
 out:
-//printf("Phase out \n");
+   if (code_trace) {
+       fprintf(stderr, "Phase out \n");
+   }
+
    fclose(infile);
    aplfree((int *) iline);
-   gsip=original_gsip;	
+   gsip=original_gsip;    
    if (err_code) {
       if (np->namep) printf("%s in function %s\n", phase, np->namep);
       error(err_code,err_msg);

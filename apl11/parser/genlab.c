@@ -14,7 +14,7 @@
  *
  * epilog:   REST-lab
  */
-void genlab(struct nlist *np) {
+void genlab(SymTabEntry *np) {
    data lnumb;	//this used to be a global
    		//replaced with int lineNumber
 		//needs to be recast, see below.

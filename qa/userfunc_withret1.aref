@@ -1,0 +1,16 @@
+clear ws
+	¦ Test of )read.  niladic function with a return value.
+
+	
+
+	•chdir 'clean_dir'
+
+0
+	
+
+	)read withret1
+
+	withret1
+
+0.1
+	

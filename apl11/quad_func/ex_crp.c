@@ -15,7 +15,7 @@
 
 void ex_crp() {
    char name[NAMS], *iline, *c, *c2, *dp;
-   struct nlist *np;
+   SymTabEntry *np;
    struct item *p;
    int len, dim0, dim1, i;
    FILE   *infile;

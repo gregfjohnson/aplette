@@ -29,7 +29,7 @@ void funedit(char *fname) {
    p = sp[-1];
    if(p->type != LV) error(ERR_value,"function name not found");
    sichk(p);
-   if(fname == 0) fname = ((struct nlist *)p)->namep;
+   if(fname == 0) fname = ((SymTabEntry *)p)->namep;
    c = getenv("EDITOR");
    /* if (c == 0) c = "vi"; */
    if (c == 0) 

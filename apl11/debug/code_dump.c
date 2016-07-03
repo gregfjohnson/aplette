@@ -203,36 +203,36 @@ void code_dump(char *cp, int flag) {
    int i;
 
    s = cp;
-   if(flag) printf("[ ");
+   if(flag) fprintf(stderr, "[ ");
 
 loop:
-   putchar(' ');
+   fprintf(stderr, " ");
    if(column > 50) {
-      if(flag) printf(" ]\n[ ");
-      else putchar('\n');
+      if(flag) fprintf(stderr, " ]\n[ ");
+      else fprintf(stderr, "\n");
    }
    i = *s++;
    //if(i != END) i &= 0377;
    i &= 0377;
    if(i >= 0 && i <= OPT_MAX && opname[i]) {
       t = opname[i];
-      while(*t) putchar(*t++);
+      while(*t) fprintf(stderr, "%c", *t++);
    }
-   else if(i != END) printf("%d ", i);
+   else if(i != END) fprintf(stderr, "%d ", i);
    switch(i) {
 
    case EOL:
       if(*s != EOL) break;
    case END:
-      if(flag) printf(" ]");
-      putchar('\n');
+      if(flag) fprintf(stderr, " ]");
+      fprintf(stderr, "\n");
       return;
 
    case QUOT:
       i = *s++;	/* throw away vcount, see notes in execute() */
       i=strlen(s);
-      putchar('-');
-      printf("%s ",s);
+      fprintf(stderr, "-");
+      fprintf(stderr, "%s ",s);
       //s += i;
       s += i+1;	/* jump past null termination */
       break;
@@ -249,10 +249,10 @@ loop:
    case AUTO:
    case REST:
    case RVAL:
-      s += copy(IN, (char *) s, (char *) &cp, 1);
-      putchar('-');
-      t = ((struct nlist *)cp)->namep;
-      while(*t) putchar(*t++);
+      s += copy(PTR, (char *) s, (char *) &cp, 1);
+      fprintf(stderr, "-");
+      t = ((SymTabEntry *)cp)->namep;
+      while(*t) fprintf(stderr, "%c", *t++);
       break;
 
    case INDEX:
@@ -260,10 +260,10 @@ loop:
       break;
    case IMMED:
       i = *s++;
-      putchar('-');
+      fprintf(stderr, "-");
       if(i > 0 && i <= 32 && sysops[i]) {
         t = sysops[i];
-        while(*t) putchar(*t++);
+        while(*t) fprintf(stderr, "%c", *t++);
       }
       break;
    }

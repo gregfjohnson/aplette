@@ -6,7 +6,8 @@
 
 /******************* C declarations ************************/
 %{
-#include <memory.h>
+#include "memory.h"
+#include "debug.h"
 #include "local_parser.h"
 #include "opt_codes.h"
 #include "data.h"
@@ -63,6 +64,7 @@ line:
    lex0 eol
    {
       *ccharp++ = COMNT;
+      *ccharp++ = EOL;
    } |
    
    /* system commands are unlike ordinary expressions */
@@ -134,7 +136,7 @@ func:
    {
       if(context == lex3) *ccharp++ = ELID;
       if(context == lex4){
-         *ccharp++ = EOL;   /* pop previous result */
+         *ccharp++ = EOL;      /* pop previous result */
          *ccharp++ = NILRET;   /* return empty result */
       }
    } ;
@@ -289,7 +291,7 @@ labels:
 label:
    anyname cln
    {
-      if(labgen) genlab((struct nlist *) $1);
+      if(labgen) genlab((SymTabEntry *) $1);
    }  ;
 
 fstat0:

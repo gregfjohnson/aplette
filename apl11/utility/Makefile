@@ -5,7 +5,7 @@ CFLAGS += -I../include
 
 OBJECTS = floating.o iodone.o checksp.o fix.o topfix.o \
 	errors.o file.o gamma.o signals.o optable.o \
-	extend.o map.o scalar.o fappend.o fuzz.o
+	extend.o map.o scalar.o fappend.o fuzz.o readline.o
 
 all: Q.o
 

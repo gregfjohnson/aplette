@@ -23,7 +23,7 @@ int size();
 
 void indexIterateInit(DataIterator *iter);
 bool indexIterate(DataIterator *iter);
-void purge_name(struct nlist *np);
-void erase(struct nlist *np);
+void purge_name(SymTabEntry *np);
+void erase(SymTabEntry *np);
 
 #endif // DATA_H

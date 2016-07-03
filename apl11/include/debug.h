@@ -13,5 +13,6 @@ void vars_dump();
 void mem_dump();
 void code_dump(char *cp, int flag);
 void stack_dump();
+void parseDump(char *line, int len);
 
 #endif

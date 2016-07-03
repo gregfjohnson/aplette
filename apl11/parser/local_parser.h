@@ -22,13 +22,13 @@ int   immedcmd;         /* immediate command number */
 
 int yylex();
 
-char	*name();
+char	*name(char *np, char c);
 bool alpha(char s);
 int digit(char s);
 int isodigit(char c);
 int getquad();
 void yyerror(char *error);
-void genlab(struct nlist *np);
+void genlab(SymTabEntry *np);
 void invert(char *a, char *b);
 int getnum(char ic);
 int getnam(char ic);

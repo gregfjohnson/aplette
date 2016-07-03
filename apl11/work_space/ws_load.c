@@ -29,7 +29,7 @@ void writeErrorOnFailure(int fd, void *buf, size_t count) {
 void wsload(int ffile) {
    char buffer[64], *gettoken(), c;
    int use, size, rank, i, dim[MRANK];
-   struct nlist *n;
+   SymTabEntry *n;
    struct item *p;
 
    gettoken(ffile, buffer);
@@ -56,7 +56,7 @@ void wsload(int ffile) {
       if (equal(buffer, "DF")) use = DF;
 
       gettoken(ffile, buffer);
-      for (n=nlist; n->namep; n++) {
+      for (n=symbolTable; n->namep; n++) {
          if (equal(buffer, n->namep)) {
             erase(n);
             goto hokay;

@@ -14,9 +14,9 @@
 #include "apl.h"
 
 void vars_dump() {
-struct nlist *n;
+SymTabEntry *n;
    
-   for(n=nlist; n->namep; n++) {
+   for(n=symbolTable; n->namep; n++) {
       printf("%x:", (uintptr_t) n);
       printf(" namep=%s",n->namep);
       printf(" itemp=%x", (uintptr_t) n->itemp);

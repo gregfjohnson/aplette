@@ -10,11 +10,11 @@
 #include "debug.h"
 
 void ex_asgn() {
-   struct nlist *p;
+   SymTabEntry *p;
    struct item *q;
    int i;
 
-   p = (struct nlist *)sp[-1];
+   p = (SymTabEntry *)sp[-1];
    q = (struct item *)sp[-1]; /* just to get item->index
                                * further down, q is reassigned */
    switch(p->type){
@@ -25,8 +25,8 @@ void ex_asgn() {
       return;
 
    case LV:
-      if (((struct nlist *)p->itemp) && 
-          ((struct nlist *)p)->itemp->type == LBL) 
+      if (((SymTabEntry *)p->itemp) && 
+          ((SymTabEntry *)p)->itemp->type == LBL) 
           error(ERR_implicit,"attempt to reassign a label value");
       break;
    default:
@@ -38,7 +38,7 @@ void ex_asgn() {
    q = fetch1();
    erase(p);
    p->use = DA;
-   ((struct nlist *)p)->itemp = q;
+   ((SymTabEntry *)p)->itemp = q;
    sp[-1] = (struct item *)p;
 
    if(vars_trace) vars_dump();

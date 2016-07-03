@@ -22,7 +22,7 @@
 void ex_syscom() {
    int i, *ip, j;
    struct item *p;
-   struct nlist *n;
+   SymTabEntry *n;
    char fname[64];                  /* Array for filename */
    char *cp, *vfname();
 
@@ -94,7 +94,7 @@ void ex_syscom() {
       p = sp[-1];
       sp--;
       purge_name(p);
-      erase((struct nlist *) p);
+      erase((SymTabEntry *) p);
       if(vars_trace) vars_dump();
       return;
 
@@ -107,7 +107,7 @@ void ex_syscom() {
       Exit(0);
 
    case VARS:
-      for(n=nlist; n->namep; n++) {
+      for(n=symbolTable; n->namep; n++) {
          if(n->itemp && n->use == DA ) {
             if(column+8 >= pagewidth) printf("\n\t");
             printf(n->namep);
@@ -118,7 +118,7 @@ void ex_syscom() {
       return;
 
    case FNS:
-      for(n=nlist; n->namep; n++) {
+      for(n=symbolTable; n->namep; n++) {
          if(n->use == DF || n->use == MF || n->use == NF) {
             if(column+8 >= pagewidth) printf("\n\t");
             printf(n->namep);
@@ -129,7 +129,7 @@ void ex_syscom() {
       return;
 
    case CODE:
-      n = (struct nlist *)sp[-1];
+      n = (SymTabEntry *)sp[-1];
       sp--;
       switch(n->use){
       default:
@@ -255,10 +255,10 @@ char *
 vfname(array)
 char *array;
 {
-   struct nlist *n;
+   SymTabEntry *n;
    char *p;
 
-   n = (struct nlist *)sp[-1];
+   n = (SymTabEntry *)sp[-1];
    sp--;
    if(n->type != LV) error(ERR_value,"not a local varaible");
    p = n->namep;

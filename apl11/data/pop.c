@@ -10,7 +10,9 @@
 void pop() {
    struct item *p;
 
-   if(sp <= stack) error(ERR_botch,"pop - stack underflow");
+   if(sp <= stack) {
+      error(ERR_botch,"pop - stack underflow");
+   }
    p=sp[-1];
    if (p) {
       switch(p->type) {
@@ -20,7 +22,7 @@ void pop() {
          break;
          
       case LBL:
-         ((struct nlist *)p)->use = 0;     /* delete label */
+         ((SymTabEntry *)p)->use = 0;     /* delete label */
 
       case LV:
          break;

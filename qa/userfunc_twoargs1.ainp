@@ -1,0 +1,6 @@
+C@J Test of )read.  dyadic function with a return value.
+
+Lchdir 'clean_dir'
+
+)read twoargs
+2 twoargs 5

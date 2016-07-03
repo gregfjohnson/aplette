@@ -4,13 +4,13 @@
  */
 #include "apl.h"
 
-struct nlist *
+SymTabEntry *
 nlook(name)
 char *name;
 {
-   struct nlist *np;
+   SymTabEntry *np;
 
-   for(np = nlist; np->namep; np++) {
+   for(np = symbolTable; np->namep; np++) {
       if(equal(np->namep, name)) return(np);
    }
    return(0);

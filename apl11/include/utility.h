@@ -9,6 +9,7 @@
 
 #ifndef UTILITY_H
 #define UTILITY_H
+#include <stdio.h>
 #include "apl.h"
 
 void error(int type, char *diagnostic);
@@ -29,5 +30,6 @@ void panic(int signum);
 void catchsigs();
 
 void fappend(int fd, struct item *ap);
+char *readLine(char *title, char *xLine, int xLineLength, FILE *xInfile);
 
 #endif // UTILITY_H

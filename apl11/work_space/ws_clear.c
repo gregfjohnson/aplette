@@ -6,9 +6,9 @@
 #include "memory.h"
 
 void clear() {
-   struct nlist *n;
+   SymTabEntry *n;
 
-   for(n=nlist; n->namep; n++) {
+   for(n=symbolTable; n->namep; n++) {
       n->use = 0;
       n->itemp = 0;
       n->namep = 0;

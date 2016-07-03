@@ -81,7 +81,7 @@ loop:
        * AFTER all header processing has been completed.
        */
 
-      if(((struct nlist *)p)->use != DA){
+      if(((SymTabEntry *)p)->use != DA){
          if ((gsip->Mode != deffun) || gsip->funlc != 1)
             error(ERR_value,"undefined variable");
          q = newdat(DA, 0, 1);      /* Dummy */
@@ -89,7 +89,7 @@ loop:
          prolgerr = 1;            /* ERROR flag */
          return(q);
       }
-      p = ((struct nlist *)p)->itemp;
+      p = ((SymTabEntry *)p)->itemp;
       i = p->type;
       if(i == LBL) i = DA;         /* treat label as data */
       q = newdat(i, p->rank, p->size);

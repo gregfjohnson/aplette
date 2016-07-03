@@ -17,40 +17,45 @@
 #define WSFILE   ws_file                /* work space file */
 
 /* Magic Numbers */
-#define NFDS        20                  /* Number of available file descriptors */
-#define MRANK        8                  /* maximum rank, ie number of dimensions */
-#define STKS       500                  /* stack size */
-#define NLS        200                  /* number of local symbols, 
-                                         * ie varables and user functions, see nlist[NLS] */
-#define NAMS        40                  /* maximum size of variable and user function names */
-#define OBJS       500                  /* space provided for p-code */
-#define MAXLAB     100                  /* maximum number of labels in one function */
-#define LINEMAX    200                  /* length of line typed at the keyboard */
+#define NFDS                   20       /* Number of available file descriptors */
+#define MRANK                   8       /* maximum rank, ie number of dimensions */
+#define STKS                  500       /* stack size */
+#define SYM_TAB_MAX           200       /* number of local symbols, 
+                                         * ie varables and user functions, see symbolTable[SYM_TAB_MAX] */
+#define NAMS                   40       /* maximum size of variable and user function names */
+#define OBJS                  500       /* space provided for p-code */
+#define MAXLAB                100       /* maximum number of labels in one function */
+#define LINEMAX               200       /* length of line typed at the keyboard */
 
 /* The basic type of float data in apl11 */
 #define data   double
 
 /* derived constants */
 #define SDAT    sizeof(data)
-#define SINT     sizeof(int)
-#define MAXEXP           709            /* the largest value such that exp(MAXEXP) is OK */
-#define MINdata    MINDOUBLE
-#define MAXdata    MAXDOUBLE
+#define SINT    sizeof(int)
+#define SPTR    sizeof(void *)
 
-#define INITIAL_tolerance    1.0e-13
+#define MAXEXP                709       /* the largest value such that exp(MAXEXP) is OK */
+#define MINdata         MINDOUBLE
+#define MAXdata         MAXDOUBLE
+
+#define INITIAL_tolerance 1.0e-13
 data tolerance;
 
-#define INITIAL_iorigin      1
+#define INITIAL_iorigin         1
 int iorigin;
 
-#define INITIAL_pagewidth   72
+#define INITIAL_pagewidth      72
 int pagewidth;
 
-#define INITIAL_PrintP       9
+#define INITIAL_PrintP          9
 int PrintP;
 
-#define quote_quad_limit    40
+#define quote_quad_limit       40
 char quote_quad_prompt[quote_quad_limit+1];
+
+typedef int  (*VoidToIntFn)();
+typedef data (*VoidToDataFn)();
 
 struct chrstrct {
    char c[2];
@@ -127,7 +132,9 @@ jmp_buf   hot_restart;                  /* Used for setexit/reset */
                                           * not return a value. */
 #define    QX     14                     /* latent expr. quad LX  */
 #define    LBL    15                     /* locked label value */
-#define    NTYPES 16                     /* number of defined types */
+#define    PTR    16                     /* generic pointer for copy() */
+
+#define    NTYPES 17                     /* number of defined types */
 
 /*
  * This is a descriptor for apl data, 
@@ -154,24 +161,30 @@ struct item {
 /*
  * variable/fn (and file name) descriptor block.
  * contains useful information about all LVs.
- * Also kludged up to handle file names (only nlist.namep 
+ * Also kludged up to handle file names (only SymTab.namep 
  * is then used.)
  *
- * For fns, nlist.itemp is an array of pointers to character
+ * For fns, SymbolTable.FunctionPcode is an array of pointers to character
  * strings which are the compiled code for a line of the fn.
- * (Itemp == 0) means that the fn has not yet been compiled .
- * nlist.itemp[0] == the number of lines in the fn, and
- * nlist.itemp[1] == the function startup code, and
- * nlist.itemp[max] == the close down shop code.
+ * (function == 0) means that the fn has not yet been compiled .
+ * SymTabEntry.function.lineCount == the number of lines in the fn, and
+ * SymTabEntry.pcodeLines[0] == the function startup code, and
+ * SymTabEntry.pcodeLines[lineCount-1] == the close down shop code.
  */
 
-struct nlist {
-   int          use;
-   int          type;
-   struct item* itemp;
-   char*        namep;
-   int          label;
-} nlist[NLS];
+typedef struct {
+    int            use;
+    int            type;
+    struct item*   itemp;
+    char*          namep;
+
+    int label;
+    int functionLineCount;
+    int functionPcodeLineLength;
+    char **functionPcodeLines;
+} SymTabEntry;
+
+SymTabEntry symbolTable[SYM_TAB_MAX];
 
 /* The context structure
  * pointed to by the State Indicator
@@ -191,9 +204,8 @@ struct Context {
 
     char*           text;               /* input line, plain text */
     char*           pcode;              /* pseudo code */
-    char*           xref;               /* cross reference text vs pcode */
     char*           ptr;                /* pointer to current token in pcode */
-    struct nlist*   np;                 /* current fn vital stats. */
+    SymTabEntry*    np;                 /* current fn vital stats. */
     int             funlc;              /* current fn current line number */
     struct item**   sp;                 /* top of operand stack upon fn entry */
     jmp_buf         env;                /* for restoration of local fn activation record */
@@ -209,7 +221,7 @@ extern int (*exop[])();
 
 double ltod();
 char   *compile();
-struct nlist *nlook();
+SymTabEntry *nlook();
 struct item *fetch(), *fetch1(), *fetch2(), *extend();
 struct item *newdat(), *dupdat();
 

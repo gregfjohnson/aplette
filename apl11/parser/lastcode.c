@@ -39,7 +39,7 @@ loop:
       case AUTO:
       case REST:
       case RVAL:
-      s += SINT;
+      s += SPTR;
       break;
 
       case INDEX:

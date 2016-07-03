@@ -9,15 +9,19 @@ int copy(int type, char *from, char *to, int size) {
    char *a, *b;
    int s;
 
-   if((i = size) == 0) return(0);
+   if (size == 0) return(0);
+
+   i = size;
    a = from;
    b = to;
-   if(type == DA) i *= SDAT;
-   if(type == IN) i *= SINT;
+   if(type == DA ) i *= SDAT;
+   if(type == IN ) i *= SINT;
+   if(type == PTR) i *= SPTR;
    s = i;
    do
       *b++ = *a++;
    while(--i);
+
    return(s);
 }
 
