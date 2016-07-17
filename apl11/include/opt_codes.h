@@ -109,7 +109,7 @@
 #define EXD0 99
 #define SCAN0 100
 #define BASE 101
-#define MENC 102 /* monadic encode */
+#define MENC 102  /* monadic encode */
 #define LABEL 103 /* statement label */
 
 #define QLX 105 /* Quad Latent eXpression */
@@ -149,10 +149,10 @@
 #define SICLR0 138
 #define RVAL 139
 #define QSIGNL 140
-#define QFLOAT 141 /* Float character string to data */
-#define QNL 142 /* Produce namelist */
-#define QEX 143 /* Expunge added by tyl 13.8.1999 */
-#define QAI 144 /* Accinfo added by tyl 13.8.1999 */
+#define QFLOAT 141  /* Float character string to data */
+#define QNL 142     /* Produce namelist */
+#define QEX 143     /* Expunge added by tyl 13.8.1999 */
+#define QAI 144     /* Accinfo added by tyl 13.8.1999 */
 #define OPT_MAX 144 /* largest opt-code */
 
 /* System Command op-codes */

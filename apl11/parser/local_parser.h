@@ -15,7 +15,7 @@ int nlexsym;
 int context;
 char* iline;
 char *ccharp, *ccharp2;
-data lnumb; /* current label number */
+data lnumb;   /* current label number */
 char* labcpp; /* label prologue */
 char* labcpe; /* label epilogue */
 int immedcmd; /* immediate command number */
@@ -44,8 +44,8 @@ struct OPER {
 
 struct COMM {
     char* ct_name; /* command name string */
-    int ct_ytype; /* command type */
-    int ct_ylval; /* "yylval" value */
+    int ct_ytype;  /* command type */
+    int ct_ylval;  /* "yylval" value */
 };
 
 struct QUOD {

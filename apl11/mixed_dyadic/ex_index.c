@@ -80,7 +80,7 @@ void ex_index()
     }
     else {
         pop(); /* pop ELID */
-        sp--; /* skip over LV */
+        sp--;  /* skip over LV */
         for (i = 0; i < n; i++)
             pop();
     }

@@ -34,7 +34,7 @@ bool indexIterate(DataIterator* iter)
         return false;
 
     if (iter->rank == 0) {
-        result = true; // process scalar once
+        result = true;         // process scalar once
         iter->complete = true; // for next time through..
     }
     else {

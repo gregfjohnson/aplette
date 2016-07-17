@@ -54,7 +54,7 @@ void mainloop()
         lineNumber = -1;
         if (echoflg)
             echoflg = 1; /* enabled echo echo suppress off */
-        checksp(); /* check for stack overflow */
+        checksp();       /* check for stack overflow */
         if (intflg)
             error(ERR_interrupt, "");
 

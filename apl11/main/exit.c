@@ -18,5 +18,5 @@ void Exit(int s)
     unlink(WSFILE); /* Unlink temporaries */
     unlink(scr_file);
     normalExit = 1; /* Set this flag for atexit() */
-    exit(s); /* And we're outa here */
+    exit(s);        /* And we're outa here */
 }

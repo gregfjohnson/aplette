@@ -20,5 +20,5 @@ void ex_label()
     ex_asgn();
     n = (SymTabEntry*)sp[-1];
     n->itemp->type = LBL; /* lock out assignments */
-    sp--; /* discard stack */
+    sp--;                 /* discard stack */
 }

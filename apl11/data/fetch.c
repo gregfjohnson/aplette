@@ -54,7 +54,7 @@ loop:
             error(ERR_value, "right value is NIL");
         return (p);
 
-    case QV: /* Quad Variables */
+    case QV:          /* Quad Variables */
         i = p->index; /* get the pointer to applicable quad service routine */
         aplfree((int*)p);
         p = (struct item*)(*exop[i])(0); /* call the service routine */

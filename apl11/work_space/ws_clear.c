@@ -15,7 +15,7 @@ void clear()
         n->namep = 0;
     }
     afreset(); /* release all dynamic memory */
-    gsip = 0; /* reset state indicator */
+    gsip = 0;  /* reset state indicator */
 
     iorigin = INITIAL_iorigin;
     pagewidth = INITIAL_pagewidth;

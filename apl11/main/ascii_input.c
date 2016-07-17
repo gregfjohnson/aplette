@@ -93,29 +93,29 @@ static struct {
     char in[2];
     char out;
 } chartab[] = {
-    { "-/", C_SLASHBAR }, /* 0200 compress */
-    { "-\\", C_SLOPEBAR }, /* 0201 expand */
-    { "\'L", C_QUOTEQUAD }, /* 0202 quote quad */
-    { "^~", C_NAND }, /* 0205 nand */
-    { "V~", C_NOR }, /* 0206 nor */
-    { "*O", C_CIRCLESTAR }, /* 0207 log */
-    { "-O", C_CIRCLESTILE }, /* 0211 rotate */
+    { "-/", C_SLASHBAR },     /* 0200 compress */
+    { "-\\", C_SLOPEBAR },    /* 0201 expand */
+    { "\'L", C_QUOTEQUAD },   /* 0202 quote quad */
+    { "^~", C_NAND },         /* 0205 nand */
+    { "V~", C_NOR },          /* 0206 nor */
+    { "*O", C_CIRCLESTAR },   /* 0207 log */
+    { "-O", C_CIRCLESTILE },  /* 0211 rotate */
     { "O\\", C_CIRCLESLOPE }, /* 0212 transpose */
-    { "BN", C_IBEAM }, /* 0213 i beam */
-    { "%L", C_QUADDIVIDE }, /* 0214 domino */
-    { "A|", C_DELTASTILE }, /* 0215 grade up */
-    { "V|", C_DELSTILE }, /* 0216 grade dn */
-    { "O|", C_CIRCLESTILE }, /* 0217 rotate */
-    { "<=", C_LESSOREQUAL }, /* 0220 less eq */
-    { "=>", C_GRATOREQUAL }, /* 0221 greater eq */
-    { "/=", C_NOTEQUAL }, /* 0222 not eq */
-    { "^~", C_NAND }, /* 0223 nand */
-    { "H|", C_DELTASTILE }, /* 0227 another grade up */
-    { "G|", C_DELSTILE }, /* 0230 another grade down */
-    { "BJ", C_UPTACKJOT }, /* 0241 standard execute */
-    { "JN", C_DOWNTACKJOT }, /* 0242 format */
-    { "CJ", C_UPSHOEJOT }, /* 0246 lamp (comment delimiter) */
-    { "\0", '\0' } /* two-characters of null ends list */
+    { "BN", C_IBEAM },        /* 0213 i beam */
+    { "%L", C_QUADDIVIDE },   /* 0214 domino */
+    { "A|", C_DELTASTILE },   /* 0215 grade up */
+    { "V|", C_DELSTILE },     /* 0216 grade dn */
+    { "O|", C_CIRCLESTILE },  /* 0217 rotate */
+    { "<=", C_LESSOREQUAL },  /* 0220 less eq */
+    { "=>", C_GRATOREQUAL },  /* 0221 greater eq */
+    { "/=", C_NOTEQUAL },     /* 0222 not eq */
+    { "^~", C_NAND },         /* 0223 nand */
+    { "H|", C_DELTASTILE },   /* 0227 another grade up */
+    { "G|", C_DELSTILE },     /* 0230 another grade down */
+    { "BJ", C_UPTACKJOT },    /* 0241 standard execute */
+    { "JN", C_DOWNTACKJOT },  /* 0242 format */
+    { "CJ", C_UPSHOEJOT },    /* 0246 lamp (comment delimiter) */
+    { "\0", '\0' }            /* two-characters of null ends list */
 };
 
 static void addChar(char** result, int* len, int* nextIndex, char ch)

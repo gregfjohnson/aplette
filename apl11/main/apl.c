@@ -36,9 +36,9 @@ int main(int argc, char** argp)
     rl_readline_name = "openapl";
 #endif
 
-    mkcore = 0; /* if "1", produce core image upon fatal error */
-    normalExit = 0; /* set to true when doing a normal exit */
-    sandboxflg = 0; /* initial security value, changed by command line */
+    mkcore = 0;           /* if "1", produce core image upon fatal error */
+    normalExit = 0;       /* set to true when doing a normal exit */
+    sandboxflg = 0;       /* initial security value, changed by command line */
     sandbox = sandboxflg; /* sandbox is set whenever Quad-LX is run,
    				 * upon return it is set to sandboxflg */
     time(&startTime);
@@ -58,8 +58,8 @@ int main(int argc, char** argp)
     ascii_characters = 0;
 
     /* diagnostics */
-    mem_trace = 0; /* dynamic memory allocation */
-    code_trace = 0; /* pseudo code */
+    mem_trace = 0;   /* dynamic memory allocation */
+    code_trace = 0;  /* pseudo code */
     stack_trace = 0; /* local stack */
     funtrace = 0;
 

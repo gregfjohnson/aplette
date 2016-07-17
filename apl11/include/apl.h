@@ -17,15 +17,15 @@
 #define WSFILE ws_file /* work space file */
 
 /* Magic Numbers */
-#define NFDS 20 /* Number of available file descriptors */
-#define MRANK 8 /* maximum rank, ie number of dimensions */
-#define STKS 500 /* stack size */
+#define NFDS 20         /* Number of available file descriptors */
+#define MRANK 8         /* maximum rank, ie number of dimensions */
+#define STKS 500        /* stack size */
 #define SYM_TAB_MAX 200 /* number of local symbols, \
                          * ie varables and user functions, see symbolTable[SYM_TAB_MAX] */
-#define NAMS 40 /* maximum size of variable and user function names */
-#define OBJS 500 /* space provided for p-code */
-#define MAXLAB 100 /* maximum number of labels in one function */
-#define LINEMAX 200 /* length of line typed at the keyboard */
+#define NAMS 40         /* maximum size of variable and user function names */
+#define OBJS 500        /* space provided for p-code */
+#define MAXLAB 100      /* maximum number of labels in one function */
+#define LINEMAX 200     /* length of line typed at the keyboard */
 
 /* The basic type of float data in apl11 */
 #define data double
@@ -75,10 +75,10 @@ data one;
 data pi;
 data datum;
 data getdat();
-int funtrace; /* function trace enabled */
-int labgen; /* label processing being done */
+int funtrace;         /* function trace enabled */
+int labgen;           /* label processing being done */
 jmp_buf cold_restart; /* Used for setexit/reset */
-jmp_buf hot_restart; /* Used for setexit/reset */
+jmp_buf hot_restart;  /* Used for setexit/reset */
 
 //jmp_buf    gbl_env;                   /* Used for setexit/reset */
 //jmp_buf    mainloop_return;
@@ -87,8 +87,8 @@ jmp_buf hot_restart; /* Used for setexit/reset */
 /* Error Types
  * Any additions to this list must be dealt with at errors.c
  */
-#define ERR 0 /* code 0 for miscellaneous errors */
-#define ERR_axis 1 /* codes 1 to 10 are consistent */
+#define ERR 0        /* code 0 for miscellaneous errors */
+#define ERR_axis 1   /* codes 1 to 10 are consistent */
 #define ERR_domain 2 /* with the standard */
 #define ERR_implicit 3
 #define ERR_index 4
@@ -122,14 +122,14 @@ jmp_buf hot_restart; /* Used for setexit/reset */
 #define QQ 5
 #define IN 6
 #define EL 7
-#define NF 8 /* niladic function */
-#define MF 9 /* monadic function */
+#define NF 8  /* niladic function */
+#define MF 9  /* monadic function */
 #define DF 10 /* dyadic function */
 #define QC 11
-#define QV 12 /* quad variables */
+#define QV 12  /* quad variables */
 #define NIL 13 /* Used where a user defined function does \
                 * not return a value. */
-#define QX 14 /* latent expr. quad LX  */
+#define QX 14  /* latent expr. quad LX  */
 #define LBL 15 /* locked label value */
 #define PTR 16 /* generic pointer for copy() */
 
@@ -192,22 +192,22 @@ SymTabEntry symbolTable[SYM_TAB_MAX];
 
 struct Context {
     struct Context* prev; /* previous */
-    int suspended; /* suspended == 1, otherwise == 0 */
+    int suspended;        /* suspended == 1, otherwise == 0 */
 
-    enum Mode { /* Mode can only be one of the following: */
-        immed, /*     immediate execution */
-        exec, /*     execute */
+    enum Mode {  /* Mode can only be one of the following: */
+        immed,   /*     immediate execution */
+        exec,    /*     execute */
         quadinp, /*     quad input */
-        deffun /*     defined function */
+        deffun   /*     defined function */
     } Mode;
 
-    char* text; /* input line, plain text */
-    char* pcode; /* pseudo code */
-    char* ptr; /* pointer to current token in pcode */
-    SymTabEntry* np; /* current fn vital stats. */
-    int funlc; /* current fn current line number */
+    char* text;       /* input line, plain text */
+    char* pcode;      /* pseudo code */
+    char* ptr;        /* pointer to current token in pcode */
+    SymTabEntry* np;  /* current fn vital stats. */
+    int funlc;        /* current fn current line number */
     struct item** sp; /* top of operand stack upon fn entry */
-    jmp_buf env; /* for restoration of local fn activation record */
+    jmp_buf env;      /* for restoration of local fn activation record */
 } * gsip, prime_context;
 
 /*
@@ -229,9 +229,9 @@ int signgam;
 int column;
 int intflg;
 int echoflg;
-int sandbox; /* when set, some functions are barred */
-int sandboxflg; /* when set, sandbox cannot be unset */
-int use_readline; /* shows that the user has a valid .inputrc */
+int sandbox;          /* when set, some functions are barred */
+int sandboxflg;       /* when set, sandbox cannot be unset */
+int use_readline;     /* shows that the user has a valid .inputrc */
 int ascii_characters; /* use 7-bit ascii and map to APL characters */
 int ifile;
 int wfile;
@@ -243,9 +243,9 @@ int pt;
 int syze;
 int pas1;
 int protofile;
-int lastop; /* last (current) operator exec'ed */
+int lastop;     /* last (current) operator exec'ed */
 char* scr_file; /* scratch file name */
-char* ws_file; /* apl workspace file */
+char* ws_file;  /* apl workspace file */
 int lineNumber;
 int normalExit;
 int mkcore;
@@ -270,8 +270,8 @@ typedef struct {
 
 DataIterator idx;
 
-#define setexit() setjmp(gbl_env) /* "setexit" equivalent      */
-#define reset() longjmp(gbl_env, 0) /* "reset" equivalent        */
+#define setexit() setjmp(gbl_env)       /* "setexit" equivalent      */
+#define reset() longjmp(gbl_env, 0)     /* "reset" equivalent        */
 #define equal(a, b) (0 == strcmp(a, b)) /* character string equality */
 
 #define SECURITY_CHECK \

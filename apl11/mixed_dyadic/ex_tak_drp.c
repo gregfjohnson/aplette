@@ -78,7 +78,7 @@ int td1(int tdmode)
 
     p = fetch2();
     q = sp[-2];
-    r = !q->size; /* Weird stuff for null items */
+    r = !q->size;       /* Weird stuff for null items */
     if (q->rank == 0) { /* Extend scalars */
         nq = newdat(q->type, p->size, 1);
         *nq->datap = *q->datap;

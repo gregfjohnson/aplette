@@ -41,7 +41,7 @@ void ex_ibr0()
             error(ERR_botch, "stack pointer problem");
         while (sp > gsip->sp)
             pop();
-        pop(); /* pop off possibly bad previous result */
+        pop();       /* pop off possibly bad previous result */
         ex_nilret(); /* and stick on some dummy datum */
         p = (int*)gsip->np->itemp;
         //execute_old(p[*p + 1]);
