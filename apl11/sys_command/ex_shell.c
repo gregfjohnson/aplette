@@ -11,11 +11,13 @@
 * execute that shell.  If not, or if that exec fails, attempt
 * to execute the standard shell, /bin/sh
 */
-void ex_shell() {
-   char *getenv(), *sh;
+void ex_shell()
+{
+    char *getenv(), *sh;
 
-   sh = getenv("SHELL");
-   if (sh == 0) sh = "/bin/sh";
-   if (system(sh) == -1) error(ERR, "attempt to start shell failed");
+    sh = getenv("SHELL");
+    if (sh == 0)
+        sh = "/bin/sh";
+    if (system(sh) == -1)
+        error(ERR, "attempt to start shell failed");
 }
-

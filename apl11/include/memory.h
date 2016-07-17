@@ -6,16 +6,16 @@
 #define MEMORY_H
 
 struct memblock {
-	int *block;
-	unsigned nbytes;
-	struct memblock *next;
+    int* block;
+    unsigned nbytes;
+    struct memblock* next;
 };
 
-struct memblock *firstblock;
+struct memblock* firstblock;
 extern int mem_trace;
 
 void afreset();
-int *alloc();
-void aplfree(int *ap);
+int* alloc();
+void aplfree(int* ap);
 
 #endif

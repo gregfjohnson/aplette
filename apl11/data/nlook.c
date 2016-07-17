@@ -4,15 +4,14 @@
  */
 #include "apl.h"
 
-SymTabEntry *
-nlook(name)
-char *name;
+SymTabEntry*
+    nlook(name) char* name;
 {
-   SymTabEntry *np;
+    SymTabEntry* np;
 
-   for(np = symbolTable; np->namep; np++) {
-      if(equal(np->namep, name)) return(np);
-   }
-   return(0);
+    for (np = symbolTable; np->namep; np++) {
+        if (equal(np->namep, name))
+            return (np);
+    }
+    return (0);
 }
-

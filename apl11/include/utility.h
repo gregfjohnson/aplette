@@ -12,10 +12,10 @@
 #include <stdio.h>
 #include "apl.h"
 
-void error(int type, char *diagnostic);
+void error(int type, char* diagnostic);
 int topfix();
-int scalar(struct item *aip);
-void pline(char *str, int loc, int ln);
+int scalar(struct item* aip);
+void pline(char* str, int loc, int ln);
 int fix(data d);
 void checksp();
 void fppinit(int arg);
@@ -29,7 +29,7 @@ void intr(int s);
 void panic(int signum);
 void catchsigs();
 
-void fappend(int fd, struct item *ap);
-char *readLine(char *title, char *xLine, int xLineLength, FILE *xInfile);
+void fappend(int fd, struct item* ap);
+char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile);
 
 #endif // UTILITY_H

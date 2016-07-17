@@ -13,16 +13,17 @@
 #include <inttypes.h>
 #include "apl.h"
 
-void vars_dump() {
-SymTabEntry *n;
-   
-   for(n=symbolTable; n->namep; n++) {
-      printf("%x:", (uintptr_t) n);
-      printf(" namep=%s",n->namep);
-      printf(" itemp=%x", (uintptr_t) n->itemp);
-      printf(" use=%d",n->use);
-      printf(" type=%d",n->type);
-/*      printf(" label=%d",n->label); */
-      printf("\n");
-   }
+void vars_dump()
+{
+    SymTabEntry* n;
+
+    for (n = symbolTable; n->namep; n++) {
+        printf("%x:", (uintptr_t)n);
+        printf(" namep=%s", n->namep);
+        printf(" itemp=%x", (uintptr_t)n->itemp);
+        printf(" use=%d", n->use);
+        printf(" type=%d", n->type);
+        /*      printf(" label=%d",n->label); */
+        printf("\n");
+    }
 }

@@ -7,7 +7,8 @@
 #include "apl.h"
 #include "utility.h"
 
-void ex_close() {
-   SECURITY_CHECK;
-   iodone(close(topfix()));
+void ex_close()
+{
+    SECURITY_CHECK;
+    iodone(close(topfix()));
 }

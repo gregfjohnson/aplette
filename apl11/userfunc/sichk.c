@@ -6,12 +6,14 @@
 #include "apl.h"
 #include "utility.h"
 
-void sichk(SymTabEntry *n) {
-   struct Context *p;
+void sichk(SymTabEntry* n)
+{
+    struct Context* p;
 
-   p = gsip;
-   while(p){
-      if(n == p->np) error(ERR,"si damage -- type ')sic'");
-      p = p->prev;
-   }
+    p = gsip;
+    while (p) {
+        if (n == p->np)
+            error(ERR, "si damage -- type ')sic'");
+        p = p->prev;
+    }
 }

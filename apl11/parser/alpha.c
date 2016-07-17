@@ -5,11 +5,10 @@
 
 #include "local_parser.h"
 
-bool alpha(char s) {
-   return(
-         (s >= 'a' && s <= 'z')
-      || (s >= 'A' && s <= 'Z')
-      || (litflag == -2 && ( s == '/' || s == '.' ))
-   );
+bool alpha(char s)
+{
+    return (
+        (s >= 'a' && s <= 'z')
+        || (s >= 'A' && s <= 'Z')
+        || (litflag == -2 && (s == '/' || s == '.')));
 }
-

@@ -8,16 +8,16 @@
 #include "userfunc.h"
 
 char *
-catcode(s1,s2)
-char *s1, *s2;
+    catcode(s1, s2) char *s1,
+    *s2;
 {
-   int i,j;
-   char *p,*q;
+    int i, j;
+    char *p, *q;
 
-   i = csize(s1) - 1;
-   j = csize(s2);
-   p = q = alloc(i+j);
-   p += copy(CH, s1, p, i);
-   copy(CH, s2, p, j);
-   return(q);
+    i = csize(s1) - 1;
+    j = csize(s2);
+    p = q = alloc(i + j);
+    p += copy(CH, s1, p, i);
+    copy(CH, s2, p, j);
+    return (q);
 }

@@ -7,12 +7,13 @@
 #include "apl.h"
 #include "utility.h"
 
-char *iofname();
+char* iofname();
 
-void ex_open() {
-   int m;
+void ex_open()
+{
+    int m;
 
-   m = topfix();
-   SECURITY_CHECK;
-   iodone(open(iofname(), m));
+    m = topfix();
+    SECURITY_CHECK;
+    iodone(open(iofname(), m));
 }

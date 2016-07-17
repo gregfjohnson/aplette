@@ -7,7 +7,8 @@
 #include "apl.h"
 #include "utility.h"
 
-void ex_dup() {
-   SECURITY_CHECK;
-   iodone(dup(topfix()));
+void ex_dup()
+{
+    SECURITY_CHECK;
+    iodone(dup(topfix()));
 }

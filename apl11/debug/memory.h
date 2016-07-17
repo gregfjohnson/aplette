@@ -4,10 +4,10 @@
  */
 
 struct memblock {
-	int *block;
-	unsigned nbytes;
-	struct memblock *next;
+    int* block;
+    unsigned nbytes;
+    struct memblock* next;
 };
 
-struct memblock *firstblock;
+struct memblock* firstblock;
 extern int mem_trace;

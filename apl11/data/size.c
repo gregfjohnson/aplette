@@ -4,15 +4,15 @@
  */
 #include "apl.h"
 
-int size() {
-   int i, s;
+int size()
+{
+    int i, s;
 
-   s = 1;
-   for(i=idx.rank-1; i>=0; i--) {
-      idx.del[i] = s;
-      s *= idx.dim[i];
-   }
-   idx.size = s;
-   return(s);
+    s = 1;
+    for (i = idx.rank - 1; i >= 0; i--) {
+        idx.del[i] = s;
+        s *= idx.dim[i];
+    }
+    idx.size = s;
+    return (s);
 }
-

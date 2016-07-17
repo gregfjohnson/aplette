@@ -7,6 +7,7 @@
 #include "utility.h"
 
 /* monadic encode */
-void ex_menc() {
-   error(ERR,"Monadic encode not supported");
+void ex_menc()
+{
+    error(ERR, "Monadic encode not supported");
 }

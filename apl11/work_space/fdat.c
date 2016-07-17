@@ -11,15 +11,15 @@
  */
 
 #include "apl.h"
- 
-void fdat(int f) {
-   struct stat b;
-   struct tm *p, *localtime();
 
-   fstat(f, &b);
-   p = localtime(&b.st_mtime);
+void fdat(int f)
+{
+    struct stat b;
+    struct tm *p, *localtime();
 
-   printf("  %02d:%02d.%02d",p->tm_hour,p->tm_min,p->tm_sec);
-   printf(" %02d/%02d/%02d",p->tm_mon+1,p->tm_mday,p->tm_year%100);
+    fstat(f, &b);
+    p = localtime(&b.st_mtime);
+
+    printf("  %02d:%02d.%02d", p->tm_hour, p->tm_min, p->tm_sec);
+    printf(" %02d/%02d/%02d", p->tm_mon + 1, p->tm_mday, p->tm_year % 100);
 }
-

@@ -15,23 +15,22 @@
 #include "utility.h"
 #include "char.h"
 
-struct item * ex_qav(io)
-int io; /* 0 = source, 1 = sink */
+struct item* ex_qav(io) int io; /* 0 = source, 1 = sink */
 {
-struct item *p;
-int i;
-char *n;
+    struct item* p;
+    int i;
+    char* n;
 
-   if ( io == 0 ) { 
-      p = newdat(CH, 1, 256);
-      n=(char*)p->datap;
-      for (i=0; i<p->size; i++) {
-         *n=i;
-         n++;
-      }
-      return(p);
-      
-   } else {
-      error(ERR_implicit,"cannot change " S_QUAD "av");
-   };
+    if (io == 0) {
+        p = newdat(CH, 1, 256);
+        n = (char*)p->datap;
+        for (i = 0; i < p->size; i++) {
+            *n = i;
+            n++;
+        }
+        return (p);
+    }
+    else {
+        error(ERR_implicit, "cannot change " S_QUAD "av");
+    };
 }

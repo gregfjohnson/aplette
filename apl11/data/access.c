@@ -4,11 +4,12 @@
  */
 #include "apl.h"
 
-int access() {
-   int i, n;
+int access()
+{
+    int i, n;
 
-   n = 0;
-   for(i=0; i<idx.rank; i++) n += idx.idx[i] * idx.del[i];
-   return(n);
+    n = 0;
+    for (i = 0; i < idx.rank; i++)
+        n += idx.idx[i] * idx.del[i];
+    return (n);
 }
-

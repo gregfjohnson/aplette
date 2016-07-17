@@ -5,13 +5,18 @@
 
 #include "local_parser.h"
 
-int digit(char s) {
-   if(s >='0' && s <= '9') return(1);
-   return(0);
+int digit(char s)
+{
+    if (s >= '0' && s <= '9')
+        return (1);
+    return (0);
 }
 
-int isodigit(char c) {
-   if (c < '0') return 0;
-   if (c > '7') return 0;
-   return 1;
+int isodigit(char c)
+{
+    if (c < '0')
+        return 0;
+    if (c > '7')
+        return 0;
+    return 1;
 }

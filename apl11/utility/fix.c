@@ -5,10 +5,10 @@
 #include <math.h>
 #include "apl.h"
 
-int fix(data d) {
-   int i;
+int fix(data d)
+{
+    int i;
 
-   i = floor(d+0.5);
-   return(i);
+    i = floor(d + 0.5);
+    return (i);
 }
-

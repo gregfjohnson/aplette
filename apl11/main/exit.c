@@ -8,13 +8,15 @@
 #include <unistd.h>
 #include "apl.h"
 
-void Exit(int s) {
+void Exit(int s)
+{
 
-   int j;
+    int j;
 
-   for(j=3; j<NFDS; j++) close(j);
-   unlink(WSFILE);                  /* Unlink temporaries */
-   unlink(scr_file);
-   normalExit = 1;                  /* Set this flag for atexit() */
-   exit(s);                         /* And we're outa here */
+    for (j = 3; j < NFDS; j++)
+        close(j);
+    unlink(WSFILE); /* Unlink temporaries */
+    unlink(scr_file);
+    normalExit = 1; /* Set this flag for atexit() */
+    exit(s); /* And we're outa here */
 }

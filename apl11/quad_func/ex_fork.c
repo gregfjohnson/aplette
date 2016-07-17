@@ -8,11 +8,13 @@
 #include "data.h"
 #include "utility.h"
 
-void ex_fork() {
-   int pid;
+void ex_fork()
+{
+    int pid;
 
-   SECURITY_CHECK;
-   if ((pid = fork()) == -1) error(ERR,"could not fork");
-   pop();
-   iodone(pid);
+    SECURITY_CHECK;
+    if ((pid = fork()) == -1)
+        error(ERR, "could not fork");
+    pop();
+    iodone(pid);
 }

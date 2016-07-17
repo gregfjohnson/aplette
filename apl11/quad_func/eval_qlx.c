@@ -13,17 +13,19 @@
  * check for latent expr quad LX and evaluate it if found
  */
 
-void eval_qlx() {
-   SymTabEntry *n;
-   struct item *p;
+void eval_qlx()
+{
+    SymTabEntry* n;
+    struct item* p;
 
-   if((n=nlook(S_QUAD "lx")) && n->itemp->type == CH && n->itemp->size){
-      *sp++ = dupdat(n->itemp);
-      sandbox=1;
-      ex_execute();
-      sandbox=sandboxflg;
-      p = sp[-1];
-      if(p->type != EL && p->type != NIL) ex_print();
-      pop();
-   }
+    if ((n = nlook(S_QUAD "lx")) && n->itemp->type == CH && n->itemp->size) {
+        *sp++ = dupdat(n->itemp);
+        sandbox = 1;
+        ex_execute();
+        sandbox = sandboxflg;
+        p = sp[-1];
+        if (p->type != EL && p->type != NIL)
+            ex_print();
+        pop();
+    }
 }

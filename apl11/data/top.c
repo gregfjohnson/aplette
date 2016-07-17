@@ -8,14 +8,15 @@
 
 double top()
 {
-   struct item *p;
-   double d;
+    struct item* p;
+    double d;
 
-   p = fetch1();
-   if (p->type != DA ) error(ERR_implicit,"topval - bad data type");
-   if (p->size != 1) error(ERR_implicit,"topval - size is not 1");
-   d = p->datap[0];
-   pop();
-   return d;
+    p = fetch1();
+    if (p->type != DA)
+        error(ERR_implicit, "topval - bad data type");
+    if (p->size != 1)
+        error(ERR_implicit, "topval - size is not 1");
+    d = p->datap[0];
+    pop();
+    return d;
 }
-

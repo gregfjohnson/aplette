@@ -9,94 +9,101 @@
 #include "data.h"
 
 void red0(int k);
-void red1(data *dp, struct item *result, data (*f)(data, data));
+void red1(data* dp, struct item* result, data (*f)(data, data));
 
-void ex_red0() {
-   fetch1();
-   red0(0);
+void ex_red0()
+{
+    fetch1();
+    red0(0);
 }
 
-void ex_red() {
-   struct item *p;
+void ex_red()
+{
+    struct item* p;
 
-   p = fetch1();
-   red0(p->rank-1);
+    p = fetch1();
+    red0(p->rank - 1);
 }
 
-void ex_redk() {
-   int i;
+void ex_redk()
+{
+    int i;
 
-   i = topfix() - iorigin;
-   fetch1();
-   red0(i);
+    i = topfix() - iorigin;
+    fetch1();
+    red0(i);
 }
 
-void red0(int k) {
-   struct item *p, *q;
+void red0(int k)
+{
+    struct item *p, *q;
     data (*fn)(data, data);
 
-   p = fetch1();
+    p = fetch1();
 
-   if(p->type != DA)
-    error(ERR_domain,"not numeric data");
-   bidx(p);
-   if (p->rank) colapse(k);
-   else idx.dimk = idx.delk = 1;  /* (handcraft for scalars) */
-   if(idx.dimk == 0) {
-/*
+    if (p->type != DA)
+        error(ERR_domain, "not numeric data");
+    bidx(p);
+    if (p->rank)
+        colapse(k);
+    else
+        idx.dimk = idx.delk = 1; /* (handcraft for scalars) */
+    if (idx.dimk == 0) {
+        /*
  *  reduction identities - ets/jrl 5/76
  */
-      q = newdat(DA,0,1);
-      q->dim[0] = 1;
-      switch(*gsip->ptr++) {
-         case ADD:
-         case SUB:
-         case OR:
-         q->datap[0] = 0;
-         break;
+        q = newdat(DA, 0, 1);
+        q->dim[0] = 1;
+        switch (*gsip->ptr++) {
+        case ADD:
+        case SUB:
+        case OR:
+            q->datap[0] = 0;
+            break;
 
-         case AND:
-         case MUL:
-         case DIV:
-         q->datap[0] = 1;
-         break;
+        case AND:
+        case MUL:
+        case DIV:
+            q->datap[0] = 1;
+            break;
 
-         case MIN:
-         q->datap[0] = MAXdata;
-         break;
+        case MIN:
+            q->datap[0] = MAXdata;
+            break;
 
-         case MAX:
-         q->datap[0] = MINdata;
-         break;
+        case MAX:
+            q->datap[0] = MINdata;
+            break;
 
-         default:
-         error(ERR_implicit,"cannot reduce using this function");
-      }
-      pop();
-      *sp++ = q;
-      return;
-   }
-    fn = (data (*)(data, data)) exop[*gsip->ptr++];
+        default:
+            error(ERR_implicit, "cannot reduce using this function");
+        }
+        pop();
+        *sp++ = q;
+        return;
+    }
+    fn = (data (*)(data, data))exop[*gsip->ptr++];
 
     q = newdat(idx.type, idx.rank, idx.size);
-    copy(IN, (char *) idx.dim, (char *) q->dim, idx.rank);
+    copy(IN, (char*)idx.dim, (char*)q->dim, idx.rank);
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {
         red1(p->datap, q, fn);
     }
 
-   pop();
-   *sp++ = q;
+    pop();
+    *sp++ = q;
 }
 
-void red1(data *dp, struct item *result, data (*f)(data, data)) {
+void red1(data* dp, struct item* result, data (*f)(data, data))
+{
     register int i;
     data d;
 
-    dp += access() + (idx.dimk-1) * idx.delk;
+    dp += access() + (idx.dimk - 1) * idx.delk;
     d = *dp;
-    for(i=1; i<idx.dimk; i++) {
+    for (i = 1; i < idx.dimk; i++) {
         dp -= idx.delk;
         d = (*f)(*dp, d);
     }

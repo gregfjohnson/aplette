@@ -15,24 +15,26 @@
 #include "format.h"
 #include "local_print.h"
 
-int print() {
-   struct item *p;
+int print()
+{
+    struct item* p;
 
-   p = fetch1();
-   if(p->type == NIL) return(0);
-   if(p->size == 0) return(1);
-   switch (p->type) {
-   case DA:
-      fp_print(p);
-   break;
+    p = fetch1();
+    if (p->type == NIL)
+        return (0);
+    if (p->size == 0)
+        return (1);
+    switch (p->type) {
+    case DA:
+        fp_print(p);
+        break;
 
-   case CH:
-      lt_print(p);
-   break;
+    case CH:
+        lt_print(p);
+        break;
 
-   default:
-      error(ERR_botch,"attempt to print unsupported type");
-   }
-   return(1);
+    default:
+        error(ERR_botch, "attempt to print unsupported type");
+    }
+    return (1);
 }
-

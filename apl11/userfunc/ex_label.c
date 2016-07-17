@@ -13,11 +13,12 @@
  *   (where CONST is the label address)
  */
 
-void ex_label() {
-   SymTabEntry *n;
+void ex_label()
+{
+    SymTabEntry* n;
 
-   ex_asgn();
-   n = (SymTabEntry *)sp[-1];
-   n->itemp->type = LBL;         /* lock out assignments */
-   sp--;                     /* discard stack */
+    ex_asgn();
+    n = (SymTabEntry*)sp[-1];
+    n->itemp->type = LBL; /* lock out assignments */
+    sp--; /* discard stack */
 }

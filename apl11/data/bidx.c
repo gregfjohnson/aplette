@@ -5,13 +5,13 @@
 #include "apl.h"
 #include "data.h"
 
-void bidx(struct item *ip) {
-   struct item *p;
+void bidx(struct item* ip)
+{
+    struct item* p;
 
-   p = ip;
-   idx.type = p->type;
-   idx.rank = p->rank;
-   copy(IN, (char *) p->dim, (char *) idx.dim, idx.rank);
-   size();
+    p = ip;
+    idx.type = p->type;
+    idx.rank = p->rank;
+    copy(IN, (char*)p->dim, (char*)idx.dim, idx.rank);
+    size();
 }
-

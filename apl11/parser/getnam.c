@@ -10,62 +10,68 @@
 #include "userfunc.h"
 #include "y.tab.h"
 
-extern	struct COMM comtab[];
+extern struct COMM comtab[];
 #define lv yylval
 
-int getnam(char ic) {
-   char name[NAMS], *cp;
-   int c;
-   SymTabEntry *np;
+int getnam(char ic)
+{
+    char name[NAMS], *cp;
+    int c;
+    SymTabEntry* np;
 
-   c = ic;
-   cp = name;
-   do {
-      if(cp >= &name[NAMS]) error(ERR_length,"name too long");
-      *cp++ = c;
-      c = *iline++;
-   } while(alpha(c) || digit(c));
-   *cp++ = 0;
-   iline--;
-                           /*   commands  */
-   if(litflag == -1) {
-      litflag = -2;
-      for(c=0; comtab[c].ct_name; c++) {
-         if(equal(name, comtab[c].ct_name)) break;
-      }
-      immedcmd = lv.charval = comtab[c].ct_ylval;
-      return(comtab[c].ct_ytype);
-   }
-   for(np=symbolTable; np->namep; np++) {
-      if(equal(np->namep, name)) {
-         lv.charptr = (char *)np;
-         switch(np->use) {
-   
-         case NF:
-            if (context == lex2) sichk(np);
-            return(nfun);
+    c = ic;
+    cp = name;
+    do {
+        if (cp >= &name[NAMS])
+            error(ERR_length, "name too long");
+        *cp++ = c;
+        c = *iline++;
+    } while (alpha(c) || digit(c));
+    *cp++ = 0;
+    iline--;
+    /*   commands  */
+    if (litflag == -1) {
+        litflag = -2;
+        for (c = 0; comtab[c].ct_name; c++) {
+            if (equal(name, comtab[c].ct_name))
+                break;
+        }
+        immedcmd = lv.charval = comtab[c].ct_ylval;
+        return (comtab[c].ct_ytype);
+    }
+    for (np = symbolTable; np->namep; np++) {
+        if (equal(np->namep, name)) {
+            lv.charptr = (char*)np;
+            switch (np->use) {
 
-         case MF:
-            if (context == lex2) sichk(np);
-            return(mfun);
+            case NF:
+                if (context == lex2)
+                    sichk(np);
+                return (nfun);
 
-         case DF:
-            if (context == lex2) sichk(np);
-            return(dfun);
-         }
-         return(nam);
-      }
-   }
-   /* look for an unallocated line in symbolTable */
-   for(np=symbolTable; np->namep; np++) {
-      if(equal(np->namep, "#"))break;
-   }
+            case MF:
+                if (context == lex2)
+                    sichk(np);
+                return (mfun);
 
-   /* place the name in symbolTable */
-   np->namep = (char *) alloc(cp-name);
-   copy(CH, name, np->namep, cp-name);
-   np->type = LV;
-   lv.charptr = (char *)np;
-   return(nam);
+            case DF:
+                if (context == lex2)
+                    sichk(np);
+                return (dfun);
+            }
+            return (nam);
+        }
+    }
+    /* look for an unallocated line in symbolTable */
+    for (np = symbolTable; np->namep; np++) {
+        if (equal(np->namep, "#"))
+            break;
+    }
+
+    /* place the name in symbolTable */
+    np->namep = (char*)alloc(cp - name);
+    copy(CH, name, np->namep, cp - name);
+    np->type = LV;
+    lv.charptr = (char*)np;
+    return (nam);
 }
-

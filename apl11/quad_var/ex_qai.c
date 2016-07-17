@@ -17,24 +17,23 @@
 #include "apl.h"
 #include "utility.h"
 
-struct item * ex_qai(io)
-int io; /* 0 = source, 1 = sink */
+struct item* ex_qai(io) int io; /* 0 = source, 1 = sink */
 {
-   struct tms t;
-   struct item *p;
-   long tv;
+    struct tms t;
+    struct item* p;
+    long tv;
 
-   if (io==0) {
-      time(&tv);
-      times(&t);
-      p=newdat(DA,1,4);
-      p->datap[0] = (data) geteuid();
-      p->datap[1] = t.tms_utime + t.tms_cutime;
-      p->datap[3] = tv - startTime;
-      p->datap[2] = t.tms_stime + t.tms_cstime;
-      return(p);
-
-   } else {
-      error(ERR_implicit,"cannot change accounting info");
-   };
+    if (io == 0) {
+        time(&tv);
+        times(&t);
+        p = newdat(DA, 1, 4);
+        p->datap[0] = (data)geteuid();
+        p->datap[1] = t.tms_utime + t.tms_cutime;
+        p->datap[3] = tv - startTime;
+        p->datap[2] = t.tms_stime + t.tms_cstime;
+        return (p);
+    }
+    else {
+        error(ERR_implicit, "cannot change accounting info");
+    };
 }

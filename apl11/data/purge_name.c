@@ -13,9 +13,10 @@
 #include "apl.h"
 #include "memory.h"
 
-void purge_name(SymTabEntry *np) {
-   char *hash = "#";
+void purge_name(SymTabEntry* np)
+{
+    char* hash = "#";
 
-   aplfree((int *) np->namep);
-   np->namep=hash;
+    aplfree((int*)np->namep);
+    np->namep = hash;
 }

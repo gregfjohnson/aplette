@@ -12,18 +12,21 @@
 #include "parser.h"
 #include "work_space.h"
 
-void ex_fdef() {
-   struct item *p;
-   char *p2;
-   SymTabEntry *np;
-   char b[512];
-   int dim0, dim1;
+void ex_fdef()
+{
+    struct item* p;
+    char* p2;
+    SymTabEntry* np;
+    char b[512];
+    int dim0, dim1;
 
-   p = fetch1();
-   if( p->rank != 2 && p->rank != 1 ) error(ERR_rank,"");
-   if(p->type != CH) error(ERR_domain,"");
+    p = fetch1();
+    if (p->rank != 2 && p->rank != 1)
+        error(ERR_rank, "");
+    if (p->type != CH)
+        error(ERR_domain, "");
 
-   /* The following code has been commented out as a
+    /* The following code has been commented out as a
     * test of slight modifications to the compiler.
     * Before this change, it was impossible to use quad-FX
     * from inside an APL function, for it might damage
@@ -37,23 +40,24 @@ void ex_fdef() {
    if(gsip) error(ERR,"si damage -- type ')sic'");
     */
 
-   dim0 = p->dim[0];
-   dim1 = p->dim[1];
-   if(p->rank == 1) dim1 = dim0;
-   copy(CH, (char *) p->datap, (char *) b, dim1);
-   b[dim1] = '\n';
+    dim0 = p->dim[0];
+    dim1 = p->dim[1];
+    if (p->rank == 1)
+        dim1 = dim0;
+    copy(CH, (char*)p->datap, (char*)b, dim1);
+    b[dim1] = '\n';
 
-   p2 = compile_old(b, 2);
-   if(p2 != 0){
-      copy(IN, (char *) p2+1, (char *) &np, 1);
-      erase(np);
-      np->use = *p2;
-      aplfree((int *) p2);
-   
-      np->label = lseek(wfile, 0L, 2);
-      fappend(wfile, p);
-      writeErrorOnFailure(wfile,"",1);
-   }
-   pop();
-   *sp++ = newdat(DA, 1, 0);
+    p2 = compile_old(b, 2);
+    if (p2 != 0) {
+        copy(IN, (char*)p2 + 1, (char*)&np, 1);
+        erase(np);
+        np->use = *p2;
+        aplfree((int*)p2);
+
+        np->label = lseek(wfile, 0L, 2);
+        fappend(wfile, p);
+        writeErrorOnFailure(wfile, "", 1);
+    }
+    pop();
+    *sp++ = newdat(DA, 1, 0);
 }

@@ -14,51 +14,57 @@
 
 static char line[LINEMAX];
 
-char *readLine(char *title, char *xLine, int xLineLength, FILE *xInfile) {
-    char *status = NULL;
-    char *asciiLine;
+char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile)
+{
+    char* status = NULL;
+    char* asciiLine;
     int i, len;
 
-    if (xLineLength < 1) goto done;
+    if (xLineLength < 1)
+        goto done;
 
     if (ascii_characters) {
         status = fgets(line, LINEMAX, xInfile);
-        if (status == NULL) goto done;
+        if (status == NULL)
+            goto done;
 
         // did we read a whole line??
-        if (line[strlen(line)-1] != '\n') {
+        if (line[strlen(line) - 1] != '\n') {
             status = NULL;
             goto done;
         }
 
         asciiLine = to_ascii_input(line);
-        if (asciiLine == NULL) goto done;
+        if (asciiLine == NULL)
+            goto done;
 
         len = strlen(asciiLine);
-        if (len > xLineLength - 1) len = xLineLength - 1;
+        if (len > xLineLength - 1)
+            len = xLineLength - 1;
 
         for (i = 0; i < len; ++i) {
             xLine[i] = asciiLine[i];
         }
         xLine[i] = '\0';
 
-        aplfree((int *) asciiLine);
-
-    } else {
+        aplfree((int*)asciiLine);
+    }
+    else {
         status = fgets(xLine, xLineLength, xInfile);
 
         // did we read a whole line??
-        if (status != NULL && xLine[strlen(xLine)-1] != '\n') {
+        if (status != NULL && xLine[strlen(xLine) - 1] != '\n') {
             status = NULL;
             goto done;
         }
     }
 
-    done:
+done:
     if (code_trace) {
         if (status) {
             fprintf(stderr, "%s; input line:  %s\n", title, xLine);
-        } else {
+        }
+        else {
             fprintf(stderr, "%s; input line:  <no data read>\n", title);
         }
     }

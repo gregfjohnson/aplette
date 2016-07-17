@@ -7,41 +7,41 @@
 #include "utility.h"
 #include "memory.h"
 
-void pop() {
-   struct item *p;
+void pop()
+{
+    struct item* p;
 
-   if(sp <= stack) {
-      error(ERR_botch,"pop - stack underflow");
-   }
-   p=sp[-1];
-   if (p) {
-      switch(p->type) {
-      default:
-         printf("[bad type: %d]\n", p->type);
-         error(ERR_botch,"pop - unrecognised type");
-         break;
-         
-      case LBL:
-         ((SymTabEntry *)p)->use = 0;     /* delete label */
+    if (sp <= stack) {
+        error(ERR_botch, "pop - stack underflow");
+    }
+    p = sp[-1];
+    if (p) {
+        switch (p->type) {
+        default:
+            printf("[bad type: %d]\n", p->type);
+            error(ERR_botch, "pop - unrecognised type");
+            break;
 
-      case LV:
-         break;
+        case LBL:
+            ((SymTabEntry*)p)->use = 0; /* delete label */
 
-      case DA:
-      case CH:
-         aplfree((int *) p->datap);
-         aplfree((int *) p);
-         break;
+        case LV:
+            break;
 
-      case QQ:
-      case QD:
-      case EL:
-      case NIL:
-      case QX:
-      case QV:
-         aplfree((int *) p);
-      }
-   }
-   sp--;
+        case DA:
+        case CH:
+            aplfree((int*)p->datap);
+            aplfree((int*)p);
+            break;
+
+        case QQ:
+        case QD:
+        case EL:
+        case NIL:
+        case QX:
+        case QV:
+            aplfree((int*)p);
+        }
+    }
+    sp--;
 }
-

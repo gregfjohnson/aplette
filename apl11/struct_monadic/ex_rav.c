@@ -8,9 +8,10 @@
 #include "utility.h"
 
 static void rav0(int k);
-static void rav1(struct item *p, struct item *dest);
+static void rav1(struct item* p, struct item* dest);
 
-void ex_rav() {
+void ex_rav()
+{
     struct item *p, *r;
 
     p = fetch1();
@@ -21,10 +22,11 @@ void ex_rav() {
         *sp++ = r;
         return;
     }
-    rav0(p->rank-1);
+    rav0(p->rank - 1);
 }
 
-void ex_ravk() {
+void ex_ravk()
+{
     int i;
 
     i = topfix() - iorigin;
@@ -32,7 +34,8 @@ void ex_ravk() {
     rav0(i);
 }
 
-static void rav0(int k) {
+static void rav0(int k)
+{
     struct item *p, *r;
 
     p = sp[-1];
@@ -49,14 +52,14 @@ static void rav0(int k) {
     *sp++ = r;
 }
 
-static void rav1(struct item *p, struct item *dest) {
+static void rav1(struct item* p, struct item* dest)
+{
     int i, n;
 
     n = access();
-    for(i = 0; i < idx.dimk; i++) {
+    for (i = 0; i < idx.dimk; i++) {
         p->index = n;
         putdat(dest, getdat(p));
         n += idx.delk;
     }
 }
-

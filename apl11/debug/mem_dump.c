@@ -14,17 +14,18 @@
 #include "memory.h"
 #include "apl.h"
 
-void mem_dump() {
-   struct memblock *item;
-   printf("Dumping dynamic memory... \n");
-   printf("firstblock, points to %x \n", (uintptr_t) firstblock );
+void mem_dump()
+{
+    struct memblock* item;
+    printf("Dumping dynamic memory... \n");
+    printf("firstblock, points to %x \n", (uintptr_t)firstblock);
 
-   if (firstblock == 0) {
-      printf("no dynamic memory\n");
-      return;
-   }
-   for (item=firstblock; item; item=item->next) {
-      printf("%x points to %d bytes at %x \n", 
-              (uintptr_t) item,     item->nbytes, (uintptr_t) item->block);
-   }
+    if (firstblock == 0) {
+        printf("no dynamic memory\n");
+        return;
+    }
+    for (item = firstblock; item; item = item->next) {
+        printf("%x points to %d bytes at %x \n",
+            (uintptr_t)item, item->nbytes, (uintptr_t)item->block);
+    }
 }

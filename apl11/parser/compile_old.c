@@ -19,36 +19,38 @@
  *   4 function epilog
  *   5 function body
  */
-extern int     ilex[];
+extern int ilex[];
 
-char *compile_old(char *s, int f) {
-   char *p, *q;
-   int i;
+char* compile_old(char* s, int f)
+{
+    char *p, *q;
+    int i;
 
-   iline = s;
-   ccharp = oline;
-   litflag = 0;
-   nlexsym = ilex[f];
-   context = nlexsym;
+    iline = s;
+    ccharp = oline;
+    litflag = 0;
+    nlexsym = ilex[f];
+    context = nlexsym;
 
-   if (code_trace) fprintf(stderr, "\n\nabout to yyparse.. iline:  %s\n\n", iline);
+    if (code_trace)
+        fprintf(stderr, "\n\nabout to yyparse.. iline:  %s\n\n", iline);
 
-   if(yyparse()) {
-      pline(s, iline-s, lineNumber);	//print line and error pointer
-      return(0);
-   }
-   *ccharp++ = END;
+    if (yyparse()) {
+        pline(s, iline - s, lineNumber); //print line and error pointer
+        return (0);
+    }
+    *ccharp++ = END;
 
-   parseDump(oline, ccharp-oline);
+    parseDump(oline, ccharp - oline);
 
-   iline = (char *) alloc(ccharp-oline);
+    iline = (char*)alloc(ccharp - oline);
 
-   // p = iline;
-   // for(q = oline; q < ccharp; ++q) *p++ = *q;
+    // p = iline;
+    // for(q = oline; q < ccharp; ++q) *p++ = *q;
 
-   for (i = 0; i < ccharp - oline; ++i) {
-       iline[i] = oline[i];
-   }
+    for (i = 0; i < ccharp - oline; ++i) {
+        iline[i] = oline[i];
+    }
 
-   return(iline);
+    return (iline);
 }

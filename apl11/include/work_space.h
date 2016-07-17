@@ -13,7 +13,7 @@ void wsload(int ffile);
 void wssave(int ffile);
 void clear();
 
-void readErrorOnFailure(int fd, void *buf, size_t count);
-void writeErrorOnFailure(int fd, void *buf, size_t count);
+void readErrorOnFailure(int fd, void* buf, size_t count);
+void writeErrorOnFailure(int fd, void* buf, size_t count);
 
 #endif

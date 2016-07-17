@@ -9,20 +9,21 @@
 #include "data.h"
 #include "utility.h"
 
-void ex_wait() {
-   struct item *p;
-   void (*sig)(int);
-   pid_t pid;
-   int s;
+void ex_wait()
+{
+    struct item* p;
+    void (*sig)(int);
+    pid_t pid;
+    int s;
 
-   SECURITY_CHECK;
-   sig = signal(SIGINT, SIG_IGN);
-   pid = wait(&s);
-   signal(SIGINT, sig);
-   p = newdat(DA, 1, 3);
-   p->datap[0] = pid;
-   p->datap[1] = s&0377;
-   p->datap[2] = (s>>8)&0377;
-   pop();      /* dummy arg */
-   *sp++ = p;
+    SECURITY_CHECK;
+    sig = signal(SIGINT, SIG_IGN);
+    pid = wait(&s);
+    signal(SIGINT, sig);
+    p = newdat(DA, 1, 3);
+    p->datap[0] = pid;
+    p->datap[1] = s & 0377;
+    p->datap[2] = (s >> 8) & 0377;
+    pop(); /* dummy arg */
+    *sp++ = p;
 }

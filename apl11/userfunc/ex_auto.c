@@ -7,12 +7,13 @@
 #include "data.h"
 #include "utility.h"
 
-void ex_auto() {
-   SymTabEntry *np;
+void ex_auto()
+{
+    SymTabEntry* np;
 
-   gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
-   checksp();
-   *sp++ = np->itemp;
-   np->itemp = 0;
-   np->use = 0;
+    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
+    checksp();
+    *sp++ = np->itemp;
+    np->itemp = 0;
+    np->use = 0;
 }

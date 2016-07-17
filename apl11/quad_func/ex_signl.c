@@ -7,10 +7,11 @@
 #include "apl.h"
 #include "utility.h"
 
-void ex_signl() {
-   int i,j;
+void ex_signl()
+{
+    int i, j;
 
-   i = topfix();
-   j = topfix() != 0;
-   iodone(signal(i, (void (*)(int))j) == SIG_ERR ? -1 : 0);
+    i = topfix();
+    j = topfix() != 0;
+    iodone(signal(i, (void (*)(int))j) == SIG_ERR ? -1 : 0);
 }

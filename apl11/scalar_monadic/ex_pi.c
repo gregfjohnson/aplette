@@ -2,14 +2,13 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+
 #include "apl.h"
 
 data
-ex_pi(d)
-data d;
+    ex_pi(d)
+        data d;
 {
-   d = pi * d;
-   return(d);
+    d = pi * d;
+    return (d);
 }
-

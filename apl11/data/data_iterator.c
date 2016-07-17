@@ -8,12 +8,13 @@
  */
 #include "data.h"
 
-void indexIterateInit(DataIterator *iter) {
+void indexIterateInit(DataIterator* iter)
+{
     int i;
     if (iter->size == 0) {
         iter->complete = true;
-
-    } else {
+    }
+    else {
         iter->complete = false;
 
         if (iter->rank > 0) {
@@ -25,25 +26,27 @@ void indexIterateInit(DataIterator *iter) {
     }
 }
 
-bool indexIterate(DataIterator *iter) {
+bool indexIterate(DataIterator* iter)
+{
     int i;
     bool result;
-    if (iter->complete) return false;
+    if (iter->complete)
+        return false;
 
     if (iter->rank == 0) {
-        result = true;                  // process scalar once
-        iter->complete = true;          // for next time through..
+        result = true; // process scalar once
+        iter->complete = true; // for next time through..
+    }
+    else {
+        iter->complete = true; // unless proven otherwise..
 
-    } else {
-        iter->complete = true;          // unless proven otherwise..
-
-        for (i = iter->rank-1; i >= 0; --i) {
+        for (i = iter->rank - 1; i >= 0; --i) {
             if (iter->idx[i] < iter->dim[i] - 1) {
                 ++iter->idx[i];
                 iter->complete = false;
                 break;
-
-            } else {
+            }
+            else {
                 iter->idx[i] = 0;
             }
         }
@@ -56,7 +59,8 @@ bool indexIterate(DataIterator *iter) {
 #ifdef UNIT_TEST
 #include <stdio.h>
 
-void prt(char *title, DataIterator *iter) {
+void prt(char* title, DataIterator* iter)
+{
     fprintf(stderr, "%s (done %d):  ", title, iter->complete);
     for (int i = 0; i < iter->rank; ++i) {
         fprintf(stderr, "%4d", iter->idx[i]);
@@ -64,10 +68,11 @@ void prt(char *title, DataIterator *iter) {
     fprintf(stderr, "\n");
 }
 
-static void testScalar() {
+static void testScalar()
+{
     DataIterator iter;
-    iter.rank   = 0;
-    iter.size   = 1;
+    iter.rank = 0;
+    iter.size = 1;
 
     indexIterateInit(&iter);
     while (indexIterate(&iter)) {
@@ -75,11 +80,12 @@ static void testScalar() {
     }
 }
 
-static void testVectorWithOneElement() {
+static void testVectorWithOneElement()
+{
     DataIterator iter;
-    iter.rank   = 1;
+    iter.rank = 1;
     iter.dim[0] = 1;
-    iter.size   = 1;
+    iter.size = 1;
 
     indexIterateInit(&iter);
     while (indexIterate(&iter)) {
@@ -87,11 +93,12 @@ static void testVectorWithOneElement() {
     }
 }
 
-static void testVectorWithMultipleElements() {
+static void testVectorWithMultipleElements()
+{
     DataIterator iter;
-    iter.rank   = 1;
+    iter.rank = 1;
     iter.dim[0] = 3;
-    iter.size   = 3;
+    iter.size = 3;
 
     indexIterateInit(&iter);
     while (indexIterate(&iter)) {
@@ -99,13 +106,14 @@ static void testVectorWithMultipleElements() {
     }
 }
 
-static void testThreeDimensionalArrayWithOneElement() {
+static void testThreeDimensionalArrayWithOneElement()
+{
     DataIterator iter;
-    iter.rank   = 3;
+    iter.rank = 3;
     iter.dim[0] = 1;
     iter.dim[1] = 1;
     iter.dim[2] = 1;
-    iter.size   = 1;
+    iter.size = 1;
 
     indexIterateInit(&iter);
     while (indexIterate(&iter)) {
@@ -113,13 +121,14 @@ static void testThreeDimensionalArrayWithOneElement() {
     }
 }
 
-static void testThreeDimensionalArray() {
+static void testThreeDimensionalArray()
+{
     DataIterator iter;
-    iter.rank   =  3;
-    iter.dim[0] =  2;
-    iter.dim[1] =  3;
-    iter.dim[2] =  4;
-    iter.size   = 24;
+    iter.rank = 3;
+    iter.dim[0] = 2;
+    iter.dim[1] = 3;
+    iter.dim[2] = 4;
+    iter.size = 24;
 
     indexIterateInit(&iter);
     while (indexIterate(&iter)) {
@@ -127,7 +136,8 @@ static void testThreeDimensionalArray() {
     }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv)
+{
     testScalar();
     testVectorWithOneElement();
     testVectorWithMultipleElements();

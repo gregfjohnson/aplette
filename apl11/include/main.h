@@ -11,6 +11,6 @@
 
 void mainloop();
 void Exit(int s);
-char *to_ascii_input(char *input);
+char* to_ascii_input(char* input);
 
 #endif

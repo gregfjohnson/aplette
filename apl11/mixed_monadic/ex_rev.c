@@ -9,32 +9,37 @@
 
 void revk(int k);
 
-void ex_rev0() {
-   fetch1();
-   revk(0);
+void ex_rev0()
+{
+    fetch1();
+    revk(0);
 }
 
-void ex_revk() {
-   int k;
+void ex_revk()
+{
+    int k;
 
-   k = topfix() - iorigin;
-   fetch1();
-   revk(k);
+    k = topfix() - iorigin;
+    fetch1();
+    revk(k);
 }
 
-void ex_rev() {
-   struct item *p;
+void ex_rev()
+{
+    struct item* p;
 
-   p = fetch1();
-   revk(p->rank-1);
+    p = fetch1();
+    revk(p->rank - 1);
 }
 
-void revk(int k) {
-   int o;
+void revk(int k)
+{
+    int o;
 
-   bidx(sp[-1]);
-   if(k < 0 || k >= idx.rank) error(ERR_index,"");
-   o = idx.del[k] * (idx.dim[k]-1);
-   idx.del[k] = -idx.del[k];
-   map(o);
+    bidx(sp[-1]);
+    if (k < 0 || k >= idx.rank)
+        error(ERR_index, "");
+    o = idx.del[k] * (idx.dim[k] - 1);
+    idx.del[k] = -idx.del[k];
+    map(o);
 }

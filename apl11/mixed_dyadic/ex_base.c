@@ -9,40 +9,41 @@
 #include "opt_codes.h"
 #include "oper_dyadic.h"
 
-char base_com[] = {ADD, MUL};
+char base_com[] = { ADD, MUL };
 
 void ex_base()
 {
-   struct item *extend();
-   struct item *p, *q;
-   int i;
-   char *savptr;
-   data d1, d2;
+    struct item* extend();
+    struct item *p, *q;
+    int i;
+    char* savptr;
+    data d1, d2;
 
-   p = fetch2();
-   q = sp[-2];
-   if(p->type != DA || q->type != DA) 
-      error(ERR_domain,"base - incorrect types");
-   if(p->rank > 1 ) 
-      error(ERR_rank,"base - cannot handle left-arg-rank > 1");
-   if(scalar(p)){
-      if(q->rank > 0) i = q->dim[0];
-      else i = q->size;
-      q = extend(DA, i, p->datap[0]);
-      pop();
-      *sp++ = p = q;
-      q = sp[-2];
-   }
-   d1 = p->datap[p->size-1];
-   p->datap[p->size-1] = 1.0;
-   for(i=p->size-2; i>= 0; i--){
-      d2 = p->datap[i];
-      p->datap[i] = d1;
-      d1 *= d2;
-   }
-   savptr = gsip->ptr;
-   gsip->ptr = base_com;
-   ex_iprod();
-   gsip->ptr = savptr;
+    p = fetch2();
+    q = sp[-2];
+    if (p->type != DA || q->type != DA)
+        error(ERR_domain, "base - incorrect types");
+    if (p->rank > 1)
+        error(ERR_rank, "base - cannot handle left-arg-rank > 1");
+    if (scalar(p)) {
+        if (q->rank > 0)
+            i = q->dim[0];
+        else
+            i = q->size;
+        q = extend(DA, i, p->datap[0]);
+        pop();
+        *sp++ = p = q;
+        q = sp[-2];
+    }
+    d1 = p->datap[p->size - 1];
+    p->datap[p->size - 1] = 1.0;
+    for (i = p->size - 2; i >= 0; i--) {
+        d2 = p->datap[i];
+        p->datap[i] = d1;
+        d1 *= d2;
+    }
+    savptr = gsip->ptr;
+    gsip->ptr = base_com;
+    ex_iprod();
+    gsip->ptr = savptr;
 }
-

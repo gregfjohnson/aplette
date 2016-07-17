@@ -11,7 +11,8 @@
  * onto the stack
  */
 
-void ex_nilret() {
-   checksp();
-   *sp++ = newdat(NIL,0,0);
+void ex_nilret()
+{
+    checksp();
+    *sp++ = newdat(NIL, 0, 0);
 }

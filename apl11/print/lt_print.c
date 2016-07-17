@@ -15,39 +15,40 @@
 #include "data.h"
 
 /* Print literals */
-int lt_print(struct item *p) {
-   int i, j;
+int lt_print(struct item* p)
+{
+    int i, j;
 
-   bidx(p);
+    bidx(p);
 
-   for(i=1; i<p->size; i++) {
-      if(intflg) break;
-      j = getdat(p);
-      putchar(j);
-      column++;
-      if ( column >= pagewidth ) {
-         putchar('\n');
-         column=0;
-      }
+    for (i = 1; i < p->size; i++) {
+        if (intflg)
+            break;
+        j = getdat(p);
+        putchar(j);
+        column++;
+        if (column >= pagewidth) {
+            putchar('\n');
+            column = 0;
+        }
 
-      /* has end of dimension been reached? */
-      if (i != p->size ) {
-	 for(j=p->rank-2; j>=0; j--) {
-            if(i%idx.del[j] == 0) {
-               putchar('\n');
-               column=0;
+        /* has end of dimension been reached? */
+        if (i != p->size) {
+            for (j = p->rank - 2; j >= 0; j--) {
+                if (i % idx.del[j] == 0) {
+                    putchar('\n');
+                    column = 0;
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
-   j = getdat(p);
-   putchar(j);
-   column++;
-   if ( column >= pagewidth ) {
-      putchar('\n');
-      column=0;
-   }
-   return(1);
+    j = getdat(p);
+    putchar(j);
+    column++;
+    if (column >= pagewidth) {
+        putchar('\n');
+        column = 0;
+    }
+    return (1);
 }
-

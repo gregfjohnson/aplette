@@ -17,25 +17,29 @@
 #include "data.h"
 #include "utility.h"
 
-struct item * ex_qio(io)
-int io; /* 0 = source, 1 = sink */
+struct item* ex_qio(io) int io; /* 0 = source, 1 = sink */
 {
-struct item *p;
-int i;	
+    struct item* p;
+    int i;
 
-   if ( io == 0 ) { 
-      p = newdat(DA, 0, 1);
-      p->datap[0] = iorigin;
-      return(p);
-   } else {
-      pop();
-      p = fetch1();
-      if(p->type != DA ) error(ERR_domain,"assign value not numeric");
-      if(p->rank != 0 ) error(ERR_rank,"assign value not scalar");
-      i=fix(p->datap[0]);
-      if(i==0||i==1) iorigin=(data)i;
-      else error(ERR_domain, "assign value not 0 or 1" );   
-      sp[-1] = (struct item *)p;
-      return(0);
-   };
+    if (io == 0) {
+        p = newdat(DA, 0, 1);
+        p->datap[0] = iorigin;
+        return (p);
+    }
+    else {
+        pop();
+        p = fetch1();
+        if (p->type != DA)
+            error(ERR_domain, "assign value not numeric");
+        if (p->rank != 0)
+            error(ERR_rank, "assign value not scalar");
+        i = fix(p->datap[0]);
+        if (i == 0 || i == 1)
+            iorigin = (data)i;
+        else
+            error(ERR_domain, "assign value not 0 or 1");
+        sp[-1] = (struct item*)p;
+        return (0);
+    };
 }

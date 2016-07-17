@@ -5,17 +5,16 @@
 #include "apl.h"
 #include "data.h"
 
-struct item *
-dupdat(ap)
-struct item *ap;
+struct item*
+    dupdat(ap) struct item* ap;
 {
-   struct item *p1, *p2;
-   int i;
+    struct item *p1, *p2;
+    int i;
 
-   p1 = ap;
-   p2 = newdat(p1->type, p1->rank, p1->size);
-   for(i=0; i<p1->rank; i++) p2->dim[i] = p1->dim[i];
-   copy(p1->type, (char *) p1->datap, (char *) p2->datap, p1->size);
-   return(p2);
+    p1 = ap;
+    p2 = newdat(p1->type, p1->rank, p1->size);
+    for (i = 0; i < p1->rank; i++)
+        p2->dim[i] = p1->dim[i];
+    copy(p1->type, (char*)p1->datap, (char*)p2->datap, p1->size);
+    return (p2);
 }
-

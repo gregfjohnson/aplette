@@ -19,53 +19,55 @@
  * top two stack entries respectively. - bb
  */
 
-struct item * fetch1()
+struct item* fetch1()
 {
-   struct item *p;
+    struct item* p;
 
-   p = fetch(sp[-1]);
-   sp[-1] = p;
-   return(p);
+    p = fetch(sp[-1]);
+    sp[-1] = p;
+    return (p);
 }
 
-struct item * fetch2()
+struct item* fetch2()
 {
-   struct item *p;
+    struct item* p;
 
-   sp[-2] = fetch(sp[-2]);
-   p = fetch(sp[-1]);
-   sp[-1] = p;
-   return(p);
+    sp[-2] = fetch(sp[-2]);
+    p = fetch(sp[-1]);
+    sp[-1] = p;
+    return (p);
 }
 
-struct item * fetch(struct item *ip) {
-   struct item *p, *q;
-   int i;
-   extern int prolgerr;
+struct item* fetch(struct item* ip)
+{
+    struct item *p, *q;
+    int i;
+    extern int prolgerr;
 
-   p = ip;
+    p = ip;
 
 loop:
-   switch(p->type) {
+    switch (p->type) {
 
-   case NIL:
-      if(lastop != PRINT) error(ERR_value,"right value is NIL");
-      return(p);
+    case NIL:
+        if (lastop != PRINT)
+            error(ERR_value, "right value is NIL");
+        return (p);
 
-   case QV:	/* Quad Variables */
-      i=p->index; /* get the pointer to applicable quad service routine */
-      aplfree((int *) p);
-      p=(struct item *)(*exop[i])(0);	/* call the service routine */
-      goto loop;
+    case QV: /* Quad Variables */
+        i = p->index; /* get the pointer to applicable quad service routine */
+        aplfree((int*)p);
+        p = (struct item*)(*exop[i])(0); /* call the service routine */
+        goto loop;
 
-   case DA:	/* DAta type */
-   case CH:	/* CHaracter type */
-      p->index = 0;
-      return(p);
+    case DA: /* DAta type */
+    case CH: /* CHaracter type */
+        p->index = 0;
+        return (p);
 
-   case LV:
+    case LV:
 
-      /* KLUDGE --
+        /* KLUDGE --
        *
        * Currently, if something prevents APL from completing
        * execution of line 0 of a function, it leaves with
@@ -81,25 +83,25 @@ loop:
        * AFTER all header processing has been completed.
        */
 
-      if(((SymTabEntry *)p)->use != DA){
-         if ((gsip->Mode != deffun) || gsip->funlc != 1)
-            error(ERR_value,"undefined variable");
-         q = newdat(DA, 0, 1);      /* Dummy */
-         q->datap[0] = 0;
-         prolgerr = 1;            /* ERROR flag */
-         return(q);
-      }
-      p = ((SymTabEntry *)p)->itemp;
-      i = p->type;
-      if(i == LBL) i = DA;         /* treat label as data */
-      q = newdat(i, p->rank, p->size);
-      copy(IN, (char *) p->dim, (char *) q->dim, p->rank);
-      copy(i, (char *) p->datap, (char *) q->datap, p->size);
-      return(q);
+        if (((SymTabEntry*)p)->use != DA) {
+            if ((gsip->Mode != deffun) || gsip->funlc != 1)
+                error(ERR_value, "undefined variable");
+            q = newdat(DA, 0, 1); /* Dummy */
+            q->datap[0] = 0;
+            prolgerr = 1; /* ERROR flag */
+            return (q);
+        }
+        p = ((SymTabEntry*)p)->itemp;
+        i = p->type;
+        if (i == LBL)
+            i = DA; /* treat label as data */
+        q = newdat(i, p->rank, p->size);
+        copy(IN, (char*)p->dim, (char*)q->dim, p->rank);
+        copy(i, (char*)p->datap, (char*)q->datap, p->size);
+        return (q);
 
-   default:
-      error(ERR_botch,"fetch");
-   }
-   return NULL; // never reached because of default above..
+    default:
+        error(ERR_botch, "fetch");
+    }
+    return NULL; // never reached because of default above..
 }
-

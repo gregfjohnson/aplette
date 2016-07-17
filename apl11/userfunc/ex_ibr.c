@@ -14,21 +14,23 @@
  * monadic immediate branch -- resume fn at specific line
  */
 
-void ex_ibr() {
-   struct Context *thisContext;
+void ex_ibr()
+{
+    struct Context* thisContext;
 
-   if( gsip == &prime_context || gsip->prev->suspended == 0) {
-      error(ERR_implicit,"no suspended fn");
-   }
+    if (gsip == &prime_context || gsip->prev->suspended == 0) {
+        error(ERR_implicit, "no suspended fn");
+    }
 
-   /* throw away current context */
-   thisContext=gsip;
-   gsip=gsip->prev;
-   aplfree((int *) thisContext);
+    /* throw away current context */
+    thisContext = gsip;
+    gsip = gsip->prev;
+    aplfree((int*)thisContext);
 
-   ex_br();
-   if(gsip->sp == 0 || sp < gsip->sp) 
-      error(ERR_botch,"stack pointer problem");
-   while(sp > gsip->sp) pop();
-   longjmp(gsip->env, 0);         /* warp out */
+    ex_br();
+    if (gsip->sp == 0 || sp < gsip->sp)
+        error(ERR_botch, "stack pointer problem");
+    while (sp > gsip->sp)
+        pop();
+    longjmp(gsip->env, 0); /* warp out */
 }

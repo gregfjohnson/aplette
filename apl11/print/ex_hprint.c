@@ -6,7 +6,8 @@
 #include "data.h"
 #include "local_print.h"
 
-void ex_hprint() {
-   print();
-   pop();
+void ex_hprint()
+{
+    print();
+    pop();
 }

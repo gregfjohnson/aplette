@@ -8,13 +8,12 @@
 
 void afreset()
 {
-   struct memblock *item, *next_item;
+    struct memblock *item, *next_item;
 
-   for (item=firstblock; item; item=next_item) {
-      next_item=item->next;
-      free(item->block);
-      free(item);
-   }
-   firstblock = 0;
+    for (item = firstblock; item; item = next_item) {
+        next_item = item->next;
+        free(item->block);
+        free(item);
+    }
+    firstblock = 0;
 }
-

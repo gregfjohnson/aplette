@@ -6,46 +6,49 @@
 #include "apl.h"
 #include "opt_codes.h"
 
-int lastCode(char *s) {
-   int code, j, last;
+int lastCode(char* s)
+{
+    int code, j, last;
 
-   code = 0;
-   last = 0;
+    code = 0;
+    last = 0;
 loop:
-   if (code && code != EOL && code != END) last = code;
-   code = *s++;
-   //if(code != END) code &= 0377;
-   switch(code) {
+    if (code && code != EOL && code != END)
+        last = code;
+    code = *s++;
+    //if(code != END) code &= 0377;
+    switch (code) {
 
-      case EOL:
-      if(*s != EOL) break;
-      case END:
-      return last;
+    case EOL:
+        if (*s != EOL)
+            break;
+    case END:
+        return last;
 
-      case QUOT:
-      j = *s++;
-      s += j;
-      break;
+    case QUOT:
+        j = *s++;
+        s += j;
+        break;
 
-      case CONST:
-      j = *s++;
-      s += j*SDAT;
-      break;
+    case CONST:
+        j = *s++;
+        s += j * SDAT;
+        break;
 
-      case NAME:
-      case FUN:
-      case ARG1:
-      case ARG2:
-      case AUTO:
-      case REST:
-      case RVAL:
-      s += SPTR;
-      break;
+    case NAME:
+    case FUN:
+    case ARG1:
+    case ARG2:
+    case AUTO:
+    case REST:
+    case RVAL:
+        s += SPTR;
+        break;
 
-      case INDEX:
-      case IMMED:
-      s++;
-      break;
-   }
-   goto loop;
+    case INDEX:
+    case IMMED:
+        s++;
+        break;
+    }
+    goto loop;
 }

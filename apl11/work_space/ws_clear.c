@@ -5,20 +5,20 @@
 #include "apl.h"
 #include "memory.h"
 
-void clear() {
-   SymTabEntry *n;
+void clear()
+{
+    SymTabEntry* n;
 
-   for(n=symbolTable; n->namep; n++) {
-      n->use = 0;
-      n->itemp = 0;
-      n->namep = 0;
-   }
-   afreset();   /* release all dynamic memory */
-   gsip = 0;   /* reset state indicator */
+    for (n = symbolTable; n->namep; n++) {
+        n->use = 0;
+        n->itemp = 0;
+        n->namep = 0;
+    }
+    afreset(); /* release all dynamic memory */
+    gsip = 0; /* reset state indicator */
 
-   iorigin= INITIAL_iorigin;
-   pagewidth= INITIAL_pagewidth;
-   PrintP= INITIAL_PrintP;
-   tolerance = INITIAL_tolerance;
-
+    iorigin = INITIAL_iorigin;
+    pagewidth = INITIAL_pagewidth;
+    PrintP = INITIAL_PrintP;
+    tolerance = INITIAL_tolerance;
 }

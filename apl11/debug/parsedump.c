@@ -9,10 +9,12 @@
 #include <stdio.h>
 #include "apl.h"
 
-void parseDump(char *line, int len) {
+void parseDump(char* line, int len)
+{
     int i;
 
-    if (!code_trace) return;
+    if (!code_trace)
+        return;
 
     for (i = 0; i < len; ++i) {
         fprintf(stderr, "%02x ", 0xff & line[i]);

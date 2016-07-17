@@ -10,48 +10,49 @@
 #include "utility.h"
 
 /* List a function on the terminal */
-void ex_list() {
-   char lastc, c;
-   SymTabEntry *n;
-   int line;
+void ex_list()
+{
+    char lastc, c;
+    SymTabEntry* n;
+    int line;
 
-   /* Check for valid function */
+    /* Check for valid function */
 
-   n = (SymTabEntry *)*--sp;
-   if (n->type != LV) error(ERR_value,"function name not defined");
+    n = (SymTabEntry*)*--sp;
+    if (n->type != LV)
+        error(ERR_value, "function name not defined");
 
-   /* If a function, locate it in workspace file and
+    /* If a function, locate it in workspace file and
     * print on the terminal in formatted form.
     */
 
-   switch(((SymTabEntry *)n)->use){
-   default:
-      error(ERR_botch,"cannot find requested function");
+    switch (((SymTabEntry*)n)->use) {
+    default:
+        error(ERR_botch, "cannot find requested function");
 
-   case NF:
-   case MF:
-   case DF:
-      lseek(wfile, (long)n->label, 0);
-      line = 0;
-      lastc = 0;
-      putchar('\n');
+    case NF:
+    case MF:
+    case DF:
+        lseek(wfile, (long)n->label, 0);
+        line = 0;
+        lastc = 0;
+        putchar('\n');
 
-      while(read(wfile, &c, 1) > 0){
+        while (read(wfile, &c, 1) > 0) {
 
-         if (!c){
-            putchar('\n');
-            return;
-         }
+            if (!c) {
+                putchar('\n');
+                return;
+            }
 
-         switch(lastc){
-         case '\n':
-            printf("[%d]", ++line);
-         case 0:
-            putchar('\t');
-         }
-         putchar(lastc=c);
-      }
-      error(ERR_botch,"unexpected EOF");
-   }
+            switch (lastc) {
+            case '\n':
+                printf("[%d]", ++line);
+            case 0:
+                putchar('\t');
+            }
+            putchar(lastc = c);
+        }
+        error(ERR_botch, "unexpected EOF");
+    }
 }
-

@@ -7,9 +7,10 @@
 #include "apl.h"
 #include "utility.h"
 
-char *iofname();
+char* iofname();
 
-void ex_unlink() {
-   SECURITY_CHECK;
-   iodone(unlink(iofname()));
+void ex_unlink()
+{
+    SECURITY_CHECK;
+    iodone(unlink(iofname()));
 }

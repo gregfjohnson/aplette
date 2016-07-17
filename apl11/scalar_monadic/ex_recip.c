@@ -2,15 +2,15 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
- 
+
 #include "apl.h"
 #include "utility.h"
 
 data
-ex_recip(d)
-data d;
+    ex_recip(d)
+        data d;
 {
-   if(d == zero) error(ERR_domain,"reciprocal of zero attempted");
-   return(one/d);
+    if (d == zero)
+        error(ERR_domain, "reciprocal of zero attempted");
+    return (one / d);
 }
-

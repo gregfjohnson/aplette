@@ -16,35 +16,34 @@
 #include "apl.h"
 #include "utility.h"
 
-struct item * ex_qts(io)
-int io; /* 0 = source, 1 = sink */
+struct item* ex_qts(io) int io; /* 0 = source, 1 = sink */
 {
-struct item *p;
-struct tm *tp;
-struct timeval tv;
-struct timezone tz;
-long tvec;
-   
-   if ( io == 0 ) { 
-      p = newdat(DA, 1, 7);
+    struct item* p;
+    struct tm* tp;
+    struct timeval tv;
+    struct timezone tz;
+    long tvec;
 
-      /* get time information from the OS */
-      time(&tvec);
-      tp = localtime(&tvec);
-      gettimeofday(&tv, &tz);
+    if (io == 0) {
+        p = newdat(DA, 1, 7);
 
-      /* load time into item *p */
-      p->datap[0]=tp->tm_year+1900;
-      p->datap[1]=tp->tm_mon+1;
-      p->datap[2]=tp->tm_mday;
-      p->datap[3]=tp->tm_hour;
-      p->datap[4]=tp->tm_min;
-      p->datap[5]=tp->tm_sec;
-      p->datap[6]=tv.tv_usec/1000;
-             
-      return(p);
+        /* get time information from the OS */
+        time(&tvec);
+        tp = localtime(&tvec);
+        gettimeofday(&tv, &tz);
 
-   } else {
-      error(ERR_implicit,"cannot change time");
-   };
+        /* load time into item *p */
+        p->datap[0] = tp->tm_year + 1900;
+        p->datap[1] = tp->tm_mon + 1;
+        p->datap[2] = tp->tm_mday;
+        p->datap[3] = tp->tm_hour;
+        p->datap[4] = tp->tm_min;
+        p->datap[5] = tp->tm_sec;
+        p->datap[6] = tv.tv_usec / 1000;
+
+        return (p);
+    }
+    else {
+        error(ERR_implicit, "cannot change time");
+    };
 }

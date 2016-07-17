@@ -14,16 +14,16 @@
 
 int access();
 
-void bidx(struct item *ip);
-int copy(int type, char *from, char *to, int size);
+void bidx(struct item* ip);
+int copy(int type, char* from, char* to, int size);
 void colapse(int k);
-void putdat(struct item *ip, data d);
+void putdat(struct item* ip, data d);
 void pop();
 int size();
 
-void indexIterateInit(DataIterator *iter);
-bool indexIterate(DataIterator *iter);
-void purge_name(SymTabEntry *np);
-void erase(SymTabEntry *np);
+void indexIterateInit(DataIterator* iter);
+bool indexIterate(DataIterator* iter);
+void purge_name(SymTabEntry* np);
+void erase(SymTabEntry* np);
 
 #endif // DATA_H

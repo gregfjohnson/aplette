@@ -6,12 +6,13 @@
 #include "apl.h"
 #include "data.h"
 
-void ex_rest() {
-   struct item *p;
-   SymTabEntry *np;
+void ex_rest()
+{
+    struct item* p;
+    SymTabEntry* np;
 
-   p = sp[-1];
-   /*
+    p = sp[-1];
+    /*
     * the following is commented out because
     * of an obscure bug in the parser, which is
     * too difficult to correct right now.
@@ -47,11 +48,12 @@ void ex_rest() {
     *   --jjb
    if(p->type == LV) error(ERR_botch,"rest B");
     */
-   gsip->ptr += copy(PTR, (char *) gsip->ptr, (char *) &np, 1);
-   erase(np);
-   np->itemp = sp[-2];
-   np->use = 0;
-   if(np->itemp) np->use = DA;
-   sp--;
-   sp[-1] = p;
+    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
+    erase(np);
+    np->itemp = sp[-2];
+    np->use = 0;
+    if (np->itemp)
+        np->use = DA;
+    sp--;
+    sp[-1] = p;
 }

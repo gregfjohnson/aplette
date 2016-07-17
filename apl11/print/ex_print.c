@@ -5,10 +5,11 @@
 #include "apl.h"
 #include "local_print.h"
 
-int ex_print() {
-  if(print()) {	/* print() would only return 0 for type NIL */
-     putchar('\n');
-     column=0;
-  }
-  return(0);
+int ex_print()
+{
+    if (print()) { /* print() would only return 0 for type NIL */
+        putchar('\n');
+        column = 0;
+    }
+    return (0);
 }

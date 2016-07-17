@@ -8,12 +8,13 @@
 
 #include "apl.h"
 
-double  floor();
+double floor();
 
-data ex_rand(data d) {
-   double f;
+data ex_rand(data d)
+{
+    double f;
 
-   f = (random()/(float)INT_MAX) * d;
-   d = floor(f) + iorigin;
-   return(d);
+    f = (random() / (float)INT_MAX) * d;
+    d = floor(f) + iorigin;
+    return (d);
 }

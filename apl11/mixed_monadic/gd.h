@@ -9,6 +9,6 @@
 #ifndef GD_H
 #define GD_H
 
-void gd0(int k, int (*f)(const void *, const void *));
+void gd0(int k, int (*f)(const void*, const void*));
 
 #endif

@@ -6,13 +6,13 @@
 #include "utility.h"
 #include "memory.h"
 
-struct item *
+struct item*
 newdat(int type, int rank, int size)
 {
-   struct item *p;
-   void *q;
+    struct item* p;
+    void* q;
 
-   /* Allocate a new data item.  I have searched the specifications
+    /* Allocate a new data item.  I have searched the specifications
     * for C and as far as I can tell, it should be legal to
     * declare a zero-length array inside a structure.  However,
     * the VAX C compiler (which I think is a derivative of the
@@ -27,28 +27,28 @@ newdat(int type, int rank, int size)
     * --John Bruner
     */
 
+    if (rank > MRANK)
+        error(ERR_rank, "maximum rank exceeded");
 
-   if(rank > MRANK) error(ERR_rank,"maximum rank exceeded");
+    /* create data storage for those types that required it */
+    switch (type) {
+    case DA:
+        q = alloc(size * SDAT);
+        break;
+    case NIL:
+    case CH:
+        q = alloc(size);
+        break;
+    }
 
-   /* create data storage for those types that required it */
-   switch (type) {
-   case DA:
-      q = alloc(size * SDAT);
-      break;
-   case NIL:
-   case CH:
-      q = alloc(size);
-      break;
-   }
-
-   p = (struct item *) alloc(sizeof(*p));
-   /* populate it */
-   p->rank = rank;
-   p->type = type;
-   p->size = size;
-   p->index = 0;
-   if(rank == 1) p->dim[0] = size;
-   p->datap = q;
-   return(p);
+    p = (struct item*)alloc(sizeof(*p));
+    /* populate it */
+    p->rank = rank;
+    p->type = type;
+    p->size = size;
+    p->index = 0;
+    if (rank == 1)
+        p->dim[0] = size;
+    p->datap = q;
+    return (p);
 }
-

@@ -19,38 +19,42 @@
  * the namep of the function is used for the file name.
  */
 
-static char *bad_fn  = "apl.badfn";
-static int badfnsv(char *fname);
+static char* bad_fn = "apl.badfn";
+static int badfnsv(char* fname);
 
-void funedit(char *fname) {
-   struct item *p;
-   char *c, cmd[128];
+void funedit(char* fname)
+{
+    struct item* p;
+    char *c, cmd[128];
 
-   p = sp[-1];
-   if(p->type != LV) error(ERR_value,"function name not found");
-   sichk(p);
-   if(fname == 0) fname = ((SymTabEntry *)p)->namep;
-   c = getenv("EDITOR");
-   /* if (c == 0) c = "vi"; */
-   if (c == 0) 
-      error(ERR,"The variable $editor has not been set");
-   strcpy(cmd, c);
-   strcat(cmd, " ");
-   strcat(cmd, fname);
-   if (system(cmd) < 0) error(ERR, "could not start editor");
+    p = sp[-1];
+    if (p->type != LV)
+        error(ERR_value, "function name not found");
+    sichk(p);
+    if (fname == 0)
+        fname = ((SymTabEntry*)p)->namep;
+    c = getenv("EDITOR");
+    /* if (c == 0) c = "vi"; */
+    if (c == 0)
+        error(ERR, "The variable $editor has not been set");
+    strcpy(cmd, c);
+    strcat(cmd, " ");
+    strcat(cmd, fname);
+    if (system(cmd) < 0)
+        error(ERR, "could not start editor");
 
-   /* Read function into workspace.  If "funread" (which calls
+    /* Read function into workspace.  If "funread" (which calls
     * "fundef") returns 0, an error occurred in processing the
     * header (line 0).  If this happened with "editf" or "del",
     * save the bad function in the file "bad_fn".
     */
 
-   if (funread(fname) == 0 && fname == scr_file){
-      unlink(bad_fn);
-      if (badfnsv(fname)) printf("function saved in %s\n", bad_fn);
-   }
+    if (funread(fname) == 0 && fname == scr_file) {
+        unlink(bad_fn);
+        if (badfnsv(fname))
+            printf("function saved in %s\n", bad_fn);
+    }
 }
-
 
 /* This routine saves the contents of "fname" in the file
 * named in "bad_fn".  It is called by "funedit" if the
@@ -58,13 +62,16 @@ void funedit(char *fname) {
 * the entire file is not lost).  Returns 1 if successful,
 * 0 if not.
 */
-static int badfnsv(char *fname) {
-   int fd1, fd2, len;
-   char buf[512];
+static int badfnsv(char* fname)
+{
+    int fd1, fd2, len;
+    char buf[512];
 
-   if ((fd1=open(fname, 0)) < 0 || (fd2=creat(bad_fn, 0644)) < 0) return(0);
-   while((len=read(fd1, buf, 512)) > 0) writeErrorOnFailure(fd2, buf, len);
-   close(fd1);
-   close(fd2);
-   return(1);
+    if ((fd1 = open(fname, 0)) < 0 || (fd2 = creat(bad_fn, 0644)) < 0)
+        return (0);
+    while ((len = read(fd1, buf, 512)) > 0)
+        writeErrorOnFailure(fd2, buf, len);
+    close(fd1);
+    close(fd2);
+    return (1);
 }

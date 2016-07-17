@@ -7,12 +7,13 @@
 #include "apl.h"
 #include "utility.h"
 
-void ex_kill() {
-   int pid, signo;
+void ex_kill()
+{
+    int pid, signo;
 
-   SECURITY_CHECK;
-   pid = topfix();
-   signo = topfix();
-   kill(pid, signo);
-   *sp++ = newdat(DA, 1, 0);
+    SECURITY_CHECK;
+    pid = topfix();
+    signo = topfix();
+    kill(pid, signo);
+    *sp++ = newdat(DA, 1, 0);
 }

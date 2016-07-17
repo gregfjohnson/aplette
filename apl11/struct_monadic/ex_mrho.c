@@ -5,15 +5,17 @@
 #include "apl.h"
 #include "data.h"
 
-void ex_mrho() {
-   struct item *p, *q;
-   data *dp;
-   int i;
+void ex_mrho()
+{
+    struct item *p, *q;
+    data* dp;
+    int i;
 
-   p = fetch1();
-   q = newdat(DA, 1, p->rank);
-   dp = q->datap;
-   for(i=0; i<p->rank; i++) *dp++ = p->dim[i];
-   pop();
-   *sp++ = q;
+    p = fetch1();
+    q = newdat(DA, 1, p->rank);
+    dp = q->datap;
+    for (i = 0; i < p->rank; i++)
+        *dp++ = p->dim[i];
+    pop();
+    *sp++ = q;
 }

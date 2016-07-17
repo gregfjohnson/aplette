@@ -7,9 +7,10 @@
 #include "apl.h"
 #include "utility.h"
 
-char *iofname();
+char* iofname();
 
-void ex_chdir() {
-   SECURITY_CHECK;
-   iodone(chdir(iofname()));
+void ex_chdir()
+{
+    SECURITY_CHECK;
+    iodone(chdir(iofname()));
 }

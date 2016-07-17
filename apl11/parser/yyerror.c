@@ -3,5 +3,6 @@
  * subject to the conditions expressed in the file "License".
  */
 
-void yyerror(char *error) {
+void yyerror(char* error)
+{
 }

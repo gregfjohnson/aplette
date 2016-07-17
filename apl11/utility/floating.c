@@ -12,26 +12,30 @@
 #include "apl.h"
 #include "utility.h"
 
-char *fpelist[] = {
-   "floating exception",
-   "integer overflow",
-   "integer divide by zero",
-   "floating overflow",
-   "floating divide by zero",
-   "floating underflow",
-   "decimal overflow",
-   "subscript range",
-   "floating overflow",
-   "floating divide by zero",
-   "floating underflow"
+char* fpelist[] = {
+    "floating exception",
+    "integer overflow",
+    "integer divide by zero",
+    "floating overflow",
+    "floating divide by zero",
+    "floating underflow",
+    "decimal overflow",
+    "subscript range",
+    "floating overflow",
+    "floating divide by zero",
+    "floating underflow"
 };
 
-void fpe(int param) {
-   signal(SIGFPE, fpe);
-   if (param >= sizeof fpelist/sizeof fpelist[0]) error(ERR,"floating exception");
-   else error(ERR,fpelist[param]);
+void fpe(int param)
+{
+    signal(SIGFPE, fpe);
+    if (param >= sizeof fpelist / sizeof fpelist[0])
+        error(ERR, "floating exception");
+    else
+        error(ERR, fpelist[param]);
 }
 
-void fppinit(int arg) {
-   signal(SIGFPE, fpe);
+void fppinit(int arg)
+{
+    signal(SIGFPE, fpe);
 }

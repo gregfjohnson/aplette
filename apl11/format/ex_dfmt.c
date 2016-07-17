@@ -18,39 +18,37 @@
 /* dyadic format */
 void ex_dfmt()
 {
-   struct item *rp, *lp, *q;
+    struct item *rp, *lp, *q;
 
-   lp = fetch2();
-   rp = sp[-2];
+    lp = fetch2();
+    rp = sp[-2];
 
-   switch (lp->type) {
-   case DA:
-   break;
+    switch (lp->type) {
+    case DA:
+        break;
 
-   case CH:
-      error(ERR_domain,"");
-   break;
-	     
-   default:
-      error(ERR_botch,"attempt to format unsupported type");
-   }
-      
-   switch (rp->type) {
-   case DA:
-      /* convert rp from numeric to a literal array */
-      q=fp_dfmt(lp,rp);
-      pop();
-      pop();
-      *sp++ = q; // put it onto the stack
-   break;
+    case CH:
+        error(ERR_domain, "");
+        break;
 
-   case CH:
-      error(ERR_domain,"");
-   break;
-	     
-   default:
-      error(ERR_botch,"attempt to format unsupported type");
-   }
-	  
+    default:
+        error(ERR_botch, "attempt to format unsupported type");
+    }
+
+    switch (rp->type) {
+    case DA:
+        /* convert rp from numeric to a literal array */
+        q = fp_dfmt(lp, rp);
+        pop();
+        pop();
+        *sp++ = q; // put it onto the stack
+        break;
+
+    case CH:
+        error(ERR_domain, "");
+        break;
+
+    default:
+        error(ERR_botch, "attempt to format unsupported type");
+    }
 }
-

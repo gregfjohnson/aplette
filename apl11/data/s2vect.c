@@ -4,16 +4,14 @@
  */
 #include "apl.h"
 
-struct item *
-s2vect(ap)
-struct item *ap;
+struct item*
+    s2vect(ap) struct item* ap;
 {
-   struct item *p, *q;
+    struct item *p, *q;
 
-   p = ap;
-   q = newdat(p->type, 1, 1);
-   q->datap = p->datap;
-   q->dim[0] = 1;
-   return(q);
+    p = ap;
+    q = newdat(p->type, 1, 1);
+    q->datap = p->datap;
+    q->dim[0] = 1;
+    return (q);
 }
-

@@ -7,15 +7,18 @@
 #include "utility.h"
 #include "mixed_dyadic.h"
 
-void ex_br() {
-   struct item *p;
+void ex_br()
+{
+    struct item* p;
 
-   p = fetch1();
-   if(p->size == 0) return;
-   gsip->funlc = fix(getdat(p));
+    p = fetch1();
+    if (p->size == 0)
+        return;
+    gsip->funlc = fix(getdat(p));
 }
 
-void ex_br0() {
-   gsip->funlc = 0;
-   ex_elid();
+void ex_br0()
+{
+    gsip->funlc = 0;
+    ex_elid();
 }

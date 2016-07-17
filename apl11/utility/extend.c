@@ -6,13 +6,16 @@
 #include "utility.h"
 
 /* extend - used by ex_base and ex_iprod */
-struct item *
-extend(int ty, int n, data d) {
-   int i;
-   struct item *q;
+struct item*
+extend(int ty, int n, data d)
+{
+    int i;
+    struct item* q;
 
-   if(ty != DA) error(ERR_domain,"not numeric type");
-   q = newdat(ty, 1, n);
-   for(i=0; i<n; i++) q->datap[i] = d;
-   return(q);
+    if (ty != DA)
+        error(ERR_domain, "not numeric type");
+    q = newdat(ty, 1, n);
+    for (i = 0; i < n; i++)
+        q->datap[i] = d;
+    return (q);
 }
