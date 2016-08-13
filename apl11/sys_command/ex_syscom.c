@@ -150,6 +150,7 @@ void ex_syscom()
         case DF:
             if (n->itemp == 0)
                 funcomp(n);
+            #if 0
             ip = (int*)n->itemp;
             printf(" [p] "); /* prologue */
             code_dump(ip[1], 0);
@@ -160,6 +161,17 @@ void ex_syscom()
             printf(" [e] "); /* epilogue */
             code_dump(ip[i + 1], 0);
             printf("\n");
+            #endif
+        {
+            fprintf(stderr, "[p] ");
+            code_dump(n->functionLines[0]->pcode, 0);
+            for (i = 1; i < n->functionLineCount; i++) {
+                fprintf(stderr, "[%d] ", i);
+                code_dump(n->functionLines[i]->pcode, 0);
+            }
+            fprintf(stderr, "[e] ");
+            code_dump(n->functionLines[n->functionLineCount]->pcode, 0);
+        }
         }
         return;
 

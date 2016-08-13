@@ -12,8 +12,7 @@
 
 int nsave(int ffile, SymTabEntry* an);
 
-void wssave(int ffile)
-{
+void wssave(int ffile) {
     SymTabEntry* n;
 
     nsave(ffile, 0);
@@ -26,8 +25,7 @@ void wssave(int ffile)
     close(ffile);
 }
 
-int nsave(int ffile, SymTabEntry* an)
-{
+int nsave(int ffile, SymTabEntry* an) {
     char c, buffer[64];
     int i, size;
     struct item* p;
@@ -94,10 +92,8 @@ int nsave(int ffile, SymTabEntry* an)
     real: {
         int line, i;
         char lineCount[64];
-        unsigned char zero = 0;
         writeErrorOnFailure(ffile, an->namep, strlen(an->namep));
         sprintf(lineCount, " %d", an->sourceCodeCount);
-        printf("lineCount:  >>%s<<\n", lineCount);
         writeErrorOnFailure(ffile, lineCount, strlen(lineCount));
         writeErrorOnFailure(ffile, "\n", 1);
         for (line = 0; line < an->sourceCodeCount; ++line) {
@@ -106,7 +102,6 @@ int nsave(int ffile, SymTabEntry* an)
                 writeErrorOnFailure(ffile, &an->functionSourceCode[line][i], 1);
             }
         }
-        writeErrorOnFailure(ffile, &zero, 1);
         break;
     }
     }

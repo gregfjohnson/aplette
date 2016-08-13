@@ -160,11 +160,6 @@ void wsload(int ffile)
                     aplfree((int *) iline);
                 }
             }
-            if (1 != read(ffile, &ch, 1) || ch != (unsigned char) '\0') {
-                close(ffile);
-                error(ERR_botch, "wsload unexpected char at end of function");
-            }
-
 
             break;
         }
