@@ -10,10 +10,14 @@
 void ex_auto()
 {
     SymTabEntry* np;
+    SymTabEntry* newEntry;
 
     gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
     checksp();
-    *sp++ = np->itemp;
-    np->itemp = 0;
-    np->use = 0;
+
+    *sp++ = (struct item*) np;
+    symtabRemoveEntry(np);
+
+    newEntry = symtabInsert(np->namep);
+    newEntry->entryType = LV;
 }

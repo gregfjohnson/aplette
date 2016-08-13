@@ -23,7 +23,7 @@ void ex_exec()
         error(ERR_rank, "");
     if (p->size > 500)
         error(ERR_length, "");
-    if (p->type != CH)
+    if (p->itemType != CH)
         error(ERR_domain, "");
     if (p->rank == 2) {
         if (p->dim[0] > MAXP)

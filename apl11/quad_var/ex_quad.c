@@ -25,10 +25,10 @@ struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
 {
     char* getinput();
     struct item* p;
-    struct Context* thisContext;
+    Context* thisContext;
 
     if (io == 0) {
-        thisContext = (struct Context*)alloc(sizeof(struct Context));
+        thisContext = (Context*)alloc(sizeof(Context));
         thisContext->prev = gsip; /* setup new context */
         thisContext->Mode = deffun;
         //thisContext->np = np;

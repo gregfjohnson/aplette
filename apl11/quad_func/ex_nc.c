@@ -16,7 +16,7 @@ void ex_nc()
     char buf[40];
 
     p = fetch1();
-    if (p->type != CH)
+    if (p->itemType != CH)
         error(ERR_domain, "");
     if (p->size >= 40 || p->rank > 1)
         error(ERR_rank, "");
@@ -25,7 +25,7 @@ void ex_nc()
     np = nlook(buf);
     i = 0;
     if (np != 0) {
-        switch (np->use) {
+        switch (np->entryUse) {
         case 0:
             i = 0;
             break;
@@ -40,7 +40,7 @@ void ex_nc()
             i = 2;
             break;
         default:
-            printf("unknown ", S_QUAD, "nc type = %d\n", np->use);
+            printf("unknown ", S_QUAD, "nc type = %d\n", np->entryUse);
             i = 4;
         }
     }

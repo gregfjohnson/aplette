@@ -21,9 +21,9 @@ void ex_index()
     p = sp[-1];
     if (f == ASGN) {
         gsip->ptr++;
-        if (p->type != LV)
+        if (p->itemType != LV)
             error(ERR_value, "not a local variable");
-        if (((SymTabEntry*)p)->use != DA)
+        if (((SymTabEntry*)p)->entryUse != DA)
             fetch1();
         q = ((SymTabEntry*)p)->itemp;
     }
@@ -34,7 +34,7 @@ void ex_index()
     idx.rank = 0;
     for (i = 0; i < n; i++) {
         p = sp[-i - 2];
-        if (p->type == EL) {
+        if (p->itemType == EL) {
             idx.dim[idx.rank++] = q->dim[i];
             continue;
         }
@@ -51,8 +51,8 @@ void ex_index()
             if (idx.size != p->size)
                 error(ERR_length, "");
             f = 1; /* v[i] <- v */
-        }
-        else {
+
+        } else {
             if (idx.size && !p->size)
                 error(ERR_length, "");
             /* Note -- for idx.size = 0, no assign occurs
@@ -62,9 +62,9 @@ void ex_index()
             f = 2; /* v[i] <- s */
         }
         ex_elid();
-    }
-    else {
-        p = newdat(q->type, idx.rank, idx.size);
+
+    } else {
+        p = newdat(q->itemType, idx.rank, idx.size);
         copy(IN, (char*)idx.dim, (char*)p->dim, idx.rank);
         *sp++ = p;
         f = 0; /* v[i] */
@@ -116,7 +116,7 @@ void index1(int i, int f)
         }
     }
     p = sp[-i - 3];
-    if (p->type == EL) {
+    if (p->itemType == EL) {
         for (j = 0; j < idx.dim[i]; j++) {
             idx.idx[i] = j;
             index1(i + 1, f);

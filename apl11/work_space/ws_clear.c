@@ -4,13 +4,15 @@
  */
 #include "apl.h"
 #include "memory.h"
+#include "data.h"
 
 void clear()
 {
     SymTabEntry* n;
 
-    for (n = symbolTable; n->namep; n++) {
-        n->use = 0;
+    symtabIterateInit();
+    while (n = symtabIterate()) {
+        n->entryUse = 0;
         n->itemp = 0;
         n->namep = 0;
     }

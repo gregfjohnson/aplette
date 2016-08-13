@@ -17,12 +17,15 @@ void ex_float()
     struct item* p;
 
     p = fetch1(); /* Get variable descriptor */
-    if (p->type != CH)
+
+    if (p->itemType != CH)
         error(ERR_domain, "");                   /* Must be characters */
+
     if (p->rank == 0                             /* Scalar */
         || p->dim[(p->rank) - 1] % sizeof datum) /* Bad size */
         error(ERR_length, "");
+
     p->dim[p->rank - 1] /= sizeof datum; /* Reduce dimensions */
     p->size /= sizeof datum;             /* Reduce size */
-    p->type = DA;                        /* Change data type */
+    p->itemType = DA;                    /* Change data type */
 }

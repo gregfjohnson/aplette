@@ -10,87 +10,80 @@
 #include "char.h"
 #include "memory.h"
 
-/* quad CR - character representation
- * convert a function into a character array */
+// quad CR - character representation
+// convert a function into a character array
 
-void ex_crp()
-{
+void ex_crp() {
     char name[NAMS], *iline, *c, *c2, *dp;
     SymTabEntry* np;
     struct item* p;
     int len, dim0, dim1, i;
-    FILE* infile;
+    int lineNumber;
 
     p = fetch1();
     if (p->size == 0 || p->rank > 1 || p->size >= NAMS)
         error(ERR_length, S_QUAD "cr");
 
-    /* set up the name in search format     */
-    copy(CH, (char*)p->datap, (char*)name, p->size);
+    if (p->itemType != CH)
+        error(ERR_domain, "");                   // Must be characters
+
+    copy(CH, (char *) p->datap, (char *) name, p->size);
     name[p->size] = '\0';
-    np = nlook(name);
 
-    /* if not found then domain error       */
-    if (!np->namep)
+    np = symtabFind(name);
+
+    // if not found then domain error..
+    if (np == NULL || np->namep == NULL)
         error(ERR_domain, S_QUAD "cr");
 
-    switch (np->use) {
-    default:
+    // if not a function then domain error..
+    if (np->entryUse != MF && np->entryUse != DF && np->entryUse != NF) {
         error(ERR_domain, S_QUAD "cr");
-    case MF:
-    case DF:
-    case NF: /* only allow functions */
-        ;
     }
-    infile = fdopen(wfile, "r"); /* duplicate unbuffered file wfile into
-             * buffered file infile */
 
-    /* look up function     */
-    fseek(infile, (long)np->label, 0);
-
-    iline = (char*)alloc(LINEMAX);
-    /* alloc is a wrapper for malloc, probably takes care of
-    * dynamic memory alloaction.
-    */
-
-    /* compute max width and height         */
+    // compute max width and height
     dim0 = 0;
     dim1 = 0;
-    while (NULL != fgets(iline, LINEMAX, infile)) {
-        if (strlen(iline) == 0)
-            break;
+
+    lineNumber = 0;
+    while (1) {
+        if (lineNumber >= np->sourceCodeCount) { break; }
+        iline = np->functionSourceCode[lineNumber++];
+
+        if (strlen(iline) == 0) { break; }
+
         c2 = iline;
-        while (*c2++ != '\n')
-            ;
+        while (*c2++ != '\n');
         dim0++;
         len = c2 - iline - 1;
         dim1 = dim1 < len ? len : dim1;
     }
-    pop(); /* release old variable         */
 
-    /* create new array and put function in */
+    pop(); // release old variable
+
+    // create new array and put function in
     p = newdat(CH, 2, dim0 * dim1);
     p->rank = 2;
     p->dim[0] = dim0;
     p->dim[1] = dim1;
     dp = (char*)(p->datap);
-    fseek(infile, (long)np->label, 0);
-    while (NULL != fgets(iline, LINEMAX, infile)) {
-        if (strlen(iline) == 0)
-            break;
+
+    lineNumber = 0;
+    while (1) {
+        if (lineNumber >= np->sourceCodeCount) { break; }
+        iline = np->functionSourceCode[lineNumber++];
+
+        if (strlen(iline) == 0) { break; }
+
         c2 = c = iline;
         for (i = 0; i < dim1; i++) {
             if (*c != '\n')
                 *dp++ = *c++;
             else
-                *dp++ = ' '; /* fill w/blanks*/
+                *dp++ = ' '; // fill w/blanks
         }
     }
-    aplfree((int*)iline);
 
-    /* put the new array on the stack       */
+    // put the new array on the stack
     *sp++ = p;
-
-    /* reset the current file               */
-    fclose(infile);
 }

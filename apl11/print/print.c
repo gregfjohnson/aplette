@@ -20,11 +20,16 @@ int print()
     struct item* p;
 
     p = fetch1();
-    if (p->type == NIL)
+
+    if (p->itemType == NIL) {
         return (0);
-    if (p->size == 0)
+    }
+
+    if (p->size == 0) {
         return (1);
-    switch (p->type) {
+    }
+
+    switch (p->itemType) {
     case DA:
         fp_print(p);
         break;
@@ -36,5 +41,6 @@ int print()
     default:
         error(ERR_botch, "attempt to print unsupported type");
     }
+
     return (1);
 }

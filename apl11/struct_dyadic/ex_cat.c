@@ -20,12 +20,12 @@ void ex_cat()
     p = fetch2();
     q = sp[-2];
     k = p->rank;
-    if (p->type != q->type)
+    if (p->itemType != q->itemType)
         error(ERR_domain, "");
     if (q->rank > k)
         k = q->rank;
     if (k == 0) {
-        r = newdat(p->type, 1, 2);
+        r = newdat(p->itemType, 1, 2);
         putdat(r, getdat(p));
         putdat(r, getdat(q));
         pop();
@@ -59,7 +59,7 @@ static void cat0(int k)
     p = sp[-1];
     q = sp[-2];
     i = k;
-    if (p->type != q->type)
+    if (p->itemType != q->itemType)
         error(ERR_domain, "");
     if (p->rank >= q->rank) {
         bidx(p);
@@ -73,7 +73,7 @@ static void cat0(int k)
     }
     idx.dim[i] = a + b;
     size();
-    r = newdat(p->type, idx.rank, idx.size);
+    r = newdat(p->itemType, idx.rank, idx.size);
     copy(IN, (char*)idx.dim, (char*)r->dim, idx.rank);
     i = idx.del[i];
     a *= i;
@@ -123,13 +123,13 @@ static void lam0(double d)
 
     p = sp[-1];
     q = sp[-2];
-    if (p->type != q->type)
+    if (p->itemType != q->itemType)
         error(ERR_domain, "");
     if (q->rank > p->rank)
         p = q;
     if (p->rank >= MRANK)
         error(ERR_rank, "");
-    idx.type = p->type;
+    idx.type = p->itemType;
     idx.rank = p->rank + 1;
     k = fix(d) - iorigin;
     if (k < 0 || k >= p->rank + 1)

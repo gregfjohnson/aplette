@@ -22,8 +22,7 @@ int ilex[] = {
     lex0, lex1, lex2, lex3, lex4, lex5
 };
 
-char* compile_new(int f)
-{
+char* compile_new(int f) {
     char *p, *q;
 
     iline = gsip->text;
@@ -31,6 +30,7 @@ char* compile_new(int f)
     litflag = 0;
     nlexsym = ilex[f];
     context = nlexsym;
+    compilePhase = (CompilePhase) f;
 
     if (code_trace)
         fprintf(stderr, "\n\nabout to yyparse.. iline:  >>%s<<\n\n", iline);

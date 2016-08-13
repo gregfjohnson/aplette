@@ -12,8 +12,11 @@
 #include "parser.h"
 #include "userfunc.h"
 #include "debug.h"
+#include "data.h"
 
+static char *strdupNoEoln(char *in);
 static void reverse(char* s);
+static char* catcode();
 
 /*
  * funcomp - compile functions
@@ -24,20 +27,20 @@ static void reverse(char* s);
  *
  */
 
+#define LABEL_PROLOG_LEN (1 + SPTR + 1 + 1 + SDAT + 1 + SPTR + 1 + 1)
+#define LABEL_EPILOG_LEN (1 + SPTR + 1)
 char *labcpp, *labcpe;
-extern char* catcode();
 
-void funcomp(SymTabEntry* np)
-{
+void funcomp(SymTabEntry* np) {
     int linesRead = 0;
-    char labp[MAXLAB * 20], labe[MAXLAB * 4];
+    char labelProlog[MAXLAB * LABEL_PROLOG_LEN], labe[MAXLAB * LABEL_EPILOG_LEN];
     char *a, *c;
+    int len1, len2;
     int i, err, err_code;
-    char** p;
     char *iline, *status, *phase, *err_msg;
-    struct Context *original_gsip, *FunctionLine,
-        *Prologue, *Epilogue;
-    FILE* infile;
+    Context *original_gsip, *functionLine, *Prologue, *Epilogue;
+    Context **functionLines;
+    int dbLineNum = 0;
 
     /* as gsip is used during compilation, we have to save the original
     * and restore it upon exit
@@ -45,13 +48,10 @@ void funcomp(SymTabEntry* np)
     original_gsip = gsip;
     err_code = 0;
     err_msg = "";
-    infile = fdopen(wfile, "r");
-    err = fseek(infile, (long)np->label, 0);
-    if (err != 0)
-        error(ERR_implicit, "Could not find function in workspace");
+
+    dbLineNum = 0;
     err = 0;
     lineNumber = 0;
-    iline = (char*)alloc(LINEMAX);
 
     /* Phase 1 creates the first of a linked list of compiled
    * function lines.  This first line will contain the prologue
@@ -60,16 +60,20 @@ void funcomp(SymTabEntry* np)
         fprintf(stderr, "Phase 1 \n");
     }
     phase = "Phase 1";
-    Prologue = (struct Context*)alloc(sizeof(struct Context));
+    Prologue = (Context*)alloc(sizeof(Context));
     Prologue->Mode = deffun;
     Prologue->suspended = 0;
     Prologue->prev = 0;
-    Prologue->text = (char*)NULL;
-    Prologue->pcode = (char*)NULL;
+    Prologue->text = NULL;
+    Prologue->pcode = NULL;
     Prologue->sp = 0;
 
     /* get the first line */
-    status = readLine("funcomp prolog line", iline, LINEMAX, infile);
+    if (dbLineNum < np->sourceCodeCount) {
+        status = iline = np->functionSourceCode[dbLineNum++];
+    } else {
+        status = NULL;
+    }
 
     if (0 == strlen(iline) || status == NULL) {
         err_code = ERR_implicit;
@@ -80,10 +84,12 @@ void funcomp(SymTabEntry* np)
         ++linesRead;
     }
 
-    Prologue->text = iline;
+    Prologue->text = strdupNoEoln(iline);
     gsip = Prologue;
     labgen = 0;
-    compile_new(3); /* 3 = compile function prologue */
+
+    compile_new(CompileFunctionProlog);
+
     if (gsip->pcode == 0) {
         err_code = ERR_implicit;
         err_msg = "invalid header line";
@@ -95,12 +101,17 @@ void funcomp(SymTabEntry* np)
         fprintf(stderr, "Phase 2 \n");
     }
     phase = "Phase 2";
-    labcpp = labp;
+    labcpp = labelProlog;
     labcpe = labe;
     labgen = 1;
 
     while (1) {
-        status = readLine("funcomp function body", iline, LINEMAX, infile);
+        if (dbLineNum < np->sourceCodeCount) {
+            status = iline = np->functionSourceCode[dbLineNum++];
+        } else {
+            status = NULL;
+        }
+
         if (0 == strlen(iline) || status == NULL) {
             break;
         }
@@ -109,23 +120,24 @@ void funcomp(SymTabEntry* np)
         }
 
         /* create a new Context */
-        FunctionLine = (struct Context*)alloc(sizeof(struct Context));
-        FunctionLine->Mode = deffun;
-        FunctionLine->suspended = 0;
-        FunctionLine->prev = gsip; /* link to previous */
-        FunctionLine->text = (char*)NULL;
-        FunctionLine->pcode = (char*)NULL;
-        FunctionLine->sp = 0;
-        FunctionLine->text = iline;
+        functionLine = (Context*)alloc(sizeof(Context));
+        functionLine->Mode = deffun;
+        functionLine->suspended = 0;
+        functionLine->prev = gsip; /* link to previous */
+        functionLine->pcode = NULL;
+        functionLine->sp = 0;
+        functionLine->text = strdupNoEoln(iline);
 
-        gsip = FunctionLine;
         lineNumber++;
-        compile_new(5); /* 5 = compile function body */
+        gsip = functionLine;
+        compile_new(CompileFunctionBody);
+
         if (MAXLAB <= (labcpe - labe) / 5 + 1) {
             err_code = ERR_botch;
             err_msg = "too many labels, edit MAXLAB in apl.h and recompile";
             goto out;
         }
+
         if (gsip->pcode == 0) {
             err++;
         }
@@ -137,18 +149,18 @@ void funcomp(SymTabEntry* np)
         goto out;
     }
 
-    /* At the end of this Phase, lineNumber=Maximum_No_of_lines
-    * but we want to include the Prologue (line 0) and 
-    * Epilogue (so add one to lineNumber)
-    */
+    /* At the end of this Phase, lineNumber = Maximum_No_of_lines
+     * but we want to include the Prologue (line 0) and 
+     * Epilogue (so add one to lineNumber)
+     */
     lineNumber++;
 
     if (code_trace) {
         fprintf(stderr, "At end of Phase 2...\n");
         for (i = lineNumber; i > 1; i--) {
             fprintf(stderr, "[%d] ", i - 1);
-            code_dump(FunctionLine->pcode, 0);
-            FunctionLine = FunctionLine->prev;
+            code_dump(functionLine->pcode, 0);
+            functionLine = functionLine->prev;
         }
         fprintf(stderr, "[p] ");
         code_dump(Prologue->pcode, 0);
@@ -161,11 +173,13 @@ void funcomp(SymTabEntry* np)
     /* generate the Epilogue */
 
     // reset the file read pointer to the beginning of this function..
-    fseek(infile, (long)np->label, 0);
+    dbLineNum = 0;
 
-    // we are rereading the first line of the function, so don't bump lineNumber.
-    status = readLine("funcomp epilog after rewinding to label",
-        iline, LINEMAX, infile);
+    if (dbLineNum < np->sourceCodeCount) {
+        status = iline = np->functionSourceCode[dbLineNum++];
+    } else {
+        status = NULL;
+    }
 
     if (0 == strlen(iline)) {
         err++;
@@ -173,16 +187,18 @@ void funcomp(SymTabEntry* np)
         goto out;
     }
 
-    Epilogue = (struct Context*)alloc(sizeof(struct Context));
+    Epilogue = (Context*)alloc(sizeof(Context));
     Epilogue->Mode = deffun;
     Epilogue->suspended = 0;
     Epilogue->prev = gsip;
-    Epilogue->text = iline;
-    Epilogue->pcode = (char*)NULL;
+    Epilogue->text = strdupNoEoln(iline);
+    Epilogue->pcode = NULL;
     Epilogue->sp = 0;
     labgen = 0;
     gsip = Epilogue;
-    compile_new(4); /* 4 = compile function epilogue */
+
+    compile_new(CompileFunctionEpilog);
+
     if (gsip->pcode == 0) {
         err_code = ERR_implicit;
         err_msg = "invalid header line";
@@ -190,7 +206,7 @@ void funcomp(SymTabEntry* np)
     }
 
     /* only conduct phase 3b/c if labels were generated */
-    if (labcpp != labp) {
+    if (labcpp != labelProlog) {
         phase = "Phase 3b";
         /* append the label-epilogue to the Epilogue */
         reverse(labe);
@@ -200,22 +216,22 @@ void funcomp(SymTabEntry* np)
 
         phase = "Phase 3c";
         /* At this point, we have:
-       * fn-prologue (p[1]):      <AUTOs and ARGs>, ELID, END
-       * label-prologue (labp):   <AUTOs and LABELs>, END
-       * 
-       * and we want to produce:
-       * fn-prologue (p[1]):   <AUTOs and ARGs>,<AUTOs and LABELs>,  ELID, END.
-       */
-        a = csize(Prologue->pcode) - 1;
-        c = csize(labp) - 1;
+         * fn-prologue (pcodeLines[1]):      <AUTOs and ARGs>, ELID, END
+         * local array labelProlog:          <AUTOs and LABELs>, END
+         * 
+         * and we want to produce:
+         * fn-prologue (pcodeLines[1]):   <AUTOs and ARGs>,<AUTOs and LABELs>,  ELID, END.
+         */
+        len1 = csize(Prologue->pcode) - 1;
+        len2 = csize(labelProlog) - 1;
 
         /* Move the ELID from the end of the fn-prologue,
        * to the end of the label-prologue.
        */
-        if (((struct chrstrct*)Prologue->pcode)->c[(int)a - 1] == ELID) {
-            ((struct chrstrct*)Prologue->pcode)->c[(int)a - 1] = END;
-            labp[(int)c] = ELID;
-            labp[(int)c + 1] = END;
+        if (Prologue->pcode[len1 - 1] == ELID) {
+            Prologue->pcode[len1 - 1] = END;
+            labelProlog[len2] = ELID;
+            labelProlog[len2 + 1] = END;
         }
         else {
             err_code = ERR_botch;
@@ -225,8 +241,8 @@ void funcomp(SymTabEntry* np)
 
         /* Append the label-prologue to the Prologue */
         a = Prologue->pcode;
-        Prologue->pcode = catcode(a, labp);
-        aplfree((int*)a);
+        Prologue->pcode = catcode(a, labelProlog);
+        aplfree((int*) a);
     }
 
     if (code_trace) {
@@ -235,33 +251,32 @@ void funcomp(SymTabEntry* np)
     }
 
     /* Phase 4 goes through the compiled lines
-   * storing pointers to each pcode in p[]
+   * storing pointers to each pcode in pcodeLines[]
    */
     if (code_trace) {
         fprintf(stderr, "Phase 4 \n");
     }
     phase = "Phase 4";
-    p = (char**)alloc((linesRead + 1) * SPTR);
-    FunctionLine = Epilogue;
+    functionLines = (Context **)alloc((linesRead + 1) * SPTR);
+    functionLine = Epilogue;
     for (i = linesRead; i >= 0; --i) {
-        p[i] = FunctionLine->pcode;
-        FunctionLine = FunctionLine->prev;
+        functionLines[i] = functionLine;
+        functionLine = functionLine->prev;
     }
 
     if (code_trace) {
         fprintf(stderr, "At end of Phase 4...\n");
         fprintf(stderr, "[p] ");
-        code_dump(p[0], 0);
+        code_dump(functionLines[0]->pcode, 0);
         for (i = 1; i < linesRead; i++) {
             fprintf(stderr, "[%d] ", i);
-            code_dump(p[i], 0);
+            code_dump(functionLines[i]->pcode, 0);
         }
         fprintf(stderr, "[e] ");
-        code_dump(p[linesRead], 0);
+        code_dump(functionLines[linesRead]->pcode, 0);
     }
 
     /* put the result into effect */
-    // np->itemp = (struct item *)p;
 
     // functionLineCount is one larger than the APL function line number
     // of the last line of this function.  i.e., if gsip->funlc >= functionLineCount
@@ -270,8 +285,8 @@ void funcomp(SymTabEntry* np)
     // counting the function header.  So, N+1 is the number we are looking for.
 
     np->functionLineCount = linesRead;
-    np->functionPcodeLines = p;
-    np->functionPcodeLineLength = linesRead + 1;
+    np->functionLines = functionLines;
+    np->functionLineLength = linesRead + 1;
 
     err = 0;
 
@@ -280,8 +295,6 @@ out:
         fprintf(stderr, "Phase out \n");
     }
 
-    fclose(infile);
-    aplfree((int*)iline);
     gsip = original_gsip;
     if (err_code) {
         if (np->namep)
@@ -290,8 +303,7 @@ out:
     }
 }
 
-static void reverse(char* s)
-{
+static void reverse(char* s) {
     char *p, *q, c;
     int j;
 
@@ -308,4 +320,24 @@ static void reverse(char* s)
         q += j;
         p -= j;
     }
+}
+
+static char *catcode(char *s1, char *s2) {
+    int i, j;
+    char *p, *q;
+
+    i = csize(s1) - 1;
+    j = csize(s2);
+    p = q = (char *) alloc(i + j);
+    p += copy(CH, s1, p, i);
+    copy(CH, s2, p, j);
+    return (q);
+}
+
+static char *strdupNoEoln(char *in) {
+    char *result;
+    int len = strlen(in);
+    while (len > 0 && in[len-1] == '\n') --len;
+    result = strndup(in, len + 1);
+    return result;
 }

@@ -42,7 +42,7 @@ void ex_syscom()
         if (equal(cp, "off"))
             return;
         if ((protofile = open(cp, 1)) > 0) {
-            lseek(protofile, 0L, 2); /* append to existing file */
+            lseek(protofile, 0L, SEEK_END); /* append to existing file */
             printf("[appending]\n");
         }
         else {
@@ -56,7 +56,9 @@ void ex_syscom()
         return;
 
     case DEBUG:
-        code_trace = ~code_trace;
+        code_trace = !code_trace;
+        stack_trace = !stack_trace;
+        funtrace = !funtrace;
         return;
 
     case MEMORY:
@@ -95,7 +97,7 @@ void ex_syscom()
     case ERASE:
         p = sp[-1];
         sp--;
-        purge_name(p);
+        // purge_name(p);
         erase((SymTabEntry*)p);
         if (vars_trace)
             vars_dump();
@@ -110,8 +112,10 @@ void ex_syscom()
         Exit(0);
 
     case VARS:
-        for (n = symbolTable; n->namep; n++) {
-            if (n->itemp && n->use == DA) {
+        symtabIterateInit();
+        while (n = symtabIterate()) {
+            // for(n=symbolTable; n->namep; n++) {
+            if (n->itemp && n->entryUse == DA) {
                 if (column + 8 >= pagewidth)
                     printf("\n\t");
                 printf(n->namep);
@@ -122,8 +126,10 @@ void ex_syscom()
         return;
 
     case FNS:
-        for (n = symbolTable; n->namep; n++) {
-            if (n->use == DF || n->use == MF || n->use == NF) {
+        symtabIterateInit();
+        while (n = symtabIterate()) {
+            // for(n=symbolTable; n->namep; n++) {
+            if (n->entryUse == DF || n->entryUse == MF || n->entryUse == NF) {
                 if (column + 8 >= pagewidth)
                     printf("\n\t");
                 printf(n->namep);
@@ -136,7 +142,7 @@ void ex_syscom()
     case CODE:
         n = (SymTabEntry*)sp[-1];
         sp--;
-        switch (n->use) {
+        switch (n->entryUse) {
         default:
             error(ERR_implicit, "function name not found");
         case NF:
@@ -258,15 +264,13 @@ void ex_syscom()
     }
 }
 
-char*
-    vfname(array) char* array;
-{
+char* vfname(char* array) {
     SymTabEntry* n;
     char* p;
 
     n = (SymTabEntry*)sp[-1];
     sp--;
-    if (n->type != LV)
+    if (n->entryType != LV)
         error(ERR_value, "not a local varaible");
     p = n->namep;
     while (*array++ = *p++)

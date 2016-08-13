@@ -47,18 +47,22 @@ struct item* fetch(struct item* ip)
     p = ip;
 
 loop:
-    switch (p->type) {
+    switch (p->itemType) {
 
     case NIL:
         if (lastop != PRINT)
             error(ERR_value, "right value is NIL");
         return (p);
 
-    case QV:          /* Quad Variables */
+    case QV: {        /* Quad Variables */
+        struct item *(*quadServiceRoutine)(int);
+
         i = p->index; /* get the pointer to applicable quad service routine */
         aplfree((int*)p);
-        p = (struct item*)(*exop[i])(0); /* call the service routine */
+        quadServiceRoutine = (struct item *(*)(int)) exop[i];
+        p = quadServiceRoutine(0);
         goto loop;
+    }
 
     case DA: /* DAta type */
     case CH: /* CHaracter type */
@@ -83,7 +87,7 @@ loop:
        * AFTER all header processing has been completed.
        */
 
-        if (((SymTabEntry*)p)->use != DA) {
+        if (((SymTabEntry*)p)->entryUse != DA) {
             if ((gsip->Mode != deffun) || gsip->funlc != 1)
                 error(ERR_value, "undefined variable");
             q = newdat(DA, 0, 1); /* Dummy */
@@ -92,7 +96,7 @@ loop:
             return (q);
         }
         p = ((SymTabEntry*)p)->itemp;
-        i = p->type;
+        i = p->itemType;
         if (i == LBL)
             i = DA; /* treat label as data */
         q = newdat(i, p->rank, p->size);

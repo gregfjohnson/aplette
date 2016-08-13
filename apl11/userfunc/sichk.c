@@ -6,9 +6,8 @@
 #include "apl.h"
 #include "utility.h"
 
-void sichk(SymTabEntry* n)
-{
-    struct Context* p;
+void sichk(SymTabEntry* n) {
+    Context* p;
 
     p = gsip;
     while (p) {

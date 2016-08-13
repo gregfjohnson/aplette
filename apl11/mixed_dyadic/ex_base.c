@@ -21,7 +21,7 @@ void ex_base()
 
     p = fetch2();
     q = sp[-2];
-    if (p->type != DA || q->type != DA)
+    if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "base - incorrect types");
     if (p->rank > 1)
         error(ERR_rank, "base - cannot handle left-arg-rank > 1");

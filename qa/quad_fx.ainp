@@ -1,0 +1,4 @@
+fn { 1 10R'G z { sq n'
+fn { fn,[1] 10Y'z { n*2'
+Lfx fn
+sq 4

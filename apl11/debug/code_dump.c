@@ -256,13 +256,12 @@ loop:
     case ARG2:
     case AUTO:
     case REST:
-    case RVAL:
-        s += copy(PTR, (char*)s, (char*)&cp, 1);
-        fprintf(stderr, "-");
-        t = ((SymTabEntry*)cp)->namep;
-        while (*t)
-            fprintf(stderr, "%c", *t++);
+    case RVAL: {
+        SymTabEntry* entry;
+        s += copy(PTR, (char*)s, (char*)&entry, 1);
+        fprintf(stderr, "-%s", entry->namep);
         break;
+    }
 
     case INDEX:
         s++;

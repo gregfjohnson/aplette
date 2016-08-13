@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 
 struct item* ex_qai(io) int io; /* 0 = source, 1 = sink */
 {

@@ -10,8 +10,7 @@
 #include "debug.h"
 #include "execute.h"
 
-void execute()
-{
+void execute() {
     int opcode, i, j;
     data* dp;
     struct item *p, *p1;
@@ -20,12 +19,16 @@ void execute()
 
     gsip->ptr = gsip->pcode;
 
-    if (code_trace)
+    if (code_trace) {
         code_dump(gsip->ptr, 0);
+    }
 
     while (1) {
-        if (stack_trace)
+        if (stack_trace) {
+            printf("execute loop:\n");
             stack_dump();
+        }
+
         opcode = *gsip->ptr++;
         opcode &= 0377;
         lastop = opcode;
@@ -42,7 +45,7 @@ void execute()
             error(ERR_botch, "execute - unknown operand");
 
         case END:
-            return;
+            goto epilog;
 
         case EOL:
             pop();
@@ -106,7 +109,7 @@ void execute()
         case NOT:
             f = exop[opcode];
             p = fetch1();
-            if (p->type != DA)
+            if (p->itemType != DA)
                 error(ERR_domain, "type not supported by function");
             dp = p->datap;
             for (i = 0; i < p->size; i++) {
@@ -210,15 +213,18 @@ void execute()
             //current_line->pointer = pcp;
             break;
 
-        case RVAL: /* de-referenced LVAL */
-            gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&p1, 1);
-            if (((SymTabEntry*)p1)->use != DA)
+        case RVAL: { /* de-referenced LVAL */
+            SymTabEntry *entry;
+            gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&entry, 1);
+            entry = symtabFind(entry->namep);
+            if (entry->entryUse != DA) {
                 ex_nilret(); /* no fn rslt */
-            else {
-                *sp = fetch(p1);
+            } else {
+                *sp = fetch(entry);
                 sp++;
             }
             break;
+        }
 
         case NAME:
             gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)sp, 1);
@@ -228,12 +234,12 @@ void execute()
         case QUOT:
             j = CH;
             /* prior to V0.14, strings were prefixed with their
-	  * length which was limitted to 128 due to signed 
-	  * int limit of 8bit character.
-	  * Now strings are null terminated.
-	  * the legacy of the string length prefix remains
-	  * and should be removed from apl.y
-	  */
+	         * length which was limitted to 128 due to signed 
+	         * int limit of 8bit character.
+	         * Now strings are null terminated.
+	         * the legacy of the string length prefix remains
+	         * and should be removed from apl.y
+	         */
             gsip->ptr++; /* throw away vcount */
             opcode = strlen(gsip->ptr);
             p = newdat(j, opcode == 1 ? 0 : 1, opcode);
@@ -266,5 +272,12 @@ void execute()
             *sp++ = p;
             break;
         }
+    }
+
+    epilog:
+
+    if (stack_trace) {
+        printf("end of execute:\n");
+        stack_dump();
     }
 }

@@ -32,11 +32,12 @@ void ex_nl()
     ip = fetch1();
     if (ip->rank > 1)
         error(ERR_rank, "");
-    if (ip->type != DA)
+    if (ip->itemType != DA)
         error(ERR_domain, "");
 
     for (i = 0; i < NTYPES; i++)
         tlist[i] = 0;
+
     for (dp = ip->datap; dp < ip->datap + ip->size; dp++) {
         switch ((int)*dp) {
         case 1:
@@ -55,8 +56,10 @@ void ex_nl()
     }
 
     count = maxlen = 0;
-    for (np = symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++) {
-        if (np->use < NTYPES && tlist[np->use]) {
+    symtabIterateInit();
+    while (np = symtabIterate()) {
+        // for(np=symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++){
+        if (np->entryUse < NTYPES && tlist[np->entryUse]) {
             count++;
             if ((i = strlen(np->namep)) > maxlen)
                 maxlen = i;
@@ -68,8 +71,10 @@ void ex_nl()
     ip->dim[1] = maxlen;
     cp = ip->datap;
 
-    for (np = symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++) {
-        if (np->use < NTYPES && tlist[np->use]) {
+    symtabIterateInit();
+    while (np = symtabIterate()) {
+        // for(np=symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++) {
+        if (np->entryUse < NTYPES && tlist[np->entryUse]) {
             for (cp2 = &np->namep[i = 0]; i < maxlen; i++) {
                 if (*cp2)
                     *cp++ = *cp2++;

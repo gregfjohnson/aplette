@@ -39,7 +39,7 @@ void scan0(int k)
     data (*fn)(data, data);
 
     p = fetch1();
-    if (p->type != DA)
+    if (p->itemType != DA)
         error(ERR_domain, "not numeric data");
 
     bidx(p);

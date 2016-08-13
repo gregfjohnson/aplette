@@ -14,8 +14,7 @@
 
 static char line[LINEMAX];
 
-char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile)
-{
+char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile) {
     char* status = NULL;
     char* asciiLine;
     int i, len;
@@ -48,8 +47,8 @@ char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile)
         xLine[i] = '\0';
 
         aplfree((int*)asciiLine);
-    }
-    else {
+
+    } else {
         status = fgets(xLine, xLineLength, xInfile);
 
         // did we read a whole line??
@@ -63,8 +62,8 @@ done:
     if (code_trace) {
         if (status) {
             fprintf(stderr, "%s; input line:  %s\n", title, xLine);
-        }
-        else {
+
+        } else {
             fprintf(stderr, "%s; input line:  <no data read>\n", title);
         }
     }

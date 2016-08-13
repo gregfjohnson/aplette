@@ -17,12 +17,12 @@ void ex_execute()
     struct item* p;
     int i, dim0, dim1;
     char* b;
-    struct Context* thisContext;
+    Context* thisContext;
 
     p = fetch1();
     if (p->rank > 2)
         error(ERR_rank, "");
-    if (p->type != CH)
+    if (p->itemType != CH)
         error(ERR_domain, "not a literal value");
     /*get out if nothing to do, apr 2-23-77 */
     if (p->size == 0)
@@ -32,7 +32,7 @@ void ex_execute()
     dim0 = p->rank < 2 ? 1 : p->dim[0];
     dim1 = p->rank < 2 ? p->size : p->dim[1];
 
-    thisContext = (struct Context*)alloc(sizeof(struct Context));
+    thisContext = (Context*)alloc(sizeof(Context));
     thisContext->prev = gsip; /* setup new context */
     thisContext->text = (char*)alloc(dim1 + 1);
     thisContext->Mode = exec;

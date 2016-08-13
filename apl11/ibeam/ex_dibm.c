@@ -6,9 +6,9 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 
-void ex_dibm()
-{
+void ex_dibm() {
     int arg;
     struct item* p;
 

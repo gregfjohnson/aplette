@@ -9,6 +9,7 @@
 #include "memory.h"
 #include "userfunc.h"
 #include "execute.h"
+#include "parser.h"
 
 int prolgerr; /* Flag -- set if bad fetch in prologue 
                     * this variable is global so that fetch()
@@ -18,17 +19,19 @@ void ex_fun()
 {
     SymTabEntry* np;
     int functionLineCount;
-    int functionPcodeLineLength;
-    char** pcodeLineArray;
-    struct Context* thisContext;
+    int functionLineLength;
+    Context** lineArray;
+    Context* thisContext;
+    Context* savedGsip;
 
-    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
+    gsip->ptr += copy(PTR, (char *)gsip->ptr, (char *) &np, 1);
 
-    if (np->functionPcodeLines == NULL)
+    if (np->functionLines == NULL) {
         funcomp(np);
-    pcodeLineArray = np->functionPcodeLines;
+    }
+    lineArray = np->functionLines;
 
-    thisContext = (struct Context*)alloc(sizeof(struct Context));
+    thisContext = (Context*) alloc(sizeof(Context));
     thisContext->prev = gsip; /* setup new state indicator */
     thisContext->Mode = deffun;
     thisContext->np = np;
@@ -40,44 +43,64 @@ void ex_fun()
     prolgerr = 0; /* Reset error flag */
 
     functionLineCount = np->functionLineCount;
-    functionPcodeLineLength = np->functionPcodeLineLength;
+    functionLineLength = np->functionLineLength;
 
     checksp();
-    if (funtrace)
+
+    if (funtrace) {
         printf("\ntrace: fn %s entered:\n", np->namep);
-    if (setjmp(gsip->env))
+    }
+
+    if (setjmp(gsip->env)) {
         goto reenter;
+    }
+
     while (1) {
         gsip->funlc++;
-        if (funtrace)
+
+        if (funtrace) {
             printf("\ntrace: fn %s[%d]:\n", np->namep, gsip->funlc - 1);
-        gsip->pcode = pcodeLineArray[gsip->funlc - 1];
-        gsip->ptr = gsip->pcode;
+        }
+
+        if (gsip->funlc == 1) {
+            gsip->pcode = lineArray[0]->pcode;
+
+        } else {
+            gsip->text = lineArray[gsip->funlc - 1]->text;
+            compile_new(CompileFunctionBody);
+        }
+
         execute();
+
         if (gsip->funlc == 1) {
             gsip->sp = sp;
-            if (prolgerr)
+            if (prolgerr) {
                 error(ERR_botch, "prolog problem");
+            }
         }
-        if (intflg)
-            error(ERR_interrupt, "");
 
-    reenter:
+        if (intflg) {
+            error(ERR_interrupt, "");
+        }
+
+        reenter:
+
         if (gsip->funlc < 0 || gsip->funlc >= functionLineCount) {
             gsip->funlc = 1; /* for pretty traceback */
 
-            if (funtrace)
+            if (funtrace) {
                 printf("\ntrace: fn %s exits\n", np->namep);
+            }
 
-            gsip->pcode = pcodeLineArray[functionPcodeLineLength - 1];
-            gsip->ptr = gsip->pcode;
+            gsip->pcode = lineArray[functionLineLength - 1]->pcode;
             execute();
 
             gsip = gsip->prev; /* restore state indicator to previous state */
-            //pcp = gsip->oldpcp;
             aplfree((int*)thisContext);
+
             return;
         }
+
         pop();
     }
 }

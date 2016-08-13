@@ -80,7 +80,7 @@ int td1(int tdmode)
     q = sp[-2];
     r = !q->size;       /* Weird stuff for null items */
     if (q->rank == 0) { /* Extend scalars */
-        nq = newdat(q->type, p->size, 1);
+        nq = newdat(q->itemType, p->size, 1);
         *nq->datap = *q->datap;
         pop();
         *sp++ = q = nq;
@@ -121,7 +121,7 @@ void takezr(int* fill)
         if ((fill[i] > 0 && idx.idx[i] >= fill[i]) || (fill[i] < 0 && idx.idx[i] < -fill[i])) {
             p = sp[-1];
             p->index = access();
-            putdat(p, (p->type == DA) ? zero : (data)' ');
+            putdat(p, (p->itemType == DA) ? zero : (data)' ');
             return;
         }
     }

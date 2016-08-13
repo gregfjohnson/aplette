@@ -72,7 +72,7 @@ struct OPER tab[] = {
         ';', unk, semi,
     },
     {
-        ':', unk, cln,
+        ':', unk, colon,
     },
     {
         C_UPSHOEJOT, COMNT, comnt,

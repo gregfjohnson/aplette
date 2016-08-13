@@ -21,7 +21,7 @@
 void mainloop()
 {
     char* getinput();
-    struct Context* thisContext;
+    Context* thisContext;
 
     while (1) {
         /* return to this point after an error */
@@ -31,7 +31,7 @@ void mainloop()
        * then create a new context
        */
         if (gsip->Mode != immed) {
-            thisContext = (struct Context*)alloc(sizeof(struct Context));
+            thisContext = (Context*)alloc(sizeof(Context));
             thisContext->Mode = immed;
             thisContext->suspended = 0;
             thisContext->prev = gsip;

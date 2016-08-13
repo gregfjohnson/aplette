@@ -13,4 +13,10 @@ clear ws
 	onearg 5
 
 3125
+	)vars
+
+
+	)fns
+
+onearg	
 	

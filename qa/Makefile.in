@@ -14,7 +14,8 @@ OBJECTS = printing.dif quad_vars.dif \
           struct_monadic.adif struct_dyadic.adif \
           mixed_monadic.adif mixed_dyadic.adif \
           userfunc_nilret1.adif userfunc_twoargs1.adif \
-          userfunc_onearg1.adif userfunc_withret1.adif
+          userfunc_onearg1.adif userfunc_withret1.adif \
+		  quad_fx.adif
 
 BROKEN_OBJECTS = ibeams.dif quad_fns.dif nesting.dif userfunc.dif \
                  debug.dif sys_commands.dif \

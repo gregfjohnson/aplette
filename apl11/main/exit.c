@@ -15,8 +15,8 @@ void Exit(int s)
 
     for (j = 3; j < NFDS; j++)
         close(j);
-    unlink(WSFILE); /* Unlink temporaries */
     unlink(scr_file);
+    free(scr_file);
     normalExit = 1; /* Set this flag for atexit() */
     exit(s);        /* And we're outa here */
 }

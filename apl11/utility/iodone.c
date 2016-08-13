@@ -4,6 +4,7 @@
  */
 
 #include "apl.h"
+#include "data.h"
 
 void iodone(int ok)
 {

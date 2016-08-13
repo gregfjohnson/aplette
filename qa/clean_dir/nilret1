@@ -1,3 +1,4 @@
-G nilret1
-a { 10
-a % 10
+G nilret1; lcl1
+l1: lcl1 { 47
+l2: a { 10
+l3: a % 10

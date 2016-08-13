@@ -6,6 +6,7 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 
 void ex_kill()
 {

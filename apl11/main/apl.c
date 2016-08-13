@@ -14,6 +14,7 @@
 #include "config.h"
 #include "utility.h"
 #include "main.h"
+#include "data.h"
 #include "work_space.h"
 #include "quad_func.h"
 
@@ -25,6 +26,53 @@ char headline[] = "openAPL "
                   "Version 0"
 #include "patchlevel.h"
                   "\n";
+
+data tolerance;
+int iorigin;
+int pagewidth;
+int PrintP;
+char quote_quad_prompt[quote_quad_limit + 1];
+data zero;
+data one;
+data pi;
+data datum;
+int funtrace;         /* function trace enabled */
+int labgen;           /* label processing being done */
+jmp_buf cold_restart; /* Used for setexit/reset */
+jmp_buf hot_restart;  /* Used for setexit/reset */
+
+int (*exop[])();
+int integ;
+int signgam;
+int column;
+int intflg;
+int echoflg;
+int sandbox;          /* when set, some functions are barred */
+int sandboxflg;       /* when set, sandbox cannot be unset */
+int use_readline;     /* shows that the user has a valid .inputrc */
+int ascii_characters; /* use 7-bit ascii and map to APL characters */
+int ifile;
+int ttystat[3];
+long startTime;
+int rowsz;
+int oldlb[MAXLAB];
+int pt;
+int syze;
+int pas1;
+int protofile;
+int lastop;     /* last (current) operator exec'ed */
+char* scr_file; /* scratch file name */
+int lineNumber;
+int normalExit;
+int mkcore;
+int code_trace;
+int mem_trace;
+int stack_trace;
+int vars_trace;
+DataIterator idx;
+Context *gsip, prime_context;
+
+CompilePhase compilePhase;
 
 int main(int argc, char** argp)
 {
@@ -46,9 +94,9 @@ int main(int argc, char** argp)
     /* setup scratch files */
     pid = getpid();
     scr_file = malloc(32);
-    ws_file = malloc(32);
     snprintf(scr_file, 32, "/tmp/apled.%d", pid);
-    snprintf(ws_file, 32, "/tmp/aplws.%d", pid);
+
+    symtab_init();
 
     sigs = 1;
 
@@ -90,7 +138,6 @@ int main(int argc, char** argp)
                 break;
             case 't':
                 scr_file += 5;
-                ws_file += 5;
                 break;
             case 's':
                 sandbox = sandboxflg = 1;
@@ -116,9 +163,6 @@ int main(int argc, char** argp)
     /*
     * open ws file
     */
-
-    close(opn(WSFILE, 0600));
-    wfile = opn(WSFILE, O_RDWR);
 
     sp = stack;
     fflag = 1;
@@ -152,7 +196,7 @@ int main(int argc, char** argp)
     gsip = &prime_context; /* global state indicator */
     gsip->Mode = immed;
     gsip->suspended = 0;
-    gsip->prev = (struct Context*)NULL;
+    gsip->prev = (Context*)NULL;
     gsip->sp = 0;
     gsip->ptr = 0;
     gsip->text = (char*)NULL;

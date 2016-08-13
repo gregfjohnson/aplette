@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 #include "char.h"
 
 struct item* ex_qav(io) int io; /* 0 = source, 1 = sink */

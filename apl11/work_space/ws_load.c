@@ -11,17 +11,18 @@
 #include "memory.h"
 #include "fdat.h"
 #include "data.h"
+#include "main.h"
 
-void readErrorOnFailure(int fd, void* buf, size_t count)
-{
+static char *gettoken(int ffile, char* buffer);
+
+void readErrorOnFailure(int fd, void* buf, size_t count) {
     int result = read(fd, buf, count);
     if (result < 0) {
         error(ERR, "attempt to read file failed");
     }
 }
 
-void writeErrorOnFailure(int fd, void* buf, size_t count)
-{
+void writeErrorOnFailure(int fd, void* buf, size_t count) {
     int result = write(fd, buf, count);
     if (result < 0) {
         error(ERR, "attempt to write file failed");
@@ -66,19 +67,21 @@ void wsload(int ffile)
             use = DF;
 
         gettoken(ffile, buffer);
-        for (n = symbolTable; n->namep; n++) {
+
+        symtabIterateInit();
+        while (n = symtabIterate()) {
             if (equal(buffer, n->namep)) {
                 erase(n);
                 goto hokay;
             }
         }
-        n->namep = (char*)alloc(1 + strlen(buffer));
-        strcpy(n->namep, buffer);
+        n = symtabInsert(buffer);
+
     hokay:
-        n->use = use;
-        if (n->use == CH)
-            n->use = DA;
-        n->type = LV;
+        n->entryUse = use;
+        if (n->entryUse == CH)
+            n->entryUse = DA;
+        n->entryType = LV;
 
         switch (use) {
 
@@ -99,7 +102,7 @@ void wsload(int ffile)
                 p->dim[i] = dim[i];
 
             if (use == CH) {
-                readErrorOnFailure(ffile, (char*)p->datap, size);
+                readErrorOnFailure(ffile, (char*) p->datap, size);
             }
             else {
                 readErrorOnFailure(ffile, (data*)p->datap, size * sizeof(data));
@@ -110,19 +113,61 @@ void wsload(int ffile)
 
         case NF:
         case MF:
-        case DF:
+        case DF: {
+            int sourceCodeLen = 0;
+            char lineBuf[LINEMAX];
+            char *iline;
+            int line;
+            unsigned char ch;
+            int lineCount = atoi(gettoken(ffile, buffer));
+
+            // while (1 == read(ffile, &ch, 1) && ch != (unsigned char) '\n');
+
             n->itemp = 0;
-            n->label = lseek(wfile, 0L, 2);
-            while (1) {
-                if (read(ffile, &c, 1) != 1) {
-                    close(ffile);
-                    error(ERR, "wsload unexpected eof");
+            n->label = 0;
+
+            n->sourceCodeCount = lineCount;
+
+            n->functionSourceCode = (char **) alloc(SPTR * lineCount);
+
+            for (line = 0; line < lineCount; ++line) {
+                int i;
+                int lineLen = 0;
+
+                while (1) {
+                    int result;
+                    result = read(ffile, &ch, 1);
+                    if (result != 1) {
+                        close(ffile);
+                        error(ERR, "wsload unexpected eof");
+                    }
+                    lineBuf[lineLen++] = ch;
+                    if (ch == (unsigned char) '\n') break;
                 }
-                writeErrorOnFailure(wfile, &c, 1);
-                if (c == 0)
-                    break;
+                lineBuf[lineLen] = '\0';
+
+                if (ascii_characters) {
+                    iline = to_ascii_input(lineBuf);
+
+                } else {
+                    iline = lineBuf;
+                }
+
+                n->functionSourceCode[line] = (char *) alloc(strlen(iline) + 1);
+                strcpy(n->functionSourceCode[line], iline);
+
+                if (ascii_characters) {
+                    aplfree((int *) iline);
+                }
             }
+            if (1 != read(ffile, &ch, 1) || ch != (unsigned char) '\0') {
+                close(ffile);
+                error(ERR_botch, "wsload unexpected char at end of function");
+            }
+
+
             break;
+        }
         }
     }
 
@@ -130,9 +175,7 @@ void wsload(int ffile)
     close(ffile);
 }
 
-/* static - this declaration produced a warning */
-char* gettoken(int ffile, char* buffer)
-{
+static char *gettoken(int ffile, char* buffer) {
     int i;
     char c;
 

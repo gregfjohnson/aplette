@@ -14,10 +14,10 @@ void putdat(struct item* ip, data d)
     i = p->index;
     if (i >= p->size)
         error(ERR_botch, "putdat - index exceeds size");
-    if (p->type == DA) {
+    if (p->itemType == DA) {
         p->datap[i] = d;
     }
-    else if (p->type == CH) {
+    else if (p->itemType == CH) {
         ((struct chrstrct*)p->datap)->c[i] = d;
     }
     else

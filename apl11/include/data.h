@@ -23,7 +23,24 @@ int size();
 
 void indexIterateInit(DataIterator* iter);
 bool indexIterate(DataIterator* iter);
+
 void purge_name(SymTabEntry* np);
 void erase(SymTabEntry* np);
+
+struct item* newdat(EntryType type, int rank, int size);
+struct item* dupdat(struct item* ap);
+
+void symtab_init();
+SymTabEntry* symtabFind(char* name);
+SymTabEntry* symtabInsert(char* name);
+SymTabEntry* symtabEntryCreate(char* name);
+void symtabEntryInsert(SymTabEntry* entry);
+void symtabDelete(char* name);
+void symtabRemoveEntry(SymTabEntry* entry);
+
+void symtabIterateInit();
+SymTabEntry* symtabIterate();
+
+void initFunctionDefnSymbolTable();
 
 #endif // DATA_H

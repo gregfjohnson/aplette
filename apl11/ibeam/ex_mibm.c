@@ -6,13 +6,13 @@
 #include <sys/times.h>
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 
 int afnfree, afnused;
 
-void ex_mibm()
-{
+void ex_mibm() {
     struct tm* localtime();
-    struct Context* gp;
+    Context* gp;
     struct item* p;
     int i;
     struct tms t;

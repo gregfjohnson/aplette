@@ -4,6 +4,7 @@
  */
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 
 /* extend - used by ex_base and ex_iprod */
 struct item*

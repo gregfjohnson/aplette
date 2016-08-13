@@ -16,7 +16,7 @@
 
 void ex_ibr()
 {
-    struct Context* thisContext;
+    Context* thisContext;
 
     if (gsip == &prime_context || gsip->prev->suspended == 0) {
         error(ERR_implicit, "no suspended fn");

@@ -17,7 +17,7 @@ void ex_ap()
     SECURITY_CHECK;
     fd = topfix();
     p = fetch1();
-    lseek(fd, 0L, 2);
+    lseek(fd, 0L, SEEK_END);
     fappend(fd, p);
     if (p->rank == 1)
         writeErrorOnFailure(fd, "\n", 1);

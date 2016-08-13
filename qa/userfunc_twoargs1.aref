@@ -13,4 +13,10 @@ clear ws
 	2 twoargs 5
 
 32
+	)vars
+
+
+	)fns
+
+twoargs	
 	

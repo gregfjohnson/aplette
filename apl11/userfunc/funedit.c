@@ -22,17 +22,16 @@
 static char* bad_fn = "apl.badfn";
 static int badfnsv(char* fname);
 
-void funedit(char* fname)
-{
-    struct item* p;
+void funedit(char* fname) {
+    SymTabEntry* p;
     char *c, cmd[128];
 
-    p = sp[-1];
-    if (p->type != LV)
+    p = (SymTabEntry *) sp[-1];
+    if (p->entryType != LV)
         error(ERR_value, "function name not found");
     sichk(p);
     if (fname == 0)
-        fname = ((SymTabEntry*)p)->namep;
+        fname = p->namep;
     c = getenv("EDITOR");
     /* if (c == 0) c = "vi"; */
     if (c == 0)

@@ -113,10 +113,10 @@ void error(int type, char* diagnostic)
         printf(": %s.\n", diagnostic);
 
     /* purge any unassigned names */
-    for (np = symbolTable; np->namep; np++) {
-        if (np->use == 0 && !equal(np->namep, "#"))
-            purge_name(np);
-    }
+    // for(np=symbolTable; np->namep; np++) {
+    //    if(np->use == 0 && !equal(np->namep, "#")) purge_name(np);
+    // }
+
     if (vars_trace)
         vars_dump();
 

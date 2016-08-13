@@ -35,8 +35,7 @@
 /* A static variable for holding a line of user input */
 static char* line_read = (char*)NULL;
 
-char* getinput(prompt) char* prompt;
-{
+char* getinput(char* prompt) {
     int Length;
     char* iline;
     char input_buffer[LINEMAX];

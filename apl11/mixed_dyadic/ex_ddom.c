@@ -24,7 +24,7 @@ void ex_ddom()
 
     p = fetch2();
     q = sp[-2];
-    if (p->type != DA || q->type != DA)
+    if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "domino - incorrect types");
     if ((p->rank != 1 && p->rank != 2) || q->rank != 2)
         error(ERR_rank, "domino - unexpected ranks");

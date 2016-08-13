@@ -8,20 +8,19 @@
 /*
  * csize -- return size (in bytes) of a compiled string
  */
-int csize(char* s)
-{
+int csize(char* s) {
     int c, len;
     char* p;
-    int i;
 
     len = 1;
     p = s;
     while ((c = *p++) != END) {
+        int i = 0;
         len++;
         c &= 0377;
+
         switch (c) {
         default:
-            i = 0;
             break;
 
         case QUOT:
@@ -34,18 +33,13 @@ int csize(char* s)
             len++;
             break;
 
-        case NAME:
-        case FUN:
-        case ARG1:
-        case ARG2:
-        case AUTO:
-        case REST:
-        case RVAL:
-            i = SINT; /*   All pointers better be the same size as int's  */
+        case NAME: case FUN: case ARG1: case ARG2: case AUTO: case REST: case RVAL:
+            i = SPTR;
             break;
         }
         p += i;
         len += i;
     }
+
     return (len);
 }

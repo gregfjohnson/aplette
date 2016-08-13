@@ -6,25 +6,30 @@
 #include "apl.h"
 #include "utility.h"
 #include "memory.h"
+#include "debug.h"
 
-void pop()
-{
+void pop() {
     struct item* p;
+
+    if (stack_trace) {
+        printf("pop stack..\n");
+    }
 
     if (sp <= stack) {
         error(ERR_botch, "pop - stack underflow");
     }
     p = sp[-1];
     if (p) {
-        switch (p->type) {
+        switch (p->itemType) {
         default:
-            printf("[bad type: %d]\n", p->type);
+            printf("[bad type: %d]\n", p->itemType);
             error(ERR_botch, "pop - unrecognised type");
             break;
 
         case LBL:
-            ((SymTabEntry*)p)->use = 0; /* delete label */
+            ((SymTabEntry*)p)->entryUse = UNKNOWN; /* delete label */
 
+        case UNKNOWN:
         case LV:
             break;
 
@@ -34,8 +39,8 @@ void pop()
             aplfree((int*)p);
             break;
 
-        case QQ:
-        case QD:
+        // case QQ:
+        // case QD:
         case EL:
         case NIL:
         case QX:

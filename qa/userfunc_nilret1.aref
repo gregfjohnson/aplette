@@ -13,4 +13,10 @@ clear ws
 	nilret1
 
 1
+	)vars
+
+a	
+	)fns
+
+nilret1	
 	

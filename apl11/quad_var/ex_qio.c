@@ -30,10 +30,13 @@ struct item* ex_qio(io) int io; /* 0 = source, 1 = sink */
     else {
         pop();
         p = fetch1();
-        if (p->type != DA)
+
+        if (p->itemType != DA)
             error(ERR_domain, "assign value not numeric");
+
         if (p->rank != 0)
             error(ERR_rank, "assign value not scalar");
+
         i = fix(p->datap[0]);
         if (i == 0 || i == 1)
             iorigin = (data)i;

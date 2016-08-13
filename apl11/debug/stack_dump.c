@@ -14,23 +14,32 @@ void stack_dump()
     struct item** p;
     int i, n;
     printf("---- stack top ----\n");
-    /*
-   printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
- */
+
+    // printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
+
     for (p = sp - 1, n = -1; p >= stack; p--, n--) {
         printf("sp[%d]=%XH\n", n, p);
-        continue; // pointer size != sizeof(int) bugs break the code below.
+
+        // continue; // pointer size != sizeof(int) bugs break the code below.
         // remove this continue when it is fixed.
 
         if (n == 0) {
             printf("\n");
-        }
-        else {
-            printf("which is: type = ");
-            if ((i = (*p)->type) >= 0 && i <= LBL && ty[i])
+
+        } else {
+            if (*p == 0) {
+                printf("(null pointer)\n");
+                continue;
+            }
+
+            printf("    which is: type = ");
+
+            if ((i = (*p)->itemType) >= 0 && i <= LBL && ty[i]) {
                 printf("%s", ty[i]);
-            else
-                printf("%d", (*p)->type);
+            } else {
+                printf("%d", (*p)->itemType);
+            }
+
             switch (i) {
             default:
                 putchar('\n');

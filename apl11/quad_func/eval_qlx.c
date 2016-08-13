@@ -18,13 +18,13 @@ void eval_qlx()
     SymTabEntry* n;
     struct item* p;
 
-    if ((n = nlook(S_QUAD "lx")) && n->itemp->type == CH && n->itemp->size) {
+    if ((n = nlook(S_QUAD "lx")) && n->itemp->itemType == CH && n->itemp->size) {
         *sp++ = dupdat(n->itemp);
         sandbox = 1;
         ex_execute();
         sandbox = sandboxflg;
         p = sp[-1];
-        if (p->type != EL && p->type != NIL)
+        if (p->itemType != EL && p->itemType != NIL)
             ex_print();
         pop();
     }

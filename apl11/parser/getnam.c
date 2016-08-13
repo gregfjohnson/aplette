@@ -13,23 +13,27 @@
 extern struct COMM comtab[];
 #define lv yylval
 
-int getnam(char ic)
-{
+int getnam(char ic) {
     char name[NAMS], *cp;
     int c;
     SymTabEntry* np;
 
+    // copy identifier from iline to local variable "name".
+    // first character is the arg passed in to getnam(),
+    // subsequent chars are from iline, while alpha() or digit().
     c = ic;
     cp = name;
     do {
-        if (cp >= &name[NAMS])
+        if (cp >= &name[NAMS - 1])
             error(ERR_length, "name too long");
         *cp++ = c;
         c = *iline++;
     } while (alpha(c) || digit(c));
     *cp++ = 0;
+
     iline--;
-    /*   commands  */
+
+    // commands
     if (litflag == -1) {
         litflag = -2;
         for (c = 0; comtab[c].ct_name; c++) {
@@ -39,39 +43,39 @@ int getnam(char ic)
         immedcmd = lv.charval = comtab[c].ct_ylval;
         return (comtab[c].ct_ytype);
     }
-    for (np = symbolTable; np->namep; np++) {
-        if (equal(np->namep, name)) {
-            lv.charptr = (char*)np;
-            switch (np->use) {
 
-            case NF:
-                if (context == lex2)
-                    sichk(np);
-                return (nfun);
+    np = symtabFind(name);
 
-            case MF:
-                if (context == lex2)
-                    sichk(np);
-                return (mfun);
+    if (np != NULL) {
+        lv.charptr = (char*) np;
 
-            case DF:
-                if (context == lex2)
-                    sichk(np);
-                return (dfun);
-            }
-            return (nam);
+        switch (np->entryUse) {
+        case NF:
+            if (context == lex2)
+                sichk(np);
+
+            return (nfun);
+
+        case MF:
+            if (context == lex2)
+                sichk(np);
+
+            return (mfun);
+
+        case DF:
+            if (context == lex2)
+                sichk(np);
+
+            return (dfun);
         }
-    }
-    /* look for an unallocated line in symbolTable */
-    for (np = symbolTable; np->namep; np++) {
-        if (equal(np->namep, "#"))
-            break;
+
+        return (nam);
     }
 
-    /* place the name in symbolTable */
-    np->namep = (char*)alloc(cp - name);
-    copy(CH, name, np->namep, cp - name);
-    np->type = LV;
-    lv.charptr = (char*)np;
-    return (nam);
+    np = symtabEntryCreate(name);
+
+    np->entryType = LV;
+    lv.charptr = (char *) np;
+
+    return nam;
 }

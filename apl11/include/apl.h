@@ -13,9 +13,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Temp file names */
-#define WSFILE ws_file /* work space file */
-
 /* Magic Numbers */
 #define NFDS 20         /* Number of available file descriptors */
 #define MRANK 8         /* maximum rank, ie number of dimensions */
@@ -40,19 +37,19 @@
 #define MAXdata MAXDOUBLE
 
 #define INITIAL_tolerance 1.0e-13
-data tolerance;
+extern data tolerance;
 
 #define INITIAL_iorigin 1
-int iorigin;
+extern int iorigin;
 
 #define INITIAL_pagewidth 72
-int pagewidth;
+extern int pagewidth;
 
 #define INITIAL_PrintP 9
-int PrintP;
+extern int PrintP;
 
 #define quote_quad_limit 40
-char quote_quad_prompt[quote_quad_limit + 1];
+extern char quote_quad_prompt[quote_quad_limit + 1];
 
 typedef int (*VoidToIntFn)();
 typedef data (*VoidToDataFn)();
@@ -70,15 +67,16 @@ struct {
     char iline[LINEMAX]; /* used to store dynamic strings */
 } error_message;
 
-data zero;
-data one;
-data pi;
-data datum;
 data getdat();
-int funtrace;         /* function trace enabled */
-int labgen;           /* label processing being done */
-jmp_buf cold_restart; /* Used for setexit/reset */
-jmp_buf hot_restart;  /* Used for setexit/reset */
+
+extern data zero;
+extern data one;
+extern data pi;
+extern data datum;
+extern int funtrace;         /* function trace enabled */
+extern int labgen;           /* label processing being done */
+extern jmp_buf cold_restart; /* Used for setexit/reset */
+extern jmp_buf hot_restart;  /* Used for setexit/reset */
 
 //jmp_buf    gbl_env;                   /* Used for setexit/reset */
 //jmp_buf    mainloop_return;
@@ -115,22 +113,53 @@ jmp_buf hot_restart;  /* Used for setexit/reset */
  * print
  */
 
-#define DA 1 /* floating point data */
-#define CH 2 /* character data */
-#define LV 3 /* Local Variable */
-#define QD 4
-#define QQ 5
-#define IN 6
-#define EL 7
-#define NF 8  /* niladic function */
-#define MF 9  /* monadic function */
-#define DF 10 /* dyadic function */
-#define QC 11
-#define QV 12  /* quad variables */
-#define NIL 13 /* Used where a user defined function does \
-                * not return a value. */
+// newdat() allows only CH, DA, EL, NIL, and QV.
+// these values are used in itemp->type.
+
+// copy() mentions DA, IN, PTR, but does not fail if given something else.
+//        if not DA, IN, PTR, it assumes 1-byte values (i.e., CH)
+
+typedef enum { 
+    UNKNOWN = 0,
+    DA = 1,
+    CH = 2,
+    EL = 7,
+    NIL = 13,
+    LBL = 15,
+    // supposedly (?) LV also?  according to pop().
+    // supposedly (?) QV also?  according to newdat().
+    // supposedly (?) QX also?  according to newdat().
+} ItemType;
+
+// #define DA 1 /* floating point data */
+// #define CH 2 /* character data */
+// #define EL 7
+// #define QV 12  /* quad variables */
+// #define NIL 13 /* Used where a user defined function does \
+
+typedef enum { 
+    LV = 3,
+    QV = 12,
+} EntryType;
+
+// CH DA EL QV NIL NF MF DF (erase.c)
+typedef enum { 
+    NF = 8,
+    MF = 9,
+    DF = 10,
+} EntryUse;
+
+// #define LV 3 /* Local Variable */
+// #define QD 4
+// #define QQ 5
+#define IN 6  /* used only as first arg of copy(), indicating "integer type" */
+//#define NF 8  /* niladic function */
+//#define MF 9  /* monadic function */
+//#define DF 10 /* dyadic function */
+// #define QC 11
+               /* not return a value. */
 #define QX 14  /* latent expr. quad LX  */
-#define LBL 15 /* locked label value */
+// #define LBL 15 /* locked label value */
 #define PTR 16 /* generic pointer for copy() */
 
 #define NTYPES 17 /* number of defined types */
@@ -150,7 +179,7 @@ jmp_buf hot_restart;  /* Used for setexit/reset */
 
 struct item {
     int rank;
-    int type;
+    ItemType itemType;
     int size;
     int index;
     data* datap;
@@ -163,35 +192,51 @@ struct item {
  * Also kludged up to handle file names (only SymTab.namep 
  * is then used.)
  *
- * For fns, SymbolTable.FunctionPcode is an array of pointers to character
- * strings which are the compiled code for a line of the fn.
- * (function == 0) means that the fn has not yet been compiled .
- * SymTabEntry.function.lineCount == the number of lines in the fn, and
- * SymTabEntry.pcodeLines[0] == the function startup code, and
- * SymTabEntry.pcodeLines[lineCount-1] == the close down shop code.
+ * For fns, SymbolTable.functionLines[] is an array of pointers to character
+ * strings which are the compiled code for lines of the fn.
+ * SymTabEntry.functionLineCount == the number of lines in the body of the fn.
+ * SymTabEntry.functionLineLength is the length of functionLines[].
+ * SymTabEntry.functionLines[0] is the the function startup code, and
+ * SymTabEntry.functionLines[1] .. SymTabEntry.functionLines[functionLineCount]
+ * are the lines in the body of the APL function.
+ * SymTabEntry.functionLines[functionLineLength-1] is the the "close down shop" code.
  */
 
+typedef enum {
+    CompileImmediate,      //   0 compile immediate
+    CompileQuadInput,      //   1 compile quad input
+    CompileFunctionDefn,   //   2 function definition
+    CompileFunctionProlog, //   3 function prolog
+    CompileFunctionEpilog, //   4 function epilog
+    CompileFunctionBody,   //   5 function body
+    CompileFunctionLine,   //   6 function body - compile a line while running function
+} CompilePhase;
+
+extern CompilePhase compilePhase;
+
+struct _Context;
+
 typedef struct {
-    int use;
-    int type;
+    int entryUse;
+    EntryType entryType;
     struct item* itemp;
     char* namep;
 
     int label;
     int functionLineCount;
-    int functionPcodeLineLength;
-    char** functionPcodeLines;
+    int functionLineLength;
+    struct _Context** functionLines;
+    int sourceCodeCount;
+    char **functionSourceCode;
 } SymTabEntry;
-
-SymTabEntry symbolTable[SYM_TAB_MAX];
 
 /* The context structure
  * pointed to by the State Indicator
  * Refer to the DESIGN file in apl11/main
  */
 
-struct Context {
-    struct Context* prev; /* previous */
+typedef struct _Context {
+    struct _Context* prev; /* previous */
     int suspended;        /* suspended == 1, otherwise == 0 */
 
     enum Mode {  /* Mode can only be one of the following: */
@@ -208,10 +253,11 @@ struct Context {
     int funlc;        /* current fn current line number */
     struct item** sp; /* top of operand stack upon fn entry */
     jmp_buf env;      /* for restoration of local fn activation record */
-} * gsip, prime_context;
+} Context;
 
-/*
- * exop[i] is the address of the i'th action routine.
+extern Context *gsip, prime_context;
+
+/* exop[i] is the address of the i'th action routine.
  * Because of a "symbol table overflow" problem with C,
  * the table was moved to utility/optable.c
  */
@@ -222,39 +268,36 @@ double ltod();
 char* compile();
 SymTabEntry* nlook();
 struct item *fetch(), *fetch1(), *fetch2(), *extend();
-struct item *newdat(), *dupdat();
 
-int integ;
-int signgam;
-int column;
-int intflg;
-int echoflg;
-int sandbox;          /* when set, some functions are barred */
-int sandboxflg;       /* when set, sandbox cannot be unset */
-int use_readline;     /* shows that the user has a valid .inputrc */
-int ascii_characters; /* use 7-bit ascii and map to APL characters */
-int ifile;
-int wfile;
-int ttystat[3];
-long startTime;
-int rowsz;
-int oldlb[MAXLAB];
-int pt;
-int syze;
-int pas1;
-int protofile;
-int lastop;     /* last (current) operator exec'ed */
-char* scr_file; /* scratch file name */
-char* ws_file;  /* apl workspace file */
-int lineNumber;
-int normalExit;
-int mkcore;
+extern int integ;
+extern int signgam;
+extern int column;
+extern int intflg;
+extern int echoflg;
+extern int sandbox;          /* when set, some functions are barred */
+extern int sandboxflg;       /* when set, sandbox cannot be unset */
+extern int use_readline;     /* shows that the user has a valid .inputrc */
+extern int ascii_characters; /* use 7-bit ascii and map to APL characters */
+extern int ifile;
+extern int ttystat[3];
+extern long startTime;
+extern int rowsz;
+extern int oldlb[MAXLAB];
+extern int pt;
+extern int syze;
+extern int pas1;
+extern int protofile;
+extern int lastop;     /* last (current) operator exec'ed */
+extern char* scr_file; /* scratch file name */
+extern int lineNumber;
+extern int normalExit;
+extern int mkcore;
 
 /* diagnostics */
-int code_trace;
-int mem_trace;
-int stack_trace;
-int vars_trace;
+extern int code_trace;
+extern int mem_trace;
+extern int stack_trace;
+extern int vars_trace;
 
 typedef struct {
     int rank;
@@ -268,7 +311,7 @@ typedef struct {
     char complete;
 } DataIterator;
 
-DataIterator idx;
+extern DataIterator idx;
 
 #define setexit() setjmp(gbl_env)       /* "setexit" equivalent      */
 #define reset() longjmp(gbl_env, 0)     /* "reset" equivalent        */

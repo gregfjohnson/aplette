@@ -43,7 +43,7 @@ struct item* ex_qquad(int io)
     case QV_sink:
         pop();
         p = fetch1();
-        if (p->type != CH)
+        if (p->itemType != CH)
             error(ERR_domain, "assign value not character");
         if (p->rank > 1)
             error(ERR_rank, "rank of assign value too large");

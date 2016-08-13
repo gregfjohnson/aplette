@@ -4,17 +4,20 @@
  */
 #include "apl.h"
 #include "memory.h"
+#include "utility.h"
 
 void erase(SymTabEntry* np)
 {
-    int* p;
     struct item* itemp;
     int i;
 
-    if (p) {
-        switch (np->use) {
+    if (np) {
+        switch (np->entryUse) {
         case CH:
         case DA:
+        case EL:
+        case QV:
+        case NIL:
             aplfree((int*)np->itemp->datap);
             aplfree((int*)np->itemp);
             np->itemp = 0;
@@ -24,15 +27,17 @@ void erase(SymTabEntry* np)
         case MF:
         case DF:
             // free the p-code that np points to.
-            for (i = 0; i < np->functionPcodeLineLength; ++i) {
-                aplfree((int*)np->functionPcodeLines[i]);
+            for (i = 0; i < np->functionLineLength; ++i) {
+                aplfree((int*)np->functionLines[i]);
             }
-            aplfree((int*)np->functionPcodeLines);
+            if (np->functionLines != NULL) {
+                aplfree((int*)np->functionLines);
+            }
 
-            np->functionPcodeLines = NULL;
+            np->functionLines = NULL;
             np->functionLineCount = 0;
-            np->functionPcodeLineLength = 0;
+            np->functionLineLength = 0;
         }
+        np->entryUse = UNKNOWN;
     }
-    np->use = 0;
 }

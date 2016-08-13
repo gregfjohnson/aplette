@@ -34,7 +34,7 @@ void ex_iprod()
     p = fetch2();
     q = sp[-2];
 
-    if (p->type != DA || q->type != DA)
+    if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "not numeric data");
 
     // extend scalars to match corresponding arg

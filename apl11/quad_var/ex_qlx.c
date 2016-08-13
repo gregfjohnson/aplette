@@ -26,7 +26,7 @@ struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
         if (n) {
             q = n->itemp;
             p = dupdat(q);
-            copy(q->type, (char*)q->datap, (char*)p->datap, q->size);
+            copy(q->itemType, (char*)q->datap, (char*)p->datap, q->size);
         }
         else
             p = newdat(CH, 1, 0);
@@ -37,18 +37,17 @@ struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
         pop();
         n = nlook(S_QUAD "lx");
         if (n == 0) { /* allocate new name: */
-            for (n = symbolTable; n->namep; n++)
-                ;
-            n->namep = (char*)alloc(4);
-            copy(CH, (char*)S_QUAD "lx", (char*)n->namep, 4);
-            n->type = LV;
-            n->use = 0;
+            //for(n=symbolTable; n->namep; n++) ;
+            char name[4] = S_QUAD "lx";
+            n = symtabInsert(name);
+            n->entryType = LV;
+            n->entryUse = 0;
             n->itemp = newdat(CH, 0, 0);
         }
         q = fetch1();
         erase(n);
-        n->use = DA;
-        ((SymTabEntry*)n)->itemp = q;
+        n->entryUse = DA;
+        n->itemp = q;
         sp[-1] = (struct item*)n;
 
         return (0);

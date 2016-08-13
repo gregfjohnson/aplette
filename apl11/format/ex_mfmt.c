@@ -21,7 +21,7 @@ void ex_mfmt()
     struct item *p, *q;
 
     p = fetch1();
-    switch (p->type) {
+    switch (p->itemType) {
     case DA:
         /* convert p from numeric to a literal array */
         q = fp_mfmt(p);

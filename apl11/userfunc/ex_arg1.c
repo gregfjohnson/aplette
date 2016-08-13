@@ -6,14 +6,21 @@
 #include "apl.h"
 #include "data.h"
 
-void ex_arg1()
-{
+void ex_arg1() {
     struct item* p;
     SymTabEntry* np;
+    SymTabEntry* newEntry;
 
-    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
-    p = fetch1();
-    sp[-1] = np->itemp;
-    np->itemp = p;
-    np->use = DA;
+    gsip->ptr += copy(PTR, (char*) gsip->ptr, (char*) &np, 1);
+    p = fetch(sp[-1]);
+    --sp;
+
+    *sp++ = (struct item*) np;
+    symtabRemoveEntry(np);
+
+    newEntry = symtabInsert(np->namep);
+
+    newEntry->itemp = p;
+    newEntry->entryType = LV;
+    newEntry->entryUse = DA; // ???
 }

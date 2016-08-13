@@ -16,7 +16,7 @@ void ex_rav()
 
     p = fetch1();
     if (p->rank == 0) {
-        r = newdat(p->type, 1, 1);
+        r = newdat(p->itemType, 1, 1);
         putdat(r, getdat(p));
         pop();
         *sp++ = r;
@@ -41,7 +41,7 @@ static void rav0(int k)
     p = sp[-1];
     bidx(p);
     colapse(k);
-    r = newdat(p->type, 1, p->size);
+    r = newdat(p->itemType, 1, p->size);
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {

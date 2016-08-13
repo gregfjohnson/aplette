@@ -17,7 +17,7 @@ void ex_seek()
 
     SECURITY_CHECK;
     p = fetch1();
-    if (p->type != DA)
+    if (p->itemType != DA)
         error(ERR_domain, "");
     if (p->rank != 1)
         error(ERR_rank, "");

@@ -12,17 +12,21 @@
 
 #include <inttypes.h>
 #include "apl.h"
+#include "data.h"
 
 void vars_dump()
 {
     SymTabEntry* n;
 
-    for (n = symbolTable; n->namep; n++) {
+    symtabIterateInit();
+
+    while (n = symtabIterate()) {
+        // for(n=symbolTable; n->namep; n++) {
         printf("%x:", (uintptr_t)n);
         printf(" namep=%s", n->namep);
         printf(" itemp=%x", (uintptr_t)n->itemp);
-        printf(" use=%d", n->use);
-        printf(" type=%d", n->type);
+        printf(" use=%d", n->entryUse);
+        printf(" entryType=%d", n->entryType);
         /*      printf(" label=%d",n->label); */
         printf("\n");
     }

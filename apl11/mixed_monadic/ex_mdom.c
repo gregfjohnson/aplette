@@ -5,6 +5,7 @@
 
 #include "apl.h"
 #include "utility.h"
+#include "data.h"
 #include "mixed_dyadic.h"
 
 void ex_mdom()

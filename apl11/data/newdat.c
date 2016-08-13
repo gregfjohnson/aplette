@@ -6,11 +6,10 @@
 #include "utility.h"
 #include "memory.h"
 
-struct item*
-newdat(int type, int rank, int size)
-{
+// allowed types:
+struct item* newdat(ItemType type, int rank, int size) {
     struct item* p;
-    void* q;
+    void* q = NULL;
 
     /* Allocate a new data item.  I have searched the specifications
     * for C and as far as I can tell, it should be legal to
@@ -27,6 +26,10 @@ newdat(int type, int rank, int size)
     * --John Bruner
     */
 
+    if (type != CH && type != DA && type != EL && type != NIL && type != QV) {
+        error(ERR_botch, "newdat:  type is unknown");
+    }
+
     if (rank > MRANK)
         error(ERR_rank, "maximum rank exceeded");
 
@@ -35,16 +38,19 @@ newdat(int type, int rank, int size)
     case DA:
         q = alloc(size * SDAT);
         break;
-    case NIL:
+
     case CH:
         q = alloc(size);
+        break;
+
+    default:
         break;
     }
 
     p = (struct item*)alloc(sizeof(*p));
     /* populate it */
     p->rank = rank;
-    p->type = type;
+    p->itemType = type;
     p->size = size;
     p->index = 0;
     if (rank == 1)

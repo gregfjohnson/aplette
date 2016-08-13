@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "apl.h"
@@ -14,6 +15,8 @@
 #include "main.h"
 #include "utility.h"
 
+static int copyFile(char ***lines, FILE *f);
+
 /*
  * fundef - defines a function
  * Once a file has been edited by the user, this routine
@@ -24,70 +27,97 @@
  * It uses a mix of buffered and nonbuf IO.
  */
 
-int fundef(int f)
-{
+int fundef(int f) {
     int a;
-    char *iline, *status, *c;
+    char *iline = NULL, *status, *c;
     SymTabEntry* np;
+    SymTabEntry* symtabLhsEntry;
     char b[512];
     FILE* infile;
 
-    // duplicate unbuffered file f into buffered file infile
     infile = fdopen(f, "r");
 
-    iline = (char*)alloc(LINEMAX);
+    iline = (char *) alloc(LINEMAX);
 
     status = readLine("fundef verify first line", iline, LINEMAX, infile);
 
     if (status == NULL || 0 == strcmp(iline, "\n")) {
         printf("Blank function header. \n");
-        aplfree((int*)iline);
-        return (0);
+        goto out;
     }
 
-    c = compile_old(iline, 2);
-    aplfree((int*)iline);
+    c = compile_old(iline, CompileFunctionDefn);
+
     if (c == 0)
         goto out;
 
     copy(PTR, (char*)c + 1, (char*)&np, 1);
-    sichk(np);
-    erase(np);
-    np->use = ((struct chrstrct*)c)->c[0];
-    aplfree((int*)c);
+    symtabLhsEntry = symtabFind(np->namep);
 
-    // the scheme is, we write function definitions into our
-    // workspace temporary file.  The workspace temporary
-    // file can have multiple function definitions written into it,
-    // none of which have been actually compiled.
+    if (symtabLhsEntry == NULL) {
+        symtabLhsEntry = symtabInsert(np->namep);
+        symtabLhsEntry->entryType = LV;
+    }
+
+    sichk(symtabLhsEntry);
+    erase(symtabLhsEntry);
+    symtabLhsEntry->entryUse = c[0];
+
+    aplfree((int *) c);
+
+    // we save the source code of the function into the function
+    // symbol table entry.
     //
     // we lazily compile, and only get around to compiling a function
     // that has been read in the first time it actually gets used.
     //
-    // this may have to do with the possibility that names changed
-    // what they were bound to.  so maybe we want to re-compile
-    // every time just prior to executing.
+    // this is for mutual recursion.  and, simply, a function whose
+    // body refers to a not-yet-defined function.
+    // for parsing, we need to know
+    // the arity of every identifier, but nothing else.
     //
-    // we save the location in the workspace temporary file where
-    // we are about to write the current function being defined.
-    // after writing that function, we write a blank line out to the
-    // workspace temporary file.  that appears to be the way we
-    // delineate file definitions that have all been saved up, and the
-    // signal to the compiler that we are done compiling a particular
-    // function definition.
+    // if we compile just function headers and not bodies, we
+    // will have the arities of the function names.  Then, when
+    // we get around to executing a function, we can compile the
+    // body lines, because we know the arity of other functions.
     //
 
-    np->label = lseek(wfile, 0L, 2);
+    symtabLhsEntry->label = 0;
 
-    fseek(infile, 0L, 0);
-
-    // copy infile to wfile..
-    while ((a = fread(b, 1, 512, infile)) > 0) {
-        writeErrorOnFailure(wfile, b, a);
-    }
-    writeErrorOnFailure(wfile, "", 1);
+    symtabLhsEntry->sourceCodeCount =
+            copyFile(&symtabLhsEntry->functionSourceCode, infile);
 
 out:
+    if (iline != NULL) { aplfree((int *) iline); }
     fclose(infile);
-    return (1);
+
+    return 1;
+}
+
+static int copyFile(char ***lines, FILE *f) {
+    char *iline, *status;
+    int lineCount = 0;
+
+    *lines = NULL;
+
+    iline = (char *) alloc(LINEMAX);
+
+    fseek(f, 0L, SEEK_SET);
+    while (readLine("copyFile", iline, LINEMAX, f)) {
+        ++lineCount;
+    }
+    if (lineCount == 0) { return 0; }
+
+    fseek(f, 0L, SEEK_SET);
+
+    *lines = (char **) alloc(SPTR * lineCount);
+    lineCount = 0;
+    while (readLine("copyFile", iline, LINEMAX, f)) {
+        (*lines)[lineCount] = (char *) alloc(strlen(iline) + 1);
+        strcpy((*lines)[lineCount], iline);
+
+        ++lineCount;
+    }
+
+    return lineCount;
 }

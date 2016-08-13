@@ -13,35 +13,52 @@ void ex_asgn()
 {
     SymTabEntry* p;
     struct item* q;
+    SymTabEntry* symtabLhsEntry;
     int i;
 
     p = (SymTabEntry*)sp[-1];
-    q = (struct item*)sp[-1]; /* just to get item->index
-                               * further down, q is reassigned */
-    switch (p->type) {
 
+    q = (struct item *) sp[-1]; /* just to get item->index
+                                 * further down, q is reassigned */
+
+    switch (p->entryType) {
     case QV:
         i = q->index; /* get the pointer to applicable quad service routine */
         (*exop[i])(1);
         return;
 
     case LV:
-        if (((SymTabEntry*)p->itemp) && ((SymTabEntry*)p)->itemp->type == LBL)
+        symtabLhsEntry = symtabFind(p->namep);
+
+        if (symtabLhsEntry == NULL) {
+            symtabLhsEntry = symtabInsert(p->namep);
+        }
+
+        if (symtabLhsEntry != NULL) {
+            symtabLhsEntry->entryType = LV;
+        }
+
+        if (p->itemp != NULL && p->itemp->itemType == LBL)
             error(ERR_implicit, "attempt to reassign a label value");
+
+        if (symtabLhsEntry == NULL) { error(ERR, "asgn - panic"); }
+
         break;
+
     default:
         error(ERR, "asgn - panic");
     }
 
-    if (p->use != 0 && p->use != DA)
-        error(ERR_domain, "asgn");
+    if (p->entryUse != UNKNOWN && p->entryUse != DA) { error(ERR_domain, "asgn"); }
     sp--;
     q = fetch1();
     erase(p);
-    p->use = DA;
-    ((SymTabEntry*)p)->itemp = q;
-    sp[-1] = (struct item*)p;
+    symtabLhsEntry->entryUse = DA;
+    symtabLhsEntry->itemp = q;
 
-    if (vars_trace)
+    sp[-1] = (struct item*) symtabLhsEntry;
+
+    if (vars_trace) {
         vars_dump();
+    }
 }

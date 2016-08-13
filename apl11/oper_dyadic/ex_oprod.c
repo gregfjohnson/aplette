@@ -16,7 +16,7 @@ void ex_oprod()
     f = (data*)exop[*gsip->ptr++];
     p = fetch2();
     q = sp[-2];
-    if (p->type != DA || q->type != DA)
+    if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "not numeric data");
     /*
     * collapse 1 element vectors to scalars

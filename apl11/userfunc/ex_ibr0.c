@@ -17,7 +17,7 @@
 
 void ex_ibr0()
 {
-    struct Context* thisContext;
+    Context* thisContext;
     int* p;
 
     if (gsip == &prime_context)
@@ -37,25 +37,34 @@ void ex_ibr0()
 
     /* clear the stack of the previous context */
     while ((gsip->Mode == deffun) && gsip->suspended == 0) {
+
         if (gsip->sp == 0 || sp < gsip->sp)
             error(ERR_botch, "stack pointer problem");
-        while (sp > gsip->sp)
-            pop();
+
+        while (sp > gsip->sp) { pop(); }
+
         pop();       /* pop off possibly bad previous result */
         ex_nilret(); /* and stick on some dummy datum */
-        p = (int*)gsip->np->itemp;
-        //execute_old(p[*p + 1]);
-        gsip->pcode = p[*p + 1];
+
+        // find and execute epilog for each function on the stack
+
+        int functionLineLength = gsip->np->functionLineLength;
+        Context** lineArray = gsip->np->functionLines;
+
+        gsip->pcode = lineArray[functionLineLength - 1]->pcode;
         gsip->ptr = gsip->pcode;
+
         execute();
+
         gsip = gsip->prev;
     }
+
     /* clear the stack of the original immediate context
-    * that lead to the suspension
+    * that led to the suspension
     */
     if (gsip == &prime_context) {
-        while (sp > stack)
-            pop();
+        while (sp > stack) { pop(); }
+
         longjmp(cold_restart, 1);
     }
 }

@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 
 struct item*
     s2vect(ap) struct item* ap;
@@ -10,7 +11,7 @@ struct item*
     struct item *p, *q;
 
     p = ap;
-    q = newdat(p->type, 1, 1);
+    q = newdat(p->itemType, 1, 1);
     q->datap = p->datap;
     q->dim[0] = 1;
     return (q);

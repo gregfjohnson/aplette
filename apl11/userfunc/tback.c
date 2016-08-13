@@ -13,7 +13,7 @@ char* atfrom[] = { "at\t", "from\t", "", "" };
 
 void tback(int flag)
 {
-    struct Context* thisContext;
+    Context* thisContext;
     int i;
 
     if (gsip == &prime_context)

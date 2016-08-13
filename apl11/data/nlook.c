@@ -3,15 +3,9 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 
-SymTabEntry*
-    nlook(name) char* name;
+SymTabEntry* nlook(char* name)
 {
-    SymTabEntry* np;
-
-    for (np = symbolTable; np->namep; np++) {
-        if (equal(np->namep, name))
-            return (np);
-    }
-    return (0);
+    return symtabFind(name);
 }

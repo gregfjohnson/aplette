@@ -4,3 +4,5 @@ Lchdir 'clean_dir'
 
 )read twoargs
 2 twoargs 5
+)vars
+)fns

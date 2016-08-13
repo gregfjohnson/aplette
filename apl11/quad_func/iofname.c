@@ -13,7 +13,7 @@ char* iofname(int m)
     struct item* p;
 
     p = fetch1();
-    if (p->type != CH || p->rank > 1)
+    if (p->itemType != CH || p->rank > 1)
         error(ERR_implicit, "file name");
     copy(CH, (char*)p->datap, (char*)b, p->size);
     b[p->size] = 0;

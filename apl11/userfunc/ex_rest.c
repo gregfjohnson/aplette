@@ -6,12 +6,11 @@
 #include "apl.h"
 #include "data.h"
 
-void ex_rest()
-{
-    struct item* p;
+void ex_rest() {
+    struct item* valueFromLastExecutedLine;
     SymTabEntry* np;
 
-    p = sp[-1];
+    valueFromLastExecutedLine = sp[-1];
     /*
     * the following is commented out because
     * of an obscure bug in the parser, which is
@@ -46,14 +45,19 @@ void ex_rest()
     * I can't think of why it won't work properly as it
     * is, but if I had the time, I'd fix it properly.
     *   --jjb
-   if(p->type == LV) error(ERR_botch,"rest B");
+    if(p->type == LV) error(ERR_botch,"rest B");
     */
+
     gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
-    erase(np);
-    np->itemp = sp[-2];
-    np->use = 0;
-    if (np->itemp)
-        np->use = DA;
+
+    symtabDelete(np->namep);
+
+    np = (SymTabEntry*)sp[-2];
+
+    if (np->entryUse != UNKNOWN) {
+        symtabEntryInsert(np);
+    }
     sp--;
-    sp[-1] = p;
+
+    sp[-1] = valueFromLastExecutedLine;
 }

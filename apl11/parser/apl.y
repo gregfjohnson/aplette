@@ -21,7 +21,7 @@
 /* terminal tokens */
 %term lex0 lex1 lex2 lex3 lex4 lex5
 %term lpar rpar lbkt rbkt eol unk dell
-%term null dot cln semi comnt tran
+%term null dot colon semi comnt tran
 %term <charptr> strng nam numb nfun mfun dfun
 %term <charval> com com0 q_var asg
 %term <charval> comexpr comnam comnull comlist
@@ -43,8 +43,8 @@
  */
 
 %%
-line:
 
+line:
     /* The top level definition of a line:
     * if its not an assignment, a comment or already printed
     * then print it.
@@ -109,7 +109,6 @@ line:
     /* function body */
     lex5 fstat ;
 
-
 /* function header */
 func:
     anyname asg header
@@ -119,8 +118,8 @@ func:
         case lex3:
             name($$, AUTO);
             /* see comments in funcomp() concerning
-          * label processing.
-          */
+             * label processing.
+             */
             *ccharp++ = ELID;
             break;
 
@@ -132,18 +131,21 @@ func:
             invert($3, ccharp2);
         }
     } |
+
     header
     {
         if(context == lex3) *ccharp++ = ELID;
+
         if(context == lex4){
             *ccharp++ = EOL;      /* pop previous result */
             *ccharp++ = NILRET;   /* return empty result */
         }
     } ;
+
 header:
     args autos
     {
-        if(context == lex4) invert($$, $2);
+        if (context == lex4) invert($$, $2);
     } ;
 
 args:
@@ -172,6 +174,7 @@ args:
             name($3, REST);
         }
     } |
+
     anyname anyname
     {
         switch(context) {
@@ -195,6 +198,7 @@ args:
             name($2, REST);
         }
     } |
+
     anyname
     {
         switch(context) {
@@ -205,7 +209,7 @@ args:
 
         case lex2:
             name($$, NF);
-     /* no break, fall through to lex3/4 */
+            /* no break, fall through to lex3/4 */
 
         case lex3:
         case lex4:
@@ -213,21 +217,23 @@ args:
             break;
         }
     } ;
+
 autos:
     semi nam autos
     {
         $$ = $3;
+
         switch(context) {
+            case lex3:
+                name($2, AUTO);
+                break;
 
-        case lex3:
-            name($2, AUTO);
-            break;
-
-        case lex4:
-            ccharp2 = name($2, REST);
-            invert($$, ccharp2);
+            case lex4:
+                ccharp2 = name($2, REST);
+                invert($$, ccharp2);
         }
     } |
+
     eol
     {
         $$ = ccharp;
@@ -239,6 +245,7 @@ bcomand:
     {
         litflag = -1;
     } ;
+
 comand:
     comexpr expr |
     comnam anyname
@@ -259,7 +266,6 @@ anylist:
     {
        name($1, NAME);
     };
-
 
 /*
  * statement:
@@ -289,7 +295,7 @@ labels:
     labels label;
 
 label:
-    anyname cln
+    anyname colon
     {
         if(labgen) genlab((SymTabEntry *) $1);
     }  ;
@@ -311,24 +317,30 @@ fstat0:
         $$ = $2;
         *ccharp++ = BRAN;
     } ;
+
 stat:
     statement eol ;
+
 statement:
     expr |
     hprint ;
+
 hprint:
     expr hsemi output ;
+
 output:
     expr
     {
         *ccharp++ = PRINT;
     } |
     hprint ;
+
 hsemi:
     semi
     {
         *ccharp++ = HPRINT;
     };
+
 expr:
     e1 |
     monadic expr
@@ -339,6 +351,7 @@ expr:
     {
         invert($$, $3);
     } ;
+
 e1:
     e2 |
     e2 lsub subs rbkt
@@ -348,6 +361,7 @@ e1:
         *ccharp++ = scount;
         scount = $2;
     } ;
+
 e2:
     nfun
     {
@@ -451,6 +465,7 @@ e2:
         $$ = ccharp;
         *ccharp++ = $1;
     } ;
+
 vector:
     number vector
     {
@@ -460,6 +475,7 @@ vector:
     {
         vcount = 1;
     } ;
+
 number:
     numb
     {
@@ -477,6 +493,7 @@ lsub:
         $$ = scount;
         scount = 1;
     } ;
+
 subs:
     sub |
     subs semi sub
@@ -484,6 +501,7 @@ subs:
         invert($$, $3);
         scount++;
     } ;
+
 sub:
     expr |
     {
@@ -519,6 +537,7 @@ monadic:
         *ccharp++ = $2+3;
         *ccharp++ = $1;
     } ;
+
 monad:
     m |
     msub |
@@ -526,6 +545,7 @@ monad:
     {
         $$++;
     } ;
+
 smonad:
     msub |
     mdsub
@@ -562,6 +582,7 @@ dyadic:
         *ccharp++ = $1;
         *ccharp++ = $3;
     } ;
+
 sdyad:
     mdcom
     {
@@ -580,14 +601,20 @@ subr:
 /* various combinations */
 comp:
     com | com0 ;
+
 dyad:
     mondya | dscal | d | com0 | asg | com ;
+
 mdcom:
     mdsub | com ;
+
 mondya:
     mdscal | md | mdsub ;
+
 scalar:
     mdscal | dscal ;
+
 anyname:
     nam | nfun | mfun | dfun ;
+
 %%

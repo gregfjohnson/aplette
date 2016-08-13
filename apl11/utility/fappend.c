@@ -19,7 +19,7 @@ void fappend(int fd, struct item* ap)
     p = ap;
     if (p->rank != 2 && p->rank != 1)
         error(ERR_rank, "");
-    if (p->type != CH)
+    if (p->itemType != CH)
         error(ERR_domain, "not character type");
     dim1 = p->dim[1];
     dim0 = p->dim[0];

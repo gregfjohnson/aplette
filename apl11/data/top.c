@@ -12,7 +12,7 @@ double top()
     double d;
 
     p = fetch1();
-    if (p->type != DA)
+    if (p->itemType != DA)
         error(ERR_implicit, "topval - bad data type");
     if (p->size != 1)
         error(ERR_implicit, "topval - size is not 1");

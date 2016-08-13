@@ -18,9 +18,9 @@ void ex_write()
     SECURITY_CHECK;
     fd = topfix();
     p = fetch1();
-    if (p->type != CH && p->type != DA)
+    if (p->itemType != CH && p->itemType != DA)
         error(ERR_domain, "");
-    mult = p->type == CH ? 1 : sizeof datum;
+    mult = p->itemType == CH ? 1 : sizeof datum;
     m = write(fd, p->datap, p->size * mult) / mult;
     pop();
     iodone(m);

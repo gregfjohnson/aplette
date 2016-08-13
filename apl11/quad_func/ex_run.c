@@ -17,7 +17,7 @@ void ex_run()
 
     SECURITY_CHECK;
     p = fetch1();
-    if (p->type != CH)
+    if (p->itemType != CH)
         error(ERR_domain, "");
     if (p->rank != 1)
         error(ERR_rank, "");

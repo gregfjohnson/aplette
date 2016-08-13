@@ -12,7 +12,7 @@ void ex_ex(void)
     char buf[40];
 
     p = fetch1();
-    if (p->type != CH)
+    if (p->itemType != CH)
         error(ERR_domain, "");
     if (p->rank > 2)
         error(ERR_rank, "");
@@ -36,7 +36,13 @@ void ex_ex(void)
         np = nlook(buf);
         i = 0;
         if (np != 0) {
-            if (np->use == MF || np->use == NF || np->use == DF || np->use == DA || np->use == CH || np->use == LV) {
+            if (   np->entryUse == MF
+                || np->entryUse == NF
+                || np->entryUse == DF
+                || np->entryUse == DA
+                || np->entryUse == CH
+                || np->entryUse == LV)
+            {
                 erase(np);
                 i = 1;
             }

@@ -6,9 +6,7 @@
 #include "utility.h"
 #include "data.h"
 
-data
-    getdat(ip) struct item* ip;
-{
+data getdat(struct item* ip) {
     struct item* p;
     int i;
     data d;
@@ -22,13 +20,13 @@ data
     i = p->index;
     while (i >= p->size) {
         if (p->size == 0)
-            return ((p->type == DA) ? zero : (data)' ') /* let the caller beware */;
+            return ((p->itemType == DA) ? zero : (data)' ') /* let the caller beware */;
         i -= p->size;
     }
-    if (p->type == DA) {
+    if (p->itemType == DA) {
         d = p->datap[i];
     }
-    else if (p->type == CH) {
+    else if (p->itemType == CH) {
         d = ((struct chrstrct*)p->datap)->c[i];
     }
     else

@@ -12,11 +12,16 @@ int topfix()
     int i;
 
     p = fetch1();
-    if (p->type != DA)
+
+    if (p->itemType != DA)
         error(ERR_domain, "topval");
+
     if (p->size != 1)
         error(ERR_length, "topval");
+
     i = fix(p->datap[0]);
+
     pop();
+
     return (i);
 }

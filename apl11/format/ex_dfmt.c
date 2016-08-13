@@ -23,7 +23,7 @@ void ex_dfmt()
     lp = fetch2();
     rp = sp[-2];
 
-    switch (lp->type) {
+    switch (lp->itemType) {
     case DA:
         break;
 
@@ -35,7 +35,7 @@ void ex_dfmt()
         error(ERR_botch, "attempt to format unsupported type");
     }
 
-    switch (rp->type) {
+    switch (rp->itemType) {
     case DA:
         /* convert rp from numeric to a literal array */
         q = fp_dfmt(lp, rp);

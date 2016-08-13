@@ -10,31 +10,34 @@
 /*
  * genlab -- generates label code onto label stacks.
  *
- * prologue:   AUTO-lab, CONST-linenum, NAME-lab LABEL
+ * prologue:   AUTO-lab, CONST-linenum, NAME-lab LABEL END
  *
- * epilog:   REST-lab
+ * epilog:   REST-lab END
  */
-void genlab(SymTabEntry* np)
-{
-    data lnumb; //this used to be a global
-    //replaced with int lineNumber
-    //needs to be recast, see below.
-    /* label prologue */
+void genlab(SymTabEntry* np) {
+    data lnumb;
+
+    // label prologue
 
     *labcpp++ = AUTO;
-    labcpp += copy(IN, (char*)&np, (char*)labcpp, 1);
+    labcpp += copy(PTR, (char*)&np, (char*)labcpp, 1);
+
     *labcpp++ = CONST;
     *labcpp++ = 1;
     lnumb = (data)lineNumber;
     labcpp += copy(DA, (char*)&lnumb, (char*)labcpp, 1);
+
     *labcpp++ = NAME;
-    labcpp += copy(IN, (char*)&np, (char*)labcpp, 1);
+    labcpp += copy(PTR, (char*)&np, (char*)labcpp, 1);
+
     *labcpp++ = LABEL;
+
     *labcpp = END;
 
-    /* label epilog */
+    // label epilog
 
     *labcpe++ = REST;
-    labcpe += copy(IN, (char*)&np, (char*)labcpe, 1);
+    labcpe += copy(PTR, (char*)&np, (char*)labcpe, 1);
+
     *labcpe = END;
 }

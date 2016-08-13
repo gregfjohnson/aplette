@@ -10,49 +10,37 @@
 #include "utility.h"
 
 /* List a function on the terminal */
-void ex_list()
-{
-    char lastc, c;
-    SymTabEntry* n;
+void ex_list() {
+    SymTabEntry* function;
     int line;
+    int i;
 
     /* Check for valid function */
 
-    n = (SymTabEntry*)*--sp;
-    if (n->type != LV)
+    function = (SymTabEntry*)*--sp;
+    if (function->entryType != LV)
         error(ERR_value, "function name not defined");
 
     /* If a function, locate it in workspace file and
     * print on the terminal in formatted form.
     */
 
-    switch (((SymTabEntry*)n)->use) {
+    switch (function->entryUse) {
     default:
         error(ERR_botch, "cannot find requested function");
 
     case NF:
     case MF:
     case DF:
-        lseek(wfile, (long)n->label, 0);
-        line = 0;
-        lastc = 0;
-        putchar('\n');
-
-        while (read(wfile, &c, 1) > 0) {
-
-            if (!c) {
-                putchar('\n');
-                return;
+        for (line = 0; line < function->sourceCodeCount; ++line) {
+            if (line == 0) {
+                printf("     ");
+            } else {
+                printf("[%d]  ", line);
             }
-
-            switch (lastc) {
-            case '\n':
-                printf("[%d]", ++line);
-            case 0:
-                putchar('\t');
+            for (i = 0; i < strlen(function->functionSourceCode[line])-1; ++i) {
+                printf("%c", function->functionSourceCode[line][i]);
             }
-            putchar(lastc = c);
         }
-        error(ERR_botch, "unexpected EOF");
     }
 }

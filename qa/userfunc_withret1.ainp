@@ -4,3 +4,5 @@ Lchdir 'clean_dir'
 
 )read withret1
 withret1
+)vars
+)fns
