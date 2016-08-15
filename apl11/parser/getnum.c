@@ -16,10 +16,19 @@ int getnum(char ic)
     n = 0;
     d1 = 0.;
     c = ic;
-    if (c == C_OVERBAR) { /* C_OVERBAR is negative number prefix */
+
+    // C_OVERBAR is negative number prefix
+    if (c == C_OVERBAR) {
         s++;
         c = *iline++;
+
+    // ascii version of negative number prefix..
+    } else if (ascii_characters && c == '`') {
+        s++;
+        c = *iline++;
+        if (c == '`') c = C_OVERBAR;
     }
+
     while (digit(c)) {
         d1 = d1 * 10. + c - '0';
         c = *iline++;
@@ -36,10 +45,19 @@ int getnum(char ic)
         s1 = 0;
         n1 = 0;
         c = *iline++;
-        if (c == C_OVERBAR) { /* C_OVERBAR is negative number prefix */
+
+        // C_OVERBAR is negative number prefix
+        if (c == C_OVERBAR) {
             s1++;
             c = *iline++;
+
+        // ascii version of negative number prefix..
+        } else if (ascii_characters && c == '`') {
+            s1++;
+            c = *iline++;
+            if (c == '`') c = C_OVERBAR;
         }
+
         while (digit(c)) {
             n1 = n1 * 10 + c - '0';
             c = *iline++;

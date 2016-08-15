@@ -55,11 +55,15 @@ int yylex()
         goto done;
     }
 
-    if (digit(c) || c == C_OVERBAR || (c == '.' && digit(*iline))) {
+    /* C_OVERBAR is the negative number prefix */
+    if (   digit(c)
+        || c == C_OVERBAR
+        || (ascii_characters && c == '`')
+        || (c == '.' && digit(*iline)))
+    {
         result = getnum(c);
         goto done;
     }
-    /* C_OVERBAR is the negative number prefix */
 
     rval = unk;
     for (tp = tab; tp->input; tp++) {
