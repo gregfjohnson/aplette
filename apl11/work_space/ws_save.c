@@ -10,38 +10,44 @@
 #include "work_space.h"
 #include "data.h"
 
-int nsave(int ffile, SymTabEntry* an);
+static int nsave(int ffile, SymTabEntry* an);
+static void saveWorkspaceInformation(int ffile);
 
 void wssave(int ffile) {
     SymTabEntry* n;
 
-    nsave(ffile, 0);
+    saveWorkspaceInformation(ffile);
+
     symtabIterateInit();
     while (n = symtabIterate()) {
-        // for(n=symbolTable; n->namep; n++) {
         nsave(ffile, n);
     }
+
     fdat(ffile);
     close(ffile);
 }
 
-int nsave(int ffile, SymTabEntry* an) {
+static void saveWorkspaceInformation(int ffile) {
+    char buffer[64];
+    writeErrorOnFailure(ffile, "apl\\11\n", 7);
+
+    sprintf(buffer, "tolerance %lg\n", tolerance);
+    writeErrorOnFailure(ffile, buffer, strlen(buffer));
+
+    sprintf(buffer, "origin %d\n", iorigin);
+    writeErrorOnFailure(ffile, buffer, strlen(buffer));
+
+    sprintf(buffer, "width %d\n", pagewidth);
+    writeErrorOnFailure(ffile, buffer, strlen(buffer));
+
+    sprintf(buffer, "digits %d\n", PrintP);
+    writeErrorOnFailure(ffile, buffer, strlen(buffer));
+}
+
+static int nsave(int ffile, SymTabEntry* an) {
     char c, buffer[64];
     int i, size;
     struct item* p;
-
-    if (an == 0) {
-        writeErrorOnFailure(ffile, "apl\\11\n", 7);
-        sprintf(buffer, "tolerance %lg\n", tolerance);
-        writeErrorOnFailure(ffile, buffer, strlen(buffer));
-        sprintf(buffer, "origin %d\n", iorigin);
-        writeErrorOnFailure(ffile, buffer, strlen(buffer));
-        sprintf(buffer, "width %d\n", pagewidth);
-        writeErrorOnFailure(ffile, buffer, strlen(buffer));
-        sprintf(buffer, "digits %d\n", PrintP);
-        writeErrorOnFailure(ffile, buffer, strlen(buffer));
-        return 0;
-    }
 
     if (an->entryUse == UNKNOWN || (an->entryUse == DA && an->itemp == 0))
         return 0;
@@ -90,18 +96,25 @@ int nsave(int ffile, SymTabEntry* an) {
         writeErrorOnFailure(ffile, "DF ", 3);
 
     real: {
+        char zero = '\0';
         int line, i;
         char lineCount[64];
+
+        // write the function's name on the same line as the function arity
+        // printed above..
         writeErrorOnFailure(ffile, an->namep, strlen(an->namep));
-        sprintf(lineCount, " %d", an->sourceCodeCount);
-        writeErrorOnFailure(ffile, lineCount, strlen(lineCount));
         writeErrorOnFailure(ffile, "\n", 1);
+
+        // write the function source code lines..
         for (line = 0; line < an->sourceCodeCount; ++line) {
             for (i = 0; i < strlen(an->functionSourceCode[line])-1; ++i) {
-                // printf("%c", an->functionSourceCode[line][i]);
                 writeErrorOnFailure(ffile, &an->functionSourceCode[line][i], 1);
             }
         }
+
+        // a zero byte is the marker for end of a function definition.
+        writeErrorOnFailure(ffile, &zero, 1);
+
         break;
     }
     }

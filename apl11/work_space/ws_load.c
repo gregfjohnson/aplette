@@ -14,6 +14,7 @@
 #include "main.h"
 
 static char *gettoken(int ffile, char* buffer);
+static void readFunction(int fd, SymTabEntry *newFunction);
 
 void readErrorOnFailure(int fd, void* buf, size_t count) {
     int result = read(fd, buf, count);
@@ -113,56 +114,9 @@ void wsload(int ffile)
 
         case NF:
         case MF:
-        case DF: {
-            int sourceCodeLen = 0;
-            char lineBuf[LINEMAX];
-            char *iline;
-            int line;
-            unsigned char ch;
-            int lineCount = atoi(gettoken(ffile, buffer));
-
-            // while (1 == read(ffile, &ch, 1) && ch != (unsigned char) '\n');
-
-            n->itemp = 0;
-            n->label = 0;
-
-            n->sourceCodeCount = lineCount;
-
-            n->functionSourceCode = (char **) alloc(SPTR * lineCount);
-
-            for (line = 0; line < lineCount; ++line) {
-                int i;
-                int lineLen = 0;
-
-                while (1) {
-                    int result;
-                    result = read(ffile, &ch, 1);
-                    if (result != 1) {
-                        close(ffile);
-                        error(ERR, "wsload unexpected eof");
-                    }
-                    lineBuf[lineLen++] = ch;
-                    if (ch == (unsigned char) '\n') break;
-                }
-                lineBuf[lineLen] = '\0';
-
-                if (ascii_characters) {
-                    iline = to_ascii_input(lineBuf);
-
-                } else {
-                    iline = lineBuf;
-                }
-
-                n->functionSourceCode[line] = (char *) alloc(strlen(iline) + 1);
-                strcpy(n->functionSourceCode[line], iline);
-
-                if (ascii_characters) {
-                    aplfree((int *) iline);
-                }
-            }
-
+        case DF:
+            readFunction(ffile, n);
             break;
-        }
         }
     }
 
@@ -192,4 +146,103 @@ static char *gettoken(int ffile, char* buffer) {
     }
     buffer[i] = 0;
     return buffer;
+}
+
+// read a function into the workspace.
+//
+// The legacy format for workspaces is to have
+// a line "MF functionName" (resp. "DF" or "NF", indicating arity of the function).
+// then, a string of non-zero characters containing the source code for the
+// function, with new-line characters separating individual lines, then
+// a byte containing 0 as a flag that the function definition is complete.
+//
+// I'd like to change the above format to "MF functionName lineCount", followed
+// by lineCount new-line terminated function source code lines.  And, dispense
+// with the funny zero character at the end of the function.
+// But, on the chance that there are some workspaces people have out there,
+// I'll stick to the legacy workspace format for now.  - Greg J.
+//
+// given that we don't know how many lines we'll find when we start reading in
+// the function, and that alloc.c does not have a realloc operation, we do things
+// in a roundabout way:  malloc() and free our own local character array and read
+// the function text into that array.  use realloc() along the way as necessary.
+// then, count the number of source code lines, allocate the real array of
+// line pointers based on that size, and copy from there.
+
+static void readFunction(int fd, SymTabEntry *newFunction) {
+    char *fnText;
+    int fnTextLen;
+    int fnTextUsed;
+
+    fnText = (char *) malloc(32);
+    fnTextLen = 32;
+    fnTextUsed = 0;
+
+    while (1) {
+        char ch;
+        int result;
+        result = read(fd, &ch, 1);
+        if (result != 1) {
+            close(fd);
+            error(ERR, "wsload unexpected eof");
+        }
+        if (ch == 0) break;
+
+        if (fnTextUsed == fnTextLen) {
+            fnTextLen *= 2;
+            fnText = (char *) realloc(fnText, fnTextLen);
+        }
+
+        fnText[fnTextUsed++] = ch;
+    }
+    int lineCount = 0;
+    for (int i = 0; fnText[i] != '\0'; ++i) {
+        if (fnText[i] == '\n') {
+            ++lineCount;
+        }
+    }
+ 
+    int sourceCodeLen = 0;
+    char lineBuf[LINEMAX];
+    char *iline;
+    int line;
+    unsigned char ch;
+
+    newFunction->itemp = 0;
+    newFunction->label = 0;
+
+    newFunction->sourceCodeCount = lineCount;
+
+    newFunction->functionSourceCode = (char **) alloc(SPTR * lineCount);
+    char *fnTextPtr = fnText;
+
+    for (line = 0; line < lineCount; ++line) {
+        int i;
+        int lineLen = 0;
+
+        while (1) {
+            char ch = *fnTextPtr++;
+            lineBuf[lineLen++] = ch;
+            if (ch == (unsigned char) '\n') {
+                lineBuf[lineLen] = '\0';
+                break;
+            }
+        }
+
+        if (ascii_characters) {
+            iline = to_ascii_input(lineBuf);
+
+        } else {
+            iline = lineBuf;
+        }
+
+        newFunction->functionSourceCode[line] = (char *) alloc(strlen(iline) + 1);
+        strcpy(newFunction->functionSourceCode[line], iline);
+
+        if (ascii_characters) {
+            aplfree((int *) iline);
+        }
+    }
+
+    free(fnText);
 }
