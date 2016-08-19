@@ -12,6 +12,7 @@
 
 #include "apl.h"
 #include "char.h"
+#include "print.h"
 #include "format.h"
 
 /* convert floating point data d to character string 
@@ -35,7 +36,7 @@ char* fp2char_paded(data d, struct FORMAT* format)
                 ;
             /* leading minus */
             if (format_buffer[n] == '-')
-                format_buffer[n++] = C_OVERBAR;
+                format_buffer[n++] = c_overbar();
             /* up to decimal place */
             for (; format_buffer[n] != '.' && n < width; n++)
                 ;
@@ -59,7 +60,7 @@ char* fp2char_paded(data d, struct FORMAT* format)
         n--;
         for (; format_buffer[n] == '0' || format_buffer[n] == ' ' || format_buffer[n] == '.'; n--)
             ;
-        if (format_buffer[n] == C_OVERBAR)
+        if (format_buffer[n] == c_overbar())
             format_buffer[n] = ' ';
     }
 
@@ -74,7 +75,7 @@ char* fp2char_paded(data d, struct FORMAT* format)
         for (n = 0; format_buffer[n] == ' '; n++)
             ;
         if (format_buffer[n] == '-' && value != 0)
-            format_buffer[n++] = C_OVERBAR;
+            format_buffer[n++] = c_overbar();
         else
             format_buffer[n++] = ' ';
 
@@ -88,7 +89,7 @@ char* fp2char_paded(data d, struct FORMAT* format)
         /* exponent's sign */
         m = n + 1;
         if (format_buffer[n] == '-')
-            format_buffer[n++] = C_OVERBAR;
+            format_buffer[n++] = c_overbar();
 
         /* skip exponent's leading zero */
         for (; format_buffer[m] == '0';)

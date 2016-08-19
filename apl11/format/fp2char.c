@@ -12,6 +12,7 @@
 
 #include "apl.h"
 #include "char.h"
+#include "print.h"
 #include "format.h"
 
 /* convert floating point data d to character string */
@@ -31,7 +32,7 @@ char* fp2char(data d, struct FORMAT* format)
             ;
         /* leading minus */
         if (format_buffer[n] == '-')
-            format_buffer[n++] = C_OVERBAR;
+            format_buffer[n++] = c_overbar();
         /* leading zeros and decimal place */
         for (; format_buffer[n] == '0' || format_buffer[n] == '.'; n++)
             ;
@@ -60,7 +61,7 @@ char* fp2char(data d, struct FORMAT* format)
         /* leading minus */
         if (sign) {
             if (value < 0) {
-                format_buffer[0] = C_OVERBAR;
+                format_buffer[0] = c_overbar();
                 value = -value;
             }
             else
@@ -100,7 +101,7 @@ char* fp2char(data d, struct FORMAT* format)
         m++;
         /* deal with exponent sign */
         if (format_buffer[m++] == '-')
-            format_buffer[n++] = C_OVERBAR;
+            format_buffer[n++] = c_overbar();
         /* skip exponent leading zeros */
         for (; format_buffer[m] == '0'; m++)
             ;

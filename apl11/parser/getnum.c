@@ -5,6 +5,7 @@
 
 #include "local_parser.h"
 #include "char.h"
+#include "print.h"
 #include "y.tab.h"
 
 int getnum(char ic)
