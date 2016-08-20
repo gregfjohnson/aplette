@@ -196,7 +196,8 @@ static void readFunction(int fd, SymTabEntry *newFunction) {
         fnText[fnTextUsed++] = ch;
     }
     int lineCount = 0;
-    for (int i = 0; fnText[i] != '\0'; ++i) {
+    int i;
+    for (i = 0; fnText[i] != '\0'; ++i) {
         if (fnText[i] == '\n') {
             ++lineCount;
         }
