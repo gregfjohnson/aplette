@@ -8,11 +8,13 @@
 #include "utility.h"
 #include "data.h"
 
-int td1(int tdmode);
-void takezr(int* fill);
+#define Take 0
+#define Drop 1
 
-void ex_take()
-{
+static int td1(int tdmode);
+static void takezr(int* fill);
+
+void ex_take() {
     int i, k, o, fill[MRANK], fflg;
 
     /* While TANSTAAFL, in APL there is a close approximation.  It
@@ -26,7 +28,7 @@ void ex_take()
     */
 
     o = 0;
-    fflg = td1(0);
+    fflg = td1(Take);
     for (i = 0; i < idx.rank; i++) {
         fill[i] = 0;
         k = idx.idx[i];
@@ -53,33 +55,38 @@ void ex_take()
     }
 }
 
-void ex_drop()
-{
+void ex_drop() {
     int i, k, o;
 
+    td1(Drop);
+
     o = 0;
-    td1(1);
     for (i = 0; i < idx.rank; i++) {
         k = idx.idx[i];
+
         if (k > 0)
             o += idx.del[i] * k;
         else
             k = -k;
+
         idx.dim[i] -= k;
     }
+
     map(o);
 }
 
-int td1(int tdmode)
-{
-    struct item *p, *q, *nq, *s2vect();
+static int td1(int tdmode) {
+    struct item *p, *q, *nq;
     int i, k;
     int r; /* set to 1 if take > array dim */
 
     p = fetch2();
     q = sp[-2];
+
     r = !q->size;       /* Weird stuff for null items */
-    if (q->rank == 0) { /* Extend scalars */
+
+    /* Extend scalars */
+    if (q->rank == 0) {
         nq = newdat(q->itemType, p->size, 1);
         *nq->datap = *q->datap;
         pop();
@@ -87,9 +94,12 @@ int td1(int tdmode)
         for (i = 0; i < p->size; i++)
             q->dim[i] = 1;
     }
+
     if (p->rank > 1 || q->rank != p->size)
         error(ERR_rank, "");
+
     bidx(q);
+
     for (i = 0; i < p->size; i++) {
         k = fix(getdat(p));
         idx.idx[i] = k;
@@ -102,7 +112,7 @@ int td1(int tdmode)
        */
 
         if (k > idx.dim[i]) {
-            if (tdmode)
+            if (tdmode == Drop)
                 idx.idx[i] = idx.dim[i];
             else
                 r = 1;
@@ -112,8 +122,7 @@ int td1(int tdmode)
     return (r);
 }
 
-void takezr(int* fill)
-{
+static void takezr(int* fill) {
     struct item* p;
     int i;
 
@@ -121,7 +130,7 @@ void takezr(int* fill)
         if ((fill[i] > 0 && idx.idx[i] >= fill[i]) || (fill[i] < 0 && idx.idx[i] < -fill[i])) {
             p = sp[-1];
             p->index = access();
-            putdat(p, (p->itemType == DA) ? zero : (data)' ');
+            putdat(p, (p->itemType == DA) ? zero : (data) ' ');
             return;
         }
     }

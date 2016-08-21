@@ -22,7 +22,7 @@ BROKEN_OBJECTS = ibeams.dif quad_fns.dif nesting.dif userfunc.dif \
                  struct_monadic.dif struct_dyadic.dif
 
 # Keep *.out files
-.PRECIOUS: %.out
+.PRECIOUS: %.out %.aout
 
 # As long as the following is the first target,
 # everything will get tested

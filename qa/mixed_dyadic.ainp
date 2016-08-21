@@ -3,3 +3,17 @@ left  { 1
 right { -1
 left  O@| pi
 right O@| pi
+
+3 Y pi
+0 Y pi
+R0 Y pi
+RR0 Y pi
+
+m { 3 4RI12
+L { m1 { 2 1 U m
+Rm1
+RRm1
+
+L { m0 { 1 2 U m1
+Rm0
+RRm0
