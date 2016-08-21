@@ -1,0 +1,8 @@
+G z { exp x; xreal; ximag; rz
+} ((0 # RRx) ^ 1 # `1 Y Rx) / xnotreal
+x { x, 0
+xnotreal:
+rz { Rx
+xreal { 0 `1 U ((X/`1URx), 2) Rx
+ximag { 0 1 U ((X/`1URx), 2) Rx
+z { rz R ((*xreal) X (2 O ximag)), (*xreal) X 1 O ximag
