@@ -102,8 +102,8 @@ int main(int argc, char** argp)
 
     /* other flags... */
     echoflg = !isatty(0);
-    use_readline = 0;
-    ascii_characters = 0;
+    use_readline = 1;
+    ascii_characters = 1;
 
     /* diagnostics */
     mem_trace = 0;   /* dynamic memory allocation */
