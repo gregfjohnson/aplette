@@ -14,10 +14,14 @@
 #include "main.h"
 #include "debug.h"
 #include "userfunc.h"
+#include "parser.h"
 #include "listdir.h"
 #include "ex_shell.h"
 #include "ex_list.h"
 #include "ex_prws.h"
+#include "quad_var.h"
+
+void updatePrintP(struct item *p);
 
 void ex_syscom()
 {
@@ -63,6 +67,18 @@ void ex_syscom()
 
     case MEMORY:
         mem_dump();
+        return;
+
+    case DIGITS:
+        if (exprOrNullFlag) {
+            p = sp[-1];
+            sp--;
+            updatePrintP(p);
+            outputPrintP();
+
+        } else {
+            outputPrintP();
+        }
         return;
 
     case TRACE:
@@ -114,7 +130,6 @@ void ex_syscom()
     case VARS:
         symtabIterateInit();
         while (n = symtabIterate()) {
-            // for(n=symbolTable; n->namep; n++) {
             if (n->itemp && n->entryUse == DA) {
                 if (column + 8 >= pagewidth)
                     printf("\n\t");
@@ -128,7 +143,6 @@ void ex_syscom()
     case FNS:
         symtabIterateInit();
         while (n = symtabIterate()) {
-            // for(n=symbolTable; n->namep; n++) {
             if (n->entryUse == DF || n->entryUse == MF || n->entryUse == NF) {
                 if (column + 8 >= pagewidth)
                     printf("\n\t");

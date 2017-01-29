@@ -35,5 +35,6 @@ struct COMM comtab[] = {
     "list", comnam, LIST,
     "prws", comnull, PRWS,
     "memory", comnull, MEMORY,
+    "digits", comExprOrNull, DIGITS,
     0, unk
 };

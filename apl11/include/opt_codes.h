@@ -190,3 +190,4 @@
 #define LIST 30
 #define PRWS 31
 #define MEMORY 32
+#define DIGITS 33

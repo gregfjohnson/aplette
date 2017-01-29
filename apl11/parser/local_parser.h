@@ -11,6 +11,7 @@
 int vcount;
 int scount;
 int litflag;
+int exprOrNullFlag;
 int nlexsym;
 int context;
 char* iline;

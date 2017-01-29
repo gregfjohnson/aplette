@@ -16,6 +16,23 @@
 #include "utility.h"
 #include "char.h"
 
+void outputPrintP() {
+    printf("digits %d\n", PrintP);
+}
+
+void updatePrintP(struct item *p) {
+    int i;
+
+    if (p->itemType != DA)
+        error(ERR_domain, "assign value not numeric");
+    if (p->rank != 0)
+        error(ERR_rank, "assign value not scalar");
+    i = p->datap[0];
+    if (i < 1 || i > 20)
+        error(ERR_limit, S_QUAD "pp range is 1 to 20");
+    PrintP = i;
+}
+
 struct item* ex_qpp(io) int io; /* 0 = source, 1 = sink */
 {
     struct item* p;
@@ -29,14 +46,7 @@ struct item* ex_qpp(io) int io; /* 0 = source, 1 = sink */
     else {
         pop();
         p = fetch1();
-        if (p->itemType != DA)
-            error(ERR_domain, "assign value not numeric");
-        if (p->rank != 0)
-            error(ERR_rank, "assign value not scalar");
-        i = p->datap[0];
-        if (i < 1 || i > 20)
-            error(ERR_limit, S_QUAD "pp range is 1 to 20");
-        PrintP = i;
+        updatePrintP(p);
         sp[-1] = (struct item*)p;
         return (0);
     };

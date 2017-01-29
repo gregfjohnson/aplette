@@ -24,7 +24,7 @@
 %term null dot colon semi comnt tran
 %term <charptr> strng nam numb nfun mfun dfun
 %term <charval> com com0 q_var asg
-%term <charval> comexpr comnam comnull comlist
+%term <charval> comnam comnull comlist comExpr comExprOrNull
 %term <charval> dscal mdscal
 %term <charval> m d md msub mdsub
 
@@ -247,13 +247,24 @@ bcomand:
     } ;
 
 comand:
-    comexpr expr |
+    comExprOrNull exprOrNull |
+    comExpr expr |
     comnam anyname
     {
         name($2, NAME);
     } |
     comlist anylist |
     comnull ;
+
+exprOrNull:
+    expr
+    {
+        exprOrNullFlag = 1;
+    } |
+    {
+        exprOrNullFlag = 0;
+    }
+    ;
 
 anylist:
     anylist anyname

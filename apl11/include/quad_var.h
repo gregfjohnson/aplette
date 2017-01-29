@@ -1,4 +1,4 @@
-/* parser.h, Copyright (C) 2016, Greg Johnson
+/* quad_var.h, Copyright (C) 2017, Greg Johnson
  * Released under the terms of the GNU GPL v2.0.
  *
  * This program is distributed in the hope that it will be useful,
@@ -6,11 +6,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef QUAD_VAR_H
+#define QUAD_VAR_H
 
-char* compile_new(int f);
-char* compile_old(char* s, int f);
-extern int exprOrNullFlag;
+#include "apl.h"
 
-#endif
+void outputPrintP();
+void updatePrintP(struct item *p);
+
+#endif // QUAD_VAR_H
