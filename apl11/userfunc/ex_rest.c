@@ -50,7 +50,7 @@ void ex_rest() {
 
     gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
 
-    symtabDelete(np->namep);
+    symtabRemoveEntry(np);
 
     np = (SymTabEntry*)sp[-2];
 
