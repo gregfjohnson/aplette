@@ -131,9 +131,15 @@ int main(int argc, char** argp)
                 mkcore = 1;
                 break;
             case 'a':
-                ascii_characters = 1;
+                ascii_characters = 0;
+                break;
+            case 'A':
+                ascii_characters = 0;
                 break;
             case 'r':
+                use_readline = 1;
+                break;
+            case 'R':
                 use_readline = 1;
                 break;
             case 't':
