@@ -48,7 +48,7 @@ void ex_fun()
     checksp();
 
     if (funtrace) {
-        printf("\ntrace: fn %s entered:\n", np->namep);
+        fprintf(stderr, "\ntrace: fn %s entered:\n", np->namep);
     }
 
     if (setjmp(gsip->env)) {
@@ -59,7 +59,7 @@ void ex_fun()
         gsip->funlc++;
 
         if (funtrace) {
-            printf("\ntrace: fn %s[%d]:\n", np->namep, gsip->funlc - 1);
+            fprintf(stderr, "\ntrace: fn %s[%d]:\n", np->namep, gsip->funlc - 1);
         }
 
         if (gsip->funlc == 1) {
@@ -85,15 +85,26 @@ void ex_fun()
 
         reenter:
 
-        if (gsip->funlc < 0 || gsip->funlc >= functionLineCount) {
+        if (gsip->funlc <= 0 || gsip->funlc >= functionLineCount) {
             gsip->funlc = 1; /* for pretty traceback */
 
             if (funtrace) {
-                printf("\ntrace: fn %s exits\n", np->namep);
+                fprintf(stderr, "\ntrace: fn %s exits\n", np->namep);
+                // function_dump(thisContext->np);
+            }
+
+            if (vars_trace) {
+                fprintf(stderr, "\nsymtab before exit:\n");
+                vars_dump();
             }
 
             gsip->pcode = lineArray[functionLineLength - 1]->pcode;
             execute();
+
+            if (vars_trace) {
+                fprintf(stderr, "\nsymtab after exit:\n");
+                vars_dump();
+            }
 
             gsip = gsip->prev; /* restore state indicator to previous state */
             aplfree((int*)thisContext);
