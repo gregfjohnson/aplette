@@ -18,9 +18,9 @@ args=''
 ## Uncomment the following to force all support files to go under 
 ## $prefix ; or leave them commented and ./autoconf/configure will guess 
 ## where they should go according to similar files on your machine.
-export wsdir ; wsdir='${prefix}/share/openAPL'
-export x11share ; x11share='${prefix}/X11'
-export fontdir ; fontdir=${x11share}/fonts
+#export wsdir ; wsdir='${prefix}/share/openAPL'
+#export x11share ; x11share='${prefix}/X11'
+#export fontdir ; fontdir=${x11share}/fonts
 
 # Uncomment the following to install epson compatible print filter
 #args="$args --enable-epson"
