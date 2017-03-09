@@ -22,7 +22,7 @@
 #include <readline/readline.h>
 #endif
 
-char headline[] = "openAPL "
+char headline[] = "aplette "
                   "Version 0"
 #include "patchlevel.h"
                   "\n";
@@ -81,7 +81,7 @@ int main(int argc, char** argp)
 
 #ifdef HAVE_LIBREADLINE
     /* Allow conditional parsing of the ~/.inputrc file. */
-    rl_readline_name = "openapl";
+    rl_readline_name = "aplette";
 #endif
 
     mkcore = 0;           /* if "1", produce core image upon fatal error */
