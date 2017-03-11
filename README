@@ -6,4 +6,4 @@ To build:
 	$> ./configure
 	$> make
 
-This will build the binary executable.
+This will build the binary executable source/aplette.
