@@ -10,13 +10,6 @@
 # Defaults:
 ac_help=
 ac_default_prefix=/usr/local
-# Any additions from configure.in:
-ac_help="$ac_help
-  --with-x                use the X Window System"
-ac_help="$ac_help
-  --enable-ghostscript    Support for PostScript(TM) compatible printer"
-ac_help="$ac_help
-  --enable-epson          Support for Epson(TM) compatible printer"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -456,7 +449,7 @@ echo > confdefs.h
 
 # A filename unique to this package, relative to the directory that
 # configure is in, which we can look for to find out if srcdir is correct.
-ac_unique_file=../apl11/include/apl.h
+ac_unique_file=../source/include/apl.h
 
 # Find the source files, if location was not specified.
 if test -z "$srcdir"; then
@@ -973,242 +966,6 @@ else
 fi
 echo "$ac_t""$CPP" 1>&6
 
-# If we find X, set shell vars x_includes and x_libraries to the
-# paths, otherwise set no_x=yes.
-# Uses ac_ vars as temps to allow command line to override cache and checks.
-# --without-x overrides everything else, but does not touch the cache.
-echo $ac_n "checking for X""... $ac_c" 1>&6
-echo "configure:982: checking for X" >&5
-
-# Check whether --with-x or --without-x was given.
-if test "${with_x+set}" = set; then
-  withval="$with_x"
-  :
-fi
-
-# $have_x is `yes', `no', `disabled', or empty when we do not yet know.
-if test "x$with_x" = xno; then
-  # The user explicitly disabled X.
-  have_x=disabled
-else
-  if test "x$x_includes" != xNONE && test "x$x_libraries" != xNONE; then
-    # Both variables are already set.
-    have_x=yes
-  else
-if eval "test \"`echo '$''{'ac_cv_have_x'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  # One or both of the vars are not set, and there is no cached value.
-ac_x_includes=NO ac_x_libraries=NO
-rm -fr conftestdir
-if mkdir conftestdir; then
-  cd conftestdir
-  # Make sure to not put "make" in the Imakefile rules, since we grep it out.
-  cat > Imakefile <<'EOF'
-acfindx:
-	@echo 'ac_im_incroot="${INCROOT}"; ac_im_usrlibdir="${USRLIBDIR}"; ac_im_libdir="${LIBDIR}"'
-EOF
-  if (xmkmf) >/dev/null 2>/dev/null && test -f Makefile; then
-    # GNU make sometimes prints "make[1]: Entering...", which would confuse us.
-    eval `${MAKE-make} acfindx 2>/dev/null | grep -v make`
-    # Open Windows xmkmf reportedly sets LIBDIR instead of USRLIBDIR.
-    for ac_extension in a so sl; do
-      if test ! -f $ac_im_usrlibdir/libX11.$ac_extension &&
-        test -f $ac_im_libdir/libX11.$ac_extension; then
-        ac_im_usrlibdir=$ac_im_libdir; break
-      fi
-    done
-    # Screen out bogus values from the imake configuration.  They are
-    # bogus both because they are the default anyway, and because
-    # using them would break gcc on systems where it needs fixed includes.
-    case "$ac_im_incroot" in
-	/usr/include) ;;
-	*) test -f "$ac_im_incroot/X11/Xos.h" && ac_x_includes="$ac_im_incroot" ;;
-    esac
-    case "$ac_im_usrlibdir" in
-	/usr/lib | /lib) ;;
-	*) test -d "$ac_im_usrlibdir" && ac_x_libraries="$ac_im_usrlibdir" ;;
-    esac
-  fi
-  cd ..
-  rm -fr conftestdir
-fi
-
-if test "$ac_x_includes" = NO; then
-  # Guess where to find include files, by looking for this one X11 .h file.
-  test -z "$x_direct_test_include" && x_direct_test_include=X11/Intrinsic.h
-
-  # First, try using that file with no special directory specified.
-cat > conftest.$ac_ext <<EOF
-#line 1044 "configure"
-#include "confdefs.h"
-#include <$x_direct_test_include>
-EOF
-ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1049: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
-ac_err=`grep -v '^ *+' conftest.out`
-if test -z "$ac_err"; then
-  rm -rf conftest*
-  # We can compile using X headers with no special include directory.
-ac_x_includes=
-else
-  echo "$ac_err" >&5
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  # Look for the header file in a standard set of common directories.
-# Check X11 before X11Rn because it is often a symlink to the current release.
-  for ac_dir in               \
-    /usr/X11/include          \
-    /usr/X11R6/include        \
-    /usr/X11R5/include        \
-    /usr/X11R4/include        \
-                              \
-    /usr/include/X11          \
-    /usr/include/X11R6        \
-    /usr/include/X11R5        \
-    /usr/include/X11R4        \
-                              \
-    /usr/local/X11/include    \
-    /usr/local/X11R6/include  \
-    /usr/local/X11R5/include  \
-    /usr/local/X11R4/include  \
-                              \
-    /usr/local/include/X11    \
-    /usr/local/include/X11R6  \
-    /usr/local/include/X11R5  \
-    /usr/local/include/X11R4  \
-                              \
-    /usr/X386/include         \
-    /usr/x386/include         \
-    /usr/XFree86/include/X11  \
-                              \
-    /usr/include              \
-    /usr/local/include        \
-    /usr/unsupported/include  \
-    /usr/athena/include       \
-    /usr/local/x11r5/include  \
-    /usr/lpp/Xamples/include  \
-                              \
-    /usr/openwin/include      \
-    /usr/openwin/share/include \
-    ; \
-  do
-    if test -r "$ac_dir/$x_direct_test_include"; then
-      ac_x_includes=$ac_dir
-      break
-    fi
-  done
-fi
-rm -f conftest*
-fi # $ac_x_includes = NO
-
-if test "$ac_x_libraries" = NO; then
-  # Check for the libraries.
-
-  test -z "$x_direct_test_library" && x_direct_test_library=Xt
-  test -z "$x_direct_test_function" && x_direct_test_function=XtMalloc
-
-  # See if we find them without any special options.
-  # Don't add to $LIBS permanently.
-  ac_save_LIBS="$LIBS"
-  LIBS="-l$x_direct_test_library $LIBS"
-cat > conftest.$ac_ext <<EOF
-#line 1118 "configure"
-#include "confdefs.h"
-
-int main() {
-${x_direct_test_function}()
-; return 0; }
-EOF
-if { (eval echo configure:1125: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
-  rm -rf conftest*
-  LIBS="$ac_save_LIBS"
-# We can link X programs with no special library path.
-ac_x_libraries=
-else
-  echo "configure: failed program was:" >&5
-  cat conftest.$ac_ext >&5
-  rm -rf conftest*
-  LIBS="$ac_save_LIBS"
-# First see if replacing the include by lib works.
-# Check X11 before X11Rn because it is often a symlink to the current release.
-for ac_dir in `echo "$ac_x_includes" | sed s/include/lib/` \
-    /usr/X11/lib          \
-    /usr/X11R6/lib        \
-    /usr/X11R5/lib        \
-    /usr/X11R4/lib        \
-                          \
-    /usr/lib/X11          \
-    /usr/lib/X11R6        \
-    /usr/lib/X11R5        \
-    /usr/lib/X11R4        \
-                          \
-    /usr/local/X11/lib    \
-    /usr/local/X11R6/lib  \
-    /usr/local/X11R5/lib  \
-    /usr/local/X11R4/lib  \
-                          \
-    /usr/local/lib/X11    \
-    /usr/local/lib/X11R6  \
-    /usr/local/lib/X11R5  \
-    /usr/local/lib/X11R4  \
-                          \
-    /usr/X386/lib         \
-    /usr/x386/lib         \
-    /usr/XFree86/lib/X11  \
-                          \
-    /usr/lib              \
-    /usr/local/lib        \
-    /usr/unsupported/lib  \
-    /usr/athena/lib       \
-    /usr/local/x11r5/lib  \
-    /usr/lpp/Xamples/lib  \
-    /lib/usr/lib/X11	  \
-                          \
-    /usr/openwin/lib      \
-    /usr/openwin/share/lib \
-    ; \
-do
-  for ac_extension in a so sl; do
-    if test -r $ac_dir/lib${x_direct_test_library}.$ac_extension; then
-      ac_x_libraries=$ac_dir
-      break 2
-    fi
-  done
-done
-fi
-rm -f conftest*
-fi # $ac_x_libraries = NO
-
-if test "$ac_x_includes" = NO || test "$ac_x_libraries" = NO; then
-  # Didn't find X anywhere.  Cache the known absence of X.
-  ac_cv_have_x="have_x=no"
-else
-  # Record where we found X for the cache.
-  ac_cv_have_x="have_x=yes \
-	        ac_x_includes=$ac_x_includes ac_x_libraries=$ac_x_libraries"
-fi
-fi
-  fi
-  eval "$ac_cv_have_x"
-fi # $with_x != no
-
-if test "$have_x" != yes; then
-  echo "$ac_t""$have_x" 1>&6
-  no_x=yes
-else
-  # If each of the values was on the command line, it overrides each guess.
-  test "x$x_includes" = xNONE && x_includes=$ac_x_includes
-  test "x$x_libraries" = xNONE && x_libraries=$ac_x_libraries
-  # Update the cache value to reflect the command line values.
-  ac_cv_have_x="have_x=yes \
-		ac_x_includes=$x_includes ac_x_libraries=$x_libraries"
-  echo "$ac_t""libraries $x_libraries, headers $x_includes" 1>&6
-fi
-
-
-
 ac_header_dirent=no
 for ac_hdr in dirent.h sys/ndir.h sys/dir.h ndir.h
 do
@@ -1645,29 +1402,11 @@ else
 fi
 done
 
-
-# Check whether --enable-ghostscript or --disable-ghostscript was given.
-if test "${enable_ghostscript+set}" = set; then
-  enableval="$enable_ghostscript"
-  with_ghostscript='ghostscript'
-fi
-
-
-
-# Check whether --enable-epson or --disable-epson was given.
-if test "${enable_epson+set}" = set; then
-  enableval="$enable_epson"
-  with_epson='epson'
-fi
-
-
-
 if ( echo $LIBS | grep readline 2>/dev/null 1>&2 ) ; then
   option_4=$srcdir./script/apl-setup.opt4a
 else
   option_4=$srcdir./script/apl-setup.opt4b
 fi
-
 
 if test -z "$wsdir" ; then
     echo $ac_n "checking for a directory in which to put APL workspaces""... $ac_c" 1>&6
@@ -1690,308 +1429,6 @@ else
   echo "configure: warning: setting work space directory to $wsdir" 1>&2
 fi
 
-  
-for ac_prog in setfont 
-do
-# Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
-echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:1700: checking for $ac_word" >&5
-if eval "test \"`echo '$''{'ac_cv_prog_have_kbd'+set}'`\" = set"; then
-  echo $ac_n "(cached) $ac_c" 1>&6
-else
-  if test -n "$have_kbd"; then
-  ac_cv_prog_have_kbd="$have_kbd" # Let the user override the test.
-else
-  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
-  for ac_dir in $PATH; do
-    test -z "$ac_dir" && ac_dir=.
-    if test -f $ac_dir/$ac_word; then
-      ac_cv_prog_have_kbd="$ac_prog"
-      break
-    fi
-  done
-  IFS="$ac_save_ifs"
-fi
-fi
-have_kbd="$ac_cv_prog_have_kbd"
-if test -n "$have_kbd"; then
-  echo "$ac_t""$have_kbd" 1>&6
-else
-  echo "$ac_t""no" 1>&6
-fi
-
-test -n "$have_kbd" && break
-done
-test -n "$have_kbd" || have_kbd=""""
-
-if test "${have_kbd}" = ""; then
-  echo "configure: warning: kbd package is missing! skipping unnecessary tests" 1>&2
-  option_1=$srcdir./script/apl.opt1b
-  option_2=$srcdir./script/apl.opt2b
-  option_3=$srcdir./script/apl-setup.opt3b
-  option_5=$srcdir./script/aplrc.opt5b
-else
-  with_console='console'
-  
-  option_1=$srcdir./script/apl.opt1a
-  option_2=$srcdir./script/apl.opt2a
-  option_3=$srcdir./script/apl-setup.opt3a
-  option_5=$srcdir./script/aplrc.opt5a
-fi
-
-
-
-
-
-if test "${with_console}" != ""; then
-  if test -z "$fontdir"; then
-    echo $ac_n "checking for kbd key tables directory""... $ac_c" 1>&6
-echo "configure:1751: checking for kbd key tables directory" >&5
-    for search_dir in $prefix/share/keytables /usr/share/keytables \
-    /usr/local/share/keytables /usr/lib/kbd/keytables
-    do
-      if test -d "$search_dir" ; then 
-        keytabledir=$search_dir
-        break
-      fi
-    done
-    if test "${keytabledir}" = ""; then
-      echo "$ac_t""Doh!" 1>&6
-      echo "configure: warning: kbd package may be incomplete" 1>&2
-    else
-      echo "$ac_t""$keytabledir" 1>&6
-    fi
-  else
-    keytabledir=$fontdir
-    echo "configure: warning: setting keytable directory to $fontdir" 1>&2
-  fi
-  
-fi
-
-if test "${with_console}" != "" || test "${with_epson}" != "" ; then
-  if test -z "$fontdir"; then
-    echo $ac_n "checking for kbd console font directory""... $ac_c" 1>&6
-echo "configure:1776: checking for kbd console font directory" >&5
-    for search_dir in $prefix/share/consolefonts /usr/share/consolefonts \
-    /usr/local/share/consolefonts /usr/lib/kbd/consolefonts
-    do
-      if test -d "$search_dir" ; then 
-        consolefontdir=$search_dir
-        break
-      fi
-    done
-    if test "${consolefontdir}" = ""; then
-      echo "$ac_t""Doh!" 1>&6
-      echo "configure: warning: kbd package may be incomplete" 1>&2
-      if test ${with_epson} != "" ; then
-        echo "configure: warning: Forcing console font directory to $sysconfdir" 1>&2
-        consolefontdir=$sysconfdir
-        
-      fi
-    else
-      echo "$ac_t""$consolefontdir" 1>&6
-    fi
-  else
-    consolefontdir=$fontdir
-    echo "configure: warning: setting consolefont directory to $fontdir" 1>&2
-  fi
-  
-fi
-  
-if test "${with_console}" != ""; then
-  echo $ac_n "checking for kbd default font""... $ac_c" 1>&6
-echo "configure:1805: checking for kbd default font" >&5
-  for search_dir in $prefix/share/consolefonts /usr/share/consolefonts \
-  /usr/local/share/consolefonts /usr/lib/kbd/consolefonts
-  do
-    for search_file in default8x16 default8x9 
-    do
-      if test -f "$search_dir/$search_file" || \
-      test -f "$search_dir/$search_file.gz" ; then 
-        defaultfont=$search_dir/$search_file
-        break 2
-      fi
-    done
-  done
-  if test "${defaultfont}" = ""; then
-    echo "$ac_t""Doh!" 1>&6
-    echo "configure: warning: kbd package may be incomplete" 1>&2
-  else
-    echo "$ac_t""$defaultfont" 1>&6
-    
-  fi
-fi
-  
-if test "${with_console}" != ""; then
-  echo $ac_n "checking for kbd default keyboard map""... $ac_c" 1>&6
-echo "configure:1829: checking for kbd default keyboard map" >&5
-  for search_dir in $sysconfdir/kbd /etc/kbd $prefix/share/keytables \
-  /usr/lib/kbd/keytables /usr/share/keytables /usr/local/share/keytables 
-  do
-    for search_file in default.map us.map
-    do
-      if test -f "$search_dir/$search_file" || \
-      test -f "$search_dir/$search_file.gz" ; then 
-        defaultmap=$search_dir/$search_file
-        break 2
-      fi
-    done
-  done
-  if test "${defaultmap}" = ""; then
-    echo "$ac_t""Doh!" 1>&6
-    echo "configure: warning: kbd package may be incomplete" 1>&2
-  else
-    echo "$ac_t""$defaultmap" 1>&6
-    
-  fi
-fi
-  
-if test -z "$x11share"; then
-  echo $ac_n "checking for x11 applications shared directory""... $ac_c" 1>&6
-echo "configure:1853: checking for x11 applications shared directory" >&5
-  for search_dir in $prefix/X11 $x_libraries/X11
-  do
-    for search_subdir in fonts locale nls xserver
-    do
-      if test -d "$search_dir/$search_subdir" ; then 
-        x11share=$search_dir
-        break 2
-      fi
-    done
-  done
-  if test "${x11share}" = ""; then
-    { echo "configure: error: cannot find where X11 font directories are kept!" 1>&2; exit 1; }
-  else
-    echo "$ac_t""$x11share" 1>&6
-  fi
-else
-  echo "configure: warning: using $x11share for X11 applications shared directory" 1>&2
-fi
-
-
-if test -z "$fontdir"; then
-  echo $ac_n "checking for x11 font directory""... $ac_c" 1>&6
-echo "configure:1876: checking for x11 font directory" >&5
-  for search_dir in $x11share/fonts
-  do
-    for search_subdir in misc
-    do
-      if test -d "$search_dir/$search_subdir" ; then 
-        x11fontdir=$search_dir/$search_subdir
-        break 2
-      fi
-    done
-  done
-  echo "$ac_t""$x11fontdir" 1>&6
-  if test "${x11fontdir}" = ""; then
-    x11fontdir=$x11share/fonts/misc
-    echo "configure: warning: forcing apl X11 font directory to $x11fontdir" 1>&2
-  fi
-else
-  x11fontdir=$fontdir
-  echo "configure: warning: setting X11 font directory to $x11fontdir" 1>&2
-fi
-
-
-echo $ac_n "checking for method used to compress X11 fonts""... $ac_c" 1>&6
-echo "configure:1899: checking for method used to compress X11 fonts" >&5
-for d1 in $prefix/X11 $x_libraries/X11
-do
-  for d2 in fonts locale nls xserver
-  do
-    for d3 in misc 75dpi 100dpi Type1 Type2
-    do
-      if test -d "$d1/$d2/$d3" ; then
-        if { ls $d1/$d2/$d3/* | grep .gz > /dev/null; }
-        then 
-          compress='gzip -f'
-          break
-        fi
-        if { ls $d1/$d2/$d3/* | grep .Z > /dev/null; }
-        then 
-          compress=compress
-          break
-        fi
-      fi
-    done
-  done
-done
-if test "${compress}" = ""; then
-  echo "configure: warning: maybe X11 font files are not compressed on this system!" 1>&2
-    compress=touch
-  
-else
-  echo "$ac_t""$compress" 1>&6
-  
-fi
-
-if test -z "$fontdir"; then
-  echo $ac_n "checking for ghostscript font directory""... $ac_c" 1>&6
-echo "configure:1932: checking for ghostscript font directory" >&5
-  for search_dir in $prefix/lib/ghostscript/fonts\
-                    /usr/lib/ghostscript/fonts /usr/share/ghostscript/fonts
-  do
-    if test -d "$search_dir" ; then
-      if { file $search_dir/* | grep PostScript > /dev/null; }
-      then 
-        gsfontdir=$search_dir
-        break
-      fi
-    fi
-  done
-  if test "${gsfontdir}" = ""; then
-    echo "configure: warning: forcing ghostscript font directory to $x11fontdir" 1>&2
-    gsfontdir=$x11fontdir
-  else
-    echo "$ac_t""$gsfontdir" 1>&6
-  fi
-else
-  gsfontdir=$fontdir
-  echo "configure: warning: setting ghostscript font directory to $gsfontdir" 1>&2
-fi
-
-
-echo $ac_n "checking for type of X11 keyboard layout""... $ac_c" 1>&6
-echo "configure:1957: checking for type of X11 keyboard layout" >&5
-platform=`uname`
-case "$platform" in
-SunOS )
-  keytype="SunOS"
-;;
-  * )
-  keytype="XFree86"
-  do_modeswitch='$(x11share)/modeswitch.xmap'
-;;
-esac
-echo "$ac_t""$keytype" 1>&6
-
-case "$platform" in
-Linux | linux )
-  echo $ac_n "checking for type of keyboard encoding""... $ac_c" 1>&6
-echo "configure:1973: checking for type of keyboard encoding" >&5
-  machine=`uname --machine`
-  case "$machine" in
-  i386 | i486 | i586 | pentium | Pentium )
-    machinetype="linux-i386"
-  ;;
-  PPC | ppc )
-    machinetype="linux-ppc"
-    keytype="XFree86-ppc"
-  ;;
-  * )
-    echo "configure: warning: Unrecognised machine type $machine forcing to i386" 1>&2
-    machinetype="linux-i386"
-  ;;
-  esac
-  echo "$ac_t""$machinetype" 1>&6
-  
-;;
-esac
-
-
-
-
 echo $ac_n "checking for -a flag with diff for non-ascii comparision""... $ac_c" 1>&6
 echo "configure:1997: checking for -a flag with diff for non-ascii comparision" >&5
 if ( diff -a configure.in configure.in 2> /dev/null 1>&2 )
@@ -2001,7 +1438,6 @@ else
   diff='diff'
 fi
 echo "$ac_t""$diff" 1>&6
-
 
 trap '' 1 2 15
 cat > confcache <<\EOF
@@ -2104,9 +1540,8 @@ done
 ac_given_srcdir=$srcdir
 ac_given_INSTALL="$INSTALL"
 
-trap 'rm -fr `echo "../Makefile ../apl11/include/makefile.common \
-           ../qa/Makefile  ../script/apl ../script/apl-setup \
-	   ../script/aplrc ../printer/apl2gs ../printer/apl2epson  ../apl11/include/config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
+trap 'rm -fr `echo "../Makefile ../source/include/makefile.common \
+           ../qa/Makefile ../source/include/config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
 
@@ -2143,13 +1578,10 @@ s%@INSTALL_DATA@%$INSTALL_DATA%g
 s%@install@%$install%g
 s%@CPP@%$CPP%g
 s%@x_libraries@%$x_libraries%g
-s%@with_ghostscript@%$with_ghostscript%g
-s%@with_epson@%$with_epson%g
 /@option_4@/r $option_4
 s%@option_4@%%g
 s%@wsdir@%$wsdir%g
 s%@have_kbd@%$have_kbd%g
-s%@with_console@%$with_console%g
 /@option_1@/r $option_1
 s%@option_1@%%g
 /@option_2@/r $option_2
@@ -2159,13 +1591,7 @@ s%@option_3@%%g
 /@option_5@/r $option_5
 s%@option_5@%%g
 s%@keytabledir@%$keytabledir%g
-s%@consolefontdir@%$consolefontdir%g
-s%@defaultfont@%$defaultfont%g
 s%@defaultmap@%$defaultmap%g
-s%@x11share@%$x11share%g
-s%@x11fontdir@%$x11fontdir%g
-s%@compress@%$compress%g
-s%@gsfontdir@%$gsfontdir%g
 s%@machinetype@%$machinetype%g
 s%@keytype@%$keytype%g
 s%@do_modeswitch@%$do_modeswitch%g
@@ -2211,9 +1637,7 @@ EOF
 
 cat >> $CONFIG_STATUS <<EOF
 
-CONFIG_FILES=\${CONFIG_FILES-"../Makefile ../apl11/include/makefile.common \
-           ../qa/Makefile  ../script/apl ../script/apl-setup \
-	   ../script/aplrc ../printer/apl2gs ../printer/apl2epson "}
+CONFIG_FILES=\${CONFIG_FILES-"../Makefile ../source/include/makefile.common ../qa/Makefile"}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
 for ac_file in .. $CONFIG_FILES; do if test "x$ac_file" != x..; then
@@ -2294,7 +1718,7 @@ ac_eD='%g'
 if test "${CONFIG_HEADERS+set}" != set; then
 EOF
 cat >> $CONFIG_STATUS <<EOF
-  CONFIG_HEADERS="../apl11/include/config.h"
+  CONFIG_HEADERS="../source/include/config.h"
 EOF
 cat >> $CONFIG_STATUS <<\EOF
 fi
@@ -2390,5 +1814,3 @@ EOF
 chmod +x $CONFIG_STATUS
 rm -fr confdefs* $ac_clean_files
 test "$no_create" = yes || ${CONFIG_SHELL-/bin/sh} $CONFIG_STATUS || exit 1
-
-
