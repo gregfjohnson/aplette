@@ -61,7 +61,7 @@ void ex_ddom()
 }
 
 static int lsq(data* dmn, data* dn1, data* dn2, data* dn3, data* dm, int* in,
-    int n, int m, int p,
+    int m, int n, int p,
     data* d1, data* d2)
 {
     data *dp1, *dp2;
