@@ -16,8 +16,9 @@ void ex_auto()
     checksp();
 
     *sp++ = (struct item*) np;
-    symtabRemoveEntry(np);
 
+    symtabRemoveEntry(np);
     newEntry = symtabInsert(np->namep);
+
     newEntry->entryType = LV;
 }

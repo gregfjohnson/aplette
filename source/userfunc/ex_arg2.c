@@ -32,7 +32,10 @@ void ex_arg2()
     *sp++ = (struct item*) np2;
     *sp++ = (struct item*) np1;
 
+    symtabRemoveEntry(np1);
     newEntry1 = symtabInsert(np1->namep);
+
+    symtabRemoveEntry(np2);
     newEntry2 = symtabInsert(np2->namep);
 
     // new arg1 binding

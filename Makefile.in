@@ -59,7 +59,7 @@ clean:
 
 # To remove everything created by autoconf/configure
 #--------------------------------------------------------
-tidy:	
+distclean:	
 	cd autoconf ; rm -f config.* 
 	rm -f source/include/config.h
 	rm -f source/include/makefile.common

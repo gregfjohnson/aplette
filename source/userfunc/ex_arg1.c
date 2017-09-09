@@ -16,8 +16,8 @@ void ex_arg1() {
     --sp;
 
     *sp++ = (struct item*) np;
-    symtabRemoveEntry(np);
 
+    symtabRemoveEntry(np);
     newEntry = symtabInsert(np->namep);
 
     newEntry->itemp = p;

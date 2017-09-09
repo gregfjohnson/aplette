@@ -4,11 +4,11 @@ rline
 aplws.abort
 /Makefile
 qa/Makefile
-apl11/apl11
-apl11/include/config.h
-apl11/include/makefile.common
-apl11/parser/y.tab.c
-apl11/parser/y.tab.h
+source/aplette
+source/include/config.h
+source/include/makefile.common
+source/parser/y.tab.c
+source/parser/y.tab.h
 autoconf/config.cache
 autoconf/config.log
 autoconf/config.status

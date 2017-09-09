@@ -1,0 +1,8 @@
+C@J Test of global variable shadowed by function arg.
+
+Lchdir 'clean_dir'
+
+)read pfoo
+u { 'u oops'
+v { 'v oops'
+4 pfoo 5
