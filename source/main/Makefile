@@ -12,7 +12,7 @@ Q.o:	$(OBJECTS)
 
 $(OBJECTS):	../include/apl.h
 
-apl.o:	../include/patchlevel.h
+apl.o:	../include/version.h
 
 getinput.o:	../include/config.h 
 

@@ -24,7 +24,7 @@
 
 char headline[] = "aplette "
                   "Version 0"
-#include "patchlevel.h"
+#include "version.h"
                   "\n";
 
 data tolerance;
