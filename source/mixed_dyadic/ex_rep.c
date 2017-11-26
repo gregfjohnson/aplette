@@ -23,7 +23,8 @@ void ex_rep()
     */
     r = newdat(DA, p->rank + q->rank, p->size * q->size);
     copy(IN, (char*)p->dim, (char*)r->dim, p->rank);
-    copy(IN, (char*)q->dim, (char*)r->dim + p->rank, q->rank);
+    // copy(IN, (char *)q->dim, (char *)(r->dim+p->rank), q->rank);
+    copy(IN, (char*)q->dim, (char*)(r->dim + p->rank), q->rank);
     p3 = &r->datap[r->size];
     for (p1 = &p->datap[p->size]; p1 > p->datap;) {
         d1 = *--p1;
