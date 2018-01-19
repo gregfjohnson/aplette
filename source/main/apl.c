@@ -102,7 +102,11 @@ int main(int argc, char** argp)
 
     /* other flags... */
     echoflg = !isatty(0);
-    use_readline = 1;
+    if (isatty(0))
+        use_readline = 1;
+    else
+        use_readline = 0;
+
     ascii_characters = 1;
 
     /* diagnostics */

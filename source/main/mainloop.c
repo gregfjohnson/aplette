@@ -10,6 +10,7 @@
  * the docs directory.
  */
 #include "memory.h"
+#include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
 #include "apl.h"
@@ -59,7 +60,10 @@ void mainloop()
             error(ERR_interrupt, "");
 
         /*  get a line of input */
-        gsip->text = getinput("\t");
+        if (isatty(0))
+            gsip->text = getinput("\t");
+        else
+            gsip->text = getinput("");
         /* getinput will return NULL at eof but only if input is not
        * from the keyboard.  The following will cause an exit
        * when input is from a file or a pipe
