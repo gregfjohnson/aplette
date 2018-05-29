@@ -9,7 +9,6 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <setjmp.h>
-#include <values.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -31,6 +30,22 @@
 #define SDAT sizeof(data)
 #define SINT sizeof(int)
 #define SPTR sizeof(void*)
+
+#ifndef MINDOUBLE
+    #define MINDOUBLE 2.2250738585072014e-308
+#endif
+
+#ifndef MAXDOUBLE
+    #define MAXDOUBLE 1.7976931348623157e+308
+#endif
+
+#ifndef MINFLOAT
+    #define MINFLOAT 1.17549435e-38F
+#endif
+
+#ifndef MAXFLOAT
+    #define MAXFLOAT 3.40282347e+38F
+#endif
 
 #define MAXEXP 709 /* the largest value such that exp(MAXEXP) is OK */
 #define MINdata MINDOUBLE
@@ -269,7 +284,7 @@ SymTabEntry* nlook();
 struct item *fetch(), *fetch1(), *fetch2(), *extend();
 
 extern int integ;
-extern int signgam;
+extern int signgamma;
 extern int column;
 extern int intflg;
 extern int echoflg;

@@ -17,7 +17,7 @@ data
     if (f > MAXEXP)
         error(ERR_limit, "input to factorial function");
     d = exp(f);
-    if (signgam < 0)
-        d = -d; /* if (signgam) in version 6 */
+    if (signgamma < 0)
+        d = -d; /* if (signgamma) in version 6 */
     return (d);
 }

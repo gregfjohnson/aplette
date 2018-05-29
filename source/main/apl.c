@@ -41,7 +41,7 @@ int labgen;           /* label processing being done */
 jmp_buf cold_restart; /* Used for setexit/reset */
 
 int integ;
-int signgam;
+int signgamma;
 int column;
 int intflg;
 int echoflg = 0;

@@ -9,7 +9,7 @@
 	gamma(x) computes the log of the absolute
 	value of the gamma function.
 	The sign of the gamma function is returned in the
-	external quantity signgam.
+	external quantity signgamma.
 
 	The coefficients for expansion around zero
 	are #5243 from Hart & Cheney; for expansion
@@ -22,7 +22,7 @@
 #include <math.h>
 
 int errno;
-int signgam = 0;
+int signgamma = 0;
 static double goobie = 0.9189385332046727417803297;
 static double pi = 3.1415926535897932384626434;
 static double asym(), pos(), neg();
@@ -63,7 +63,7 @@ double
 {
     double log(), pos(), neg(), asym();
 
-    signgam = 1.;
+    signgamma = 1.;
     if (arg <= 0.)
         return (neg(arg));
     if (arg > 8.)
@@ -99,7 +99,7 @@ static double
     if (temp < 0.)
         temp = -temp;
     else
-        signgam = -1;
+        signgamma = -1;
     return (-log(arg * pos(arg) * temp / pi));
 }
 

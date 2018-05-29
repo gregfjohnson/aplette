@@ -2,8 +2,17 @@ Welcome to aplette
 ------------------
 Aplette is a slimmed down, skinny APL interpreter derived from openApl.
 
+On linux, you will need to install bison and libreadline.
+
+On Windows, I have tested with cygwin only.  In your cygwin installation,
+you will need to include gcc, gnu make, libreadline_devel, and bison.
+
 To build:
 	$> ./configure
 	$> make
 
 This will build the binary executable source/aplette.
+
+You can test your installation as follows:
+	$> cd qa
+	$> make
