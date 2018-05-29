@@ -1,22 +1,22 @@
 clear ws
-	¦ Test of )read.  function with no return value.
+¦ Test of )read.  function with no return value.
 
-	
 
-	•chdir 'clean_dir'
+
+•chdir 'clean_dir'
 
 0
-	
 
-	)read nilret1
 
-	nilret1
+)read nilret1
+
+nilret1
 
 1
-	)vars
+)vars
 
 a	
-	)fns
+)fns
 
 nilret1	
-	
+

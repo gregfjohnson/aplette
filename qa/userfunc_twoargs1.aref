@@ -1,22 +1,22 @@
 clear ws
-	¦ Test of )read.  dyadic function with a return value.
+¦ Test of )read.  dyadic function with a return value.
 
-	
 
-	•chdir 'clean_dir'
+
+•chdir 'clean_dir'
 
 0
-	
 
-	)read twoargs
 
-	2 twoargs 5
+)read twoargs
+
+2 twoargs 5
 
 32
-	)vars
+)vars
 
 
-	)fns
+)fns
 
 twoargs	
-	
+

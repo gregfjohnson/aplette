@@ -1,39 +1,39 @@
 clear ws
-	¶Execute ordinary expressions
-	ı'3 4˚‚12'
+¶Execute ordinary expressions
+ı'3 4˚‚12'
 1  2  3  4
 5  6  7  8
 9 10 11 12
-	ı'1+(2í3)'
+ı'1+(2í3)'
 7
-	
-	¶Nested execute
-	ı'2+ı''1+(2í3)'''
+
+¶Nested execute
+ı'2+ı''1+(2í3)'''
 9
-	nê'1+(2í3)'
-	ı'2íın'
+nê'1+(2í3)'
+ı'2íın'
 14
-	
-	¶Execute with local variables
-	aê1
-	bê2
-	¶The following 2 lines should not cause a value to be printed
-	¶Bug List 021
-	ı'aê3'
+
+¶Execute with local variables
+aê1
+bê2
+¶The following 2 lines should not cause a value to be printed
+¶Bug List 021
+ı'aê3'
 3
-	ı'cê4'
+ı'cê4'
 4
-	a ; b ; c
+a ; b ; c
 324
-	
-	¶Execute quad variables
-	ı'ïpp'
+
+¶Execute quad variables
+ı'ïpp'
 9
-	ı'ïpwê70'
+ı'ïpwê70'
 70
-	ïpp
+ïpp
 9
-	ïpw
+ïpw
 70
-	
-	
+
+

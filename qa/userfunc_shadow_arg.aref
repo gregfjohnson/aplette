@@ -1,22 +1,22 @@
 clear ws
-	¶ Test of global variable shadowed by function arg.
+¶ Test of global variable shadowed by function arg.
 
-	
 
-	ïchdir 'clean_dir'
+
+ïchdir 'clean_dir'
 
 0
-	
 
-	)read pfoo
 
-	u ê 'u oops'
+)read pfoo
 
-	v ê 'v oops'
+u ê 'u oops'
 
-	4 pfoo 5
+v ê 'v oops'
+
+4 pfoo 5
 
 4
 5
 xx
-	
+

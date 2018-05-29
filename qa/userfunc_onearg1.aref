@@ -1,22 +1,22 @@
 clear ws
-	¦ Test of )read.  monadic function with a return value.
+¦ Test of )read.  monadic function with a return value.
 
-	
 
-	•chdir 'clean_dir'
+
+•chdir 'clean_dir'
 
 0
-	
 
-	)read onearg
 
-	onearg 5
+)read onearg
+
+onearg 5
 
 3125
-	)vars
+)vars
 
 
-	)fns
+)fns
 
 onearg	
-	
+

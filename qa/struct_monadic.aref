@@ -1,39 +1,39 @@
 clear ws
-	¦ Monadic tructural Primitives
+¦ Monadic tructural Primitives
 
-	
 
-	0 0 0 \ â0
+
+0 0 0 \ â0
 
 0 0 0
-	1 0 1 0 1 \ 4 3 û â12
+1 0 1 0 1 \ 4 3 û â12
 
  1 0  2 0  3
  4 0  5 0  6
  7 0  8 0  9
 10 0 11 0 12
-	0 0 0 \ 4 0 û0
+0 0 0 \ 4 0 û0
 
 0 0 0
 0 0 0
 0 0 0
 0 0 0
-	
 
-	¦ ûavel
 
-	•  n22    2 2     û â 4
+¦ ûavel
+
+•  n22    2 2     û â 4
 
 1 2
 3 4
-	•  n222   2 2 2   û â 8
+•  n222   2 2 2   û â 8
 
 1 2
 3 4
 
 5 6
 7 8
-	•  n2221  2 2 2 1 û â 8
+•  n2221  2 2 2 1 û â 8
 
 1
 2
@@ -47,72 +47,72 @@ clear ws
 
 7
 8
-	
 
-	,n22
+
+,n22
 
 1 2 3 4
-	,n222
+,n222
 
 1 2 3 4 5 6 7 8
-	,n2221
+,n2221
 
 1 2 3 4 5 6 7 8
-	
 
-	¦ hape
 
-	•  n             1
+¦ hape
+
+•  n             1
 
 1
-	•  n3         â  3
+•  n3         â  3
 
 1 2 3
-	•  n34  3 4 û â 12
+•  n34  3 4 û â 12
 
 1  2  3  4
 5  6  7  8
 9 10 11 12
-	
-
-	û   n
 
 
-	û,  n
+û   n
+
+
+û,  n
 
 1
-	û û n
+û û n
 
 0
-	û   n3
+û   n3
 
 3
-	û û n3
+û û n3
 
 1
-	û   n34
+û   n34
 
 3 4
-	
 
-	¦ ândex ìenerator
 
-	•io  0
+¦ ândex ìenerator
 
-	â 4
+•io  0
+
+â 4
 
 0 1 2 3
-	•io  1
+•io  1
 
-	â 4
+â 4
 
 1 2 3 4
-	
 
-	¦ Table - not implemented
 
-	¦ epth - not implemented
+¦ Table - not implemented
 
-	¦ înlist - not implemented
+¦ epth - not implemented
 
-	
+¦ înlist - not implemented
+
+

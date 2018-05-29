@@ -1,19 +1,19 @@
 clear ws
-	¦ Circular Functions
-	
-	A  ı5 ı2 ı1.75 ı1.5 ı1 ı.5 
-	B  0, (1ö3), .5, (2ö3), .75 .9 1 1.1 1.5 1.75
-	C  2 3 10
-	multiples  (A,B,C)ø.’â1
-	radians  ùmultiples
-	
-	•pp4
-	¦ output is restricted to 4 decimal places
-	¦ as exposing too much accuracy can lead to false errors
-	¦ due to differences between FPUs on different machines
-	
-	¦ Sine
-	6 2 9 4 8 4 8 4ômultiples,radians,(1ùradians),ı1ù1ùradians
+¦ Circular Functions
+
+A  ı5 ı2 ı1.75 ı1.5 ı1 ı.5 
+B  0, (1ö3), .5, (2ö3), .75 .9 1 1.1 1.5 1.75
+C  2 3 10
+multiples  (A,B,C)ø.’â1
+radians  ùmultiples
+
+•pp4
+¦ output is restricted to 4 decimal places
+¦ as exposing too much accuracy can lead to false errors
+¦ due to differences between FPUs on different machines
+
+¦ Sine
+6 2 9 4 8 4 8 4ômultiples,radians,(1ùradians),ı1ù1ùradians
  ı5.00 ı15.7080  0.0000  0.0000
  ı2.00  ı6.2832  0.0000  0.0000
  ı1.75  ı5.4978  0.7071  0.7854
@@ -33,9 +33,9 @@ clear ws
   2.00   6.2832  0.0000  0.0000
   3.00   9.4248  0.0000  0.0000
  10.00  31.4159  0.0000  0.0000
-	
-	¦ Cosine
-	6 2 9 4 8 4 8 4ômultiples,radians,(2ùradians),ı2ù2ùradians
+
+¦ Cosine
+6 2 9 4 8 4 8 4ômultiples,radians,(2ùradians),ı2ù2ùradians
  ı5.00 ı15.7080 ı1.0000  3.1416
  ı2.00  ı6.2832  1.0000  0.0000
  ı1.75  ı5.4978  0.7071  0.7854
@@ -55,9 +55,9 @@ clear ws
   2.00   6.2832  1.0000  0.0000
   3.00   9.4248 ı1.0000  3.1416
  10.00  31.4159  1.0000  0.0000
-	
-	¦ Hyperbolic Sine
-	6 2 7 2 12 ı4 6 2ômultiples,radians,(5ùradians),ı5ù5ùradians
+
+¦ Hyperbolic Sine
+6 2 7 2 12 ı4 6 2ômultiples,radians,(5ùradians),ı5ù5ùradians
  ı5.00 ı15.71 ı3.318E6   ı15.71
  ı2.00  ı6.28 ı2.677E2    ı6.28
  ı1.75  ı5.50 ı1.221E2    ı5.50
@@ -77,9 +77,9 @@ clear ws
   2.00   6.28  2.677E2     6.28
   3.00   9.42  6.196E3     9.42
  10.00  31.42  2.202E13   31.42
-	
-	¦ Hyperbolic Cosine
-	6 2 7 2 12 ı4 6 2ômultiples,radians,(6ùradians),ı6ù6ùradians
+
+¦ Hyperbolic Cosine
+6 2 7 2 12 ı4 6 2ômultiples,radians,(6ùradians),ı6ù6ùradians
  ı5.00 ı15.71  3.318E6    15.71
  ı2.00  ı6.28  2.677E2     6.28
  ı1.75  ı5.50  1.221E2     5.50
@@ -99,13 +99,13 @@ clear ws
   2.00   6.28  2.677E2     6.28
   3.00   9.42  6.196E3     9.42
  10.00  31.42  2.202E13   31.42
-	
-	A  ı5 ı2 ı1.75 ı1    ¦ For tan() which is infinity at piö2 
-	multiples  (A,B,C)ø.’â1
-	radians  ùmultiples
-	
-	¦ Tangent
-	6 2 9 4 8 4 8 4ômultiples,radians,(3ùradians),ı3ù3ùradians
+
+A  ı5 ı2 ı1.75 ı1    ¦ For tan() which is infinity at piö2 
+multiples  (A,B,C)ø.’â1
+radians  ùmultiples
+
+¦ Tangent
+6 2 9 4 8 4 8 4ômultiples,radians,(3ùradians),ı3ù3ùradians
  ı5.00 ı15.7080  0.0000  0.0000
  ı2.00  ı6.2832  0.0000  0.0000
  ı1.75  ı5.4978  1.0000  0.7854
@@ -123,9 +123,9 @@ clear ws
   2.00   6.2832  0.0000  0.0000
   3.00   9.4248  0.0000  0.0000
  10.00  31.4159  0.0000  0.0000
-	
-	¦ Hyperbolic Tangent
-	6 2 7 2 8 4 6 2ômultiples,radians,(7ùradians),ı7ù7ùradians
+
+¦ Hyperbolic Tangent
+6 2 7 2 8 4 6 2ômultiples,radians,(7ùradians),ı7ù7ùradians
  ı5.00 ı15.71 ı1.0000ı15.71
  ı2.00  ı6.28 ı1.0000 ı6.28
  ı1.75  ı5.50 ı1.0000 ı5.50
@@ -143,14 +143,14 @@ clear ws
   2.00   6.28  1.0000  6.28
   3.00   9.42  1.0000  9.42
  10.00  31.42  1.0000   inf
-	¦ In the above, some of the 1.0000's are actually 0.999999xyz
-	
-	¦ Checking for infinity from tan()
-	ù1
+¦ In the above, some of the 1.0000's are actually 0.999999xyz
+
+¦ Checking for infinity from tan()
+ù1
 3.142
-	ù1.5
+ù1.5
 4.712
-	3ùù1.5
+3ùù1.5
 5.444E15
-	
-	
+
+
