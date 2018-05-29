@@ -16,3 +16,11 @@ This will build the binary executable source/aplette.
 You can test your installation as follows:
 	$> cd qa
 	$> make
+
+
+aplette uses an ASCII/APL character mapping dubbed APL-touchtype.
+
+If you can write APL with your eyes closed, you can use
+APL-touchtype. "rho" is "R", "iota" is "I", etc. Trig is "O". Log is
+"O@*". (APL-touchtype uses "@" instead of backspace, and with that trivial
+substitution, all of the APL overstrikes become APL-touchtype ascii.)
