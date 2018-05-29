@@ -129,9 +129,6 @@ void error(int type, char* diagnostic)
     else {
         while (sp > stack)
             pop(); /* zap garbage */
-        //longjmp(hot_restart,1);		/* return to mainloop */
-        //mainloop();
     }
-    //longjmp(hot_restart,1);		/* return to mainloop */
     mainloop();
 }

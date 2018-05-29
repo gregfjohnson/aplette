@@ -39,14 +39,12 @@ data datum;
 int funtrace;         /* function trace enabled */
 int labgen;           /* label processing being done */
 jmp_buf cold_restart; /* Used for setexit/reset */
-jmp_buf hot_restart;  /* Used for setexit/reset */
 
-int (*exop[])();
 int integ;
 int signgam;
 int column;
 int intflg;
-int echoflg;
+int echoflg = 0;
 int sandbox;          /* when set, some functions are barred */
 int sandboxflg;       /* when set, sandbox cannot be unset */
 int use_readline;     /* shows that the user has a valid .inputrc */
@@ -74,10 +72,30 @@ Context *gsip, prime_context;
 
 CompilePhase compilePhase;
 
-int main(int argc, char** argp)
+static void usage() {
+    printf("usage:\n");
+    printf("    apl\n");
+    printf("        -a            # use native APL instead of default ascii touchtype font\n");
+    printf("        -c            # create core file on fatal error\n");
+    printf("        -d            # do not catch signals\n");
+    printf("        -e            # echo input lines\n");
+    printf("        -f script     # execute script\n");
+    printf("        -h            # this help message\n");
+    printf("        -r            # force readline use even with scripts\n");
+    printf("        -s            # execute in secure sandbox\n");
+    printf("        -t            # create temporary files in current directory instead of /tmp\n");
+    printf("        -w workspace  # load workspace\n");
+        
+    exit(1);
+}
+
+int main(int argc, char** argv)
 {
-    int pid, sigs, file_id;
-    static int fflag;
+    int pid, sigs, file_id, use_readline_arg;
+    char *ws_filename = NULL;
+    char *script_filename = NULL;
+    int opt;
+    int help = 0;
 
 #ifdef HAVE_LIBREADLINE
     /* Allow conditional parsing of the ~/.inputrc file. */
@@ -99,60 +117,53 @@ int main(int argc, char** argp)
     symtab_init();
 
     sigs = 1;
-
-    /* other flags... */
-    echoflg = !isatty(0);
-    if (isatty(0))
-        use_readline = 1;
-    else
-        use_readline = 0;
+    use_readline_arg = -1;
 
     ascii_characters = 1;
 
     /* diagnostics */
-    mem_trace = 0;   /* dynamic memory allocation */
-    code_trace = 0;  /* pseudo code */
-    stack_trace = 0; /* local stack */
-    funtrace = 0;
+    mem_trace   = 0;   /* dynamic memory allocation */
+    code_trace  = 0;   /* pseudo code */
+    stack_trace = 0;   /* local stack */
+    funtrace    = 0;   /* function execution trace */
 
-    while (argc > 1 && argp[1][0] == '-') {
-        argc--;
-        argp++;
-        while (*++*argp)
-            switch (**argp) {
-            case 'e':
-                echoflg = 1;
-                break;
-            case 'q':
-                echoflg = 0;
-                break;
-            case 'd':
-            case 'D':
-                sigs = 0;
-                break;
-            case 'c':
-            case 'C':
-                mkcore = 1;
-                break;
+    while ((opt = getopt(argc, argv, "acdef:hrstw:")) != -1) {
+        switch (opt) {
             case 'a':
                 ascii_characters = 0;
                 break;
-            case 'A':
-                ascii_characters = 0;
+            case 'c':
+                mkcore = 1;
+                break;
+            case 'd':
+                sigs = 0;
+                break;
+            case 'e':
+                echoflg = 1;
+                break;
+            case 'f':
+                script_filename = optarg;
+                break;
+            case 'h':
+                help = 1;
                 break;
             case 'r':
-                use_readline = 1;
-                break;
-            case 'R':
-                use_readline = 1;
-                break;
-            case 't':
-                scr_file += 5;
+                use_readline_arg = 1;
                 break;
             case 's':
                 sandbox = sandboxflg = 1;
                 break;
-            }
+            case 't':
+                snprintf(scr_file, 32, "apled.%d", pid);
+                break;
+            case 'w':
+                ws_filename = optarg;
+                break;
+        }
+    }
+
+    if (help) {
+        usage();
     }
 
     /* initialisation */
@@ -170,36 +181,95 @@ int main(int argc, char** argp)
         catchsigs(); /*   Catch signals  */
     fppinit(0);
 
-    /*
-    * open ws file
-    */
-
     sp = stack;
-    fflag = 1;
     ifile = 0;
-    if (signal(SIGINT, intr) == SIG_ERR)
+    if (signal(SIGINT, intr) == SIG_ERR) {
         signal(SIGINT, SIG_IGN);
-    printf("%s", headline);
-    //setexit();
-    if (fflag) {
-        fflag = 0;
-        if (argc > 1 && (file_id = opn(argp[1], O_RDONLY)) > 0) {
-            wsload(file_id);
-            printf(" %s\n", argp[1]);
-            close(file_id);
-        }
-        else {
-            if ((file_id = open("continue", 0)) < 0)
-                printf("clear ws\n");
-            else {
-                wsload(file_id);
-                printf(" continue\n");
-                close(file_id);
-            }
-        }
-        eval_qlx(); /* eval latent expr, if any */
     }
-    //setjmp(reset_env);
+
+    /* script files that start with '#!apl' on first line are invoked as
+     * "apl name_of_script_file" by the shell.
+     * we want to get rid of that first line and not feed it to the apl
+     * interpreter in that case.
+     * However, unlike in other scripting languages, '#!' is a perfectly
+     * legal start of an apl expression.  SOOOO.  you will inexplicably
+     * have the first line of your script file 
+     */
+    if (script_filename != NULL) {
+        if (freopen(script_filename, "r", stdin) == NULL) {
+            fprintf(stderr, "could not open file '%s'\n", script_filename);
+            exit(1);
+        }
+    }
+
+    /* 'apl filename' is not supposed to be done directly from the command line
+     * by users.  it is only intended to be done implicitly for scripts with
+     * the first line '#! (apl_binary)'.  the shell translates such scripts to
+     * 'apl_binary script_filename'.  in that case, we need to remove the first
+     * line of the file here, since the apl interpreter will try to parse lines
+     * starting '#! ..'
+     */
+    if (optind < argc) {
+        int c;
+        int fd;
+
+        if (script_filename != NULL) {
+            fprintf(stderr, "cannot have '-f %s' in this context.\n", script_filename);
+            exit(1);
+        }
+
+        if (freopen(argv[optind], "r", stdin) == NULL) {
+            fprintf(stderr, "could not open file '%s'\n", argv[optind]);
+            exit(1);
+        }
+
+        while ((c = getchar() != '\n') && c != EOF);
+    }
+
+    if (isatty(0)) {
+        printf("%s", headline);
+    }
+
+    if (use_readline_arg == 0 || use_readline_arg == 1) {
+        use_readline = use_readline_arg;
+
+    } else {
+        use_readline = isatty(0);
+    }
+
+    if (ws_filename != NULL) {
+        file_id = open(ws_filename, O_RDONLY);
+
+        if (file_id < 0) {
+            fprintf(stderr, "could not open file '%s'\n", ws_filename);
+            exit(1);
+        }
+
+        wsload(file_id);
+        close(file_id);
+
+        if (isatty(0)) {
+            printf(" %s\n", ws_filename);
+        }
+
+        eval_qlx(); /* eval latent expr, if any */
+
+    } else if ((file_id = open("continue", O_RDONLY)) >= 0) {
+        wsload(file_id);
+        close(file_id);
+
+        if (isatty(0)) {
+            printf(" continue\n");
+        }
+
+        eval_qlx(); /* eval latent expr, if any */
+
+    } else {
+        if (isatty(0)) {
+            printf("clear ws\n");
+        }
+    }
+
     /* return to this point to reset the state and context to original */
     setjmp(cold_restart);
 

@@ -25,12 +25,9 @@ void mainloop()
     Context* thisContext;
 
     while (1) {
-        /* return to this point after an error */
-        setjmp(hot_restart);
-
         /* if a function has been suspended
-       * then create a new context
-       */
+         * then create a new context
+         */
         if (gsip->Mode != immed) {
             thisContext = (Context*)alloc(sizeof(Context));
             thisContext->Mode = immed;

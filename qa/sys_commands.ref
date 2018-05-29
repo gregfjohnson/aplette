@@ -1,4 +1,3 @@
-clear ws
 	¦Tests of System Commands
 	)license
 openAPL, Copyright (C) Branko Bratkovic 1998, 1999
@@ -56,7 +55,6 @@ spiral	copies	primes	linear	ulam
 	)fns
 spiral	primes	ulam	makeN	
 	)clear
-clear ws
 	)fns
 
 	)vars
@@ -85,7 +83,6 @@ a
 	)fns
 lemming	
 	)clear
-clear ws
 	)vars
 
 	)fns

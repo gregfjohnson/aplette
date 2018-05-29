@@ -76,7 +76,6 @@ extern data datum;
 extern int funtrace;         /* function trace enabled */
 extern int labgen;           /* label processing being done */
 extern jmp_buf cold_restart; /* Used for setexit/reset */
-extern jmp_buf hot_restart;  /* Used for setexit/reset */
 
 //jmp_buf    gbl_env;                   /* Used for setexit/reset */
 //jmp_buf    mainloop_return;

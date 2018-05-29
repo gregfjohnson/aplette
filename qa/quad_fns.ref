@@ -1,4 +1,3 @@
-clear ws
 	¶Quad Functions for use with Unix System Calls
 	¶---------------------------------------------
 	fdê0 ïopen 'quad_fns.dat'

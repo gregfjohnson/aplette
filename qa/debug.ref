@@ -1,4 +1,3 @@
-clear ws
 	¦Tests of System Commands for Debugging
 	)load userfunc.ws
   hh:mm.ss mm/dd/yy userfunc.ws
@@ -91,7 +90,6 @@ clear ws
  [e]  eol rval-r rest-r rest-c rest-d rest-a rest-b end
 
 	)clear
-clear ws
 	
 	•chdir 'clean_dir'
 0
@@ -446,7 +444,6 @@ trace: fn ulam exits
  [e]  rest-y rest-x rest-n rest-A eol nilret end
 
 	)clear
-clear ws
 	)read lemming
 	)trace
 	)debug

@@ -1,4 +1,3 @@
-clear ws
 	¦ I-Beam 26 line number of current function
 	¦ I-Beam 36 line number of called function
 	)load userfunc.ws
