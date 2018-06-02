@@ -1,91 +1,91 @@
-¦Integers
-a1 100 5000 123456789 ı2 ı400
+C@JIntegers
+a{1 100 5000 123456789 `2 `400
 a
 a*2
 
-¦Real Numbers
-öa
+C@JReal Numbers
+%a
 
-¦Literals
+C@JLiterals
 'a'
-z'abcdefghijklmnopqrstuvwxyz'
-100ûz
-4 4ûz
-tab•av[10]
-z[5]tab
+z{'abcdefghijklmnopqrstuvwxyz'
+100Rz
+4 4Rz
+tab{Lav[10]
+z[5]{tab
 z
 
 
-¦Vectors
-â50
-öâ10
+C@JVectors
+I50
+%I10
 
-¦Arrays
-3 3ûâ9
-3 3 3ûâ3*3
+C@JArrays
+3 3RI9
+3 3 3RI3*3
 
-¦Page Width
-•pw
-•pw50
-â40
+C@JPage Width
+Lpw
+Lpw{50
+I40
 
-¦Print Precision
-•pp
-•pp4
-öâ40
+C@JPrint Precision
+Lpp
+Lpp{4
+%I40
 
-¦WARING: setting •pp over 15 may show up differences
-¦        between FPUs of different machines
-•pp15
-öâ10
+C@JWARING: setting Lpp over 15 may show up differences
+C@J        between FPUs of different machines
+Lpp{15
+%I10
 
-•pp10
-•pw72
+Lpp{10
+Lpw{72
 
-¦E format
-1eı7 1eı23 1eı123
-1.1eı7 1.1eı23 1.1eı123
+C@JE format
+1e`7 1e`23 1e`123
+1.1e`7 1.1e`23 1.1e`123
 
-¦Three digit exponent
-a1E99
-b1Eı99
+C@JThree digit exponent
+a{1E99
+b{1E`99
 a
-a’10
-a’a’a
+aX10
+aXaXa
 b
-bö10
-b’b’b
+b%10
+bXbXb
 
-¦Cascade carry forward
+C@JCascade carry forward
 0.99999999999999999
 23.9999999999999999
-ı2.99999999999999999
+`2.99999999999999999
 
-¦Quad Output
-•3 4ûâ12
+C@JQuad Output
+L{3 4RI12
 
-¦Semicolon Output
-â10 ; 300+â12 ; 'asdf'
+C@JSemicolon Output
+I10 ; 300+I12 ; 'asdf'
 
-¦Mixing E format with rational format
-•pp9
-a(0 1 2 3 4)ø.öâ4
+C@JMixing E format with rational format
+Lpp{9
+a{(0 1 2 3 4)J.%I4
 a
-10000’a
-1e9’a
-ı1e9’a
-aö10000
+10000Xa
+1e9Xa
+`1e9Xa
+a%10000
 
-¦Pushing both ends
-b4 1ûı1.234eı56 1.2 0 1e9
+C@JPushing both ends
+b{4 1R`1.234e`56 1.2 0 1e9
 b
-b’1000
-bö1000
+bX1000
+b%1000
 b,b,b
 
-¦Column Formatting
-m0.78901’(10*â6)ø.’1 1eı10 1eı6 0.01 .1
+C@JColumn Formatting
+m{0.78901X(10*I6)J.X1 1e`10 1e`6 0.01 .1
 m
-•pp4
+Lpp{4
 m
 

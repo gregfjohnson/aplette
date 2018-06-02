@@ -1,24 +1,24 @@
-¶Execute ordinary expressions
-ı'3 4˚‚12'
-ı'1+(2í3)'
+C@JExecute ordinary expressions
+B@J'3 4RI12'
+B@J'1+(2X3)'
 
-¶Nested execute
-ı'2+ı''1+(2í3)'''
-nê'1+(2í3)'
-ı'2íın'
+C@JNested execute
+B@J'2+B@J''1+(2X3)'''
+n{'1+(2X3)'
+B@J'2XB@Jn'
 
-¶Execute with local variables
-aê1
-bê2
-¶The following 2 lines should not cause a value to be printed
-¶Bug List 021
-ı'aê3'
-ı'cê4'
+C@JExecute with local variables
+a{1
+b{2
+C@JThe following 2 lines should not cause a value to be printed
+C@JBug List 021
+B@J'a{3'
+B@J'c{4'
 a ; b ; c
 
-¶Execute quad variables
-ı'ïpp'
-ı'ïpwê70'
-ïpp
-ïpw
+C@JExecute quad variables
+B@J'Lpp'
+B@J'Lpw{70'
+Lpp
+Lpw
 

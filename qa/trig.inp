@@ -1,41 +1,41 @@
-¦ Circular Functions
+C@J Circular Functions
 
-A  ı5 ı2 ı1.75 ı1.5 ı1 ı.5 
-B  0, (1ö3), .5, (2ö3), .75 .9 1 1.1 1.5 1.75
-C  2 3 10
-multiples  (A,B,C)ø.’â1
-radians  ùmultiples
+a { `5 `2 `1.75 `1.5 `1 `.5 
+b { 0, (1%3), .5, (2%3), .75 .9 1 1.1 1.5 1.75
+c { 2 3 10
+multiples { (a,b,c)J.XI1
+radians { Omultiples
 
-•pp4
-¦ output is restricted to 4 decimal places
-¦ as exposing too much accuracy can lead to false errors
-¦ due to differences between FPUs on different machines
+Lpp{4
+C@J output is restricted to 4 decimal places
+C@J as exposing too much accuracy can lead to false errors
+C@J due to differences between FPUs on different machines
 
-¦ Sine
-6 2 9 4 8 4 8 4ômultiples,radians,(1ùradians),ı1ù1ùradians
+C@J Sine
+6 2 9 4 8 4 8 4J@Nmultiples,radians,(1Oradians),`1O1Oradians
 
-¦ Cosine
-6 2 9 4 8 4 8 4ômultiples,radians,(2ùradians),ı2ù2ùradians
+C@J Cosine
+6 2 9 4 8 4 8 4J@Nmultiples,radians,(2Oradians),`2O2Oradians
 
-¦ Hyperbolic Sine
-6 2 7 2 12 ı4 6 2ômultiples,radians,(5ùradians),ı5ù5ùradians
+C@J Hyperbolic Sine
+6 2 7 2 12 `4 6 2J@Nmultiples,radians,(5Oradians),`5O5Oradians
 
-¦ Hyperbolic Cosine
-6 2 7 2 12 ı4 6 2ômultiples,radians,(6ùradians),ı6ù6ùradians
+C@J Hyperbolic Cosine
+6 2 7 2 12 `4 6 2J@Nmultiples,radians,(6Oradians),`6O6Oradians
 
-A  ı5 ı2 ı1.75 ı1    ¦ For tan() which is infinity at piö2 
-multiples  (A,B,C)ø.’â1
-radians  ùmultiples
+A { `5 `2 `1.75 `1    C@J For tan() which is infinity at pi%2 
+multiples { (a,b,c)J.XI1
+radians { Omultiples
 
-¦ Tangent
-6 2 9 4 8 4 8 4ômultiples,radians,(3ùradians),ı3ù3ùradians
+C@J Tangent
+6 2 9 4 8 4 8 4J@Nmultiples,radians,(3Oradians),`3O3Oradians
 
-¦ Hyperbolic Tangent
-6 2 7 2 8 4 6 2ômultiples,radians,(7ùradians),ı7ù7ùradians
-¦ In the above, some of the 1.0000's are actually 0.999999xyz
+C@J Hyperbolic Tangent
+6 2 7 2 8 4 6 2J@Nmultiples,radians,(7Oradians),`7O7Oradians
+C@J In the above, some of the 1.0000's are actually 0.999999xyz
 
-¦ Checking for infinity from tan()
-ù1
-ù1.5
-3ùù1.5
+C@J Checking for infinity from tan()
+O1
+O1.5
+3OO1.5
 

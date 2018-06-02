@@ -1,97 +1,97 @@
-¦ Monadic Dyadic Functions
-•pp6
-•A ı1E7 ı200 ı1.5 ı1 0 1, (1ö3), .5 7 2000
-•B(ı3+â4),2ö3
+C@J Monadic Dyadic Functions
+Lpp{6
+L{a{ `1E7 `200 `1.5 `1 0 1, (1%3), .5 7 2000
+L{b{(`3+I4),2%3
 
-¦Plus
-Bø.+B
+C@JPlus
+bJ.+b
 
-¦Minus
-Bø.-B
+C@JMinus
+bJ.-b
 
-¦Times
-Bø.’B
+C@JTimes
+bJ.Xb
 
-¦divide
-0 1 2 3 4 ø.ö1 2 3 4
+C@Jdivide
+0 1 2 3 4 J.%1 2 3 4
 
-¦Maximum
-Bø.B
+C@JMaximum
+BJ.SB
 
-¦Minimum
-Bø.B
+C@JMinimum
+BJ.DB
 
-¦Power
-•pp12
+C@JPower
+Lpp{12
 2*32
 4*0.5
-•pp6
+Lpp{6
 
-¦Logarithm
-10 2 10 0.1 ‰ 2 65536 1E15 1E15
+C@JLogarithm
+10 2 10 0.1 *@O 2 65536 1E15 1E15
 
-¦Residue (note that ş should not be confused with | )
-•ct1Eı10
-7 ı7 ø.ş31 28 ı30
-0.2 ş 1.4 1.5 1.6
-1ş1E30 1Eı30 ı1Eı30 .99999999999
-•ct0
-•pp16
-1ş1E30 1Eı30 ı1Eı30 .99999999999
-•ct1Eı10
-•pp9
+C@JResidue (note that | should not be confused with | )
+Lct{1E`10
+7 `7 J.|31 28 `30
+0.2 | 1.4 1.5 1.6
+1|1E30 1E`30 `1E`30 .99999999999
+Lct{0
+Lpp{16
+1|1E30 1E`30 `1E`30 .99999999999
+Lct{1E`10
+Lpp{9
 
-¦Binomial
-0 1 2 3 4ø.! 0 1 2 3 4
+C@JBinomial
+0 1 2 3 4J.! 0 1 2 3 4
 
-¦Circular Functions - also see trig tests
-2 ù ı1 ù .6
-2 ù 0
-3 ùùö4
-6 ù 0
+C@JCircular Functions - also see trig tests
+2 O `1 O .6
+2 O 0
+3 OO%4
+6 O 0
 
-¦And
-0 1 ø.^ 0 1
-¦LCM is not implemented
+C@JAnd
+0 1 J.^ 0 1
+C@JLCM is not implemented
 
-¦Or
-0 1 ø . ú 0 1
-¦GCD is not implemented
+C@JOr
+0 1 J . V 0 1
+C@JGCD is not implemented
 
-¦Nand
-0 1 ø . ê 0 1
+C@JNand
+0 1 J . ^@~ 0 1
 
-¦Nor
-0 1 ø . å 0 1
+C@JNor
+0 1 J . V@~ 0 1
 
-¦Equal
-1 2 3 ø.= 1 2 3
-•ct1Eı13
-4 = 4 + 5Eı13 2Eı13 ı2Eı13 ı5Eı13
-0 = ı1Eı20 1Eı20 0
-¦3 = 'A3'
-'A'=â128
-(â128)='a'
+C@JEqual
+1 2 3 J.= 1 2 3
+Lct{1E`13
+4 = 4 + 5E`13 2E`13 `2E`13 `5E`13
+0 = `1E`20 1E`20 0
+C@J3 = 'A3'
+'A'=I128
+(I128)='a'
 
 
-¦Less Than
-1 2 3 ø.< 1 2 3
-0 1 ø.< 0 1
+C@JLess Than
+1 2 3 J.< 1 2 3
+0 1 J.< 0 1
 
-¦Less than or equal to
-1 2 3 ø.ó 1 2 3
-0 1 ø.ó 0 1
+C@JLess than or equal to
+1 2 3 J.<@= 1 2 3
+0 1 J.<@= 0 1
 
-¦Not equal
-1 2 3 ø.† 1 2 3
-0 1 ø.† 0 1
+C@JNot equal
+1 2 3 J./@= 1 2 3
+0 1 J./@= 0 1
 
-¦Greater than or equal to
-1 2 3 ø.ò 1 2 3
-0 1 ø.ò 0 1
+C@JGreater than or equal to
+1 2 3 J.=@> 1 2 3
+0 1 J.=@> 0 1
 
-¦Greater than
-1 2 3 ø.> 1 2 3
-0 1 ø.> 0 1
+C@JGreater than
+1 2 3 J.> 1 2 3
+0 1 J.> 0 1
 
 

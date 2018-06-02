@@ -1,33 +1,33 @@
-¦Join along an axis
-•m2 3û'‘'
-•h3 3û'ù'
+C@JJoin along an axis
+L{m{2 3R'H'
+L{h{3 3R'O'
 m,[1]h
-•l2 4û'•'
+L{l{2 4R'L'
 m,l
 m,'+'
 m,'34'
 m,[1]'345'
-a3 4ûâ12
-û•a,3 0û99
+a{3 4RI12
+RL{a,3 0R99
 
-¦Laminate
+C@JLaminate
 1 2 3,[.5] 4 5 6
 1 2 3,[1.5]4 5 6
 1 2 3,[1.5]4
 
-¦Base
-10æ1 2 3
-24 60 60 æ 1 2 3
-•a2 3û10 10 10 12 60 60
-•b3 2û1 4 2 5 3 6
-aæb
-ı.001 10 10æ1 2 3
-60 æ1 2 3
-''æ3
-'A'æâ0
+C@JBase
+10B1 2 3
+24 60 60 B 1 2 3
+L{a{2 3R10 10 10 12 60 60
+L{b{3 2R1 4 2 5 3 6
+aBb
+`.001 10 10B1 2 3
+60 B1 2 3
+''B3
+'A'BI0
 
 
-¦Mixed types - not supported
-¦(2 0û5),'A'
-¦û3,[.5]''
+C@JMixed types - not supported
+C@J(2 0R5),'A'
+C@JR3,[.5]''
 

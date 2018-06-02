@@ -1,72 +1,64 @@
-¦Quad Input
-a•
-12
+C@JQuad Input
+a{L
 a
-b•
-(12’3)+4
+b{L
 b
 
-¦Quad Output
-•aöb
-c2+•4*5
+C@JQuad Output
+L{a%b
+c{2+L{4*5
 c
 
-¦Quote Quad Input
-a—
-abcd
+C@JQuote Quad Input
+a{'@L
 a
 
-¦Quote quad Output
-—'give me a number: '
-a—
-12345
+C@JQuote quad Output
+'@L{'give me a number: '
+a{'@L
 a
-b—'another please: '
-a—
-98765
+b{'@L{'another please: '
+a{'@L
 b
 
-—'abc'
-—'def'
-a—
-xyz
+'@L{'abc'
+'@L{'def'
+a{'@L
 
-—'1234567890123456789012345678901234567890'
-a—
-xyz
+'@L{'1234567890123456789012345678901234567890'
+a{'@L
 
-—'12345678901234567890123456789012345678901'
-a—
-xyz
+'@L{'12345678901234567890123456789012345678901'
+a{'@L
 
-—12
-—3 3û'abcdefghi'
+'@L{12
+'@L{3 3R'abcdefghi'
 
-¦Print Precision
-•pp
-a•1ö3
-•pp15
+C@JPrint Precision
+Lpp
+a{L{1%3
+Lpp{15
 a
 
-¦Comparision Tolerance
-•ct
+C@JComparision Tolerance
+Lct
 
-¦Atomic Vector
-14 16û32‹•av
+C@JAtomic Vector
+14 16R32ULav
 
-¦Index Origin
-•io
-â3
-•io0
-â3
+C@JIndex Origin
+Lio
+I3
+Lio{0
+I3
 
-¦Page Width
-•pw
-â30
-•pw50
-â30
-•pw
+C@JPage Width
+Lpw
+I30
+Lpw{50
+I30
+Lpw
 
-¦Time Stamp
-û•ts
+C@JTime Stamp
+RLts
 
