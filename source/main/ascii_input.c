@@ -49,10 +49,17 @@ char* to_ascii_input(char* input)
     return result;
 }
 
-static struct {
+typedef struct {
     char in;
     char out;
-} charmap[] = {
+} CharMap;
+
+static CharMap charmap2[] = {
+    { 'R', C_RHO },
+    { '`', C_OVERBAR },
+};
+
+static CharMap charmap[] = {
     { 'R', C_RHO },
     { 'I', C_IOTA },
     { 'J', C_JOT },
@@ -81,11 +88,14 @@ static struct {
 static void init()
 {
     int i;
+
     for (i = 0; i < 256; ++i)
         to_apl_symbol[i] = i;
+
     for (i = 0; i < sizeof(charmap) / sizeof(charmap[0]); ++i) {
         to_apl_symbol[charmap[i].in] = charmap[i].out;
     }
+
     inited = true;
 }
 
@@ -117,6 +127,42 @@ static struct {
     { "CJ", C_UPSHOEJOT },    /* 0246 lamp (comment delimiter) */
     { "\0", '\0' }            /* two-characters of null ends list */
 };
+
+void putAplTouchtypeChar(char c) {
+    int i;
+    int done = 0;
+    for (i = 0; chartab[i].out != '\0'; ++i) {
+        if (c == chartab[i].out) {
+            printf("%c@%c", chartab[i].in[0], chartab[i].in[1]);
+            done = 1;
+            break;
+        }
+    }
+
+    if (!done) {
+        for (i = 0; i < sizeof(charmap) / sizeof(charmap[0]); ++i) {
+            if (c == charmap[i].out) {
+                printf("%c", charmap[i].in);
+                done = 1;
+                break;
+            }
+        }
+    }
+
+    if (!done) {
+        for (i = 0; i < sizeof(charmap2) / sizeof(charmap2[0]); ++i) {
+            if (c == charmap2[i].out) {
+                printf("%c", charmap2[i].in);
+                done = 1;
+                break;
+            }
+        }
+    }
+
+    if (!done) {
+        printf("%c", c);
+    }
+}
 
 static void addChar(char** result, int* len, int* nextIndex, char ch)
 {
@@ -161,6 +207,17 @@ static char getTwoferChar(char first, char second)
     return 0;
 }
 
+// Translate a string from apl touchtype to internal representation.
+// Multiple-character strings such as "L@%" or "O@*" map to single
+// characters.
+//
+// And, upper-case characters such as "R" map to internal Greek letters.
+// Could imagine getting around to not doing the latter eventually..
+//
+// Assume source is a null-terminated string.
+//
+// Returns a newly malloc'd string that someone else should free.
+//
 static char* rline(char* source)
 {
     char* result = 0;
@@ -173,6 +230,7 @@ static char* rline(char* source)
             addChar(&result, &len, &next, source[i]);
         }
         else {
+            // source[i+1] is '@'; source[i+2] may be null
             char c = getTwoferChar(source[i], source[i + 2]);
             if (c == '\0') {
                 error(ERR_syntax, "");

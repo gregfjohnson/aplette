@@ -30,7 +30,7 @@ void pline(char* str, int loc, int ln)
     do {
         c = *str++;
         l++;
-        putchar(c);
+        putAplTouchtypeChar(c);
     } while (c != '\n');
 
     /* print the error pointer under the line */

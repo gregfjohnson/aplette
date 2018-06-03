@@ -32,19 +32,19 @@ all: $(OBJECTS)
 	$(DIFF) $< $*.ref > $@
 
 %.out: %.inp $(APLEXE)
-	$(APLEXE) -e -a < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
+	$(APLEXE) < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
 %.adif: %.aout
 	$(DIFF) $< $*.aref > $@
 
 %.aout: %.ainp $(APLEXE)
-	$(APLEXE) -e < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
+	$(APLEXE) < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
 # Kludge required because save command prints the date 
 sys_commands.out: sys_commands.inp $(APLEXE)
-	$(APLEXE) -e < sys_commands.inp \
+	$(APLEXE) < sys_commands.inp \
         | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' \
         | egrep -v "saved deleteme" > $@
 

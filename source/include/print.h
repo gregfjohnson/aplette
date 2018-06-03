@@ -10,6 +10,7 @@
 #define PRINT_H
 
 int ex_print();
+int printLine(char *line);
 
 char c_overbar(void);
 

@@ -4,7 +4,7 @@ include ../include/makefile.common
 CFLAGS += -I../include
 
 OBJECTS = print.o ex_hprint.o ex_print.o\
-	fp_print.o lt_print.o c_overbar.o
+	fp_print.o lt_print.o c_overbar.o print_line.o
 
 all: Q.o
 

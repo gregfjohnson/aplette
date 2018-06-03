@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include "apl.h"
 #include "main.h"
+#include "print.h"
 #include "utility.h"
 #include "parser.h"
 #include "execute.h"
@@ -68,7 +69,7 @@ void mainloop()
         if (gsip->text == NULL)
             Exit(0);
         if (echoflg)
-            printf("%s", gsip->text);
+            printLine(gsip->text);
 
         /* compile the input */
         sandbox = sandboxflg;

@@ -11,6 +11,8 @@
 
 void mainloop();
 void Exit(int s);
+
 char* to_ascii_input(char* input);
+void putAplTouchtypeChar(char c);
 
 #endif

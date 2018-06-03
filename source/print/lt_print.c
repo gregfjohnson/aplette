@@ -13,6 +13,7 @@
 #include "apl.h"
 #include "format.h"
 #include "data.h"
+#include "main.h"
 
 /* Print literals */
 int lt_print(struct item* p)
@@ -25,7 +26,7 @@ int lt_print(struct item* p)
         if (intflg)
             break;
         j = getdat(p);
-        putchar(j);
+        putAplTouchtypeChar(j);
         column++;
         if (column >= pagewidth) {
             putchar('\n');
@@ -44,7 +45,7 @@ int lt_print(struct item* p)
     }
 
     j = getdat(p);
-    putchar(j);
+    putAplTouchtypeChar(j);
     column++;
     if (column >= pagewidth) {
         putchar('\n');
