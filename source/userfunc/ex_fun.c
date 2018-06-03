@@ -10,6 +10,7 @@
 #include "userfunc.h"
 #include "execute.h"
 #include "parser.h"
+#include "debug.h"
 
 int prolgerr; /* Flag -- set if bad fetch in prologue 
                     * this variable is global so that fetch()

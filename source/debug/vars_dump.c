@@ -19,9 +19,7 @@ void vars_dump()
     SymTabEntry* n;
 
     symtabIterateInit();
-
     while (n = symtabIterate()) {
-        // for(n=symbolTable; n->namep; n++) {
         printf("%x:", (uintptr_t)n);
         printf(" namep=%s", n->namep);
         printf(" itemp=%x", (uintptr_t)n->itemp);

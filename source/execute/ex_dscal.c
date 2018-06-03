@@ -19,7 +19,7 @@ void ex_dscal(int m, int (*f)(), struct item* p1, struct item* p2)
 {
     if (p1->itemType != p2->itemType) {
         if (m == 2)
-            ex_mdyad(f, p1, p2); /* modified 9.8.1999/tyl */
+            ex_mdyad((data (*)()) f, p1, p2); /* modified 9.8.1999/tyl */
         else
             error(ERR_domain, "dscal - types do not match");
     }

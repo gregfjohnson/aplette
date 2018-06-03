@@ -28,8 +28,8 @@ void ex_iprod()
     int commonDimension;
     int a = 0, b = 0, resultIndex = 0;
 
-    fnleft = exop[*gsip->ptr++];
-    fnright = exop[*gsip->ptr++];
+    fnleft = (data (*)(data, data)) exop[*gsip->ptr++];
+    fnright = (data (*)(data, data)) exop[*gsip->ptr++];
 
     p = fetch2();
     q = sp[-2];

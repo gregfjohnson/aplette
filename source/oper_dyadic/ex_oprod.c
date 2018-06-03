@@ -13,7 +13,7 @@ void ex_oprod()
     struct item *p, *q, *r;
     data (*f)();
 
-    f = (data*)exop[*gsip->ptr++];
+    f = (data(*)()) exop[*gsip->ptr++];
     p = fetch2();
     q = sp[-2];
     if (p->itemType != DA || q->itemType != DA)

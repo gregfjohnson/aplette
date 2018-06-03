@@ -58,7 +58,6 @@ void ex_nl()
     count = maxlen = 0;
     symtabIterateInit();
     while (np = symtabIterate()) {
-        // for(np=symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++){
         if (np->entryUse < NTYPES && tlist[np->entryUse]) {
             count++;
             if ((i = strlen(np->namep)) > maxlen)
@@ -69,11 +68,10 @@ void ex_nl()
     ip = newdat(CH, 2, count * maxlen);
     ip->dim[0] = count;
     ip->dim[1] = maxlen;
-    cp = ip->datap;
+    cp = (char *) ip->datap;
 
     symtabIterateInit();
     while (np = symtabIterate()) {
-        // for(np=symbolTable; np < &symbolTable[SYM_TAB_MAX]; np++) {
         if (np->entryUse < NTYPES && tlist[np->entryUse]) {
             for (cp2 = &np->namep[i = 0]; i < maxlen; i++) {
                 if (*cp2)
