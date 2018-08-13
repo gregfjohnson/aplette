@@ -25,6 +25,7 @@
 char headline[] = "aplette "
                   "Version 0"
 #include "version.h"
+                  "; \")font\" for APL touchtype font"
                   "\n";
 
 data tolerance;

@@ -11,6 +11,7 @@
 
 char* compile_new(int f);
 char* compile_old(char* s, int f);
+void font_map_print();
 extern int exprOrNullFlag;
 
 #endif

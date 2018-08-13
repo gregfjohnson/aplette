@@ -6,6 +6,7 @@ CFLAGS += -I../include
 OBJECTS = alpha.o genlab.o getquad.o name.o \
 	compile_old.o compile_new.o getnam.o invert.o yyerror.o \
 	digit.o getnum.o yylex.o \
+    font_map.o \
 	table_oper.o table_comm.o table_quad.o \
 	lastcode.o y.tab.o
 

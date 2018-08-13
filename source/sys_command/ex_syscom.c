@@ -124,6 +124,10 @@ void ex_syscom()
         wssave(i);
         printf(" continue");
 
+    case FONT:
+        font_map_print();
+        return;
+
     case OFF:
         Exit(0);
 

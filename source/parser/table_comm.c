@@ -14,6 +14,7 @@ struct COMM comtab[] = {
     "copy", comnam, COPY,
     "debug", comnull, DEBUG,
     "drop", comlist, DROPC,
+    "font", comnull, FONT,
     "license", comnull, LICENSE,
     "edit", comnam, EDIT,
     "write", comnam, WRITE,

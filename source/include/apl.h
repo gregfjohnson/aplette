@@ -31,12 +31,12 @@
 #define SINT sizeof(int)
 #define SPTR sizeof(void*)
 
-#ifndef MINDOUBLE
-    #define MINDOUBLE 2.2250738585072014e-308
-#endif
-
 #ifndef MAXDOUBLE
     #define MAXDOUBLE 1.7976931348623157e+308
+#endif
+
+#ifndef MAX_NEGDOUBLE
+    #define MAX_NEGDOUBLE (-MAXDOUBLE)
 #endif
 
 #ifndef MINFLOAT
@@ -48,7 +48,7 @@
 #endif
 
 #define MAXEXP 709 /* the largest value such that exp(MAXEXP) is OK */
-#define MINdata MINDOUBLE
+#define MINdata MAX_NEGDOUBLE
 #define MAXdata MAXDOUBLE
 
 #define INITIAL_tolerance 1.0e-13

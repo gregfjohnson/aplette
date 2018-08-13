@@ -39,6 +39,7 @@ parser/Q.o: \
     parser/alpha.c        parser/digit.c   parser/getnum.c     parser/lastcode.c    parser/table_oper.c  parser/yylex.c \
     parser/compile_new.c  parser/genlab.c  parser/getquad.c    parser/name.c        parser/table_quad.c \
     parser/compile_old.c  parser/getnam.c  parser/invert.c     parser/table_comm.c  parser/yyerror.c \
+    parser/font_map.c \
     parser/apl.y parser/alpha.h parser/local_parser.h
 	cd parser ; $(MAKE)
 
