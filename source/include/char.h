@@ -40,6 +40,7 @@
 /*                  ((char) 148)            */
 #define C_QUAD ((char)149) /* • */
 #define S_QUAD "•"
+#define S_QUAD_ASCII "L"
 #define C_DELTILDE ((char)150)  /* – */
 #define C_QUOTEQUAD ((char)151) /* — */
 #define S_QUOTEQUAD "—"

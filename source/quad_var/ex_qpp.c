@@ -29,7 +29,7 @@ void updatePrintP(struct item *p) {
         error(ERR_rank, "assign value not scalar");
     i = p->datap[0];
     if (i < 1 || i > 20)
-        error(ERR_limit, S_QUAD "pp range is 1 to 20");
+        error(ERR_limit, S_QUAD_ASCII "pp range is 1 to 20");
     PrintP = i;
 }
 

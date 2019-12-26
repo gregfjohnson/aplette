@@ -35,7 +35,7 @@ struct item* ex_qpw(io) int io; /* 0 = source, 1 = sink */
             error(ERR_rank, "assign value not scalar");
         i = p->datap[0];
         if (i < 10 || i > 132)
-            error(ERR_limit, S_QUAD "pw range is 20 to 132");
+            error(ERR_limit, S_QUAD_ASCII "pw range is 20 to 132");
         pagewidth = i;
         sp[-1] = (struct item*)p;
         return (0);

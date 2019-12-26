@@ -22,7 +22,7 @@ void ex_crp() {
 
     p = fetch1();
     if (p->size == 0 || p->rank > 1 || p->size >= NAMS)
-        error(ERR_length, S_QUAD "cr");
+        error(ERR_length, S_QUAD_ASCII "cr");
 
     if (p->itemType != CH)
         error(ERR_domain, "");                   // Must be characters
@@ -34,11 +34,11 @@ void ex_crp() {
 
     // if not found then domain error..
     if (np == NULL || np->namep == NULL)
-        error(ERR_domain, S_QUAD "cr");
+        error(ERR_domain, S_QUAD_ASCII "cr");
 
     // if not a function then domain error..
     if (np->entryUse != MF && np->entryUse != DF && np->entryUse != NF) {
-        error(ERR_domain, S_QUAD "cr");
+        error(ERR_domain, S_QUAD_ASCII "cr");
     }
 
     // compute max width and height

@@ -40,7 +40,7 @@ void ex_nc()
             i = 2;
             break;
         default:
-            printf("unknown ", S_QUAD, "nc type = %d\n", np->entryUse);
+            printf("unknown " S_QUAD_ASCII " nc type = %d\n", np->entryUse);
             i = 4;
         }
     }

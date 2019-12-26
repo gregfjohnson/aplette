@@ -32,6 +32,6 @@ struct item* ex_qav(io) int io; /* 0 = source, 1 = sink */
         return (p);
     }
     else {
-        error(ERR_implicit, "cannot change " S_QUAD "av");
+        error(ERR_implicit, "cannot change " S_QUAD_ASCII "av");
     };
 }

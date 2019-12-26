@@ -17,9 +17,9 @@ void ex_prws()
     struct item* ip;
     int i;
 
-    printf(S_QUAD "io " S_LEFTARROW " %d\n", iorigin);
-    printf(S_QUAD "pw " S_LEFTARROW " %d\n", pagewidth);
-    printf(S_QUAD "pp " S_LEFTARROW " %d\n", PrintP);
+    printf(S_QUAD_ASCII "io " S_LEFTARROW " %d\n", iorigin);
+    printf(S_QUAD_ASCII "pw " S_LEFTARROW " %d\n", pagewidth);
+    printf(S_QUAD_ASCII "pp " S_LEFTARROW " %d\n", PrintP);
 
     symtabIterateInit();
     while (np = symtabIterate()) {

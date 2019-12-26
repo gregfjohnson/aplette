@@ -77,7 +77,7 @@ loop:
        * execution of line 0 of a function, it leaves with
        * the stack in an unknown state and "gsip->oldsp" is
        * zero.  This is nasty because there is no way to
-       * reset out of it.  The principle cause of error
+       * reset out of it.  The principal cause of error
        * exits from line 0 is the fetch of an undefined
        * function argument.  The following code attempts
        * to fix this by setting an error flag and creating

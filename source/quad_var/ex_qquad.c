@@ -16,12 +16,13 @@
 #include "data.h"
 #include "utility.h"
 #include "memory.h"
+#include "getinput.h"
 
 struct item* ex_qquad(int io)
 {
     int i;
     struct item* p;
-    char *iline, *getinput();
+    char *iline;
 
     switch (io) {
     case QV_source:

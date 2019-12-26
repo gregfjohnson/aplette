@@ -1,7 +1,7 @@
 # Makefile for quad_var (quad variables) 
 
 include ../include/makefile.common
-CFLAGS += -I../include
+CFLAGS += -I../include -I../main
 
 OBJECTS = ex_quad.o ex_qquad.o \
 	ex_qav.o ex_qct.o ex_qio.o ex_qlx.o ex_qpp.o ex_qpw.o \

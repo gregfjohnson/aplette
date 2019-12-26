@@ -19,10 +19,10 @@
 #include "utility.h"
 #include "parser.h"
 #include "execute.h"
+#include "getinput.h"
 
 void mainloop()
 {
-    char* getinput();
     Context* thisContext;
 
     while (1) {
@@ -59,7 +59,7 @@ void mainloop()
 
         /*  get a line of input */
         if (isatty(0))
-            gsip->text = getinput("\t");
+            gsip->text = getinput("        ");
         else
             gsip->text = getinput("");
         /* getinput will return NULL at eof but only if input is not

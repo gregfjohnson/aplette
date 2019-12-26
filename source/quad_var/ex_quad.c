@@ -20,10 +20,10 @@
 #include "parser.h"
 #include "execute.h"
 #include "print.h"
+#include "getinput.h"
 
 struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
 {
-    char* getinput();
     struct item* p;
     Context* thisContext;
 
@@ -39,7 +39,7 @@ struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
 
         gsip = thisContext;
         do {
-            gsip->text = getinput(S_QUAD ":\t");
+            gsip->text = getinput(S_QUAD_ASCII ":      ");
             if (!isatty(0))
                 printf("%s", gsip->text);
             if (gsip->text == NULL)
