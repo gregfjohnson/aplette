@@ -73,7 +73,7 @@ char* fp2char(data d, struct FORMAT* format)
         /* special case of 0 */
         if (value == 0) {
             format_buffer[n++] = '0';
-            format_buffer[n++] = 'E';
+            format_buffer[n++] = 'e';
             format_buffer[n++] = '0';
             for (; n < format->digits; n++)
                 format_buffer[n] = ' ';
@@ -97,7 +97,7 @@ char* fp2char(data d, struct FORMAT* format)
         if (format_buffer[n - 1] == 'e')
             n--;
         /* move the E forward */
-        format_buffer[n++] = 'E';
+        format_buffer[n++] = 'e';
         m++;
         /* deal with exponent sign */
         if (format_buffer[m++] == '-')

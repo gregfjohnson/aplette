@@ -84,7 +84,7 @@ char* fp2char_paded(data d, struct FORMAT* format)
             ;
 
         /* E symbol */
-        format_buffer[n++] = 'E';
+        format_buffer[n++] = 'e';
 
         /* exponent's sign */
         m = n + 1;
