@@ -1,20 +1,31 @@
-1
-`1
-1
-1
+Monadic Scalar Functions
+`1E7 `200 `1.5 `1 0 1 0.333333 0.5 7 2000
+Conjugate - not implemented
+Negative
+1E7 200 1.5 1 `0 `1 `0.333333 `0.5 `7 `2000
+Direction
+`1 `1 `1 `1 0 1 1 1 1 1
+Reciprocal
+`1E`7 `0.005 `0.666667 `1 1 3 2 0.142857 0.0005
 `4 2 1 0.5 `0.25
 Domain Error: reciprocal of zero attempted.
+Floor
 0
-0
-0 0 0 0
-6
-6
-`3 4 6
-2.71828
-2
-Limit Error: log of negative number attempted.
 1
-0 0 0 0 0 0
+`4 3 1 5E20 0
+Ceiling
+6
+5
+`3 4 5
+Exponential
+0 0.135335 0.367879 1 2.71828 7.38906
+2
+Natural Logarithm
+1 0.693147 0 `115.129 115.129
+1
+Magnitude
+1 0.5 0.33 0.25 0 1E`20
+Factorial
 1 1 2 6 24 120 720 5040 40320 362880
 1.77245
 `3.54471
@@ -22,6 +33,8 @@ Limit Error: log of negative number attempted.
 `3.54464
 `3.54466
 `3.5447 
+PI times (see also trig tests)
 3.14159 31.4159 314.159
-1 1 1
+Not
+1 0 0 0
 

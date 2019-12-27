@@ -6,7 +6,7 @@ L { n213 { 2 1 3 R I 6
 
 R 0 R 'ABCD'
 
-b { 1E2 1E2 1E2 0 1E2 1E2 1E2  R 42
+b { 1e2 1e2 1e2 0 1e2 1e2 1e2  R 42
 R b
 
 '' R n213

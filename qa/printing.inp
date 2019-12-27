@@ -47,8 +47,8 @@ C@JE format
 1.1e`7 1.1e`23 1.1e`123
 
 C@JThree digit exponent
-a{1E99
-b{1E`99
+a{1e99
+b{1e`99
 a
 aX10
 aXaXa
