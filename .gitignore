@@ -7,8 +7,6 @@ qa/Makefile
 source/aplette
 source/include/config.h
 source/include/makefile.common
-source/parser/y.tab.c
-source/parser/y.tab.h
 autoconf/config.cache
 autoconf/config.log
 autoconf/config.status

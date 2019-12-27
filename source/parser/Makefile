@@ -24,7 +24,7 @@ y.tab.o: y.tab.c
 	$(CC) $(CFLAGS) -c y.tab.c
 
 y.tab.c y.tab.h: apl.y
-	$(YACC) -d apl.y
+	$(if $(FACC),$(YACC) -d apl.y,touch y.tab.c y.tab.h)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
@@ -35,5 +35,4 @@ table_oper.o table_comm.o table_quad.o:	y.tab.h
 getnum.o yylex.o table_oper.o:	../include/char.h
 
 clean:
-	rm -f $(OBJECTS) core y.tab.c y.tab.h Q.o
-
+	rm -f $(OBJECTS) core Q.o
