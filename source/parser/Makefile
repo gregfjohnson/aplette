@@ -24,7 +24,7 @@ y.tab.o: y.tab.c
 	$(CC) $(CFLAGS) -c y.tab.c
 
 y.tab.c y.tab.h: apl.y
-	$(if $(FACC),$(YACC) -d apl.y,touch y.tab.c y.tab.h)
+	$(if $(YACC),$(YACC) -d apl.y,touch y.tab.c y.tab.h)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
