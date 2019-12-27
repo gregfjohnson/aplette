@@ -1,7 +1,7 @@
 # Makefile for userfunc (user defined functions)
 
 include ../include/makefile.common
-CFLAGS += -I../include
+CFLAGS += -I../include -I../main
 
 OBJECTS = ex_auto.o ex_fun.o ex_nilret.o fundef.o \
 	csize.o ex_br.o ex_ibr.o ex_rest.o funedit.o sichk.o \

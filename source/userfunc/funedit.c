@@ -24,7 +24,8 @@ static int badfnsv(char* fname);
 
 void funedit(char* fname) {
     SymTabEntry* p;
-    char *c, cmd[128];
+    #define CMD_LEN 128
+    char *c, cmd[CMD_LEN];
 
     p = (SymTabEntry *) sp[-1];
     if (p->entryType != LV)
@@ -33,12 +34,12 @@ void funedit(char* fname) {
     if (fname == 0)
         fname = p->namep;
     c = getenv("EDITOR");
-    /* if (c == 0) c = "vi"; */
-    if (c == 0)
-        error(ERR, "The variable $editor has not been set");
-    strcpy(cmd, c);
-    strcat(cmd, " ");
-    strcat(cmd, fname);
+    if (c == 0) {
+        c = "vi";
+    }
+    strncpy(cmd, c, CMD_LEN-1);
+    strncat(cmd, " ", CMD_LEN-1);
+    strncat(cmd, fname, CMD_LEN-1);
     if (system(cmd) < 0)
         error(ERR, "could not start editor");
 

@@ -17,6 +17,7 @@
 
 static void init();
 static char* rline(char* source);
+static void addChar(char** result, int* len, int* nextIndex, char ch);
 
 static char to_apl_symbol[256];
 static bool inited = false;
@@ -162,6 +163,77 @@ void putAplTouchtypeChar(char c) {
     if (!done) {
         printf("%c", c);
     }
+}
+
+void toAplTouchtypeChar(char output[3], char inChar) {
+    int i;
+    int done = 0;
+    memset(output, 0, /*output length*/ 3);
+
+    for (i = 0; chartab[i].out != '\0'; ++i) {
+        if (inChar == chartab[i].out) {
+            output[0] = chartab[i].in[0];
+            output[1] = chartab[i].in[1];
+            done = 1;
+            break;
+        }
+    }
+
+    if (!done) {
+        for (i = 0; i < sizeof(charmap) / sizeof(charmap[0]); ++i) {
+            if (inChar == charmap[i].out) {
+                output[0] = charmap[i].in;
+                done = 1;
+                break;
+            }
+        }
+    }
+
+    if (!done) {
+        for (i = 0; i < sizeof(charmap2) / sizeof(charmap2[0]); ++i) {
+            if (inChar == charmap2[i].out) {
+                output[0] = charmap2[i].in;
+                done = 1;
+                break;
+            }
+        }
+    }
+
+    if (!done) {
+        output[0] = inChar;
+    }
+}
+
+char *toAplTouchtypeLine(char *inLine) {
+    char buf[3];
+    char *output = NULL;
+    int len = 32;
+    int next = 0;
+    char *q;
+    int i;
+    int inLen = strlen(inLine);
+    int tailLfCount = 0;
+
+    for (q = &inLine[inLen-1]; q >= inLine; --q) {
+        if (*q == '\n') {
+            ++tailLfCount;
+        } else {
+            break;
+        }
+    }
+
+    if (tailLfCount > 1)
+        inLen -= tailLfCount-1;
+
+    for (i = 0; i < inLen; ++i) {
+        toAplTouchtypeChar(buf, inLine[i]);
+        for (q = buf; *q != '\0'; ++q) {
+            addChar(&output, &len, &next, *q);
+        }
+    }
+    addChar(&output, &len, &next, '\0');
+
+    return output;
 }
 
 static void addChar(char** result, int* len, int* nextIndex, char ch)
