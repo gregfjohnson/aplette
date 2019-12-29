@@ -9,8 +9,9 @@
 #include "utility.h"
 #include "work_space.h"
 #include "ascii_input.h"
+#include "memory.h"
 
-static void write_line(int fd, char *line) {
+void write_line(int fd, char *line) {
     char *ascii_line;
 
     if (ascii_characters) {
@@ -21,7 +22,7 @@ static void write_line(int fd, char *line) {
 
         writeErrorOnFailure(fd, ascii_line, strlen(ascii_line));
 
-        free(ascii_line);
+        aplfree((int *) ascii_line);
 
     } else {
         writeErrorOnFailure(fd, line, strlen(line));

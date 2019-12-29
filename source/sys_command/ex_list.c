@@ -3,11 +3,15 @@
  * subject to the conditions expressed in the file "License".
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 
 #include "apl.h"
 #include "utility.h"
+#include "userfunc.h"
+#include "main.h"
+#include "memory.h"
 
 /* List a function on the terminal */
 void ex_list() {
@@ -33,13 +37,30 @@ void ex_list() {
     case MF:
     case DF:
         for (line = 0; line < function->sourceCodeCount; ++line) {
+            char *lineText = function->functionSourceCode[line];
+
             if (line == 0) {
                 printf("     ");
             } else {
                 printf("[%d]  ", line);
             }
-            for (i = 0; i < strlen(function->functionSourceCode[line])-1; ++i) {
-                printf("%c", function->functionSourceCode[line][i]);
+
+            if (ascii_characters) {
+                char *ascii_line = toAplTouchtypeLine(lineText);
+                if (ascii_line == NULL) {
+                    error(ERR, "list:  memory failure");
+                }
+
+                printf("%s", ascii_line);
+
+                aplfree((int *) ascii_line);
+
+            } else {
+                int len = strlen(lineText);
+
+                for (i = 0; i < len-1; ++i) {
+                    printf("%c", lineText[i]);
+                }
             }
         }
     }
