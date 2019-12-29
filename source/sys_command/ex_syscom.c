@@ -21,7 +21,7 @@
 #include "ex_prws.h"
 #include "quad_var.h"
 
-void updatePrintP(struct item *p);
+static int nextMultOfEight(int n);
 
 void ex_syscom()
 {
@@ -30,6 +30,7 @@ void ex_syscom()
     SymTabEntry* n;
     char fname[64]; /* Array for filename */
     char *cp, *vfname();
+    int nameLen;
 
     i = *gsip->ptr++;
     switch (i) {
@@ -113,8 +114,7 @@ void ex_syscom()
     case ERASE:
         p = sp[-1];
         sp--;
-        // purge_name(p);
-        erase((SymTabEntry*)p);
+        erase((SymTabEntry*) p);
         if (vars_trace)
             vars_dump();
         return;
@@ -133,12 +133,19 @@ void ex_syscom()
 
     case VARS:
         symtabIterateInit();
+        column = 0;
         while (n = symtabIterate()) {
             if (n->itemp && n->entryUse == DA) {
-                if (column + 8 >= pagewidth)
+                if (column + strlen(n->namep) >= pagewidth) {
                     printf("\n\t");
-                printf(n->namep);
+                    column = 8;
+                }
+
+                printf("%s%n", n->namep, &nameLen);
+                column += nameLen;
+
                 putchar('\t');
+                column = nextMultOfEight(column);
             }
         }
         putchar('\n');
@@ -148,13 +155,20 @@ void ex_syscom()
         symtabIterateInit();
         while (n = symtabIterate()) {
             if (n->entryUse == DF || n->entryUse == MF || n->entryUse == NF) {
-                if (column + 8 >= pagewidth)
+                if (column + strlen(n->namep) >= pagewidth) {
                     printf("\n\t");
-                printf(n->namep);
+                    column = 8;
+                }
+                printf("%s%n", n->namep, &nameLen);
+                column += nameLen;
+
                 putchar('\t');
+                column = nextMultOfEight(column);
             }
         }
         putchar('\n');
+        column = 0;
+
         return;
 
     case CODE:
@@ -168,18 +182,6 @@ void ex_syscom()
         case DF:
             if (n->itemp == 0)
                 funcomp(n);
-            #if 0
-            ip = (int*)n->itemp;
-            printf(" [p] "); /* prologue */
-            code_dump(ip[1], 0);
-            for (i = 1; i < *ip; i++) {
-                printf(" [%d] ", i);
-                code_dump(ip[i + 1], 0);
-            }
-            printf(" [e] "); /* epilogue */
-            code_dump(ip[i + 1], 0);
-            printf("\n");
-            #endif
         {
             fprintf(stderr, "[p] ");
             code_dump(n->functionLines[0]->pcode, 0);
@@ -306,4 +308,8 @@ char* vfname(char* array) {
     while (*array++ = *p++)
         ;
     return (n->namep);
+}
+
+static int nextMultOfEight(int n) {
+    return 8 * ((n+7) / 8);
 }

@@ -16,7 +16,17 @@ static int symTabCmp(SymTabEntry* e1, SymTabEntry* e2) {
 
 void symtab_init() {
     rbtree_init(&rbSymbolTable, (rbtree_cmp_t*)&symTabCmp);
-    rbtree_set_malloc_free(&rbSymbolTable, (rbtree_malloc_t*)&alloc, (rbtree_free_t*)&aplfree);
+    rbtree_set_malloc_free(&rbSymbolTable,
+                           (rbtree_malloc_t*) &alloc,
+                           (rbtree_free_t*) &aplfree);
+}
+
+void symtab_clear() {
+    SymTabEntry *entry;
+    while ((entry = rbtree_first(&rbSymbolTable)) != NULL) {
+        rbtree_delete(&rbSymbolTable, entry);
+        aplfree((int*) entry);
+    }
 }
 
 SymTabEntry* symtabFind(char* name) {

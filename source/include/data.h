@@ -24,13 +24,13 @@ int size();
 void indexIterateInit(DataIterator* iter);
 bool indexIterate(DataIterator* iter);
 
-void purge_name(SymTabEntry* np);
 void erase(SymTabEntry* np);
 
 struct item* newdat(EntryType type, int rank, int size);
 struct item* dupdat(struct item* ap);
 
 void symtab_init();
+void symtab_clear();
 SymTabEntry* symtabFind(char* name);
 SymTabEntry* symtabInsert(char* name);
 SymTabEntry* symtabEntryCreate(char* name);

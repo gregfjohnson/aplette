@@ -112,17 +112,12 @@ void error(int type, char* diagnostic)
     else
         printf(": %s.\n", diagnostic);
 
-    /* purge any unassigned names */
-    // for(np=symbolTable; np->namep; np++) {
-    //    if(np->use == 0 && !equal(np->namep, "#")) purge_name(np);
-    // }
-
     if (vars_trace)
         vars_dump();
 
     /* produce traceback and mark state indicator */
     tback(0);
-    //if(gsip) gsip->suspended = 1;
+
     if (gsip->Mode == deffun) {
         gsip->suspended = 1;
     }

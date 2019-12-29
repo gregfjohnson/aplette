@@ -8,14 +8,8 @@
 
 void clear()
 {
-    SymTabEntry* n;
+    symtab_clear();
 
-    symtabIterateInit();
-    while (n = symtabIterate()) {
-        n->entryUse = 0;
-        n->itemp = 0;
-        n->namep = 0;
-    }
     afreset(); /* release all dynamic memory */
     gsip = 0;  /* reset state indicator */
 
