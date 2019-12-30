@@ -7,7 +7,7 @@ b { L
 b
 
 '\nQuad Output'
-L { a%b
+L { a % b
 c { 2 + L { 4*5
 c
 
@@ -47,11 +47,11 @@ a
 
 '\nQuote quad Output Errors'
 '@L { 12
-'@L { 3 3R'abcdefghi'
+'@L { 3 3 R 'abcdefghi'
 
 '\nPrint Precision'
 Lpp
-a { L { 1%3
+a { L { 1 % 3
 Lpp { 15
 a
 Lpp { 9
@@ -64,18 +64,18 @@ Lct
 
 '\nIndex Origin'
 Lio
-I3
+I 3
 Lio { 0
-I3
+I 3
 Lio { 1
 
 '\nPage Width'
 Lpw
-I30
+I 30
 Lpw { 50
-I30
+I 30
 Lpw
 Lpw { 72
 
 '\nTime Stamp'
-RLts
+R Lts

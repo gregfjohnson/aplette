@@ -1,37 +1,37 @@
 'Circular Functions'
 
 a { `5 `2 `1.75 `1.5 `1 `.5 
-b { 0, (1%3), .5, (2%3), .75 .9 1 1.1 1.5 1.75
+b { 0, (1 % 3), .5, (2 % 3), .75 .9 1 1.1 1.5 1.75
 c { 2 3 10
-multiples { (a,b,c) J.X I1
+multiples { (a, b, c) J.X I 1
 radians { O multiples
 
 C@J output is restricted to 4 decimal places
 C@J as exposing too much accuracy can lead to false errors
 C@J due to differences between FPUs on different machines
-Lpp{4
+Lpp { 4
 
 'Sine'
-6 2 9 4 8 4 8 4J@Nmultiples,radians,(1 O radians),`1 O 1 O radians
+6 2 9 4 8 4 8 4 J@N multiples,radians,(1 O radians),`1 O 1 O radians
 
 'Cosine'
-6 2 9 4 8 4 8 4J@Nmultiples,radians,(2 O radians),`2 O 2 O radians
+6 2 9 4 8 4 8 4 J@N multiples,radians,(2 O radians),`2 O 2 O radians
 
 'Hyperbolic Sine'
-6 2 7 2 12 `4 6 2J@Nmultiples,radians,(5 O radians),`5 O 5 O radians
+6 2 7 2 12 `4 6 2 J@N multiples,radians,(5 O radians),`5 O 5 O radians
 
 'Hyperbolic Cosine'
-6 2 7 2 12 `4 6 2J@Nmultiples,radians,(6 O radians),`6 O 6 O radians
+6 2 7 2 12 `4 6 2 J@N multiples,radians,(6 O radians),`6 O 6 O radians
 
 A { `5 `2 `1.75 `1    C@J For tan() which is infinity at pi%2
-multiples { (a,b,c)J.XI1
+multiples { (a, b, c) J.X I 1
 radians { O multiples
 
 'Tangent'
 6 2 9 4 8 4 8 4 J@N multiples, radians, (3 O radians), `3 O 3 O radians
 
 'Hyperbolic Tangent'
-6 2 7 2 8 4 6 2J@N multiples, radians, (7 O radians), `7 O 7 O radians
+6 2 7 2 8 4 6 2 J@N multiples, radians, (7 O radians), `7 O 7 O radians
 C@J In the above, some of the 1.0000's are actually 0.999999
 
 'Checking for infinity from tan()'

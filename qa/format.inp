@@ -1,39 +1,39 @@
 'Monadic Format (character "downtack jot")'
-Lpp{10
-'|',(J@N5 `6 7 8 9 10J.%I5),'|'
-d{0.7 0.8 0.9, 7 8 9%10
-J@Nd
-d-B@JJ@Nd
-Lpp{20
-J@Nd
-d-B@JJ@Nd
-Lpp{4
-m{0.78901X(10*I6)J.X1 1e`10 1e`6 0.01 0.1
-J@Nm
-J@N5Rm
-J@N1 5Rm
+Lpp { 10
+'|',(J@N 5 `6 7 8 9 10J.%I5),'|'
+d { 0.7 0.8 0.9, 7 8 9%10
+J@N d
+d - B@J J@N d
+Lpp { 20
+J@N d
+d - B@J J@N d
+Lpp { 4
+m { 0.78901 X (10*I6) J.X 1 1e`10 1e`6 0.01 0.1
+J@N m
+J@N 5 R m
+J@N 1 5 R m
 
 '\nDyadic Format'
-20 `7J@NO1
-20 `7J@N-O1
-d{`1 `0.1 0 0.1 1 J.X 5R0.5
-e{9 `3  7 `1  6 3  5 1  3 0
-eJ@Nd
-eJ@N-d
-eJ@NdX100
-eJ@N-dX.0001
+20 `7 J@N O 1
+20 `7 J@N - O 1
+d { `1 `0.1 0 0.1 1 J.X 5 R 0.5
+e { 9 `3  7 `1  6 3  5 1  3 0
+e J@N d
+e J@N -d
+e J@N d X 100
+e J@N -d X .0001
 
-R 1 0 2 0 4 0 8 0J@N0 4R1
-4 1 J@N`.99 `.89 0 7.5 11.5
+R 1 0 2 0 4 0 8 0 J@N 0 4 R 1
+4 1 J@N `.99 `.89 0 7.5 11.5
 
 '\nNon-fitting formats'
-L{a{(`1+I5)J.%I4
-7 `2J@Na
-7 `3J@Na
-7 `4J@Na
+L { a { (`1+I5) J.% I 4
+7 `2 J@N a
+7 `3 J@N a
+7 `4 J@N a
 
-7 4J@Na
-7 5J@Na
-7 6J@N100Xa
-10 4J@N100Xa
+7 4 J@N a
+7 5 J@N a
+7 6 J@N 100 X a
+10 4J@N 100 X a
 

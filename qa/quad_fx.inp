@@ -1,4 +1,8 @@
-fn { 1 10R'G z { sq n'
-fn { fn,[1] 10Y'z { n*2'
+C@J Create a 2xN string array,
+C@J and then use Lfx to turn it into
+C@J a function.
+
+fn {        1 80 R 80 Y 'G z { sq n'
+fn { fn,[1] 1 80 R 80 Y 'z { n*2'
 Lfx fn
 sq 4

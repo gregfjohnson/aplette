@@ -1,17 +1,17 @@
 'Monadic Structural Primitives'
 
-0 0 0 \ I0
-1 0 1 0 1 \ 4 3 R I12
-0 0 0 \ 4 0 R0
+0 0 0 \ I 0
+1 0 1 0 1 \ 4 3 R I 12
+0 0 0 \ 4 0 R 0
 
 '\nRavel'
 L { n22   { 2 2     R I 4
 L { n222  { 2 2 2   R I 8
 L { n2221 { 2 2 2 1 R I 8
 
-,n22
-,n222
-,n2221
+, n22
+, n222
+, n2221
 
 '\nShape'
 L { n   {          1

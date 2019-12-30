@@ -1,5 +1,5 @@
 'Integers'
-a{1 100 5000 123456789 `2 `400
+a { 1 100 5000 123456789 `2 `400
 a
 a*2
 
@@ -8,54 +8,54 @@ a*2
 
 '\nLiterals'
 'a'
-z{'abcdefghijklmnopqrstuvwxyz'
-100Rz
-4 4Rz
-tab{Lav[10]
-z[5]{tab
+z { 'abcdefghijklmnopqrstuvwxyz'
+100 R z
+4 4 R z
+tab { Lav[10]
+z[5] { tab
 z
 
 
 '\nVectors'
-I50
-%I10
+I 50
+% I 10
 
 '\nArrays'
-3 3RI9
-3 3 3RI3*3
+3 3 R I9
+3 3 3 R I 3*3
 
 '\nPage Width'
 Lpw
-Lpw{50
+Lpw { 50
 I40
-Lpw{72
+Lpw { 72
 
 '\nPrint Precision'
 Lpp
-Lpp{4
-%I40
+Lpp { 4
+% I 40
 
 '\nWARNING: setting Lpp over 15 may show up differences'
 '         between FPUs of different machines'
-Lpp{15
-%I10
+Lpp { 15
+% I 10
 
-Lpp{10
-Lpw{72
+Lpp { 10
+Lpw { 72
 
 '\nE format'
 1e`7 1e`23 1e`123
 1.1e`7 1.1e`23 1.1e`123
 
 '\nThree digit exponent'
-a{1e99
-b{1e`99
+a { 1e99
+b { 1e`99
 a
-aX10
-aXaXa
+a X 10
+a X a X a
 b
-b%10
-bXbXb
+b % 10
+b X b X b
 
 '\nCascade carry forward'
 0.99999999999999999
@@ -63,30 +63,30 @@ bXbXb
 `2.99999999999999999
 
 '\nQuad Output'
-L{3 4RI12
+L { 3 4 R I 12
 
 '\nSemicolon Output'
-I10 ; 300+I12 ; ' asdf'
+I 10 ; 300+I 12 ; ' asdf'
 
 '\nMixing E format with rational format'
-Lpp{9
-a{(0 1 2 3 4)J.%I4
+Lpp { 9
+a { (0 1 2 3 4) J.% I 4
 a
-10000Xa
-1e9Xa
-`1e9Xa
-a%10000
+10000 X a
+1e9 X a
+`1e9 X a
+a % 10000
 
 '\nPushing both ends'
-b{4 1R`1.234e`56 1.2 0 1e9
+b { 4 1 R `1.234e`56 1.2 0 1e9
 b
-bX1000
-b%1000
-b,b,b
+b X 1000
+b % 1000
+b, b, b
 
 '\nColumn Formatting'
-m{0.78901X(10*I6)J.X1 1e`10 1e`6 0.01 .1
+m { 0.78901 X (10*I6) J.X 1 1e`10 1e`6 0.01 .1
 m
-Lpp{4
+Lpp { 4
 m
 

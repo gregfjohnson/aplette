@@ -1,34 +1,34 @@
 'Join along an axis'
-L{m{2 3R'H'
-L{h{3 3R'O'
+L { m { 2 3 R 'H'
+L { h { 3 3 R 'O'
 m,[1]h
-L{l{2 4R'L'
+L { l { 2 4 R 'L'
 m,l
 m,'+'
 m,'34'
 m,[1]'345'
-a{3 4RI12
-RL{a,3 0R99
+a { 3 4RI12
+R L { a,3 0R99
 
 '\nLaminate'
-1 2 3,[.5] 4 5 6
-1 2 3,[1.5]4 5 6
+1 2 3,[.5]  4 5 6
+1 2 3,[1.5] 4 5 6
 1 2 3,[1.5]4
 
 '\nBase'
-10B1 2 3
+10 B 1 2 3
 24 60 60 B 1 2 3
-L{a{2 3R10 10 10 12 60 60
-L{b{3 2R1 4 2 5 3 6
-aBb
-`.001 10 10B1 2 3
-60 B1 2 3
-''B3
-'A'BI0
+L { a { 2 3 R 10 10 10 12 60 60
+L { b { 3 2 R 1 4 2 5 3 6
+a B b
+`.001 10 10 B 1 2 3
+60 B 1 2 3
+'' B 3
+'A' B I 0
 
 
 '\nMixed types - not supported'
-(2 0R5),'A'
+(2 0 R 5), 'A'
 3, [.5] ''
 
 pi { 3 1 4 1 5 9 2 6
@@ -39,14 +39,14 @@ right -@O pi
 
 3 Y pi
 0 Y pi
-R0 Y pi
-RR0 Y pi
+R 0 Y pi
+R R 0 Y pi
 
-m { 3 4RI12
+m { 3 4 R I 12
 L { m1 { 2 1 U m
 Rm1
 RRm1
 
 L { m0 { 1 2 U m1
-Rm0
-RRm0
+R m0
+R R m0
