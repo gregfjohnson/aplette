@@ -1,4 +1,4 @@
-C@J Test of global variable shadowed by function arg.
+'Test of global variable shadowed by function arg.'
 
 Lchdir 'clean_dir'
 

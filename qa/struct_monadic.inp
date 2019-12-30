@@ -1,10 +1,10 @@
-C@J Monadic Structural Primitives
+'Monadic Structural Primitives'
 
 0 0 0 \ I0
 1 0 1 0 1 \ 4 3 R I12
 0 0 0 \ 4 0 R0
 
-C@J Ravel
+'\nRavel'
 L { n22   { 2 2     R I 4
 L { n222  { 2 2 2   R I 8
 L { n2221 { 2 2 2 1 R I 8
@@ -13,7 +13,7 @@ L { n2221 { 2 2 2 1 R I 8
 ,n222
 ,n2221
 
-C@J Shape
+'\nShape'
 L { n   {          1
 L { n3  {       I  3
 L { n34 { 3 4 R I 12
@@ -25,12 +25,12 @@ R   n3
 R R n3
 R   n34
 
-C@J Index Generator
+'\nIndex Generator'
 Lio { 0
 I 4
 Lio { 1
 I 4
 
-C@J Table - not implemented
-C@J Depth - not implemented
-C@J Enlist - not implemented
+'\nTable - not implemented'
+'\nDepth - not implemented'
+'\nEnlist - not implemented'

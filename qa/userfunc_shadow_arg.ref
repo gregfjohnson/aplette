@@ -1,0 +1,6 @@
+Test of global variable shadowed by function arg.
+0
+4
+5
+xx
+

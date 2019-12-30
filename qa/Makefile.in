@@ -9,15 +9,14 @@ OBJECTS = printing.dif quad_vars.dif \
           format.dif trig.dif errors.dif \
           scalar_monadic.dif scalar_dyadic.dif \
           mixed_monadic.dif mixed_dyadic.dif \
-          struct_monadic.adif struct_dyadic.adif \
-          mixed_monadic.adif mixed_dyadic.adif \
-          userfunc_nilret1.adif userfunc_twoargs1.adif \
-          userfunc_onearg1.adif userfunc_withret1.adif \
-		  userfunc_shadow_arg.adif \
-		  quad_fx.adif encode.adif
+          struct_monadic.dif struct_dyadic.dif \
+          userfunc_nilret1.dif userfunc_twoargs1.dif \
+          userfunc_onearg1.dif userfunc_withret1.dif \
+		  userfunc_shadow_arg.dif \
+		  quad_fx.dif encode.dif
 
 # Keep *.out files
-.PRECIOUS: %.out %.aout
+.PRECIOUS: %.out
 
 # As long as the following is the first target,
 # everything will get tested
@@ -30,13 +29,6 @@ all: $(OBJECTS)
 	$(APLEXE) < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
-%.adif: %.aout
-	$(DIFF) $< $*.aref > $@
-
-%.aout: %.ainp $(APLEXE)
-	$(APLEXE) < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
-	echo >> $@
-
 clean:
 	rm -f *.dif  *.out aplws.abort clean_dir/aplws.abort \
-          *.adif *.aout clean_dir/core.* core.*
+          clean_dir/core.* core.*

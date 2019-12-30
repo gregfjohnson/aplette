@@ -1,6 +1,6 @@
-C@J Dyadic Structural Primitives
+'Dyadic Structural Primitives'
 
-C@J Reshape
+'\nReshape'
 L { n213 { 2 1 3 R I 6
 2 4 R n213
 
@@ -9,9 +9,10 @@ R 0 R 'ABCD'
 b { 1e2 1e2 1e2 0 1e2 1e2 1e2  R 42
 R b
 
-'' R n213
+'\n Reshape Domain Error'
+'\n'R n213
 
-C@J Join
+'\nJoin'
 L { n233 { 2 3 3 R I 18
 L { n23  { 2 3 R I 6
 n233,n23
@@ -27,5 +28,3 @@ n233,[3]n23
 n233,[2]n23
 n233,[1]n23
 n233,[0]n33
-
-

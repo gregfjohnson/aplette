@@ -1,24 +1,27 @@
-C@JExecute ordinary expressions
-B@J'3 4RI12'
-B@J'1+(2X3)'
+'Execute ordinary expressions'
+B@J '3 4RI12'
+B@J '1+(2X3)'
 
-C@JNested execute
-B@J'2+B@J''1+(2X3)'''
-n{'1+(2X3)'
-B@J'2XB@Jn'
+'\nNested execute'
+B@J '2 + B@J ''1+(2X3)'' '
+n { '1+(2X3)'
+B@J '2X B@J n'
 
-C@JExecute with local variables
-a{1
-b{2
-C@JThe following 2 lines should not cause a value to be printed
-C@JBug List 021
-B@J'a{3'
-B@J'c{4'
+'\nExecute with local variables'
+a { 1
+b { 2
+
+B@J 'a { 3'
+B@J 'c { 4'
 a ; b ; c
 
-C@JExecute quad variables
-B@J'Lpp'
-B@J'Lpw{70'
+'\nExecute quad variables'
+B@J 'Lpp'
+B@J 'Lpw { 70'
 Lpp
 Lpw
 
+'\nSort via grade up and grade down'
+pi { 3 1 4 1 5 9 2 6
+pi[ A@| pi ]
+pi[ V@| pi ]

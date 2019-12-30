@@ -1,4 +1,4 @@
-C@J Test of )read.  function with no return value.
+'Test of )read.  function with no return value.'
 
 Lchdir 'clean_dir'
 

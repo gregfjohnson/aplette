@@ -1,4 +1,4 @@
-C@J Test of )read.  dyadic function with a return value.
+'Test of )read.  dyadic function with a return value.'
 
 Lchdir 'clean_dir'
 

@@ -1,4 +1,4 @@
-C@JMonadic Format (character "downtack jot")
+'Monadic Format (character "downtack jot")'
 Lpp{10
 '|',(J@N5 `6 7 8 9 10J.%I5),'|'
 d{0.7 0.8 0.9, 7 8 9%10
@@ -13,7 +13,7 @@ J@Nm
 J@N5Rm
 J@N1 5Rm
 
-C@JDyadic Format
+'\nDyadic Format'
 20 `7J@NO1
 20 `7J@N-O1
 d{`1 `0.1 0 0.1 1 J.X 5R0.5
@@ -26,7 +26,7 @@ eJ@N-dX.0001
 R 1 0 2 0 4 0 8 0J@N0 4R1
 4 1 J@N`.99 `.89 0 7.5 11.5
 
-C@JNon-fitting formats
+'\nNon-fitting formats'
 L{a{(`1+I5)J.%I4
 7 `2J@Na
 7 `3J@Na
