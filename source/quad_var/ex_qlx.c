@@ -16,6 +16,10 @@
 #include "char.h"
 #include "memory.h"
 
+// Llx; latent expression.  Execute this string when a
+// workspace is loaded.
+// Example:  Llx { '''Hello.  Welcome to this workspace.'''
+//
 struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
 {
     struct item *p, *q;
