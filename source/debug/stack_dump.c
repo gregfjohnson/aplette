@@ -20,9 +20,6 @@ void stack_dump()
     for (p = sp - 1, n = -1; p >= stack; p--, n--) {
         printf("sp[%d]=%p\n", n, (void *) p);
 
-        // continue; // pointer size != sizeof(int) bugs break the code below.
-        // remove this continue when it is fixed.
-
         if (n == 0) {
             printf("\n");
 
