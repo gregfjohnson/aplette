@@ -18,7 +18,7 @@ void stack_dump()
     // printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
 
     for (p = sp - 1, n = -1; p >= stack; p--, n--) {
-        printf("sp[%d]=%XH\n", n, p);
+        printf("sp[%d]=%p\n", n, (void *) p);
 
         // continue; // pointer size != sizeof(int) bugs break the code below.
         // remove this continue when it is fixed.

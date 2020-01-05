@@ -42,8 +42,6 @@ void pline(char* str, int loc, int ln)
 
 void error(int type, char* diagnostic)
 {
-    SymTabEntry* np;
-
     intflg = 0;
     if (ifile) {
         close(ifile);

@@ -25,7 +25,7 @@ static int nextMultOfEight(int n);
 
 void ex_syscom()
 {
-    int i, *ip, j;
+    int i, j;
     struct item* p;
     SymTabEntry* n;
     char fname[64]; /* Array for filename */
@@ -130,7 +130,7 @@ void ex_syscom()
     case VARS:
         symtabIterateInit();
         column = 0;
-        while (n = symtabIterate()) {
+        while ((n = symtabIterate()) != NULL) {
             if (n->itemp && n->entryUse == DA) {
                 if (column + strlen(n->namep) >= pagewidth) {
                     printf("\n\t");
@@ -149,7 +149,7 @@ void ex_syscom()
 
     case FNS:
         symtabIterateInit();
-        while (n = symtabIterate()) {
+        while ((n = symtabIterate()) != NULL) {
             if (n->entryUse == DF || n->entryUse == MF || n->entryUse == NF) {
                 if (column + strlen(n->namep) >= pagewidth) {
                     printf("\n\t");
@@ -298,11 +298,13 @@ char* vfname(char* array) {
 
     n = (SymTabEntry*)sp[-1];
     sp--;
-    if (n->entryType != LV)
-        error(ERR_value, "not a local varaible");
+
+    if (n->entryType != LV) {
+        error(ERR_value, "not a local variable");
+    }
+
     p = n->namep;
-    while (*array++ = *p++)
-        ;
+    while ((*array++ = *p++) != '\0');
     return (n->namep);
 }
 

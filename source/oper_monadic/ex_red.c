@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <stdint.h>
 #include "apl.h"
 #include "utility.h"
 #include "opt_codes.h"
@@ -82,7 +83,7 @@ void red0(int k)
         *sp++ = q;
         return;
     }
-    fn = (data (*)(data, data))exop[*gsip->ptr++];
+    fn = (data (*)(data, data))exop[(uint32_t) *gsip->ptr++];
 
     q = newdat(idx.type, idx.rank, idx.size);
     copy(IN, (char*)idx.dim, (char*)q->dim, idx.rank);

@@ -2,6 +2,7 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdint.h>
 #include "apl.h"
 #include "utility.h"
 #include "data.h"
@@ -13,7 +14,7 @@ void ex_oprod()
     struct item *p, *q, *r;
     data (*f)();
 
-    f = (data(*)()) exop[*gsip->ptr++];
+    f = (data(*)()) exop[(uint32_t) *gsip->ptr++];
     p = fetch2();
     q = sp[-2];
     if (p->itemType != DA || q->itemType != DA)

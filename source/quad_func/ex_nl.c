@@ -57,7 +57,7 @@ void ex_nl()
 
     count = maxlen = 0;
     symtabIterateInit();
-    while (np = symtabIterate()) {
+    while ((np = symtabIterate()) != NULL) {
         if (np->entryUse < NTYPES && tlist[np->entryUse]) {
             count++;
             if ((i = strlen(np->namep)) > maxlen)
@@ -71,7 +71,7 @@ void ex_nl()
     cp = (char *) ip->datap;
 
     symtabIterateInit();
-    while (np = symtabIterate()) {
+    while ((np = symtabIterate()) != NULL) {
         if (np->entryUse < NTYPES && tlist[np->entryUse]) {
             for (cp2 = &np->namep[i = 0]; i < maxlen; i++) {
                 if (*cp2)

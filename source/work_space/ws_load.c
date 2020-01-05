@@ -32,7 +32,7 @@ void writeErrorOnFailure(int fd, void* buf, size_t count) {
 
 void wsload(int ffile)
 {
-    char buffer[64], *gettoken(), c;
+    char buffer[64], *gettoken();
     int use, size, rank, i, dim[MRANK];
     SymTabEntry* n;
     struct item* p;
@@ -70,7 +70,7 @@ void wsload(int ffile)
         gettoken(ffile, buffer);
 
         symtabIterateInit();
-        while (n = symtabIterate()) {
+        while ((n = symtabIterate()) != NULL) {
             if (equal(buffer, n->namep)) {
                 erase(n);
                 goto hokay;
@@ -203,11 +203,9 @@ static void readFunction(int fd, SymTabEntry *newFunction) {
         }
     }
  
-    int sourceCodeLen = 0;
     char lineBuf[LINEMAX];
     char *iline;
     int line;
-    unsigned char ch;
 
     newFunction->itemp = 0;
     newFunction->label = 0;
@@ -218,7 +216,6 @@ static void readFunction(int fd, SymTabEntry *newFunction) {
     char *fnTextPtr = fnText;
 
     for (line = 0; line < lineCount; ++line) {
-        int i;
         int lineLen = 0;
 
         while (1) {

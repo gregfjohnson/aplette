@@ -36,5 +36,6 @@ struct item* ex_qai(io) int io; /* 0 = source, 1 = sink */
     }
     else {
         error(ERR_implicit, "cannot change accounting info");
+        return (0);
     };
 }

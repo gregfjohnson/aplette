@@ -24,19 +24,19 @@ void aplfree(int* ap)
                 firstblock = item->next;
 
             if (mem_trace) {
-                printf("[aplfree: %d bytes at %x (data)",
-                    item->nbytes, (uintptr_t)item->block);
+                printf("[aplfree: %d bytes at %p (data)",
+                    item->nbytes, (void *) item->block);
             }
             free(item->block);
 
             if (mem_trace) {
-                printf(", %d bytes at %x (memblock)]\n",
-                    sizeof(struct memblock), (uintptr_t)item);
+                printf(", %ld bytes at %p (memblock)]\n",
+                    sizeof(struct memblock), (void *) item);
             }
             free(item);
             return;
         }
         last = item;
     }
-    printf("aplfree bad block address %x\n", (uintptr_t)ap);
+    printf("aplfree bad block address %p\n", (void *) ap);
 }

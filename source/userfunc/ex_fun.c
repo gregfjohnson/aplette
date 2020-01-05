@@ -23,7 +23,6 @@ void ex_fun()
     int functionLineLength;
     Context** lineArray;
     Context* thisContext;
-    Context* savedGsip;
 
     gsip->ptr += copy(PTR, (char *)gsip->ptr, (char *) &np, 1);
 

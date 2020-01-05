@@ -56,4 +56,6 @@ struct item* ex_qquad(int io)
         quote_quad_prompt[p->size] = '\0';
         return (0);
     }
+
+    return(0);
 }

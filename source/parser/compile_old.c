@@ -23,7 +23,6 @@ extern int ilex[];
 
 char* compile_old(char* s, int f)
 {
-    char *p, *q;
     int i;
 
     iline = s;

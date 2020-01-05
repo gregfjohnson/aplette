@@ -8,7 +8,6 @@
 
 void erase(SymTabEntry* np)
 {
-    struct item* itemp;
     int i;
 
     if (np) {

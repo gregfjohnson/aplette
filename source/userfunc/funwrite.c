@@ -35,7 +35,7 @@ void write_line(int fd, char *line) {
  */
 void funwrite(char* fname) {
     SymTabEntry* n;
-    int line, i, cnt, fd1, fd2;
+    int line, fd1;
 
     n = (SymTabEntry *) sp[-1];
     sp--;
@@ -51,7 +51,6 @@ void funwrite(char* fname) {
     switch (n->entryUse) {
     /* First time function declaration */
     case 0: {
-        char *ascii_line;
         printf("[new fn]\n");
         /* We can get away with the following because struct current_line
          * was made global and function editing is only permitted

@@ -7,6 +7,7 @@
  * GNU General Public License for more details.
  */
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
 #include "apl.h"
@@ -94,7 +95,7 @@ static void init()
         to_apl_symbol[i] = i;
 
     for (i = 0; i < sizeof(charmap) / sizeof(charmap[0]); ++i) {
-        to_apl_symbol[charmap[i].in] = charmap[i].out;
+        to_apl_symbol[(uint32_t) charmap[i].in] = charmap[i].out;
     }
 
     inited = true;

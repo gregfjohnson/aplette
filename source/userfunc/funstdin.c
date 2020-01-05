@@ -16,11 +16,9 @@
 #include "work_space.h"
 
 void funstdin() {
-    struct item *p;
-    char *iline, *p2;
+    char *p2;
     SymTabEntry *np, *symtabLhsEntry;
     char functionLine[LINEMAX];
-    int dim0, dim1;
     char *linePtr;
     int lineCount;
 
@@ -54,8 +52,6 @@ void funstdin() {
     linePtr = gsip->text;
 
     while (1) {
-        int i;
-
         copy(CH, linePtr, (char *) functionLine, strlen(linePtr)+1);
 
         symtabLhsEntry->functionSourceCode[lineCount] = (char *) alloc(strlen(linePtr) + 1);

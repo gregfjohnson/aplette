@@ -7,11 +7,7 @@
 #include "utility.h"
 #include <math.h>
 
-data
-    ex_pwr(d1, d2)
-        data d1,
-    d2;
-{
+data ex_pwr(data d1, data d2) {
     int s;
     double f1, f2;
 
@@ -43,4 +39,5 @@ chk:
     }
 bad:
     error(ERR_limit, "input range to pwr()");
+    return (0);
 }

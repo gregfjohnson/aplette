@@ -36,7 +36,6 @@ void updatePrintP(struct item *p) {
 struct item* ex_qpp(io) int io; /* 0 = source, 1 = sink */
 {
     struct item* p;
-    int i;
 
     if (io == 0) {
         p = newdat(DA, 0, 1);

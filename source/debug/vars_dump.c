@@ -19,13 +19,12 @@ void vars_dump()
     SymTabEntry* n;
 
     symtabIterateInit();
-    while (n = symtabIterate()) {
-        printf("%x:", (uintptr_t)n);
+    while ((n = symtabIterate()) != NULL) {
+        printf("%p:", (void *) n);
         printf(" namep=%s", n->namep);
-        printf(" itemp=%x", (uintptr_t)n->itemp);
+        printf(" itemp=%p", (void *)n->itemp);
         printf(" use=%d", n->entryUse);
         printf(" entryType=%d", n->entryType);
-        /*      printf(" label=%d",n->label); */
         printf("\n");
     }
 }

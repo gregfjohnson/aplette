@@ -28,12 +28,11 @@ static int copyFile(char ***lines, FILE *f);
  */
 
 int fundef(int f) {
-    int a;
-    char *iline = NULL, *status, *c;
+    char *iline = NULL, *c;
     SymTabEntry* np;
     SymTabEntry* symtabLhsEntry;
-    char b[512];
     FILE* infile;
+    char *status;
 
     infile = fdopen(f, "r");
 
@@ -98,7 +97,7 @@ out:
 }
 
 static int copyFile(char ***lines, FILE *f) {
-    char *iline, *status;
+    char *iline;
     int lineCount = 0;
 
     *lines = NULL;

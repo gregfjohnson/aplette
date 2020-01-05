@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <stdint.h>
 #include "apl.h"
 #include "utility.h"
 #include "opt_codes.h"
@@ -83,7 +84,7 @@ void scan0(int k)
         return;
     }
 
-    fn = (data (*)(data, data))exop[*gsip->ptr++];
+    fn = (data (*)(data, data))exop[(uint32_t) *gsip->ptr++];
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {

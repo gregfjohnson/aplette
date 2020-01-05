@@ -18,7 +18,6 @@
 void ex_ibr0()
 {
     Context* thisContext;
-    int* p;
 
     if (gsip == &prime_context)
         return;

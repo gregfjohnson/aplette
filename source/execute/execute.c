@@ -14,7 +14,7 @@ void execute() {
     int opcode, i, j;
     data* dp;
     struct item *p, *p1;
-    data (*f)();
+    data (*data_fn)();
     extern char* opname[];
 
     gsip->ptr = gsip->pcode;
@@ -70,28 +70,28 @@ void execute() {
         case OR:
         case NAND:
         case NOR:
-            f = exop[opcode];
+            data_fn = (data (*)()) exop[opcode];
             p = fetch2();
             p1 = sp[-2];
-            ex_dscal(0, f, p, p1);
+            ex_dscal(0, data_fn, p, p1);
             break;
 
         case LT:
         case LE:
         case GE:
         case GT:
-            f = exop[opcode];
+            data_fn = (data (*)()) exop[opcode];
             p = fetch2();
             p1 = sp[-2];
-            ex_dscal(1, f, p, p1);
+            ex_dscal(1, data_fn, p, p1);
             break;
 
         case EQ: /* 9.8.1999/tyl  */
         case NE:
-            f = exop[opcode];
+            data_fn = (data (*)()) exop[opcode];
             p = fetch2();
             p1 = sp[-2];
-            ex_dscal(2, f, p, p1);
+            ex_dscal(2, data_fn, p, p1);
             break;
 
         case PLUS:
@@ -107,15 +107,18 @@ void execute() {
         case RAND:
         case FAC:
         case NOT:
-            f = exop[opcode];
+            data_fn = (data (*)()) exop[opcode];
             p = fetch1();
+
             if (p->itemType != DA)
                 error(ERR_domain, "type not supported by function");
+
             dp = p->datap;
             for (i = 0; i < p->size; i++) {
-                *dp = (*f)(*dp);
+                *dp = (*data_fn)(*dp);
                 dp++;
             }
+
             break;
 
         case MEPS: /*   execute         */
@@ -208,17 +211,18 @@ void execute() {
         case QFLOAT:
         case QNL:
         case QEX:
-            //pcp = current_line->pointer;
             (*exop[opcode])();
-            //current_line->pointer = pcp;
             break;
 
         case RVAL: { /* de-referenced LVAL */
             SymTabEntry *entry;
             gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&entry, 1);
+
             entry = symtabFind(entry->namep);
+
             if (entry->entryUse != DA) {
                 ex_nilret(); /* no fn rslt */
+
             } else {
                 *sp = fetch(entry);
                 sp++;

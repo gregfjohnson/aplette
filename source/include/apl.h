@@ -149,7 +149,7 @@ typedef enum {
 // #define CH 2 /* character data */
 // #define EL 7
 // #define QV 12  /* quad variables */
-// #define NIL 13 /* Used where a user defined function does \
+// #define NIL 13 /* Used where a user defined function does */
 
 typedef enum { 
     LV = 3,

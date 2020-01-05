@@ -19,7 +19,7 @@ void wssave(int ffile) {
     saveWorkspaceInformation(ffile);
 
     symtabIterateInit();
-    while (n = symtabIterate()) {
+    while ((n = symtabIterate()) != NULL) {
         nsave(ffile, n);
     }
 
@@ -45,7 +45,7 @@ static void saveWorkspaceInformation(int ffile) {
 }
 
 static int nsave(int ffile, SymTabEntry* an) {
-    char c, buffer[64];
+    char buffer[64];
     int i, size;
     struct item* p;
 
@@ -98,7 +98,6 @@ static int nsave(int ffile, SymTabEntry* an) {
     real: {
         char zero = '\0';
         int line, i;
-        char lineCount[64];
 
         // write the function's name on the same line as the function arity
         // printed above..

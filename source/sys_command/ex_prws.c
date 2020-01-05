@@ -22,7 +22,7 @@ void ex_prws()
     printf(S_QUAD_ASCII "pp " S_LEFTARROW " %d\n", PrintP);
 
     symtabIterateInit();
-    while (np = symtabIterate()) {
+    while ((np = symtabIterate()) != NULL) {
         switch (np->entryUse) {
         case CH:
         case DA:

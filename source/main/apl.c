@@ -212,7 +212,6 @@ int main(int argc, char** argv)
      */
     if (optind < argc) {
         int c;
-        int fd;
 
         if (script_filename != NULL) {
             fprintf(stderr, "cannot have '-f %s' in this context.\n", script_filename);

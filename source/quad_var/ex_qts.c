@@ -45,5 +45,6 @@ struct item* ex_qts(io) int io; /* 0 = source, 1 = sink */
     }
     else {
         error(ERR_implicit, "cannot change time");
+        return (0);
     };
 }

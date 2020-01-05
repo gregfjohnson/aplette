@@ -2,6 +2,7 @@
  * You may use, copy, modify and sublicense this Software
  * subject to the conditions expressed in the file "License".
  */
+#include <stdint.h>
 #include "apl.h"
 #include "data.h"
 #include "memory.h"
@@ -28,8 +29,8 @@ void ex_iprod()
     int commonDimension;
     int a = 0, b = 0, resultIndex = 0;
 
-    fnleft = (data (*)(data, data)) exop[*gsip->ptr++];
-    fnright = (data (*)(data, data)) exop[*gsip->ptr++];
+    fnleft = (data (*)(data, data)) exop[(uint32_t) *gsip->ptr++];
+    fnright = (data (*)(data, data)) exop[(uint32_t) *gsip->ptr++];
 
     p = fetch2();
     q = sp[-2];

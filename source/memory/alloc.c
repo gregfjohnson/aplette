@@ -19,16 +19,16 @@ int* alloc(nbytes) unsigned nbytes;
     if (newblock == 0)
         goto failed;
     if (mem_trace) {
-        printf("[alloc: %d bytes at %x (memblock)",
-            sizeof(struct memblock), (uintptr_t)newblock);
+        printf("[alloc: %ld bytes at %p (memblock)",
+            sizeof(struct memblock), (void *) newblock);
     }
     newblock->nbytes = nbytes;
     newblock->block = malloc(nbytes);
     if (newblock->block == 0)
         goto failed;
     if (mem_trace) {
-        printf(", %d bytes at %x (data)]\n",
-            nbytes, (uintptr_t)newblock->block);
+        printf(", %d bytes at %p (data)]\n",
+            nbytes, (void *) newblock->block);
     }
     newblock->next = firstblock;
     firstblock = newblock;
@@ -38,6 +38,8 @@ failed:
     printf("Unable to obtain requested memory\n");
     printf("%d bytes were requested\n", nbytes);
     error(ERR_interrupt, "");
-    //mem_dump();
-    //abort();
+
+    // keep the compiler happy.  It doesn't know that
+    // error() never returns.
+    return NULL;
 }

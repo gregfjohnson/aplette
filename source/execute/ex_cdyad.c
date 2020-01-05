@@ -12,7 +12,7 @@
  * it adjusts the shape of the arguments as required
  */
 
-void ex_cdyad(data (*f)(), struct item* ap, struct item** ap1)
+void ex_cdyad(data (*f)(), struct item* ap, struct item* ap1)
 {
     int i;
     struct item *p, *p1;
