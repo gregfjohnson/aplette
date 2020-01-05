@@ -12,6 +12,7 @@ OBJECTS = printing.dif quad_vars.dif \
           struct_monadic.dif struct_dyadic.dif \
           userfunc_nilret1.dif userfunc_twoargs1.dif \
           userfunc_onearg1.dif userfunc_withret1.dif \
+          userfunc_stdin.dif \
 		  userfunc_shadow_arg.dif \
 		  quad_fx.dif encode.dif
 

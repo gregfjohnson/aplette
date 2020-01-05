@@ -20,6 +20,7 @@ void funwrite(char* fname);
 void funedit(char* fname);
 int funread(char* fname);
 int fundef(int f);
+void funstdin();
 void funcomp(SymTabEntry* np);
 void write_line(int fd, char *line);
 

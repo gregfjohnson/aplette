@@ -88,7 +88,10 @@ int fundef(int f) {
             copyFile(&symtabLhsEntry->functionSourceCode, infile);
 
 out:
-    if (iline != NULL) { aplfree((int *) iline); }
+    if (iline != NULL) {
+        aplfree((int *) iline);
+    }
+
     fclose(infile);
 
     return 1;

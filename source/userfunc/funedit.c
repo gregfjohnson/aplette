@@ -24,8 +24,9 @@ static int badfnsv(char* fname);
 
 void funedit(char* fname) {
     SymTabEntry* p;
-    #define CMD_LEN 128
-    char *c, cmd[CMD_LEN];
+    char *c;
+    #define CMD_LEN 256
+    char cmd[CMD_LEN];
 
     p = (SymTabEntry *) sp[-1];
     if (p->entryType != LV)
@@ -37,11 +38,17 @@ void funedit(char* fname) {
     if (c == 0) {
         c = "vi";
     }
+    if (strlen(c) + 1 + strlen(fname) >= CMD_LEN) {
+        error(ERR, "editor command line too long");
+    }
+
     strncpy(cmd, c, CMD_LEN-1);
     strncat(cmd, " ", CMD_LEN-1);
     strncat(cmd, fname, CMD_LEN-1);
-    if (system(cmd) < 0)
+
+    if (system(cmd) < 0) {
         error(ERR, "could not start editor");
+    }
 
     /* Read function into workspace.  If "funread" (which calls
     * "fundef") returns 0, an error occurred in processing the

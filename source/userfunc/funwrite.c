@@ -37,7 +37,7 @@ void funwrite(char* fname) {
     SymTabEntry* n;
     int line, i, cnt, fd1, fd2;
 
-    n = (SymTabEntry*)sp[-1];
+    n = (SymTabEntry *) sp[-1];
     sp--;
 
     if (n->entryType != LV)
@@ -49,10 +49,6 @@ void funwrite(char* fname) {
     fd1 = opn(fname, 0644);
 
     switch (n->entryUse) {
-    default:
-        close(fd1);
-        error(ERR, "fnwrite");
-
     /* First time function declaration */
     case 0: {
         char *ascii_line;
@@ -76,6 +72,10 @@ void funwrite(char* fname) {
             write_line(fd1, n->functionSourceCode[line]);
         }
         break;
+
+    default:
+        close(fd1);
+        error(ERR, "fnwrite");
     }
 
     close(fd1);

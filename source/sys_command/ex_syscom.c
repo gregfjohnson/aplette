@@ -95,11 +95,7 @@ void ex_syscom()
         return;
 
     case DELL:
-        sp[0] = sp[-1]; /*   duplicate top of stack  */
-        sp++;
-        funwrite(scr_file);
-        funedit(scr_file);
-        unlink(scr_file);
+        funstdin();
         return;
 
     case EDIT:
