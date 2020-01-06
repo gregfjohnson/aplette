@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "config.h"
 #include "history.h"
+#include "main.h"
 #include "memory.h"
 #include "apl.h"
 #ifdef HAVE_LIBREADLINE
@@ -33,61 +34,130 @@
 #endif
 
 /* A static variable for holding a line of user input */
-static char* line_read = (char*)NULL;
+static char* line_read = (char*) NULL;
 
 char* getinput(char* prompt) {
     int Length;
     char* iline;
     char input_buffer[LINEMAX];
-#ifdef HAVE_LIBREADLINE
 
+#ifdef HAVE_LIBREADLINE
     if (isatty(0) && use_readline) {
         /* Get a line from the user. */
         line_read = readline(prompt);
+
         /* check for EOF (unlikely from readline) */
         if (line_read == NULL) {
             return (NULL);
         }
-        /* readline admin */
+
         readline_add_history(line_read);
 
         /* convert line_read into apl dynamic memory,
-      * and (optionally) use ascii APL character mapping
-      */
+         * and (optionally) use ascii APL character mapping
+         */
         if (ascii_characters) {
             iline = to_ascii_input(line_read);
         }
         else {
             Length = strlen(line_read);
-            iline = (char*)alloc(Length + 2);
+            iline = (char*) alloc(Length + 2);
             strncpy(iline, line_read, Length + 1);
             strcat(iline, "\n"); /* because readline zaps the \n */
         }
 
         free(line_read);
+
         return (iline);
     }
     else {
 #else
-#warning Readline support has not been included!
-    {
+    #warning Readline support has not been included!
 #endif
-        printf("%s", prompt);
-        /* Get a line from the user. */
-
-        /* check for EOF (which happens when stdin is from a file) */
+        if (stdin_isatty) {
+            printf("%s", prompt);
+        }
+        /* Get a line from the user;
+         * check for EOF (which happens when stdin is from a file)
+         */
         if (fgets(input_buffer, LINEMAX, stdin) == NULL)
             return (NULL);
 
-        /* convert static memory user_input into apl dynamic memory */
+        /* convert static memory input_buffer into apl dynamic memory
+         * and (optionally) use ascii APL character mapping
+         */
         if (ascii_characters) {
             iline = to_ascii_input(input_buffer);
-        }
-        else {
+
+        } else {
             Length = 1 + strlen(input_buffer);
             iline = (char*)alloc(Length);
             strncpy(iline, input_buffer, Length);
         }
+
+        return (iline);
+    }
+}
+
+char* get_QuadInput(char* prompt) {
+    int Length;
+    char* iline;
+    char input_buffer[LINEMAX];
+
+#ifdef HAVE_LIBREADLINE
+    if (stdin_isatty && use_readline) {
+        /* Get a line from the user. */
+        line_read = readline(prompt);
+
+        /* check for EOF (unlikely from readline) */
+        if (line_read == NULL) {
+            return (NULL);
+        }
+
+        readline_add_history(line_read);
+
+        /* convert line_read into apl dynamic memory,
+         * and (optionally) use ascii APL character mapping
+         */
+        if (ascii_characters) {
+            iline = to_ascii_input(line_read);
+        }
+        else {
+            Length = strlen(line_read);
+            iline = (char*) alloc(Length + 2);
+            strncpy(iline, line_read, Length + 1);
+            strcat(iline, "\n"); /* because readline zaps the \n */
+        }
+
+        free(line_read);
+
+        return (iline);
+    }
+    else {
+#else
+    #warning Readline support has not been included!
+#endif
+        if (stdin_isatty) {
+            printf("%s", prompt);
+        }
+        /* Get a line from the user;
+         * check for EOF (which happens when stdin is from a file)
+         */
+        if (fgets(input_buffer, LINEMAX, quadInput) == NULL)
+            return (NULL);
+
+        /* convert static memory input_buffer into apl dynamic memory
+         * and (optionally) use ascii APL character mapping
+         */
+        if (ascii_characters) {
+            iline = to_ascii_input(input_buffer);
+
+        } else {
+            Length = 1 + strlen(input_buffer);
+            iline = (char*)alloc(Length);
+            strncpy(iline, input_buffer, Length);
+        }
+
         return (iline);
     }
 }

@@ -1,9 +1,9 @@
+#! ../source/aplette
+
 'Quad Input'
 a { L
-4
 a
 b { L
-5
 b
 
 '\nQuad Output'
@@ -13,13 +13,11 @@ c
 
 '\nQuote Quad Input'
 a { '@L
-quad_input_string1
 a
 
 '\nQuote quad Output'
 '@L { 'give me a number: '
 a { '@L
-quad_input_string2
 a
 
 J@C broken test
@@ -32,17 +30,14 @@ J@C b
 '@L { 'abc '
 '@L { 'def '
 a { '@L
-quad_input_string5
 a
 
-''
-'@L { '1234567890123456789012345678901234567890'
+'@L { '123456789012345678901234567890123456789 '
 a { '@L
-quad_input_string6
+a
 
-'@L { '12345678901234567890123456789012345678901'
+'@L { '1234567890123456789012345678901234567890 '
 a { '@L
-quad_input_string7
 a
 
 '\nQuote quad Output Errors'

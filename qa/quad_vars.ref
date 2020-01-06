@@ -1,9 +1,5 @@
 Quad Input
-L:      4
-
 4
-L:      5
-
 5
 
 Quad Output
@@ -14,22 +10,12 @@ Quad Output
 Quote Quad Input
 quad_input_string1
 
-quad_input_string1
-
 Quote quad Output
-give me a number: quad_input_string2
-
 quad_input_string2
 Limit Error: quote quad prompt not empty.
-abc quad_input_string5
-
 quad_input_string5
-
-1234567890123456789012345678901234567890quad_input_string6
-
+quad_input_string6
 Limit Error: assign value too long.
-quad_input_string7
-
 quad_input_string7
 
 Quote quad Output Errors
@@ -63,4 +49,3 @@ Page Width
 
 Time Stamp
 7
-

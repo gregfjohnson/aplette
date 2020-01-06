@@ -10,5 +10,6 @@
 #define GETINPUT_H
 
 char* getinput(char* prompt);
+char* get_QuadInput(char* prompt);
 
 #endif

@@ -135,55 +135,21 @@ extern jmp_buf cold_restart; /* Used for setexit/reset */
 
 typedef enum { 
     UNKNOWN = 0,
-    DA = 1,
-    CH = 2,
-    LV = 3,
-    EL = 7,
-    NF = 8,
-    MF = 9,
-    DF = 10,
-    QV = 12,
-    NIL = 13,
-    LBL = 15,
-    // supposedly (?) LV also?  according to pop().
-    // supposedly (?) QV also?  according to newdat().
-    // supposedly (?) QX also?  according to newdat().
+    DA = 1,      /* floating point data */
+    CH = 2,      /* character data */
+    LV = 3,      /* Local Variable */
+    IN = 6,      /* used only as first arg of copy(), indicating "integer type" */
+    EL = 7,      /* indexed assignment stack marker */
+    NF = 8,      /* niladic function */
+    MF = 9,      /* monadic function */
+    DF = 10,     /* dyadic function */
+    QV = 12,     /* quad variables */
+    NIL = 13,    /* Used where a user defined function does */
+    QX  = 14,    /* latent expr. quad LX  */
+    LBL = 15,    /* locked label value */
+    PTR = 16,    /* generic pointer for copy() */
+    NTYPES = 17, /* number of defined types */
 } ItemType;
-
-// #define DA 1 /* floating point data */
-// #define CH 2 /* character data */
-// #define EL 7
-// #define QV 12  /* quad variables */
-// #define NIL 13 /* Used where a user defined function does */
-
-#if 0
-typedef enum { 
-    LV = 3,
-    QV = 12,
-} EntryType;
-
-// CH DA EL QV NIL NF MF DF (erase.c)
-typedef enum { 
-    NF = 8,
-    MF = 9,
-    DF = 10,
-} EntryUse;
-#endif
-
-// #define LV 3 /* Local Variable */
-// #define QD 4
-// #define QQ 5
-#define IN 6  /* used only as first arg of copy(), indicating "integer type" */
-//#define NF 8  /* niladic function */
-//#define MF 9  /* monadic function */
-//#define DF 10 /* dyadic function */
-// #define QC 11
-               /* not return a value. */
-#define QX 14  /* latent expr. quad LX  */
-// #define LBL 15 /* locked label value */
-#define PTR 16 /* generic pointer for copy() */
-
-#define NTYPES 17 /* number of defined types */
 
 /*
  * This is a descriptor for apl data, 

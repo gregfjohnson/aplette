@@ -28,6 +28,7 @@ char headline[] = "aplette "
                   "; \")font\" for APL touchtype font"
                   "\n";
 
+int stdin_isatty;
 data tolerance;
 int iorigin;
 int pagewidth;
@@ -71,6 +72,8 @@ int vars_trace;
 DataIterator idx;
 Context *gsip, prime_context;
 
+FILE *quadInput = NULL;
+
 CompilePhase compilePhase;
 
 static void usage() {
@@ -97,6 +100,8 @@ int main(int argc, char** argv)
     char *script_filename = NULL;
     int opt;
     int help = 0;
+
+    stdin_isatty = isatty(0);
 
 #ifdef HAVE_LIBREADLINE
     /* Allow conditional parsing of the ~/.inputrc file. */
@@ -188,19 +193,15 @@ int main(int argc, char** argv)
         signal(SIGINT, SIG_IGN);
     }
 
-    /* script files that start with '#!apl' on first line are invoked as
-     * "apl name_of_script_file" by the shell.
-     * we want to get rid of that first line and not feed it to the apl
-     * interpreter in that case.
-     * However, unlike in other scripting languages, '#!' is a perfectly
-     * legal start of an apl expression.  SOOOO.  you will inexplicably
-     * have the first line of your script file 
-     */
     if (script_filename != NULL) {
+        int stdin_fd = dup(fileno(stdin));
+
         if (freopen(script_filename, "r", stdin) == NULL) {
             fprintf(stderr, "could not open file '%s'\n", script_filename);
             exit(1);
         }
+        quadInput = fdopen(stdin_fd, "r");
+        rl_instream = quadInput;
     }
 
     /* 'apl filename' is not supposed to be done directly from the command line
@@ -209,12 +210,26 @@ int main(int argc, char** argv)
      * 'apl_binary script_filename'.  in that case, we need to remove the first
      * line of the file here, since the apl interpreter will try to parse lines
      * starting '#! ..'
+     *
+     * when executing a script, juggle input file descriptors
+     * so that quad input comes from stdin
+     * and normal APL input comes from the body of the script.
+     * this allows us to write APL scripts that can be used with
+     * shell pipes, and so that scripts can query the user for
+     * interactive input.
      */
     if (optind < argc) {
         int c;
+        int stdin_fd;
 
         if (script_filename != NULL) {
             fprintf(stderr, "cannot have '-f %s' in this context.\n", script_filename);
+            exit(1);
+        }
+
+        stdin_fd = dup(fileno(stdin));
+        if (stdin_fd < 0) {
+            fprintf(stderr, "Error initializing standard input\n");
             exit(1);
         }
 
@@ -222,8 +237,11 @@ int main(int argc, char** argv)
             fprintf(stderr, "could not open file '%s'\n", argv[optind]);
             exit(1);
         }
-
+        // read past the #!apl line at the beginning of the script..
         while ((c = getchar() != '\n') && c != EOF);
+
+        quadInput = fdopen(stdin_fd, "r");
+        rl_instream = quadInput;
     }
 
     if (isatty(0)) {
@@ -234,7 +252,7 @@ int main(int argc, char** argv)
         use_readline = use_readline_arg;
 
     } else {
-        use_readline = isatty(0);
+        use_readline = stdin_isatty;
     }
 
     if (ws_filename != NULL) {
@@ -281,8 +299,6 @@ int main(int argc, char** argv)
     gsip->ptr = 0;
     gsip->text = (char*)NULL;
     gsip->pcode = (char*)NULL;
-    //gsip->xref=(char *)NULL;
-    //setjmp(gsip->env);	/* come back here after longjmp() */
 
     mainloop();
 }

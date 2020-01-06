@@ -9,11 +9,16 @@
 #ifndef MAIN_LOOP_H
 #define MAIN_LOOP_H
 
+#include <stdio.h>
+
 void mainloop();
 void Exit(int s);
 
 char* to_ascii_input(char* input);
 void putAplTouchtypeChar(char c);
 char *toAplTouchtypeLine(char *inLine);
+
+extern FILE *quadInput;
+extern int stdin_isatty;
 
 #endif

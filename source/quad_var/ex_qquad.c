@@ -26,9 +26,7 @@ struct item* ex_qquad(int io)
 
     switch (io) {
     case QV_source:
-        iline = getinput(quote_quad_prompt);
-        if (!isatty(0))
-            printf("%s", iline);
+        iline = get_QuadInput(quote_quad_prompt);
         if (iline == NULL)
             error(ERR, "user input was null");
         for (i = 0; iline[i] != '\n'; i++)

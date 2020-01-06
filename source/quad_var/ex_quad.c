@@ -31,34 +31,32 @@ struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
         thisContext = (Context*)alloc(sizeof(Context));
         thisContext->prev = gsip; /* setup new context */
         thisContext->Mode = deffun;
-        //thisContext->np = np;
         thisContext->sp = 0;
-        //thisContext->ptr = thisContext->pcode;
-        //thisContext->funlc = 0;
-        //thisContext->suspended = 0;
 
         gsip = thisContext;
         do {
-            gsip->text = getinput(S_QUAD_ASCII ":      ");
-            if (!isatty(0))
-                printf("%s", gsip->text);
+            gsip->text = get_QuadInput(S_QUAD_ASCII ":      ");
+
             if (gsip->text == NULL)
                 error(ERR, "user input was null");
+
             compile_new(1);
         } while (gsip->pcode == 0); /* do it at least once */
-        //i = pcp;
+
         gsip->ptr = gsip->pcode;
+
         execute();
-        //pcp = i;
+
         p = *--sp;
         gsip = thisContext->prev; /* restore previous context */
+
         aplfree((int*)thisContext->text);
         aplfree((int*)thisContext->pcode);
         aplfree((int*)thisContext);
-        //pcp = context->oldpcp;
+
         return (p);
-    }
-    else {
+
+    } else {
         pop();
         ex_print();
         return (0);
