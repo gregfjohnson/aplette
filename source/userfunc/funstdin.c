@@ -15,6 +15,8 @@
 #include "userfunc.h"
 #include "work_space.h"
 
+#define MAX_SRC_LINES 256
+
 void funstdin() {
     char *p2;
     SymTabEntry *np, *symtabLhsEntry;
@@ -45,7 +47,7 @@ void funstdin() {
 
     symtabLhsEntry->label = 0;
 
-    symtabLhsEntry->functionSourceCode = (char **) alloc(SPTR * 100);
+    symtabLhsEntry->functionSourceCode = (char **) alloc(SPTR * MAX_SRC_LINES);
 
     lineCount = 0;
 
@@ -82,6 +84,9 @@ void funstdin() {
 
         char prompt[64] = {0};
         ++lineCount;
+        if (lineCount >= MAX_SRC_LINES) {
+            error(ERR_implicit, "too many function lines");
+        }
         if (isatty(0)) {
             sprintf(prompt, "[%d] ", lineCount);
         }
