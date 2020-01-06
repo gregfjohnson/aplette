@@ -67,8 +67,10 @@ int getnam(char ic) {
                 sichk(np);
 
             return (dfun);
-        }
 
+        default:
+            return (nam);
+        }
         return (nam);
     }
 

@@ -46,6 +46,9 @@ void ex_prws()
             ex_list();
             putchar('\n');
             break;
+
+        default:
+            break;
         }
     }
 }

@@ -137,7 +137,12 @@ typedef enum {
     UNKNOWN = 0,
     DA = 1,
     CH = 2,
+    LV = 3,
     EL = 7,
+    NF = 8,
+    MF = 9,
+    DF = 10,
+    QV = 12,
     NIL = 13,
     LBL = 15,
     // supposedly (?) LV also?  according to pop().
@@ -151,6 +156,7 @@ typedef enum {
 // #define QV 12  /* quad variables */
 // #define NIL 13 /* Used where a user defined function does */
 
+#if 0
 typedef enum { 
     LV = 3,
     QV = 12,
@@ -162,6 +168,7 @@ typedef enum {
     MF = 9,
     DF = 10,
 } EntryUse;
+#endif
 
 // #define LV 3 /* Local Variable */
 // #define QD 4
@@ -231,8 +238,8 @@ extern CompilePhase compilePhase;
 struct _Context;
 
 typedef struct {
-    int entryUse;
-    EntryType entryType;
+    ItemType entryUse;
+    ItemType entryType;
     struct item* itemp;
     char* namep;
 

@@ -26,7 +26,7 @@ bool indexIterate(DataIterator* iter);
 
 void erase(SymTabEntry* np);
 
-struct item* newdat(EntryType type, int rank, int size);
+struct item* newdat(ItemType type, int rank, int size);
 struct item* dupdat(struct item* ap);
 
 void symtab_init();

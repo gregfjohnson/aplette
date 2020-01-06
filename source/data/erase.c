@@ -36,6 +36,10 @@ void erase(SymTabEntry* np)
             np->functionLines = NULL;
             np->functionLineCount = 0;
             np->functionLineLength = 0;
+            break;
+
+            default:
+            break;
         }
         np->entryUse = UNKNOWN;
     }
