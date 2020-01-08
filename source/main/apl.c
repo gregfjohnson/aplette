@@ -93,6 +93,10 @@ static void usage() {
     exit(1);
 }
 
+int gbl_argc;
+char **gbl_argv;
+int gbl_optind;
+
 int main(int argc, char** argv)
 {
     int pid, sigs, file_id, use_readline_arg;
@@ -100,6 +104,9 @@ int main(int argc, char** argv)
     char *script_filename = NULL;
     int opt;
     int help = 0;
+
+    gbl_argc = argc;
+    gbl_argv = argv;
 
     stdin_isatty = isatty(0);
 
@@ -218,6 +225,8 @@ int main(int argc, char** argv)
      * shell pipes, and so that scripts can query the user for
      * interactive input.
      */
+    gbl_optind = optind;
+
     if (optind < argc) {
         int c;
         int stdin_fd;

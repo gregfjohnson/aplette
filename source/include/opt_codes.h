@@ -153,7 +153,8 @@
 #define QNL 142     /* Produce namelist */
 #define QEX 143     /* Expunge added by tyl 13.8.1999 */
 #define QAI 144     /* Accinfo added by tyl 13.8.1999 */
-#define OPT_MAX 144 /* largest opt-code */
+#define QARGV 145   /* command-line argument list */
+#define OPT_MAX 145 /* largest opt-code */
 
 /* System Command op-codes */
 #define CLEAR 1

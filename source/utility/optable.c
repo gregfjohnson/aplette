@@ -143,6 +143,7 @@ extern int ex_wait();
 extern int ex_write();
 extern int ex_ex();
 extern int ex_qai();
+extern int ex_qargv();
 
 /* WARNING, the following must agree with opt_codes.h and code_dump.c */
 int (*exop[])() = {
@@ -293,4 +294,5 @@ int (*exop[])() = {
     ex_nl,     /*142 */
     ex_ex,     /*143 added 13.8.1999 by tyl */
     ex_qai,    /*144   	-"-	*/
+    ex_qargv,  /*145   	-"-	*/
 };

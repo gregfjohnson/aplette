@@ -21,4 +21,8 @@ char *toAplTouchtypeLine(char *inLine);
 extern FILE *quadInput;
 extern int stdin_isatty;
 
+extern int gbl_argc;
+extern char **gbl_argv;
+extern int gbl_optind;
+
 #endif

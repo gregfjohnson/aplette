@@ -17,6 +17,7 @@ struct QUOD qtab[] = {
     { "lx", QLX, q_var },
     { "av", QAV, q_var },
     { "ai", QAI, q_var },
+    { "argv", QARGV, q_var },
     { "ts", QTS, q_var },
     { "pp", QPP, q_var },
     { "pw", QPW, q_var },

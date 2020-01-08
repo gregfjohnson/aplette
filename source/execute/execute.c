@@ -271,6 +271,7 @@ void execute() {
         case QCT:
         case QIO:
         case QAI:
+        case QARGV:
             p = newdat(QV, 0, 0);
             p->index = opcode;
             *sp++ = p;
