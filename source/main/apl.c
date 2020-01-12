@@ -230,27 +230,37 @@ int main(int argc, char** argv)
     if (optind < argc) {
         int c;
         int stdin_fd;
+        FILE *test_f;
+        bool input_from_file = false;
 
         if (script_filename != NULL) {
             fprintf(stderr, "cannot have '-f %s' in this context.\n", script_filename);
             exit(1);
         }
 
-        stdin_fd = dup(fileno(stdin));
-        if (stdin_fd < 0) {
-            fprintf(stderr, "Error initializing standard input\n");
-            exit(1);
+        test_f = fopen(argv[optind], "r");
+        if (test_f != NULL) {
+            input_from_file = true;
+            fclose(test_f);
         }
 
-        if (freopen(argv[optind], "r", stdin) == NULL) {
-            fprintf(stderr, "could not open file '%s'\n", argv[optind]);
-            exit(1);
-        }
-        // read past the #!apl line at the beginning of the script..
-        while ((c = getchar() != '\n') && c != EOF);
+        if (input_from_file) {
+            stdin_fd = dup(fileno(stdin));
+            if (stdin_fd < 0) {
+                fprintf(stderr, "Error initializing standard input\n");
+                exit(1);
+            }
 
-        quadInput = fdopen(stdin_fd, "r");
-        rl_instream = quadInput;
+            if (freopen(argv[optind], "r", stdin) == NULL) {
+                fprintf(stderr, "could not open file '%s'\n", argv[optind]);
+                exit(1);
+            }
+            // read past the #!apl line at the beginning of the script..
+            while ((c = getchar() != '\n') && c != EOF);
+
+            quadInput = fdopen(stdin_fd, "r");
+            rl_instream = quadInput;
+        }
     }
 
     if (isatty(0)) {
