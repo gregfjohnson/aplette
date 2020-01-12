@@ -1582,14 +1582,6 @@ s%@x_libraries@%$x_libraries%g
 s%@option_4@%%g
 s%@wsdir@%$wsdir%g
 s%@have_kbd@%$have_kbd%g
-/@option_1@/r $option_1
-s%@option_1@%%g
-/@option_2@/r $option_2
-s%@option_2@%%g
-/@option_3@/r $option_3
-s%@option_3@%%g
-/@option_5@/r $option_5
-s%@option_5@%%g
 s%@keytabledir@%$keytabledir%g
 s%@defaultmap@%$defaultmap%g
 s%@machinetype@%$machinetype%g
