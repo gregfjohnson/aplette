@@ -21,7 +21,7 @@ clean:	tidy
 	rm -f aplette
 
 tidy:
-	rm -f $(OBJECTS) core parser/y.tab.* */*.o
+	rm -f $(OBJECTS) core */*.o
 
 debug/Q.o:	debug/*.c debug/*.h
 	cd debug ; $(MAKE)
