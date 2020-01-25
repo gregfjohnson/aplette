@@ -11,6 +11,7 @@
  */
 
 #include <stdio.h>
+#include <math.h>
 #include "apl.h"
 #include "data.h"
 #include "utility.h"
@@ -27,6 +28,8 @@ struct item* ex_qct(io) int io; /* 0 = source, 1 = sink */
         return (p);
     }
     else {
+        double df;
+
         pop();
         p = fetch1();
 
@@ -37,9 +40,16 @@ struct item* ex_qct(io) int io; /* 0 = source, 1 = sink */
             error(ERR_rank, "assign value not scalar");
 
         f = p->datap[0];
-        if (f < 0)
-            f = -f;
-        tolerance = f;
+
+        if (fabs(cimag(f)) > creal(tolerance)) {
+            error(ERR_domain, "Lct must be real");
+        }
+
+        df = creal(f);
+
+        if (df < 0)
+            df = -df;
+        tolerance = df;
         sp[-1] = (struct item*)p;
         return (0);
     };

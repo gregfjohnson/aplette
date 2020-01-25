@@ -8,6 +8,8 @@
 #include <math.h>
 
 data ex_pwr(data d1, data d2) {
+    return (cpow(d1, d2));
+#if 0
     int s;
     double f1, f2;
 
@@ -40,4 +42,5 @@ chk:
 bad:
     error(ERR_limit, "input range to pwr()");
     return (0);
+#endif
 }

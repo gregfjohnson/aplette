@@ -18,6 +18,9 @@
 /* convert floating point data d to character string */
 char* fp2char(data d, struct FORMAT* format)
 {
+    sprintf(format_buffer, "%.1f+I%.1f", creal(d), cimag(d));
+    return (char*)&format_buffer;
+    #if 0
     double value;
     int sign, width, d_places, n, m;
 
@@ -116,4 +119,5 @@ char* fp2char(data d, struct FORMAT* format)
         format_buffer[n] = '\0';
     }
     return (char*)&format_buffer;
+    #endif
 }

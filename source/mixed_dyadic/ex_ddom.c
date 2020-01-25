@@ -84,7 +84,7 @@ static int lsq(data* dmn, data* dn1, data* dn2, data* dn3, data* dm, int* in,
         l = k;
         dp1 = dn1 + k + 1;
         for (j = k + 1; j < n; j++) {
-            if (f1 < *dp1++) {
+            if (fabs(f1) < fabs(*dp1++)) {
                 f1 = dp1[-1];
                 l = j;
             }

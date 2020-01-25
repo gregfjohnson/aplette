@@ -55,7 +55,7 @@ struct item* fp_dfmt(struct item* f, struct item* p)
 
         format->digits = (int)*df;
         //printf("%f %f\n",*df,*(df+1));
-        if (*(df + 1) < 0) { // exponential format
+        if (creal(*(df + 1)) < 0) { // exponential format
             format->exp = 1;
             format->digits = (int)*df;
             format->sign = 1;
