@@ -5,6 +5,7 @@
 
 #include "apl.h"
 #include "utility.h"
+#include <math.h>
 #include "gd.h"
 
 int gdu(const int* p1, const int* p2);
@@ -36,8 +37,13 @@ int gdu(const int* p1, const int* p2)
     d1 = getdat(p);
     p->index = integ + *p2 * idx.delk;
     d2 = getdat(p);
+    if (fabs(cimag(d1)) > creal(tolerance)
+        || fabs(cimag(d2)) > creal(tolerance))
+    {
+        error(ERR_domain, "cannot sort complex values");
+    }
     if (fuzz(d1, d2) != 0) {
-        if (d1 > d2)
+        if (creal(d1) > creal(d2))
             return (1);
         return (-1);
     }

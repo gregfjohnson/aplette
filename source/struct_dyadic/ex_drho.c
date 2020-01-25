@@ -47,7 +47,7 @@ null_ok:
     s = 1;
     dp = p->datap;
     for (i = 0; i < p->size; i++) {
-        if (*dp < 0)
+        if (creal(*dp) < 0)
             error(ERR_limit, "negative dimension attempted");
         s *= fix(*dp++);
     }

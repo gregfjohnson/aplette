@@ -9,7 +9,5 @@ data
     ex_abs(d)
         data d;
 {
-    if (d < zero)
-        return (-d);
-    return (d);
+    return cabs(d);
 }

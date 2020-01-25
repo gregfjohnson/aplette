@@ -4,14 +4,25 @@
  */
 
 #include "apl.h"
+#include "utility.h"
+#include "math.h"
 
 data
     ex_sgn(d)
         data d;
 {
-    if (d == zero)
+    double r;
+
+    if (fabs(cimag(d)) > creal(tolerance)) {
+        error(ERR_domain, "signum value not a real value");
+    }
+
+    r = creal(d);
+    if (r == creal(zero))
         return (zero);
-    if (d < zero)
+
+    if (r < creal(zero))
         return (-one);
+
     return (one);
 }

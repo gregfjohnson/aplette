@@ -11,6 +11,7 @@
 #include <setjmp.h>
 #include <stdio.h>
 #include <string.h>
+#include <complex.h>
 
 /* Magic Numbers */
 #define NFDS 20         /* Number of available file descriptors */
@@ -24,7 +25,7 @@
 #define LINEMAX 200     /* length of line typed at the keyboard */
 
 /* The basic type of float data in apl11 */
-#define data double
+#define data complex
 
 /* derived constants */
 #define SDAT sizeof(data)
