@@ -2,7 +2,13 @@ C@J Create a 2xN string array,
 C@J and then use Lfx to turn it into
 C@J a function.
 
-fn {        1 80 R 80 Y 'G z { sq n'
-fn { fn,[1] 1 80 R 80 Y 'z { n*2'
+fn {        1 64 R 64 Y 'G z { sq n'
+fn { fn,[1] 1 64 R 64 Y 'z { n*2'
+
+fn
+
 Lfx fn
+
+)fns
+
 sq 4
