@@ -5,7 +5,7 @@ APLEXE = ../source/aplette
 
 DIFF = @diff@
 
-OBJECTS = printing.dif quad_vars.dif \
+OBJECTS = printing.dif quad_vars.dif2 \
           format.dif trig.dif errors.dif \
           scalar_monadic.dif scalar_dyadic.dif \
           mixed_monadic.dif mixed_dyadic.dif \
@@ -30,6 +30,12 @@ all: $(OBJECTS)
 	$(APLEXE) < $<  | sed -e 's/[0-9][0-9]:[0-9][0-9]\.[0-9][0-9] [0-9][0-9]\/[0-9][0-9]\/[0-9][0-9]/hh:mm.ss mm\/dd\/yy/' > $@
 	echo >> $@
 
+# This test is separate, because it requires a special input
+# file and runs an aplette script.
+quad_vars.dif2: quad_vars.sh
+	./quad_vars.sh < quad_vars.stdin > quad_vars.out
+	$(DIFF) quad_vars.out quad_vars.ref > $@
+
 clean:
-	rm -f *.dif  *.out aplws.abort clean_dir/aplws.abort \
+	rm -f *.dif *.dif2 *.out aplws.abort clean_dir/aplws.abort \
           clean_dir/core.* core.*
