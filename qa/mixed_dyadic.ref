@@ -49,6 +49,9 @@ Rank Error: base - cannot handle left-arg-rank > 1.
 Domain Error: base - incorrect types.
 Domain Error: base - incorrect types.
 
+Least squares
+1 1
+
 Mixed types - not supported
 Domain Error.
 Domain Error.

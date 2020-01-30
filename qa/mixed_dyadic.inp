@@ -26,6 +26,9 @@ a B b
 '' B 3
 'A' B I 0
 
+'\nLeast squares'
+m { 3 2 R 1 0 1 1 0 0
+1 2 3 L@% m
 
 '\nMixed types - not supported'
 (2 0 R 5), 'A'

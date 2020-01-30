@@ -25,3 +25,8 @@ Lpw
 pi { 3 1 4 1 5 9 2 6
 pi[ A@| pi ]
 pi[ V@| pi ]
+
+'\nMatrix inverse'
+m { (I3) J.<@= I3
+minv { L@% m
+8 1 J@N L@% m

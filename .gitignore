@@ -15,6 +15,5 @@ printer/apl2gs
 script/apl-setup
 script/aplrc
 qa/*.dif
-qa/*.adif
+qa/*.dif2
 qa/*.out
-qa/*.aout
