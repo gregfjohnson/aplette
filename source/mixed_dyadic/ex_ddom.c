@@ -18,54 +18,75 @@ static void solve(int m, int n, data* dmn, data* dn2, int* in, data* dm, data* d
 void ex_ddom()
 {
     struct item *p, *q;
-    int a, b, m, n, o, *in;
+    int row, col, m, rows, cols, o, *in;
     data *d1, *dmn, *dn1, *dn2, *dn3, *dm;
     char* al;
 
     p = fetch2();
     q = sp[-2];
+
     if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "domino - incorrect types");
+
     if ((p->rank != 1 && p->rank != 2) || q->rank != 2)
         error(ERR_rank, "domino - unexpected ranks");
-    m = q->dim[0];
-    n = q->dim[1];
-    if (m < n || m != p->dim[0])
+
+    rows = q->dim[0];
+    cols = q->dim[1];
+    if (rows < cols || rows != p->dim[0])
         error(ERR_rank, "domino - mismatch");
     o = 1;
     if (p->rank == 2)
         o = p->dim[1];
-    al = (char*)alloc(n * (SINT + SDAT * m + SDAT * 3) + SDAT * m);
+
+    /*
+    al:
+        lhs[cols][rows];
+        {
+            int n;
+            data work[3];
+        } [cols];
+
+        data rhs[rows];
+    */
+    // work area for lsq()..
+    al = (char*)alloc(cols * (SINT + SDAT * rows + SDAT * 3) + SDAT * rows);
     if (al == 0)
         error(ERR, "domino - unable to allocate memory");
+
     dmn = (data*)al;
-    dn1 = dmn + m * n;
-    dn2 = dn1 + n;
-    dn3 = dn2 + n;
-    dm = dn3 + n;
-    in = (int*)(dm + m);
+    dn1 = dmn + rows * cols;
+    dn2 = dn1 + cols;
+    dn3 = dn2 + cols;
+    dm = dn3 + cols;
+    in = (int*)(dm + rows);
     d1 = q->datap;
-    for (b = 0; b < m; b++) {
-        for (a = 0; a < n; a++)
-            dmn[a * m + b] = *d1++;
+    for (col = 0; col < rows; col++) {
+        for (row = 0; row < cols; row++)
+            dmn[row * rows + col] = *d1++;
     }
-    a = lsq(dmn, dn1, dn2, dn3, dm, in, m, n, o, p->datap, q->datap);
+    int result = lsq(dmn, dn1, dn2, dn3, dm, in, rows, cols, o, p->datap, q->datap);
     aplfree((int*)dmn);
-    if (a)
+    if (result)
         error(ERR, "domino - could not solve");
     sp--;
     pop();
     *sp++ = p;
-    p->dim[0] = n;
-    p->size = n * o;
+    p->dim[0] = cols;
+    p->size = cols * o;
 }
 
+/*
+    dmn is an m x n array, with elements stored in column-major order.
+    it is initialized from a standard data matrix (rows are stored
+    in row-major order).
+ */
 static int lsq(data* dmn, data* dn1, data* dn2, data* dn3, data* dm, int* in,
     int m, int n, int p,
     data* d1, data* d2)
 {
     data *dp1, *dp2;
-    double f1, f2, f3, f4;
+    float f1, f2, f3, f4;
     int i, j, k, l;
 
     dp1 = dmn;
@@ -207,25 +228,36 @@ static int lsq(data* dmn, data* dn1, data* dn2, data* dn3, data* dm, int* in,
     return (0);
 }
 
+/*
+ m columns
+ n rows
+ dmn:  input array; m x n
+ dm:   input vector; m elements
+ dn1:  output
+ */
 static void solve(int m, int n, data* dmn, data* dn2, int* in, data* dm, data* dn1)
 {
     data *dp1, *dp2;
     int i, j, k;
-    double f1, f2;
+    float f1, f2;
 
     for (j = 0; j < n; j++) {
-        f1 = 0.;
         dp1 = dmn + j * m + j;
         dp2 = dm + j;
         f2 = *dp1;
+
+        f1 = 0.;
         for (i = j; i < m; i++)
             f1 += *dp1++ * *dp2++;
+
         f1 /= f2 * dn2[j];
+
         dp1 = dmn + j * m + j;
         dp2 = dm + j;
         for (i = j; i < m; i++)
             *dp2++ += f1 * *dp1++;
     }
+
     dp1 = dm + n;
     dp2 = dn2 + n;
     dn1[in[n - 1]] = *--dp1 / *--dp2;
