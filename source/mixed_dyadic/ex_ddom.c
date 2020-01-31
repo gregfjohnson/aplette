@@ -16,7 +16,7 @@ static int lsq(data* dmn, data* dn1, data* dn2, data* pivot, data* dm, int* in,
 static void solve(int m, int n, data* dmn, data* dn2, int* in, data* dm, data* dn1);
 
 static void pmat(char *title, data *elts, int rows, int cols);
-static void pmat_T(char *title, data *elts, int rows, int cols);
+static void pmat_cm(char *title, data *elts, int rows, int cols);
 static void pint(char *title, int *elts, int rows);
 
 void ex_ddom()
@@ -100,7 +100,7 @@ void ex_ddom()
             dmn[row * rows + col] = *d1++;
     }
 
-    pmat_T("lsq dmn", dmn,rows,cols);
+    pmat_cm("lsq dmn", dmn,rows,cols);
     int result = lsq(dmn, dn1, dn2, pivot, dm, in, rows, cols, lhs_cols, p->datap, q->datap);
     aplfree((int*)dmn);
 
@@ -152,7 +152,7 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
         *dp2++ = f1;
     }
 
-    pmat_T("col_sumsq (sum sq cols; +/[1]rhs X rhs)", col_sumsq, 1, cols);
+    pmat_cm("col_sumsq (sum sq cols; +/[1]rhs X rhs)", col_sumsq, 1, cols);
 
     // initialize in[] to be [0, 1, .. cols-1]
     //
@@ -197,7 +197,7 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
         dp1 = dmn + col * rows + col;
         data main_diag_elt = *dp1;
 
-        pmat_T("dmn", dmn, rows, cols);
+        pmat_cm("dmn", dmn, rows, cols);
         printf("col %d, main diag elt %f\n", col, main_diag_elt);
 
         // f1 becomes sum_sq of elts at main diag and going down..
@@ -265,11 +265,11 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
             }
         }
     }
-    pmat_T("zero below-diagonal elements of dmn", dmn, rows, cols);
+    pmat_cm("zero below-diagonal elements of dmn", dmn, rows, cols);
     #endif
 
     for (k = 0; k < lhs_cols; k++) {
-        pmat_T("looping over lhs vectors; dmn", dmn, rows, cols);
+        pmat_cm("looping over lhs vectors; dmn", dmn, rows, cols);
 
         // load the k'th left-hand side column vector into dm.
         dp1 = dm;
@@ -365,11 +365,10 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
 }
 
 /*
- m columns
- n rows
- dmn:  input array; rows x cols
- dm:   input vector; rows elements
- dn1:  in/out
+ dmn:  input array; rows x cols; read-only.
+ dn2:  input vector; cols elts; read-only.
+ dm:   input vector; rows elements; updated in place as a work array.
+ dn1:  output vector; cols elts
  */
 static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, data* dn1)
 {
@@ -377,10 +376,11 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, d
     int row, col, k;
     float f1;
 
-    pmat_T("solve; dmn", dmn, rows, cols);
-    pmat_T("solve; dm in", dm, rows, 1);
-    pmat_T("solve; dn2", dn2, 1, cols);
-    pmat_T("solve; dn1 in", dn1, 1, cols);
+    memset(dn1, 0, cols*sizeof(data));
+
+    pmat_cm("solve; dmn in", dmn, rows, cols);
+    pmat_cm("solve; dm in", dm, rows, 1);
+    pmat_cm("solve; dn2 in", dn2, 1, cols);
 
     for (col = 0; col < cols; col++) {
         // dp1 points at col'th main diagonal element..
@@ -418,11 +418,12 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, d
         dn1[in[row]] = -f1 / *--dp2;
     }
 
-    pmat_T("solve; dm out", dm, rows, 1);
-    pmat_T("solve; dn1 out", dn1, 1, cols);
+    pmat_cm("solve; dn1 out", dn1, 1, cols);
 }
 
-void pmat_T(char *title, data *elts, int rows, int cols) {
+// print the matrix; elts are in column-major order.
+//
+void pmat_cm(char *title, data *elts, int rows, int cols) {
     printf("%s:\n", title);
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
@@ -434,6 +435,8 @@ void pmat_T(char *title, data *elts, int rows, int cols) {
     printf("\n");
 }
 
+// print the matrix; elts are in standard row-major order.
+//
 void pmat(char *title, data *elts, int rows, int cols) {
     printf("%s:\n", title);
     for (int row = 0; row < rows; ++row) {
