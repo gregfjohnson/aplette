@@ -368,7 +368,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             residual_soln_sum_sq += tmp * tmp;
         }
 
-        if (residual_soln_sum_sq < 0.0625 * residual_soln_sum_sq) {
+        if (residual_soln_sum_sq < 0.0625 * prev_residual_soln_sum_sq) {
             printf("keep looping..\n");
             goto loop;
 
