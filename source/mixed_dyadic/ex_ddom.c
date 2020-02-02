@@ -9,7 +9,7 @@
 #include "utility.h"
 #include "memory.h"
 
-static int lsq(data* dmn, data* dn1, data* dn2, data* pivot, data* dm, int* in,
+static int lsq(data* dmn, data* dn1, data* dn2, data* vec2_cols, data* dm, int* in,
     int n, int m, int lhs_cols,
     data* d1, data* d2);
 
@@ -23,7 +23,7 @@ void ex_ddom()
 {
     struct item *p, *q;
     int row, col, m, rows, cols, lhs_cols, *in;
-    data *d1, *dmn, *dn1, *dn2, *pivot, *dm;
+    data *d1, *dmn, *dn1, *dn2, *vec2_cols, *dm;
     char* al;
 
     p = fetch2();
@@ -70,11 +70,11 @@ void ex_ddom()
         dn2 = dn1 + cols;
 
         // data array of dimension cols
-        pivot = dn2 + cols;
+        vec2_cols = dn2 + cols;
 
         // data array of dimension rows;
         // used to hold the LHS vector(s) to be regressed against the model.
-        dm = pivot + cols;
+        dm = vec2_cols + cols;
 
         // int array of dimension cols; the columns of the regression model
         // matrix are permuted to improve numerical stability, and this
@@ -85,7 +85,7 @@ void ex_ddom()
         dmn = (data*) alloc(rows*cols * SDAT);
         dn1 = (data*) alloc(cols * SDAT);
         dn2 = (data*) alloc(cols * SDAT);
-        pivot = (data*) alloc(cols * SDAT);
+        vec2_cols = (data*) alloc(cols * SDAT);
         dm  = (data*) alloc(rows * SDAT);
         in  = (int*)  alloc(cols * SINT);
     #endif
@@ -101,7 +101,7 @@ void ex_ddom()
     }
 
     pmat_cm("lsq dmn", dmn,rows,cols);
-    int result = lsq(dmn, dn1, dn2, pivot, dm, in, rows, cols, lhs_cols, p->datap, q->datap);
+    int result = lsq(dmn, dn1, dn2, vec2_cols, dm, in, rows, cols, lhs_cols, p->datap, q->datap);
     aplfree((int*)dmn);
 
     if (result)
@@ -122,37 +122,37 @@ void ex_ddom()
     a given row, and so it is convenient to have rows be contiguous.
 
     dm is a work vector of length rows.
-    col_sumsq, dn2, and pivot are work vectors of length cols.
+    vec1_cols, dn2, and vec2_cols are work vectors of length cols.
     in is an int work vector of length cols.
 
-    d1 is the underlying data of the lhs (one or more column vectors to be estimated)
-    d2 is the underlying data of the rhs (regression matrix)
+    lhs_data is the underlying data of the lhs (one or more column vectors to be estimated)
+    rhs_data is the underlying data of the rhs (regression matrix)
  */
-static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int* in,
+static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm, int* in,
                int rows, int cols, int lhs_cols,
-               data* d1, data* d2)
+               data* lhs_data, data* rhs_data)
 {
     data *dp1, *dp2;
-    float f1, f2, f3, f4;
+    float f1, f2;
     int i, j, k, l;
 
     printf("lsq rows %d, cols %d\n", rows, cols);
     dp1 = dmn;
 
-    // populate work array col_sumsq with the sums of the
+    // populate work array vec1_cols with the sums of the
     // squares of the columns of dmn.
     //
-    dp2 = col_sumsq;
+    dp2 = vec1_cols;
     for (j = 0; j < cols; j++) {
         f1 = 0.;
         for (i = 0; i < rows; i++) {
-            f2 = *dp1++;
-            f1 += f2 * f2;
+            data tmp = *dp1++;
+            f1 += tmp * tmp;
         }
         *dp2++ = f1;
     }
 
-    pmat_cm("col_sumsq (sum sq cols; +/[1]rhs X rhs)", col_sumsq, 1, cols);
+    pmat_cm("vec1_cols (sum sq cols; +/[1]rhs X rhs)", vec1_cols, 1, cols);
 
     // initialize in[] to be [0, 1, .. cols-1]
     //
@@ -164,9 +164,9 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
         // find the index of the largest sum of squares
         // from "col" to the right.
         //
-        f1 = col_sumsq[col];
+        f1 = vec1_cols[col];
         l = col;
-        dp1 = col_sumsq + col + 1;
+        dp1 = vec1_cols + col + 1;
         for (j = col + 1; j < cols; j++) {
             if (fabs(f1) < fabs(*dp1++)) {
                 f1 = dp1[-1];
@@ -181,16 +181,16 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
             in[col] = in[l];
             in[l] = tmp;
 
-            data dtmp = col_sumsq[l];
-            col_sumsq[l] = col_sumsq[col];
-            col_sumsq[col] = dtmp;
+            data dtmp = vec1_cols[l];
+            vec1_cols[l] = vec1_cols[col];
+            vec1_cols[col] = dtmp;
 
             dp1 = dmn + col * rows;
             dp2 = dmn + l * rows;
             for (i = 0; i < rows; i++) {
-                f1 = *dp1;
+                data tmp = *dp1;
                 *dp1++ = *dp2;
-                *dp2++ = f1;
+                *dp2++ = tmp;
             }
         }
 
@@ -203,30 +203,30 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
         // f1 becomes sum_sq of elts at main diag and going down..
         f1 = 0.;
         for (i = col; i < rows; i++) {
-            f2 = *dp1++;
-            f1 += f2 * f2;
+            data tmp = *dp1++;
+            f1 += tmp * tmp;
         }
 
         if (f1 == 0.)
             return (1);
 
-        f2 = sqrt(f1);
+        data column_len = sqrt(f1);
         if (main_diag_elt >= 0.)
-            f2 = -f2;
+            column_len = -column_len;
 
-        printf("length of vector at and below main diagonal:  %f\n", f2);
+        printf("length of vector at and below main diagonal:  %f\n", column_len);
 
         // dn2 contains the L2 length of the vector at the main
         // diagonal and going downward from there.
         // (possibly negated.)
-        dn2[col] = f2;
+        dn2[col] = column_len;
 
-        f1 = 1. / (f1 - main_diag_elt * f2);
+        f1 = 1. / (f1 - main_diag_elt * column_len);
 
         // tweak main diagonal element..
-        dmn[col * rows + col] = main_diag_elt - f2;
+        dmn[col * rows + col] = main_diag_elt - column_len;
 
-        // calculate pivot[] elements
+        // calculate vec2_cols[] elements
         for (j = col + 1; j < cols; j++) {
             f2 = 0.;
 
@@ -236,7 +236,7 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
             for (i = col; i < rows; i++)
                 f2 += *dp1++ * *dp2++;
 
-            pivot[j] = f1 * f2;
+            vec2_cols[j] = f1 * f2;
         }
 
         // tweak elts to the right of the main diag..
@@ -244,16 +244,16 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
             dp1 = dmn + col * rows + col;
             dp2 = dmn + j * rows + col;
 
-            f1 = pivot[j];
+            f1 = vec2_cols[j];
             for (i = col; i < rows; i++)
                 *dp2++ -= *dp1++ * f1;
 
-            col_sumsq[j] -= dmn[j * rows + col];
+            vec1_cols[j] -= dmn[j * rows + col];
         }
     }
 
     #if 0
-    { // as an experiment, zero out all below-diagonal elements of dm..
+    { // as an experiment, zero out all below-diagonal elements of dmn..
       // didn't work.. ?!?
         printf("lsq rows %d, cols %d\n", rows, cols);
         for (int col = 0; col < cols; ++col) {
@@ -268,42 +268,59 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
     pmat_cm("zero below-diagonal elements of dmn", dmn, rows, cols);
     #endif
 
-    for (k = 0; k < lhs_cols; k++) {
-        pmat_cm("looping over lhs vectors; dmn", dmn, rows, cols);
+    pmat_cm("looping over lhs vectors; dmn", dmn, rows, cols);
+    pmat_cm("dn2", dn2, 1, cols);
 
-        // load the k'th left-hand side column vector into dm.
+    for (int lhs_col = 0; lhs_col < lhs_cols; lhs_col++) {
+
+        // load the lhs_col'th left-hand side column vector into dm.
         dp1 = dm;
-        l = k;
+        l = lhs_col;
         for (i = 0; i < rows; i++) {
-            *dp1++ = d1[l];
+            *dp1++ = lhs_data[l];
             l += lhs_cols;
         }
-        solve(rows, cols, dmn, dn2, in, dm, pivot);
-        l = k;
+        solve(rows, cols, dmn, dn2, in, dm, vec2_cols);
 
+        data soln_sumsq = 0.;
+        dp1 = vec2_cols;
+        for (i = 0; i < cols; i++) {
+            data tmp = *dp1++;
+            soln_sumsq += tmp * tmp;
+        }
+
+        // calculate model y_hat vector, and
+        // subtract y, to form residual vector.
+        // do regression on the residual vector,
+        // and look at the sum of squares of the
+        // solution.  if more than 1/16 the
+        // sum of squares of the original solution
+        // above, consider the system unsolvable
+        // (columns of rhs matrix are not linearly
+        // independent enough) and give up.
+        //
+        l = lhs_col;
         dp1 = dm;
         for (i = 0; i < rows; i++) {
-            f1 = -d1[l];
+            f1 = -lhs_data[l];
             l += lhs_cols;
-            dp2 = pivot;
+
+            dp2 = vec2_cols;
             for (j = 0; j < cols; j++)
-                f1 += d2[i * cols + j] * *dp2++;
+                f1 += rhs_data[i * cols + j] * *dp2++;
+
             *dp1++ = f1;
         }
-        solve(rows, cols, dmn, dn2, in, dm, col_sumsq);
+        solve(rows, cols, dmn, dn2, in, dm, vec1_cols);
 
-        f4 = 0.;
-        f3 = 0.;
-        dp1 = pivot;
-        dp2 = col_sumsq;
+        float residual_soln_sum_sq = 0.;
+        dp2 = vec1_cols;
         for (i = 0; i < cols; i++) {
-            f1 = *dp1++;
-            f4 += f1 * f1;
-            f1 = *dp2++;
-            f3 += f1 * f1;
+            data tmp = *dp2++;
+            residual_soln_sum_sq += tmp * tmp;
         }
 
-        if (f3 > 0.0625 * f4)
+        if (residual_soln_sum_sq > 0.0625 * soln_sumsq)
             return (1);
     loop:
         printf("loop..\n");
@@ -311,38 +328,47 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
         if (intflg)
             return (1);
 
-        dp1 = pivot;
-        dp2 = col_sumsq;
+        // add residual solution into original solution
+        // vec2_cols
+        //
+        dp1 = vec2_cols;
+        dp2 = vec1_cols;
         for (i = 0; i < cols; i++)
             *dp1++ += *dp2++;
 
-        if (f3 <= 4.81e-35 * f4) {
+        if (residual_soln_sum_sq <= 4.81e-35 * soln_sumsq) {
             printf("exit loop..\n");
             goto out;
         }
 
-        l = k;
+        // put residuals based on solution in vec2_cols
+        // into dm.
+        //
+        l = lhs_col;
         dp1 = dm;
         for (i = 0; i < rows; i++) {
-            f1 = -d1[l];
+            data f1 = -lhs_data[l];
             l += lhs_cols;
-            dp2 = pivot;
+
+            dp2 = vec2_cols;
             for (j = 0; j < cols; j++)
-                f1 += d2[i * cols + j] * *dp2++;
+                f1 += rhs_data[i * cols + j] * *dp2++;
+
             *dp1++ = f1;
         }
 
-        solve(rows, cols, dmn, dn2, in, dm, col_sumsq);
+        solve(rows, cols, dmn, dn2, in, dm, vec1_cols);
 
-        f2 = f3;
-        f3 = 0.;
-        dp1 = col_sumsq;
+        data prev_residual_soln_sum_sq = residual_soln_sum_sq;
+        residual_soln_sum_sq = 0.;
+
+        dp1 = vec1_cols;
         for (i = 0; i < cols; i++) {
-            f1 = *dp1++;
-            f3 += f1 * f1;
+            data tmp = *dp1++;
+            residual_soln_sum_sq += tmp * tmp;
         }
 
-        if (f3 < 0.0625 * f2) {
+        if (residual_soln_sum_sq < 0.0625 * residual_soln_sum_sq) {
             printf("keep looping..\n");
             goto loop;
 
@@ -353,10 +379,10 @@ static int lsq(data* dmn, data* col_sumsq, data* dn2, data* pivot, data* dm, int
     out:
         // copy the solution for this lhs column
         // into the corresponding column of the result array.
-        l = k;
-        dp1 = pivot;
+        l = lhs_col;
+        dp1 = vec2_cols;
         for (i = 0; i < cols; i++) {
-            d1[l] = *dp1++;
+            lhs_data[l] = *dp1++;
             l += lhs_cols;
         }
     }
@@ -382,43 +408,100 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, d
     pmat_cm("solve; dm in", dm, rows, 1);
     pmat_cm("solve; dn2 in", dn2, 1, cols);
 
+    // do to rows of dm what was done to rows of dmn?
+    //
+    // going through elements left to right,
+    // add into tail of dm the tail of dmn[;col]
+    // multiplied by inner product of those
+    // vectors divided by (dmn[col;col] X dn2[col]).
+    //
+    /*
+        Lio { 0
+        rows { R dm
+        indices { col + I (rows - col)
+
+        num { dm[indices] +.X dnm[indices; col]
+        den { dn2[col]     X  dnm[col; col]
+
+        dm[indices] { dm[indices] + dnm[indices; col] X num % den
+     */
     for (col = 0; col < cols; col++) {
         // dp1 points at col'th main diagonal element..
-        dp1 = dmn + col * rows + col;
-        data main_diag_elt = *dp1;
+        data *dmn_ptr = dmn + col * rows + col;
+        data main_diag_elt = *dmn_ptr;
 
-        dp2 = dm + col;
+        data *dm_ptr = dm + col;
 
+        // form inner product of tail of dm and tail
+        // of col'th row of dmn.
         f1 = 0.;
         for (row = col; row < rows; row++)
-            f1 += *dp1++ * *dp2++;
+            f1 += *dmn_ptr++ * *dm_ptr++;
 
+        // calculate pivot multiplier
         f1 /= main_diag_elt * dn2[col];
 
-        // dp1 points at col'th main diagonal element..
-        dp1 = dmn + col * rows + col;
+        // dmn_ptr points at col'th main diagonal element..
+        dmn_ptr = dmn + col * rows + col;
 
-        // dp2 points at col'th element of dm..
-        dp2 = dm + col;
+        // dm_ptr points at col'th element of dm..
+        dm_ptr = dm + col;
 
+        // update tail of dm with f1 times tail of
+        // col'th row of dmn.
         for (row = col; row < rows; row++)
-            *dp2++ += f1 * *dp1++;
+            *dm_ptr++ += f1 * *dmn_ptr++;
     }
+    pmat_cm("solve; dm after massage", dm, rows, 1);
 
-    dp1 = dm + cols;
-    dp2 = dn2 + cols;
-    dn1[in[cols - 1]] = *--dp1 / *--dp2;
-    for (row = cols - 2; row >= 0; row--) {
-        f1 = -*--dp1;
-        k = (row + 1) * rows + row;
-        for (col = row + 1; col < cols; col++) {
-            f1 += dmn[k] * dn1[in[col]];
+    // work backward through columns..
+    // it looks like we treat dmn as upper-triangular
+    // and solve from the last equation up.
+    //
+    // we treat dn2[] as if they were the elements of
+    // the main diagonal of dmn.
+    //
+    // have m =     a<k> x<k> + .. + a<n-1> x<n-1>,
+    // and we know x<k+1> .. x<n-1>.
+    // we form m - a<k+1> x<k+1> - .. - a<n-1> x<n-1>.
+    // then, we divide by dn2[k] instead of dnm[k;k]
+    // for some reason.
+    //
+    data *dm_ptr  = dm + cols;
+    data *dn2_ptr = dn2 + cols;
+
+    // last element of solution is dm[cols-1] / dn2[cols-1]..
+    //
+    dn1[in[cols - 1]] = *--dm_ptr / *--dn2_ptr;
+
+    for (col = cols - 2; col >= 0; col--) {
+        f1 = *--dm_ptr;
+        k = (col + 1) * rows + col;
+        for (int col2 = col + 1; col2 < cols; col2++) {
+            f1 -= dmn[k] * dn1[in[col2]];
             k += rows;
         }
-        dn1[in[row]] = -f1 / *--dp2;
+        dn1[in[row]] = f1 / *--dn2_ptr;
     }
 
     pmat_cm("solve; dn1 out", dn1, 1, cols);
+}
+
+void pmat_cm_apl(data *elts, int rows, int cols) {
+    printf("%d %d R ", rows, cols);
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            data elt = *(elts + col * rows + row);
+            if (elt < 0) {
+                printf("`");
+                elt = -elt;
+                printf("%-7.3f", elt);
+            } else {
+                printf("%-8.3f", elt);
+            }
+        }
+    }
+    printf("\n");
 }
 
 // print the matrix; elts are in column-major order.
@@ -432,6 +515,7 @@ void pmat_cm(char *title, data *elts, int rows, int cols) {
         }
         printf("\n");
     }
+    pmat_cm_apl(elts, rows, cols);
     printf("\n");
 }
 
