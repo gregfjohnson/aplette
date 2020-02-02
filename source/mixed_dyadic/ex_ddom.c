@@ -280,10 +280,12 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             *dp1++ = lhs_data[l];
             l += lhs_cols;
         }
-        solve(rows, cols, dmn, dn2, in, dm, vec2_cols);
+        data *solution = vec2_cols;
+
+        solve(rows, cols, dmn, dn2, in, dm, solution);
 
         data soln_sumsq = 0.;
-        dp1 = vec2_cols;
+        dp1 = solution;
         for (i = 0; i < cols; i++) {
             data tmp = *dp1++;
             soln_sumsq += tmp * tmp;
@@ -305,7 +307,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             f1 = -lhs_data[l];
             l += lhs_cols;
 
-            dp2 = vec2_cols;
+            dp2 = solution;
             for (j = 0; j < cols; j++)
                 f1 += rhs_data[i * cols + j] * *dp2++;
 
@@ -329,9 +331,9 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             return (1);
 
         // add residual solution into original solution
-        // vec2_cols
+        // solution
         //
-        dp1 = vec2_cols;
+        dp1 = solution;
         dp2 = vec1_cols;
         for (i = 0; i < cols; i++)
             *dp1++ += *dp2++;
@@ -341,7 +343,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             goto out;
         }
 
-        // put residuals based on solution in vec2_cols
+        // put residuals based on solution in solution
         // into dm.
         //
         l = lhs_col;
@@ -350,7 +352,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             data f1 = -lhs_data[l];
             l += lhs_cols;
 
-            dp2 = vec2_cols;
+            dp2 = solution;
             for (j = 0; j < cols; j++)
                 f1 += rhs_data[i * cols + j] * *dp2++;
 
@@ -380,7 +382,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
         // copy the solution for this lhs column
         // into the corresponding column of the result array.
         l = lhs_col;
-        dp1 = vec2_cols;
+        dp1 = solution;
         for (i = 0; i < cols; i++) {
             lhs_data[l] = *dp1++;
             l += lhs_cols;
