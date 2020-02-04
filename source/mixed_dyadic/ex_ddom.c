@@ -18,9 +18,10 @@
    get a transformed linear system that is easy to solve, but which
    has the same solution as the original problem.
 
-   We simply splve the mxm linear system via back-substitution.
+   We simply solve the mxm linear system via back-substitution.
 
    Here is an APL function that computes the Householder reflector:
+
    C@J Householder reflector
    C@J given a non-zero vector v, return an orthonormal matrix u
    C@J such that u +.X v is (len v) X x_axis
@@ -32,15 +33,15 @@
    C@J that same distance a second time.  this will end us up
    C@J on the X axis, specifically at (len v) X x_axis.
    C@J
-   Gz { hou x; e1; lenx; stretche1; u; lenu; unorm; identmat
+   Gz { hou x; xaxis; lenx; stretchxaxis; u; lenu; unorm; identmat
    x { ,x
 
-   e1 { (Rx) Y ,1
+   xaxis { (Rx) Y ,1
 
-   lenx      { (x +.Xx) * .5
-   stretche1 { e1 X -lenx
+   lenx         { (x +.Xx) * .5
+   stretchxaxis { xaxis X -lenx
 
-   u { x + stretche1
+   u { x + stretchxaxis
 
    lenu  { (u+.Xu) * .5
    unorm { u % lenu
