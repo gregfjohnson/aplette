@@ -9,6 +9,47 @@
 #include "utility.h"
 #include "memory.h"
 
+/*
+   It looks like Ken Thompson (or whoever wrote this code) implemented
+   the Householder reflector approach to solving linear systems.
+   The idea is to take the M matrix, and upper-triangularize it by
+   a series of left-multiplies by orthonormal matrices.
+   We then apply the same series of multiplies to the Y vector to
+   get a transformed linear system that is easy to solve, but which
+   has the same solution as the original problem.
+
+   We simply splve the mxm linear system via back-substitution.
+
+   Here is an APL function that computes the Householder reflector:
+   C@J Householder reflector
+   C@J given a non-zero vector v, return an orthonormal matrix u
+   C@J such that u +.X v is (len v) X x_axis
+   C@J
+   C@J The idea is to "stretch" x_axis to the length of v, and
+   C@J then form the diagonal of a rhombus by adding v and the stretched x_axis.
+   C@J we normalize the thus-formed diagonal of this rhombus.
+   C@J we can project v onto this diagonal, and then go
+   C@J that same distance a second time.  this will end us up
+   C@J on the X axis, specifically at (len v) X x_axis.
+   C@J
+   Gz { hou x; e1; lenx; stretche1; u; lenu; unorm; identmat
+   x { ,x
+
+   e1 { (Rx) Y ,1
+
+   lenx      { (x +.Xx) * .5
+   stretche1 { e1 X -lenx
+
+   u { x + stretche1
+
+   lenu  { (u+.Xu) * .5
+   unorm { u % lenu
+
+   identmat { (IRx) J.= IRx
+   z        { identmat - 2 X unorm J.X unorm
+*/
+
+
 static int lsq(data* dmn, data* dn1, data* dn2, data* vec2_cols, data* dm, int* in,
     int n, int m, int lhs_cols,
     data* d1, data* d2);
