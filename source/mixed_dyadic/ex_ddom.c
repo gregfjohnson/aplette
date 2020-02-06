@@ -223,6 +223,17 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
         in[j] = j;
     }
 
+    // perform in-place updates to dnm (our rhs matrix).
+    // at each iteration we deal with sub_matrix, whose upper
+    // left corner is rnm[col;col].  we derive an orthonormal matrix U
+    // such that U +.X sub_matrix rotates the first column to
+    // the x axis.
+    //
+    // dnm[col;col] and below becomes the pre-normalized U vector
+    // from the householder reflector.  (I.e., we re-use dnm on the
+    // fly.  the columns to the right of col are updated to reflect
+    // the matrix multiply.)
+
     for (int col = 0; col < cols; col++) {
         printf("col %d..\n", col);
         pmat_cm("dmn", dmn, rows, cols);
@@ -289,15 +300,39 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
         // diagonal and going downward from there.
         // (possibly negated.)
         dn2[col] = column_tail_len;
+
         pmat_cm("dmn so far", dmn, rows, col+1);
         pmat_cm("dn2 so far", dn2, 1, col+1);
-
-        data pivot = 1. / (column_tail_sumsq - main_diag_elt * column_tail_len);
 
         // tweak main diagonal element..
         // increase absolute value of main diagonal element
         // by column tail length..
+
+        // dmn[;col] becomes u, the main diagonal of the rhombus used
+        // in the householder reflector.
+        //
         dmn[col * rows + col] = main_diag_elt - column_tail_len;
+
+        // denom of pivot is half the sum of squares of u?!?
+        // want to calculate length of u and then double that.
+        // this devious calculation does that..
+        //
+        // given (sumsq m);
+        // u is [m0 + len m, m1, .. m<n-1>]'.
+        // sumsq u is (m0 +len m)^2 + m1^2 + .. + m<n-1>^2.
+        // or, m0^2 + 2 m0 (len m) + (len m)^2 + m1^2 + .. + m<n-1>^2.
+        // but this is 2 m0 (len m) + (len m)^2 + m0^2 + m1^2 + .. + m<n-1>^2.
+        // or, 2 m0 (len m) + 2 X (len m)^2.
+        //
+        // sigh.
+        //
+        data pivot = 1. / (column_tail_sumsq - main_diag_elt * column_tail_len);
+
+        {
+            data ssu = 0.;
+            for (int r = col; r < rows; ++r) ssu += dmn[col * rows + r] * dmn[col * rows + r];
+            printf("sumsq u:  %.3f; again?  %.3f\n", 1./pivot, ssu);
+        }
 
         // calculate vec2_cols[] elements
         for (j = col + 1; j < cols; j++) {
@@ -328,7 +363,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
             dp1 = dmn + col * rows + col;
             dp2 = dmn + j * rows + col;
 
-            f1 = vec2_cols[j];
+            data f1 = vec2_cols[j];
             for (i = col; i < rows; i++)
                 *dp2++ -= *dp1++ * f1;
 
