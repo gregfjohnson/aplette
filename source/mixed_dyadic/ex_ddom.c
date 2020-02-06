@@ -233,6 +233,20 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
     // from the householder reflector.  (I.e., we re-use dnm on the
     // fly.  the columns to the right of col are updated to reflect
     // the matrix multiply.)
+    //
+    // The above-diagonal parts of dnm[] become the product
+    // U<n-1> U<n-2> .. U<0> dnm[], the upper-triangular redo of
+    // dnm.  Each main diagonal element of the upper-triangular matrix
+    // is the length of the column vector starting at the main diagonal
+    // and going down from there.
+    //
+    // So, we need to save the diagonal elements separately since they
+    // need to be used both for the upper triangular matrix and the
+    // sequence of householder reflector columns.  For code convenience
+    // below, we choose to save the upper-triangular versions of the
+    // diagonal matrices in a separate array, and use the in-place
+    // version of the main diagonal to go with the householder reflector
+    // columns that are contained in the matrix below the main diagonal.
 
     for (int col = 0; col < cols; col++) {
         printf("col %d..\n", col);
@@ -588,8 +602,7 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, d
         This equals (m0 + len(m)) * len(m)
         which equals m0 len(m) + len(m)^2. the quantity we need above.
 
-        Really devious...  If we are going there, I don't see
-        any reason why dn2[] couldn't just contain len(u)^2.
+        Really devious...
      */
     for (col = 0; col < cols; col++) {
         // dp1 points at col'th main diagonal element..
