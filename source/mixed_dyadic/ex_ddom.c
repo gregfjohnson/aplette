@@ -291,6 +291,17 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols, data* dm,
 
         data column_tail_len = sqrt(column_tail_sumsq);
 
+        // our goal is to get to the space spanned by the
+        // x axis.  we will project, but we can use either
+        // the positive or the negative x axis to get there.
+        // we select the x direction that forms an acute
+        // angle with our input vector.  this avoids problems
+        // in the case where the input vector is very close
+        // to the x axis.  if we didn't do this, we might add
+        // vectors that are almost collinear and pointing in
+        // opposite directions, resulting in an almost-zero
+        // vector sum, and consequent numerical instability.
+        //
         if (main_diag_elt >= 0.)
             column_tail_len = -column_tail_len;
 
@@ -529,7 +540,7 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, d
     pmat_cm("solve; dm in", dm, rows, 1);
 
     //
-    // going through elements left to right,
+    // going through columns left to right,
     // add into tail of dm the tail of dmn[;col]
     // multiplied by inner product of those
     // vectors divided by (dmn[col;col] X dn2[col]).
@@ -543,6 +554,42 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in, data* dm, d
         den { dn2[col]     X  dnm[col; col]
 
         dm[indices] { dm[indices] + dnm[indices; col] X num % den
+
+        This calculation is in the same devious category as the
+        pivot calculation above.
+
+        Say "v" is the lhs vector we are trying to project, and u
+        is the rhombus main-diagonal vector we are using in the
+        Householder reflector.  (u = [m0 + len(m), m1, .. m<n-1>]').
+
+        Our goal is to compute v - 2 X u u' v / len(u)^2.
+
+        (project v onto u, calculate residuals, go
+        from v to u via residuals to get to space spanned
+        by u, and then go that same length and direction
+        a second time to end up on the target vector.)
+
+        (The regression part is equal to the standard
+        regression formula "u (u' u)^-1 u' v"
+        since u is an nx1 vector.)
+
+        len(u)^2 is (m0 + len(m))^2 + m1^2 + .. + m<n-1>^2.
+
+        This equals (m0^2 + 2 m0 len(m) + len(m)^2) + m1^2 + .. + m<n-1>^2.
+
+        which equals 2 m0 len(m) + 2 len(m)^2.
+
+        The factor of 2 appears in the numerator and the denominator,
+        so we can cancel it out.
+
+        So, we want to get the quantity m0 len(m) + len(m)^2.
+
+        dn2[col] contains len(m).  We use it to calculate u0 * len(m).
+        This equals (m0 + len(m)) * len(m)
+        which equals m0 len(m) + len(m)^2. the quantity we need above.
+
+        Really devious...  If we are going there, I don't see
+        any reason why dn2[] couldn't just contain len(u)^2.
      */
     for (col = 0; col < cols; col++) {
         // dp1 points at col'th main diagonal element..
