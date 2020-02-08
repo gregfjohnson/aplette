@@ -60,10 +60,6 @@ static int lsq(data* dmn, data* dn1, data* dn2, data* vec2_cols,
 static void solve(int m, int n, data* dmn, data* dn2, int* in,
                   data* dm, data* dn1);
 
-static void pmat(char *title, data *elts, int rows, int cols);
-static void pmat_cm(char *title, data *elts, int rows, int cols);
-static void pint(char *title, int *elts, int rows);
-
 void ex_ddom()
 {
     struct item *p, *q;
@@ -128,9 +124,6 @@ void ex_ddom()
     // array contains the indices of the columns as they are swapped around.
     in = (int*)(dm + rows);
 
-    //pmat("input rhs", q->datap, rows, cols);
-    //pmat("input lhs", p->datap, rows, 1);
-
     // copy the RHS matrix into the work area, transposing as we go..
     d1 = q->datap;
     for (col = 0; col < rows; col++) {
@@ -138,7 +131,6 @@ void ex_ddom()
             dmn[row * rows + col] = *d1++;
     }
 
-    //pmat_cm("lsq dmn", dmn,rows,cols);
     int result = lsq(dmn, dn1, dn2, vec2_cols,
                      dm, in, rows, cols, lhs_cols,
                      p->datap, q->datap);
@@ -211,7 +203,6 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
 {
     data *dp1, *dp2; double f1, f2; int i, j, k, l;
 
-    // printf("lsq rows %d, cols %d\n", rows, cols);
     dp1 = dmn;
 
     // populate work array vec1_cols with the sums of the
@@ -226,8 +217,6 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
         }
         *dp2++ = sum_sq;
     }
-
-    //pmat_cm("vec1_cols (sum sq cols; +/[1]rhs X rhs)", vec1_cols, 1, cols);
 
     // initialize in[] to be [0, 1, .. cols-1]
     //
@@ -261,10 +250,6 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
     // columns that are contained in the matrix below the main diagonal.
 
     for (int col = 0; col < cols; col++) {
-        // printf("col %d..\n", col);
-        //pmat_cm("dmn", dmn, rows, cols);
-        //pmat_cm("col sum_sq?", vec1_cols, 1, cols);
-
         // find the index of the largest sum of squares
         // from "col" to the right.
         //
@@ -302,9 +287,6 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
         dp1 = dmn + col * rows + col;
         data main_diag_elt = *dp1;
 
-        //pmat_cm("dmn", dmn, rows, cols);
-        //printf("col %d, main diag elt %f\n", col, main_diag_elt);
-
         // column_tail_sumsq becomes sum_sq of elts at main diag and
         // going down..
 
@@ -334,16 +316,10 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
         if (main_diag_elt >= 0.)
             column_tail_len = -column_tail_len;
 
-        // printf("length of vector at and below main diagonal:  %f\n",
-        //        column_tail_len);
-
         // dn2 contains the L2 length of the vector at the main
         // diagonal and going downward from there.
         // (possibly negated.)
         dn2[col] = column_tail_len;
-
-        //pmat_cm("dmn so far", dmn, rows, col+1);
-        //pmat_cm("dn2 so far", dn2, 1, col+1);
 
         // tweak main diagonal element..
         // increase absolute value of main diagonal element
@@ -403,12 +379,9 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
             for (i = col; i < rows; i++)
                 *dp2++ -= *dp1++ * f1;
 
-            vec1_cols[j] -= dmn[j * rows + col] * dmn[j * rows + col];
+            vec1_cols[j] -= dmn[j * rows + col];
         }
     }
-
-    //pmat_cm("looping over lhs vectors; dmn", dmn, rows, cols);
-    //pmat_cm("dn2", dn2, 1, cols);
 
     for (int lhs_col = 0; lhs_col < lhs_cols; lhs_col++) {
         // load the lhs_col'th left-hand side column vector into dm.
@@ -475,8 +448,6 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
 
     // iteratively improve the solution if necessary.
     loop:
-        // printf("loop..\n");
-
         if (intflg)
             return (1);
 
@@ -488,7 +459,6 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
             *dp1++ += *dp2++;
 
         if (residual_soln_sum_sq <= 4.81e-35 * soln_sumsq) {
-            // printf("exit loop..\n");
             goto out;
         }
 
@@ -519,11 +489,7 @@ static int lsq(data* dmn, data* vec1_cols, data* dn2, data* vec2_cols,
         }
 
         if (residual_soln_sum_sq < 0.0625 * prev_residual_soln_sum_sq) {
-            // printf("keep looping..\n");
             goto loop;
-
-        } else {
-            // printf("fall out of loop..\n");
         }
 
     out:
@@ -568,10 +534,6 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in,
     data *dp1, *dp2;
     int row, col, k;
     data f1;
-
-    //pmat_cm("solve; dmn in", dmn, rows, cols);
-    //pmat_cm("solve; dn2 in", dn2, 1, cols);
-    //pmat_cm("solve; dm in", dm, rows, 1);
 
     //
     // going through columns left to right,
@@ -650,7 +612,6 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in,
         for (row = col; row < rows; row++)
             *dm_ptr++ += f1 * *dmn_ptr++;
     }
-    // pmat_cm("solve; dm after massage", dm, rows, 1);
 
     // work backward through columns..
     // we treat dmn as upper-triangular
@@ -673,78 +634,19 @@ static void solve(int rows, int cols, data* dmn, data* dn2, int* in,
     dn1[in[cols - 1]] = *--dm_ptr / *--dn2_ptr;
 
     for (col = cols - 2; col >= 0; col--) {
-        f1 = *--dm_ptr;
+        f1 = -*--dm_ptr;
 
         // form m - a<k+1> x<k+1> - .. - a<n-1> x<n-1>.
         //
         k = (col + 1) * rows + col;
         for (int col2 = col + 1; col2 < cols; col2++) {
-            f1 -= dmn[k] * dn1[in[col2]];
+            f1 += dmn[k] * dn1[in[col2]];
             k += rows;
         }
 
         // solve solution of the form K = a x by
         // simply dividing K by a:
         //
-        dn1[in[row]] = f1 / *--dn2_ptr;
+        dn1[in[col]] = -f1 / *--dn2_ptr;
     }
-
-     //pmat_cm("solve; dn1 out", dn1, 1, cols);
-}
-
-void pmat_cm_apl(data *elts, int rows, int cols) {
-    printf("%d %d R ", rows, cols);
-    for (int row = 0; row < rows; ++row) {
-        for (int col = 0; col < cols; ++col) {
-            data elt = *(elts + col * rows + row);
-            if (elt < 0) {
-                printf("`");
-                elt = -elt;
-                printf("%-7.3f", elt);
-            } else {
-                printf("%-8.3f", elt);
-            }
-        }
-    }
-    printf("\n");
-}
-
-// print the matrix; elts are in column-major order.
-//
-void pmat_cm(char *title, data *elts, int rows, int cols) {
-    printf("%s:\n", title);
-    for (int row = 0; row < rows; ++row) {
-        for (int col = 0; col < cols; ++col) {
-            data elt = *(elts + col * rows + row);
-            if (col > 0) printf(" ");
-            printf("%f (0x%016llx)", elt, *(unsigned long long *) &elt);
-        }
-        printf("\n");
-    }
-    pmat_cm_apl(elts, rows, cols);
-    printf("\n");
-}
-
-// print the matrix; elts are in standard row-major order.
-//
-void pmat(char *title, data *elts, int rows, int cols) {
-    printf("%s:\n", title);
-    for (int row = 0; row < rows; ++row) {
-        for (int col = 0; col < cols; ++col) {
-            data elt = *(elts + row * cols + col);
-            printf("%8.3f", elt);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
-void pint(char *title, int *elts, int rows) {
-    printf("%s:\n", title);
-
-    for (int row = 0; row < rows; ++row) {
-        printf("%8d", elts[row]);
-    }
-
-    printf("\n");
 }
