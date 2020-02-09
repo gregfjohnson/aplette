@@ -43,7 +43,7 @@ void ex_execute()
     for (i = 0; i < dim0; i++) {
         copy(CH, b, gsip->text, dim1);
         gsip->text[dim1] = '\n';
-        compile_new(1);
+        compile_new(CompileQuadInput);
 
         if (gsip->pcode != 0) {
             gsip->ptr = gsip->pcode;

@@ -58,7 +58,7 @@ void ex_fdef() {
         iline = functionLine;
     }
 
-    p2 = compile_old(iline, 2);
+    p2 = compile_old(iline, CompileFunctionDefn);
     if (p2 == NULL) {
         error(ERR_implicit, "string does not contain a valid function header");
     }

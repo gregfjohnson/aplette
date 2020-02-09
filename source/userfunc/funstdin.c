@@ -26,7 +26,7 @@ void funstdin() {
 
     pop();
 
-    p2 = compile_old(gsip->text, 2);
+    p2 = compile_old(gsip->text, CompileFunctionDefn);
     if (p2 == NULL) {
         error(ERR_implicit, "string does not contain a valid function header");
     }
