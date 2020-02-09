@@ -14,7 +14,9 @@ OBJECTS = printing.dif quad_vars.dif2 \
           userfunc_onearg1.dif userfunc_withret1.dif \
           userfunc_stdin.dif \
 		  userfunc_shadow_arg.dif \
-		  quad_fx.dif encode.dif
+          userfunc_shadow_globals.dif \
+          userfunc_shadow_undefined.dif \
+		  quad_fx.dif encode.dif \
 
 # Keep *.out files
 .PRECIOUS: %.out

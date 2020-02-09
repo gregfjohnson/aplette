@@ -207,8 +207,10 @@ void code_dump(char* cp, int flag)
     if (flag)
         fprintf(stderr, "[ ");
 
+    int index = 0;
+
 loop:
-    fprintf(stderr, " ");
+    fprintf(stderr, "\n    <%d; %p> ", index++, (void *) s);
     if (column > 50) {
         if (flag)
             fprintf(stderr, " ]\n[ ");
@@ -216,65 +218,69 @@ loop:
             fprintf(stderr, "\n");
     }
     i = *s++;
-    //if(i != END) i &= 0377;
     i &= 0377;
+
     if (i >= 0 && i <= OPT_MAX && opname[i]) {
         t = opname[i];
         while (*t)
             fprintf(stderr, "%c", *t++);
-    }
-    else if (i != END)
+
+    } else if (i != END) {
         fprintf(stderr, "%d ", i);
+    }
+
     switch (i) {
+        case EOL:
+            if (*s != EOL)
+                break;
 
-    case EOL:
-        if (*s != EOL)
+        case END:
+            if (flag)
+                fprintf(stderr, " ]");
+            fprintf(stderr, "\n");
+            return;
+
+        case QUOT:
+            i = *s++; /* throw away vcount, see notes in execute() */
+            i = strlen(s);
+            fprintf(stderr, "-");
+            fprintf(stderr, "%s ", s);
+            //s += i;
+            s += i + 1; /* jump past null termination */
             break;
-    case END:
-        if (flag)
-            fprintf(stderr, " ]");
-        fprintf(stderr, "\n");
-        return;
 
-    case QUOT:
-        i = *s++; /* throw away vcount, see notes in execute() */
-        i = strlen(s);
-        fprintf(stderr, "-");
-        fprintf(stderr, "%s ", s);
-        //s += i;
-        s += i + 1; /* jump past null termination */
-        break;
+        case CONST:
+            i = *s++;
+            s += i * SDAT;
+            break;
 
-    case CONST:
-        i = *s++;
-        s += i * SDAT;
-        break;
-
-    case NAME:
-    case FUN:
-    case ARG1:
-    case ARG2:
-    case AUTO:
-    case REST:
-    case RVAL: {
-        SymTabEntry* entry;
-        s += copy(PTR, (char*)s, (char*)&entry, 1);
-        fprintf(stderr, "-%s", entry->namep);
-        break;
-    }
-
-    case INDEX:
-        s++;
-        break;
-    case IMMED:
-        i = *s++;
-        fprintf(stderr, "-");
-        if (i > 0 && i <= 32 && sysops[i]) {
-            t = sysops[i];
-            while (*t)
-                fprintf(stderr, "%c", *t++);
+        case NAME:
+        case FUN:
+        case ARG1:
+        case ARG2:
+        case AUTO:
+        case REST:
+        case RVAL: {
+            SymTabEntry* entry;
+            s += copy(PTR, (char*)s, (char*)&entry, 1);
+            fprintf(stderr, "-%s", entry->namep);
+            break;
         }
-        break;
+
+        case INDEX:
+            s++;
+            break;
+
+        case IMMED:
+            i = *s++;
+            fprintf(stderr, "-");
+            if (i > 0 && i <= 32 && sysops[i]) {
+                t = sysops[i];
+                while (*t)
+                    fprintf(stderr, "%c", *t++);
+            }
+            break;
     }
+
     goto loop;
 }

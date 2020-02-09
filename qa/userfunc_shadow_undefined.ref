@@ -1,0 +1,10 @@
+q:
+12
+z:
+shadowed output local variable
+a:
+shadowed left argument
+b:
+Value Error: undefined variable.
+c:
+shadowed local variable

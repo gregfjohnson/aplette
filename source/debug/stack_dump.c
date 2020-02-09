@@ -12,7 +12,7 @@ char* ty[] = {
 void stack_dump()
 {
     struct item** p;
-    int i, n;
+    int i, eu, n;
     printf("---- stack top ----\n");
 
     // printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
@@ -41,9 +41,28 @@ void stack_dump()
             default:
                 putchar('\n');
                 break;
-            case LV:
-                printf(",  n = %s\n", ((SymTabEntry*)*p)->namep);
+
+            case LV: {
+                SymTabEntry* sep = (SymTabEntry*)*p;
+                printf(",  n = %s", sep->namep);
+
+                printf(", entryUse ");
+                if ((eu = sep->entryUse) >= 0 && eu <= LBL && ty[eu]) {
+                    printf("%s", ty[eu]);
+                } else {
+                    printf("%d", sep->entryUse);
+                }
+
+                printf(", entryType ");
+                if ((eu = sep->entryType) >= 0 && eu <= LBL && ty[eu]) {
+                    printf("%s", ty[eu]);
+                } else {
+                    printf("%d", sep->entryType);
+                }
+
+                printf("\n");
                 break;
+            }
 
             case CH:
                 if ((*p)->size == 0) {

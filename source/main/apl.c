@@ -135,6 +135,7 @@ int main(int argc, char** argv)
     ascii_characters = 1;
 
     /* diagnostics */
+    vars_trace  = 0;   /* variables */
     mem_trace   = 0;   /* dynamic memory allocation */
     code_trace  = 0;   /* pseudo code */
     stack_trace = 0;   /* local stack */

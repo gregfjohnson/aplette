@@ -1,0 +1,25 @@
+Gz { a sq b; c; d
+d { c { a*b
+z { a O@* d
+G
+
+z { 'shadowed output local variable'
+a { 'shadowed left argument'
+c { 'shadowed local variable'
+
+q { 10 sq 12
+
+'q:'
+q
+
+'z:'
+z
+
+'a:'
+a
+
+'b:'
+b
+
+'c:'
+c

@@ -1,0 +1,37 @@
+Gz { a sq b; c; noshadow
+l1: noshadow { c { a*b
+l2: z { a O@* noshadow
+G
+
+z  { 'shadowed output local variable'
+a  { 'shadowed'
+b  { 'shadowed right argument'
+c  { 'shadowed local variable'
+l1 { 'shadowed label'
+l2 { 'another shadowed label'
+
+q { 10 sq 12
+
+'q:'
+q
+
+'z:'
+z
+
+'a:'
+a 
+
+'b:'
+b
+
+'c:'
+c
+
+'noshadow:'
+noshadow
+
+'l1:'
+l1
+
+'l2:'
+l2

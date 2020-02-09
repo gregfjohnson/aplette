@@ -42,6 +42,11 @@ void ex_mibm() {
         vars_trace = !vars_trace;
         break;
 
+    case 5: /* toggle function trace */
+        datum = funtrace;
+        funtrace = !funtrace;
+        break;
+
     case 21: /* CPU time */
         times(&t);
         datum = t.tms_utime + t.tms_stime;
