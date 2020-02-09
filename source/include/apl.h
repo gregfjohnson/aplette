@@ -185,8 +185,9 @@ struct item {
  * SymTabEntry.functionLineLength is the length of functionLines[].
  * SymTabEntry.functionLines[0] is the the function startup code, and
  * SymTabEntry.functionLines[1] .. SymTabEntry.functionLines[functionLineCount]
- * are the lines in the body of the APL function.
- * SymTabEntry.functionLines[functionLineLength-1] is the the "close down shop" code.
+ *     are the lines in the body of the APL function.
+ * SymTabEntry.functionLines[functionLineLength-1] is the
+ *     "close down shop" epilog code.
  */
 
 typedef enum {

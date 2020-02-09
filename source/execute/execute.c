@@ -39,6 +39,7 @@ void execute() {
         }
         if (code_trace && opcode >= 0)
             printf("   exec %s (0x%02x)\n", opname[opcode], opcode);
+
         switch (opcode) {
 
         default:

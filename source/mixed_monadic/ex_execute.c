@@ -58,7 +58,7 @@ void ex_execute()
             aplfree((int*)thisContext->text);
             aplfree((int*)thisContext);
 
-            error(ERR_implicit, "");
+            error(ERR_implicit, "error during execute");
         }
         b += dim1;
         if (i < dim0 - 1)

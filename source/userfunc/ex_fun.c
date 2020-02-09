@@ -52,7 +52,10 @@ void ex_fun()
     }
 
     if (setjmp(gsip->env)) {
+        // return to here from longjmp()..
         goto reenter;
+    } else {
+        // fall through to here on initial call to setjmp() above..
     }
 
     while (1) {

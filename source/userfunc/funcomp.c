@@ -216,11 +216,13 @@ void funcomp(SymTabEntry* np) {
 
         phase = "Phase 3c";
         /* At this point, we have:
-         * fn-prologue (pcodeLines[1]):      <AUTOs and ARGs>, ELID, END
-         * local array labelProlog:          <AUTOs and LABELs>, END
+         * fn-prologue (functionLines[1]):  <AUTOs and ARGs>, ELID, END
+         * local array labelProlog:         <AUTOs and LABELs>, END
          * 
          * and we want to produce:
-         * fn-prologue (pcodeLines[1]):   <AUTOs and ARGs>,<AUTOs and LABELs>,  ELID, END.
+         * fn-prologue (functionLines[1]):  <AUTOs and ARGs>,
+         *                                  <AUTOs and LABELs>,
+         *                                  ELID, END.
          */
         len1 = csize(Prologue->pcode) - 1;
         len2 = csize(labelProlog) - 1;
@@ -251,7 +253,7 @@ void funcomp(SymTabEntry* np) {
     }
 
     /* Phase 4 goes through the compiled lines
-   * storing pointers to each pcode in pcodeLines[]
+   * storing pointers to each pcode in functionLines[]
    */
     if (code_trace) {
         fprintf(stderr, "Phase 4 \n");
