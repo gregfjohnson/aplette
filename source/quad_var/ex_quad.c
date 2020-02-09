@@ -40,7 +40,7 @@ struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
             if (gsip->text == NULL)
                 error(ERR, "user input was null");
 
-            compile_new(1);
+            compile_new(CompileQuadInput);
         } while (gsip->pcode == 0); /* do it at least once */
 
         gsip->ptr = gsip->pcode;

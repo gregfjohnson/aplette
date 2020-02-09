@@ -196,7 +196,6 @@ typedef enum {
     CompileFunctionProlog, //   3 function prolog
     CompileFunctionEpilog, //   4 function epilog
     CompileFunctionBody,   //   5 function body
-    CompileFunctionLine,   //   6 function body - compile a line while running function
 } CompilePhase;
 
 extern CompilePhase compilePhase;

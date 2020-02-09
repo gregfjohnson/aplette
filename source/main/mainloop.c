@@ -73,7 +73,7 @@ void mainloop()
 
         /* compile the input */
         sandbox = sandboxflg;
-        compile_new(0);
+        compile_new(CompileImmediate);
         if (gsip->pcode == 0)
             error(ERR_syntax, ""); //control returns to top of this file
 
