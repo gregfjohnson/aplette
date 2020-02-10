@@ -211,12 +211,14 @@ void code_dump(char* cp, int flag)
 
 loop:
     fprintf(stderr, "\n    <%d; %p> ", index++, (void *) s);
+
     if (column > 50) {
         if (flag)
             fprintf(stderr, " ]\n[ ");
         else
             fprintf(stderr, "\n");
     }
+
     i = *s++;
     i &= 0377;
 
@@ -263,7 +265,7 @@ loop:
         case RVAL: {
             SymTabEntry* entry;
             s += copy(PTR, (char*)s, (char*)&entry, 1);
-            fprintf(stderr, "-%s", entry->namep);
+            fprintf(stderr, "-%s <symtab %p>", entry->namep, (void *) entry);
             break;
         }
 
