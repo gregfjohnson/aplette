@@ -1,7 +1,7 @@
 # Makefile for parser 
 
 include ../include/makefile.common
-CFLAGS += -I../include -I../main
+CFLAGS += -I../include
 
 OBJECTS = alpha.o genlab.o getquad.o name.o \
 	compile_old.o compile_new.o getnam.o invert.o yyerror.o \
