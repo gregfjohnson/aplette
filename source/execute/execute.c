@@ -11,7 +11,7 @@
 #include "execute.h"
 
 void execute() {
-    int opcode, i, j;
+    int opcode, i;
     data* dp;
     struct item *p, *p1;
     data (*data_fn)();
@@ -237,7 +237,6 @@ void execute() {
             break;
 
         case QUOT:
-            j = CH;
             /* prior to V0.14, strings were prefixed with their
 	         * length which was limitted to 128 due to signed 
 	         * int limit of 8bit character.
@@ -247,18 +246,17 @@ void execute() {
 	         */
             gsip->ptr++; /* throw away vcount */
             opcode = strlen(gsip->ptr);
-            p = newdat(j, opcode == 1 ? 0 : 1, opcode);
-            gsip->ptr += copy(j, (char*)gsip->ptr, (char*)p->datap, opcode);
+            p = newdat(CH, opcode == 1 ? 0 : 1, opcode);
+            gsip->ptr += copy(CH, (char*)gsip->ptr, (char*)p->datap, opcode);
             gsip->ptr++; /* jump past the null termination */
             *sp++ = p;
             break;
 
         case CONST:
-            j = DA;
 
             opcode = *gsip->ptr++;
-            p = newdat(j, opcode == 1 ? 0 : 1, opcode);
-            gsip->ptr += copy(j, (char*)gsip->ptr, (char*)p->datap, opcode);
+            p = newdat(DA, opcode == 1 ? 0 : 1, opcode);
+            gsip->ptr += copy(DA, (char*)gsip->ptr, (char*)p->datap, opcode);
             *sp++ = p;
             break;
 

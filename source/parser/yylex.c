@@ -75,7 +75,8 @@ int yylex() {
     }
 
     /* If it's a comment, skip to the end
-    * of the line and return eol instead.  */
+     * of the line and return eol instead.
+     */
     if (yylval.charval == COMNT) {
         while (1) {
             c = *iline++;
