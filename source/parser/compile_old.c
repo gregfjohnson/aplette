@@ -9,6 +9,7 @@
 #include "opt_codes.h"
 #include "memory.h"
 #include "debug.h"
+#include "ascii_input.h"
 
 /* s is statement
  * f is execution flag:
@@ -33,7 +34,9 @@ char* compile_old(char* s, int f)
     compilePhase = (CompilePhase)f;
 
     if (code_trace) {
-        fprintf(stderr, "\n\nabout to yyparse.. iline:  %s\n\n", iline);
+        char *line = toAplTouchtypeLine(iline);
+        fprintf(stderr, "\n\nabout to yyparse.. iline:  >>%s<<\n\n", line);
+        aplfree((int *) line);
     }
 
     if (yyparse()) {

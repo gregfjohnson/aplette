@@ -9,6 +9,7 @@
 #include "opt_codes.h"
 #include "memory.h"
 #include "debug.h"
+#include "ascii_input.h"
 
 /* f is execution flag:
  *   0 compile immediate
@@ -32,8 +33,11 @@ char* compile_new(int f) {
     context = nlexsym;
     compilePhase = (CompilePhase) f;
 
-    if (code_trace)
-        fprintf(stderr, "\n\nabout to yyparse.. iline:  >>%s<<\n\n", iline);
+    if (code_trace) {
+        char *line = toAplTouchtypeLine(iline);
+        fprintf(stderr, "\n\nabout to yyparse.. iline:  >>%s<<\n\n", line);
+        aplfree((int *) line);
+    }
 
     if (yyparse()) {
         //print line and error pointer
