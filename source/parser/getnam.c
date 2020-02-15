@@ -28,7 +28,7 @@ int getnam(char ic) {
             error(ERR_length, "name too long");
         *cp++ = c;
         c = *iline++;
-    } while (alpha(c) || digit(c));
+    } while (alpha(c) || digit(c) || c == (int) '_');
     *cp++ = 0;
 
     iline--;

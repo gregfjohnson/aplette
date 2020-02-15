@@ -27,6 +27,7 @@ int yylex()
         result = c;
         goto done;
     }
+
     while (litflag > 0) { /* comment */
         c = *iline++;
         if (c == '\n') {
@@ -35,15 +36,18 @@ int yylex()
             goto done;
         }
     }
+
     if (xxpeek[0] != 0) {
         lv.charval = xxpeek[0]; /* may want charptr here */
         xxpeek[0] = 0;
         result = xxpeek[1];
         goto done;
     }
+
     do
         c = *iline++;
     while (c == ' ');
+
     if (c == '\n') {
         nlexsym = 0;
         result = eol;
@@ -73,8 +77,10 @@ int yylex()
             break;
         }
     }
+
     /* If it's a comment, skip to the end
-    * of the line and return eol instead.  */
+     * of the line and return eol instead.
+     */
     if (lv.charval == COMNT) {
         while (1) {
             c = *iline++;

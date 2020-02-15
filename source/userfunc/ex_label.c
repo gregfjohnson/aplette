@@ -24,7 +24,7 @@ void ex_label() {
     newEntry = symtabInsert(n->namep);
     newEntry->entryType = LV;
 
-    sp[-1] = newEntry;
+    sp[-1] = (struct item *) newEntry;
     ex_asgn();
 
     // lock out assignments

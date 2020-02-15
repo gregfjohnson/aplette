@@ -1,0 +1,66 @@
+(See also main/DESIGN.Context)
+
+in parser, getnam() and name() are called to identify arities of
+identifiers to guide parsing.  (monadic, dyadic, niladic/variable etc.)
+
+Pointers to symbol table entries are placed in-line in byte code
+vectors by compile_new.
+
+During execution, when the function prolog is processed shadowed
+identifiers have their symbol table pointers pushed on the arithmetic
+runtime stack.
+
+Better?  put list of shadowed identifiers (pointers to their symbol
+table entries) into the "global state indicator pointer".  (Also,
+rename "gsip" to "activation record".)  Among other things, that
+will make the process of unwinding and disposing stack cleaner.
+
+execute() is the code that goes over a line of APL translated into pcode.
+execute() assumes that global state indicator pointer is pointing at
+a Context with gsip->pcode ready to go, and it assigns
+gsip->ptr = gsip->pcode.
+
+ex_fun.c is the code that runs user-defined functions.
+every time a function runs, each line is run through
+compile_new(CompileFunctionBody) and then the resulting
+pcode is executed.
+
+identifiers in the text line have NAME followed by 8 bytes of pointer
+to a symbol table entry.
+
+funcomp.c translates functions from source text to internal
+bytecodes.
+
+Each line is given a Context struct.
+
+functionLines is an array of pointers to Context structs.
+Context structs also have prev pointers.  From apl.h:
+/************
+For fns, SymbolTable.functionLines[] is an array of pointers to character
+strings which are the compiled code for lines of the fn.
+
+SymTabEntry.functionLineLength is the length of functionLines[].
+
+SymTabEntry.functionLineCount == the number of lines in the body of
+the fn, including line 0, the function header.
+
+functionLineLength is one greater than functionLineCount, because
+functionLines[] includes an extra final line with no corresponding
+line in the original source code.  This is the "epilog" line that
+describes how to end function execution (remove local variables from
+the symbol table, restore the previous values of shadowed non-local
+variables, etc.)
+
+SymTabEntry.functionLines[0] is the the function startup prolog code, and
+SymTabEntry.functionLines[1] .. SymTabEntry.functionLines[functionLineCount-1]
+are the lines in the body of the APL function.
+
+SymTabEntry.functionLines[functionLineLength-1] is the "close down shop"
+epilog code.
+************/
+
+gsip is a "global status indicator pointer" pointing at a Context
+struct describing the current function activation record.
+The co
+into the current byte code array, which points at
+the token to be executed.
