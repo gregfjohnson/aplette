@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 #include "apl.h"
+#include "data.h"
 #include "oper_dyadic.h"
 
 /*
@@ -15,12 +16,19 @@
 
 void ex_label() {
     SymTabEntry* n;
+    SymTabEntry* newEntry;
 
-    ex_asgn();
+    // create a new symtab entry..
     n = (SymTabEntry*)sp[-1];
+    symtabRemoveEntry(n);
+    newEntry = symtabInsert(n->namep);
+    newEntry->entryType = LV;
+
+    sp[-1] = (struct item *) newEntry;
+    ex_asgn();
 
     // lock out assignments
-    n->itemp->itemType = LBL;
+    newEntry->itemp->itemType = LBL;
 
     sp--;
 }
