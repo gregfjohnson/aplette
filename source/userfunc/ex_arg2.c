@@ -5,6 +5,7 @@
 
 #include "apl.h"
 #include "data.h"
+#include "userfunc.h"
 
 void ex_arg2()
 {
@@ -29,8 +30,8 @@ void ex_arg2()
     p2 = fetch(sp[-1]);
     --sp;
 
-    *sp++ = (struct item*) np2;
-    *sp++ = (struct item*) np1;
+    Context_addShadowedId(gsip, np2);
+    Context_addShadowedId(gsip, np1);
 
     symtabRemoveEntry(np1);
     newEntry1 = symtabInsert(np1->namep);

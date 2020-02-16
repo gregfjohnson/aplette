@@ -13,8 +13,8 @@
 #include "debug.h"
 
 int prolgerr; /* Flag -- set if bad fetch in prologue 
-                    * this variable is global so that fetch()
-                    * is able to set it */
+               * this variable is global so that fetch()
+               * is able to set it */
 
 void ex_fun()
 {
