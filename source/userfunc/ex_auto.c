@@ -6,6 +6,7 @@
 #include "apl.h"
 #include "data.h"
 #include "utility.h"
+#include "userfunc.h"
 
 void ex_auto()
 {
@@ -15,7 +16,7 @@ void ex_auto()
     gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
     checksp();
 
-    *sp++ = (struct item*) np;
+    Context_addShadowedId(gsip, np);
 
     symtabRemoveEntry(np);
     newEntry = symtabInsert(np->namep);

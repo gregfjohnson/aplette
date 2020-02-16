@@ -19,7 +19,7 @@ void ex_label() {
     SymTabEntry* newEntry;
 
     // create a new symtab entry..
-    n = (SymTabEntry*)sp[-1];
+    n = (SymTabEntry*) sp[-1];
     symtabRemoveEntry(n);
     newEntry = symtabInsert(n->namep);
     newEntry->entryType = LV;

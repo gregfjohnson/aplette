@@ -15,23 +15,31 @@ int* alloc(nbytes) unsigned nbytes;
 
     if (nbytes <= 0)
         return 0;
+
     newblock = (struct memblock*)malloc(sizeof(struct memblock));
+
     if (newblock == 0)
         goto failed;
+
     if (mem_trace) {
         printf("[alloc: %ld bytes at %p (memblock)",
             sizeof(struct memblock), (void *) newblock);
     }
+
     newblock->nbytes = nbytes;
     newblock->block = malloc(nbytes);
+
     if (newblock->block == 0)
         goto failed;
+
     if (mem_trace) {
         printf(", %d bytes at %p (data)]\n",
             nbytes, (void *) newblock->block);
     }
+
     newblock->next = firstblock;
     firstblock = newblock;
+
     return newblock->block;
 
 failed:

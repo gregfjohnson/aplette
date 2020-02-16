@@ -5,12 +5,12 @@
 
 #include "apl.h"
 #include "data.h"
+#include "utility.h"
 
 void ex_rest() {
-    struct item* valueFromLastExecutedLine;
-    SymTabEntry* np;
+    SymTabEntry *np, *restoreEntry = NULL;
 
-    valueFromLastExecutedLine = sp[-1];
+    //valueFromLastExecutedLine = sp[-1];
     /*
     * the following is commented out because
     * of an obscure bug in the parser, which is
@@ -48,16 +48,20 @@ void ex_rest() {
     if(p->type == LV) error(ERR_botch,"rest B");
     */
 
-    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
+    gsip->ptr += copy(PTR, (char*) gsip->ptr, (char*)&np, 1);
 
     symtabRemoveEntry(np);
 
-    np = (SymTabEntry*)sp[-2];
-
-    if (np->entryUse != UNKNOWN) {
-        symtabEntryInsert(np);
+    int i;
+    for (i = 0; i < gsip->shadowedIdCount; ++i) {
+        if (strcmp(gsip->shadowedIds[i]->namep, np->namep) == 0) {
+            restoreEntry = gsip->shadowedIds[i];
+            break;
+        }
     }
-    sp--;
+    if (restoreEntry == NULL) error(ERR_botch,"restore error");
 
-    sp[-1] = valueFromLastExecutedLine;
+    if (restoreEntry->entryUse != UNKNOWN) {
+        symtabEntryInsert(restoreEntry);
+    }
 }

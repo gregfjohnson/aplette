@@ -233,13 +233,16 @@ typedef struct _Context {
         deffun   /*     defined function */
     } Mode;
 
-    char* text;       /* input line, plain text */
-    char* pcode;      /* pseudo code */
-    char* ptr;        /* pointer to current token in pcode */
-    SymTabEntry* np;  /* current fn vital stats. */
-    int funlc;        /* current fn current line number */
-    struct item** sp; /* top of operand stack upon fn entry */
-    jmp_buf env;      /* for restoration of local fn activation record */
+    char* text;                /* input line, plain text */
+    char* pcode;               /* pseudo code */
+    char* ptr;                 /* pointer to current token in pcode */
+    SymTabEntry* np;           /* current fn symbol table entry. */
+    SymTabEntry** shadowedIds; /* list of shadowed identifiers */
+    int shadowedIdSize;        /* size of the list */
+    int shadowedIdCount;       /* length of the list */
+    int funlc;                 /* current fn current line number */
+    struct item** sp;          /* top of operand stack upon fn entry */
+    jmp_buf env;               /* to restore local fn activation record */
 } Context;
 
 extern Context *gsip, prime_context;
