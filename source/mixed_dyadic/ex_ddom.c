@@ -135,7 +135,7 @@ void ex_ddom()
                      dm, in, rows, cols, lhs_cols,
                      p->datap, q->datap);
 
-    aplfree((int*)dmn);
+    aplfree(dmn);
 
     if (result)
         error(ERR, "domino - could not solve");

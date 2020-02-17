@@ -36,7 +36,7 @@ char* compile_new(int f) {
     if (code_trace) {
         char *line = toAplTouchtypeLine(iline);
         fprintf(stderr, "\n\nabout to yyparse.. iline:  >>%s<<\n\n", line);
-        aplfree((int *) line);
+        aplfree(line);
     }
 
     if (yyparse()) {
@@ -49,7 +49,7 @@ char* compile_new(int f) {
 
     parseDump(oline, ccharp - oline);
 
-    iline = (char*)alloc(ccharp - oline);
+    iline = (char*) alloc(ccharp - oline);
 
     p = iline;
     for (q = oline; q < ccharp; ++q)

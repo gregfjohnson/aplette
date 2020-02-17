@@ -43,7 +43,7 @@ void funstdin() {
     erase(symtabLhsEntry);
     symtabLhsEntry->entryUse = p2[0];
 
-    aplfree((int *) p2);
+    aplfree(p2);
 
     symtabLhsEntry->label = 0;
 
@@ -75,7 +75,7 @@ void funstdin() {
         }
 
         if (lineCount > 0 && ascii_characters) {
-            aplfree((int *) linePtr);
+            aplfree(linePtr);
         }
 
         if (done) {

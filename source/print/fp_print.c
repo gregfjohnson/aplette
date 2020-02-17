@@ -122,7 +122,7 @@ int fp_print(struct item* p)
     format = format_list;
     for (i = 0; i < ncol; i++) {
         format_next = format->next;
-        aplfree((int*)format);
+        aplfree(format);
         format = format_next;
     }
 

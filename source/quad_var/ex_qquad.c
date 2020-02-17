@@ -33,7 +33,7 @@ struct item* ex_qquad(int io)
             ;
         p = newdat(CH, 1, i);
         copy(CH, (char*)iline, (char*)p->datap, i);
-        aplfree((int*)iline);
+        aplfree(iline);
         iline = (char*)NULL;
         quote_quad_prompt[0] = '\0';
         return (p);

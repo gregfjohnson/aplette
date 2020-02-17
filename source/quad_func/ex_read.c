@@ -27,7 +27,7 @@ void ex_read()
             p = newdat(CH, 1, c);
             copy(CH, (char*)q->datap, (char*)p->datap, c);
         }
-        aplfree((int*)q);
+        aplfree(q);
     }
     *sp++ = p;
 }

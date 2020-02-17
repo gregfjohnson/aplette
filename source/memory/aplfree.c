@@ -8,8 +8,7 @@
 #include <inttypes.h>
 #include "memory.h"
 
-void aplfree(int* ap)
-{
+void aplfree(void *ap) {
     struct memblock *item, *last;
 
     if (ap == 0)

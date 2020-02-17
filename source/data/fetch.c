@@ -58,7 +58,7 @@ loop:
         struct item *(*quadServiceRoutine)(int);
 
         i = p->index; /* get the pointer to applicable quad service routine */
-        aplfree((int*)p);
+        aplfree(p);
         quadServiceRoutine = (struct item *(*)(int)) exop[i];
         p = quadServiceRoutine(0);
         goto loop;

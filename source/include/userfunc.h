@@ -33,4 +33,5 @@ void eval_qlx();
 Context *Context_new();
 void Context_free(Context *context);
 void Context_addShadowedId(Context *context, SymTabEntry *entry);
+
 #endif

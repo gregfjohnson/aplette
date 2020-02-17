@@ -238,7 +238,7 @@ static void readFunction(int fd, SymTabEntry *newFunction) {
         strcpy(newFunction->functionSourceCode[line], iline);
 
         if (ascii_characters) {
-            aplfree((int *) iline);
+            aplfree(iline);
         }
     }
 

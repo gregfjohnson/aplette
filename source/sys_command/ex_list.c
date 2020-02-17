@@ -53,7 +53,7 @@ void ex_list() {
 
                 printf("%s", ascii_line);
 
-                aplfree((int *) ascii_line);
+                aplfree(ascii_line);
 
             } else {
                 int len = strlen(lineText);

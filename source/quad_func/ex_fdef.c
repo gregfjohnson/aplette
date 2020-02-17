@@ -63,7 +63,7 @@ void ex_fdef() {
         error(ERR_implicit, "string does not contain a valid function header");
     }
 
-    if (ascii_characters) { aplfree((int *) iline); }
+    if (ascii_characters) { aplfree(iline); }
 
     copy(PTR, (char *) p2 + 1, (char *) &np, 1);
     symtabLhsEntry = symtabFind(np->namep);

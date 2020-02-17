@@ -62,7 +62,7 @@ int fundef(int f) {
     erase(symtabLhsEntry);
     symtabLhsEntry->entryUse = c[0];
 
-    aplfree((int *) c);
+    aplfree(c);
 
     // we save the source code of the function into the function
     // symbol table entry.
@@ -88,7 +88,7 @@ int fundef(int f) {
 
 out:
     if (iline != NULL) {
-        aplfree((int *) iline);
+        aplfree(iline);
     }
 
     fclose(infile);
