@@ -22,7 +22,7 @@ void ex_list() {
     /* Check for valid function */
 
     function = (SymTabEntry*)*--sp;
-    if (function->entryType != LV)
+    if (function->itemType != LV)
         error(ERR_value, "function name not defined");
 
     /* If a function, locate it in workspace file and

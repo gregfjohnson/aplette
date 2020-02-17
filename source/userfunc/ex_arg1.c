@@ -22,6 +22,6 @@ void ex_arg1() {
     newEntry = symtabInsert(np->namep);
 
     newEntry->itemp = p;
-    newEntry->entryType = LV;
+    newEntry->itemType = LV;
     newEntry->entryUse = DA; // ???
 }

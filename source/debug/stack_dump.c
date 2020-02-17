@@ -53,11 +53,11 @@ void stack_dump()
                     printf("%d", sep->entryUse);
                 }
 
-                printf(", entryType ");
-                if ((eu = sep->entryType) >= 0 && eu <= LBL && ty[eu]) {
+                printf(", itemType ");
+                if ((eu = sep->itemType) >= 0 && eu <= LBL && ty[eu]) {
                     printf("%s", ty[eu]);
                 } else {
-                    printf("%d", sep->entryType);
+                    printf("%d", sep->itemType);
                 }
 
                 printf("\n");

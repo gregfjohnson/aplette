@@ -21,7 +21,7 @@ void ex_asgn()
     q = (struct item *) sp[-1]; /* just to get item->index
                                  * further down, q is reassigned */
 
-    switch (p->entryType) {
+    switch (p->itemType) {
     case QV:
         i = q->index; /* get the pointer to applicable quad service routine */
         (*exop[i])(1);
@@ -35,7 +35,7 @@ void ex_asgn()
         }
 
         if (symtabLhsEntry != NULL) {
-            symtabLhsEntry->entryType = LV;
+            symtabLhsEntry->itemType = LV;
         }
 
         if (p->itemp != NULL && p->itemp->itemType == LBL)

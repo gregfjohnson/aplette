@@ -41,11 +41,11 @@ void ex_arg2()
 
     // new arg1 binding
     newEntry1->itemp = p1;
-    newEntry1->entryType = LV;
+    newEntry1->itemType = LV;
     newEntry1->entryUse = DA;
 
     // ditto arg2
     newEntry2->itemp = p2;
-    newEntry2->entryType = LV;
+    newEntry2->itemType = LV;
     newEntry2->entryUse = DA;
 }

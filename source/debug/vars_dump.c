@@ -24,7 +24,7 @@ void vars_dump()
         printf(" namep=%s", n->namep);
         printf(" itemp=%p", (void *)n->itemp);
         printf(" use=%d", n->entryUse);
-        printf(" entryType=%d", n->entryType);
+        printf(" itemType=%d", n->itemType);
         printf("\n");
     }
 }

@@ -40,15 +40,19 @@ void wsload(int ffile)
     gettoken(ffile, buffer);
     if (!equal(buffer, "apl\\11"))
         error(ERR, "bad ws file magic number");
+
     gettoken(ffile, buffer);
     gettoken(ffile, buffer);
     tolerance = atof(buffer);
+
     gettoken(ffile, buffer);
     gettoken(ffile, buffer);
     iorigin = atoi(buffer);
+
     gettoken(ffile, buffer);
     gettoken(ffile, buffer);
     pagewidth = atoi(buffer);
+
     gettoken(ffile, buffer);
     gettoken(ffile, buffer);
     PrintP = atoi(buffer);
@@ -82,7 +86,7 @@ void wsload(int ffile)
         n->entryUse = use;
         if (n->entryUse == CH)
             n->entryUse = DA;
-        n->entryType = LV;
+        n->itemType = LV;
 
         switch (use) {
 
@@ -150,24 +154,24 @@ static char *gettoken(int ffile, char* buffer) {
 
 // read a function into the workspace.
 //
-// The legacy format for workspaces is to have
-// a line "MF functionName" (resp. "DF" or "NF", indicating arity of the function).
-// then, a string of non-zero characters containing the source code for the
-// function, with new-line characters separating individual lines, then
-// a byte containing 0 as a flag that the function definition is complete.
+// The legacy format for workspaces is to have a line "MF functionName"
+// (resp. "DF" or "NF", indicating arity of the function).  then, a string
+// of non-zero characters containing the source code for the function, with
+// new-line characters separating individual lines, then a byte containing
+// 0 as a flag that the function definition is complete.
 //
-// I'd like to change the above format to "MF functionName lineCount", followed
-// by lineCount new-line terminated function source code lines.  And, dispense
-// with the funny zero character at the end of the function.
+// I'd like to change the above format to "MF functionName lineCount",
+// followed by lineCount new-line terminated function source code lines.
+// And, dispense with the funny zero character at the end of the function.
 // But, on the chance that there are some workspaces people have out there,
 // I'll stick to the legacy workspace format for now.  - Greg J.
 //
-// given that we don't know how many lines we'll find when we start reading in
-// the function, and that alloc.c does not have a realloc operation, we do things
-// in a roundabout way:  malloc() and free our own local character array and read
-// the function text into that array.  use realloc() along the way as necessary.
-// then, count the number of source code lines, allocate the real array of
-// line pointers based on that size, and copy from there.
+// given that we don't know how many lines we'll find when we start reading
+// in the function, and that alloc.c does not have a realloc operation, we
+// do things in a roundabout way:  malloc() and free our own local character
+// array and read the function text into that array.  use realloc() along the
+// way as necessary.  then, count the number of source code lines, allocate
+// the real array of line pointers based on that size, and copy from there.
 
 static void readFunction(int fd, SymTabEntry *newFunction) {
     char *fnText;

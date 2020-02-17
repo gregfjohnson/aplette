@@ -138,7 +138,7 @@ typedef enum {
     DA = 1,      /* floating point data */
     CH = 2,      /* character data */
     LV = 3,      /* Local Variable */
-    IN = 6,      /* used only as first arg of copy(), indicating "integer type" */
+    IN = 6,      /* used only as first arg of copy(), for "integer type" */
     EL = 7,      /* indexed assignment stack marker */
     NF = 8,      /* niladic function */
     MF = 9,      /* monadic function */
@@ -150,6 +150,33 @@ typedef enum {
     PTR = 16,    /* generic pointer for copy() */
     NTYPES = 17, /* number of defined types */
 } ItemType;
+
+typedef enum {
+    CompileImmediate,      //   0 compile immediate
+    CompileQuadInput,      //   1 compile quad input
+    CompileFunctionDefn,   //   2 function definition
+    CompileFunctionProlog, //   3 function prolog
+    CompileFunctionEpilog, //   4 function epilog
+    CompileFunctionBody,   //   5 function body
+} CompilePhase;
+
+extern CompilePhase compilePhase;
+
+/* NOTE:  The expression stack is a stack
+ * of pointers.  It is declared to point to
+ * "struct item"'s, but via pointer casting it
+ * can also point at "SymTabEntry" structs.
+ * It would be better to have each stack entry
+ * be self-describing, with a field indicating
+ * the type of object it describes, and then a
+ * union of pointers to different types.
+ *
+ * I believe the itemType field at the start of
+ * each record type unambiguously identifies the type
+ * of the struct being pointed at.  itemType is "LV"
+ * if and only if the struct is a SymTabEntry
+ * struct.  Otherwise it is an item struct.
+ */
 
 /*
  * This is a descriptor for apl data, 
@@ -165,16 +192,19 @@ typedef enum {
  */
 
 struct item {
-    int rank;
     ItemType itemType;
+
+    int rank;
     int size;
     int index;
     data* datap;
     int dim[MRANK];
-} * stack[STKS], **sp;
+};
+
+struct _Context;
 
 /*
- * variable/fn (and file name) descriptor block.
+ * variable/function (and file name) descriptor block.
  * contains useful information about all LVs.
  * Also kludged up to handle file names (only SymTab.namep 
  * is then used.)
@@ -190,22 +220,10 @@ struct item {
  *     "close down shop" epilog code.
  */
 
-typedef enum {
-    CompileImmediate,      //   0 compile immediate
-    CompileQuadInput,      //   1 compile quad input
-    CompileFunctionDefn,   //   2 function definition
-    CompileFunctionProlog, //   3 function prolog
-    CompileFunctionEpilog, //   4 function epilog
-    CompileFunctionBody,   //   5 function body
-} CompilePhase;
-
-extern CompilePhase compilePhase;
-
-struct _Context;
-
 typedef struct {
+    ItemType itemType;
+
     ItemType entryUse;
-    ItemType entryType;
     struct item* itemp;
     char* namep;
 
@@ -216,6 +234,8 @@ typedef struct {
     int sourceCodeCount;
     char **functionSourceCode;
 } SymTabEntry;
+
+struct item *stack[STKS], **sp;
 
 /* The context structure
  * pointed to by the State Indicator

@@ -22,7 +22,7 @@ void ex_label() {
     n = (SymTabEntry*) sp[-1];
     symtabRemoveEntry(n);
     newEntry = symtabInsert(n->namep);
-    newEntry->entryType = LV;
+    newEntry->itemType = LV;
 
     sp[-1] = (struct item *) newEntry;
     ex_asgn();

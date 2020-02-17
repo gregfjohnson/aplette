@@ -21,5 +21,5 @@ void ex_auto()
     symtabRemoveEntry(np);
     newEntry = symtabInsert(np->namep);
 
-    newEntry->entryType = LV;
+    newEntry->itemType = LV;
 }

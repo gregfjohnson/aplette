@@ -29,7 +29,7 @@ void funedit(char* fname) {
     char cmd[CMD_LEN];
 
     p = (SymTabEntry *) sp[-1];
-    if (p->entryType != LV)
+    if (p->itemType != LV)
         error(ERR_value, "function name not found");
     sichk(p);
     if (fname == 0)

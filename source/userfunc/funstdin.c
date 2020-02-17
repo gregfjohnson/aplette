@@ -36,7 +36,7 @@ void funstdin() {
 
     if (symtabLhsEntry == NULL) {
         symtabLhsEntry = symtabInsert(np->namep);
-        symtabLhsEntry->entryType = LV;
+        symtabLhsEntry->itemType = LV;
     }
 
     sichk(symtabLhsEntry);

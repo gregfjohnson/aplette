@@ -44,7 +44,7 @@ struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
             //for(n=symbolTable; n->namep; n++) ;
             char name[4] = S_QUAD "lx";
             n = symtabInsert(name);
-            n->entryType = LV;
+            n->itemType = LV;
             n->entryUse = 0;
             n->itemp = newdat(CH, 0, 0);
         }

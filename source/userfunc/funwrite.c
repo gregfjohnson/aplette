@@ -40,7 +40,7 @@ void funwrite(char* fname) {
     n = (SymTabEntry *) sp[-1];
     sp--;
 
-    if (n->entryType != LV)
+    if (n->itemType != LV)
         error(ERR_botch, "fnwrite");
 
     if (fname == 0)

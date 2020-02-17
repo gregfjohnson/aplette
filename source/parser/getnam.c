@@ -76,7 +76,7 @@ int getnam(char ic) {
 
     np = symtabEntryCreate(name);
 
-    np->entryType = LV;
+    np->itemType = LV;
     lv.charptr = (char *) np;
 
     return nam;

@@ -299,7 +299,7 @@ char* vfname(char* array) {
     n = (SymTabEntry*)sp[-1];
     sp--;
 
-    if (n->entryType != LV) {
+    if (n->itemType != LV) {
         error(ERR_value, "not a local variable");
     }
 
