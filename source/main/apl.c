@@ -311,6 +311,7 @@ int main(int argc, char** argv)
     /* return to this point to reset the state and context to original */
     setjmp(cold_restart);
 
+    memset(&prime_context, 0, sizeof(prime_context));
     gsip = &prime_context; /* global state indicator */
     gsip->Mode = immed;
     gsip->suspended = 0;

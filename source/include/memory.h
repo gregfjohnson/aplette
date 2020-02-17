@@ -15,7 +15,7 @@ struct memblock* firstblock;
 extern int mem_trace;
 
 void afreset();
-int* alloc();
-void aplfree(int* ap);
+void* alloc();
+void aplfree(void* ap);
 
 #endif

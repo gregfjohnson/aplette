@@ -20,9 +20,11 @@ void tback(int flag)
         return; /* don't attempt to trace state zero */
     else
         thisContext = gsip;
+
     i = 0;
     if (flag)
         i = 2;
+
     while (thisContext != &prime_context) {
         if (thisContext->Mode == deffun) {
             if (flag == 0 && thisContext->suspended)

@@ -150,6 +150,6 @@ static void lam0(double d)
         sp[-1] = r;
     else
         sp[-2] = r;
-    aplfree((int*)p);
+    aplfree(p);
     cat0(k);
 }

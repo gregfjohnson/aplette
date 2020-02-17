@@ -17,8 +17,8 @@ void erase(SymTabEntry* np)
         case EL:
         case QV:
         case NIL:
-            aplfree((int*)np->itemp->datap);
-            aplfree((int*)np->itemp);
+            aplfree(np->itemp->datap);
+            aplfree(np->itemp);
             np->itemp = 0;
             break;
 
@@ -27,10 +27,10 @@ void erase(SymTabEntry* np)
         case DF:
             // free the p-code that np points to.
             for (i = 0; i < np->functionLineLength; ++i) {
-                aplfree((int*)np->functionLines[i]);
+                aplfree(np->functionLines[i]);
             }
             if (np->functionLines != NULL) {
-                aplfree((int*)np->functionLines);
+                aplfree(np->functionLines);
             }
 
             np->functionLines = NULL;

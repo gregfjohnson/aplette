@@ -46,7 +46,7 @@ char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile) {
         }
         xLine[i] = '\0';
 
-        aplfree((int*)asciiLine);
+        aplfree(asciiLine);
 
     } else {
         status = fgets(xLine, xLineLength, xInfile);

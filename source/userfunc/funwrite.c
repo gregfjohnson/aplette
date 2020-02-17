@@ -22,7 +22,7 @@ void write_line(int fd, char *line) {
 
         writeErrorOnFailure(fd, ascii_line, strlen(ascii_line));
 
-        aplfree((int *) ascii_line);
+        aplfree(ascii_line);
 
     } else {
         writeErrorOnFailure(fd, line, strlen(line));

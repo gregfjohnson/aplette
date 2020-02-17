@@ -248,7 +248,7 @@ static void addChar(char** result, int* len, int* nextIndex, char ch)
         char* current = *result;
         *result = (char*)alloc(*len * 2);
         memcpy(*result, current, *len);
-        aplfree((int*)current);
+        aplfree(current);
         *len *= 2;
     }
 

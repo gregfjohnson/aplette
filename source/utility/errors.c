@@ -17,14 +17,17 @@ void pline(char* str, int loc, int ln)
     int c, l;
     l = 0;
 
-    /* print line number if applicable */
-    if (ln >= 0) {
-        printf("[%d]\t", ln - 1);
-        loc += 8;
-        l += 8;
-    }
-    else
-        printf("\t");
+    // maybe some day..
+    #if 0
+        /* print line number if applicable */
+        if (ln >= 0) {
+            printf("[%d]\t", ln - 1);
+            loc += 8;
+            l += 8;
+        }
+        else
+            printf("\t");
+    #endif
 
     /* print the line */
     do {
@@ -33,11 +36,14 @@ void pline(char* str, int loc, int ln)
         putAplTouchtypeChar(c);
     } while (c != '\n');
 
-    /* print the error pointer under the line */
-    printf("\t");
-    for (l = 1; l < loc; l++)
-        printf(" ");
-    printf("^\n");
+    // maybe some day..
+    #if 0
+        /* print the error pointer under the line */
+        printf("\t");
+        for (l = 1; l < loc; l++)
+            printf(" ");
+        printf("^\n");
+    #endif
 }
 
 void error(int type, char* diagnostic)

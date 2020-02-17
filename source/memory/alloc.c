@@ -9,8 +9,7 @@
 #include "utility.h"
 #include "memory.h"
 
-int* alloc(nbytes) unsigned nbytes;
-{
+void *alloc(unsigned nbytes) {
     struct memblock* newblock;
 
     if (nbytes <= 0)

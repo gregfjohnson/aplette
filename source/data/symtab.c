@@ -25,7 +25,7 @@ void symtab_clear() {
     SymTabEntry *entry;
     while ((entry = rbtree_first(&rbSymbolTable)) != NULL) {
         rbtree_delete(&rbSymbolTable, entry);
-        aplfree((int*) entry);
+        aplfree(entry);
     }
 }
 
@@ -67,7 +67,7 @@ void symtabDelete(char* name) {
     entry.namep = name;
     found = rbtree_delete(&rbSymbolTable, &entry);
     if (found) {
-        aplfree((int*) found);
+        aplfree(found);
     }
 }
 

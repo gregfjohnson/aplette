@@ -35,8 +35,8 @@ void pop() {
 
         case DA:
         case CH:
-            aplfree((int*)p->datap);
-            aplfree((int*)p);
+            aplfree(p->datap);
+            aplfree(p);
             break;
 
         // case QQ:
@@ -45,7 +45,7 @@ void pop() {
         case NIL:
         case QX:
         case QV:
-            aplfree((int*)p);
+            aplfree(p);
         }
     }
     sp--;

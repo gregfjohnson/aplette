@@ -11,7 +11,7 @@
 #include "userfunc.h"
 
 /*
- * monadic immediate branch -- resume fn at specific line
+ * monadic interactive branch -- resume function at specific line
  */
 
 void ex_ibr()
@@ -22,15 +22,19 @@ void ex_ibr()
         error(ERR_implicit, "no suspended fn");
     }
 
-    /* throw away current context */
+    /* pop current interactive context..
+     */
     thisContext = gsip;
     gsip = gsip->prev;
-    aplfree((int*)thisContext);
+    aplfree(thisContext);
 
     ex_br();
+
     if (gsip->sp == 0 || sp < gsip->sp)
         error(ERR_botch, "stack pointer problem");
+
     while (sp > gsip->sp)
         pop();
+
     longjmp(gsip->env, 0); /* warp out */
 }

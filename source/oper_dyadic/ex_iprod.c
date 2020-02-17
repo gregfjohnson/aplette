@@ -52,7 +52,7 @@ void ex_iprod()
 
     if (scalar(q)) {
         r = extend(DA, p->dim[p->rank - 1], q->datap[0]);
-        aplfree((int*)sp[-2]);
+        aplfree(sp[-2]);
         sp[-2] = q = r;
     }
 
