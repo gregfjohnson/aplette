@@ -19,8 +19,24 @@
  *   4 function epilog
  *   5 function body
  */
+// these constants are defined in apl.y.
+// they correspond to the CompilePhase enum,
+// values of which are passed into compile_new()
+// as an argument.
+//
+// They are used to create fake lexemes that
+// guide the behavior of the parser.
+// (there are cases in which the same syntax needs
+// to be treated // differently depending on the context in
+// which it is being compiled.)
+//
 int ilex[] = {
-    lex0, lex1, lex2, lex3, lex4, lex5
+    compile_immed,
+    compile_quad_input,
+    compile_function_defn,
+    compile_function_prolog,
+    compile_function_epilog,
+    compile_function_body
 };
 
 char* compile_new(int f) {

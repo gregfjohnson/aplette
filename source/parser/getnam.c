@@ -51,19 +51,19 @@ int getnam(char ic) {
 
         switch (np->entryUse) {
         case NF:
-            if (context == lex2)
+            if (context == compile_function_defn)
                 sichk(np);
 
             return (nfun);
 
         case MF:
-            if (context == lex2)
+            if (context == compile_function_defn)
                 sichk(np);
 
             return (mfun);
 
         case DF:
-            if (context == lex2)
+            if (context == compile_function_defn)
                 sichk(np);
 
             return (dfun);

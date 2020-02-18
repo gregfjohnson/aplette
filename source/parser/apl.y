@@ -19,7 +19,19 @@
     char   charval;
 }
 /* terminal tokens */
-%term lex0 lex1 lex2 lex3 lex4 lex5
+
+/* fake tokens that are created by compile_new() to
+ * guide the parser; in some cases different behaviors
+ * are required for the same input string for different
+ * contexts.
+ */
+%term compile_immed
+%term compile_quad_input
+%term compile_function_defn
+%term compile_function_prolog
+%term compile_function_epilog
+%term compile_function_body
+
 %term lpar rpar lbkt rbkt eol unk dell
 %term null dot colon semi comnt tran
 %term <charptr> strng nam numb nfun mfun dfun
@@ -49,7 +61,7 @@ line:
     * if its not an assignment, a comment or already printed
     * then print it.
     */
-    lex0 stat
+    compile_immed stat
     {
         *ccharp = END;
         integ = lastCode(oline);
@@ -61,14 +73,14 @@ line:
     * but a line containing only a comment looks like
     * a blank line because lex discards all its contents
     */
-    lex0 eol
+    compile_immed eol
     {
         *ccharp++ = COMNT;
         *ccharp++ = EOL;
     } |
    
     /* system commands are unlike ordinary expressions */
-    lex0 bcomand comand eol
+    compile_immed bcomand comand eol
     {
         *ccharp++ = IMMED;
         *ccharp++ = $3;
@@ -77,7 +89,7 @@ line:
     /* invoking the function editor is treated like 
     * a system command using the execute-immediate token.
     */
-    lex0 dell func
+    compile_immed dell func
     {
         *ccharp++ = IMMED;
         /* *ccharp++ = EDITF; */
@@ -85,29 +97,29 @@ line:
     } |
 
     /* immediate mode state indicator stuff */
-    lex0 tran eol
+    compile_immed tran eol
     {
         *ccharp++ = SICLR0;
     } |
-    lex0 tran expr eol
+    compile_immed tran expr eol
     {
         *ccharp++ = SICLR;
     } |
 
     /* quad input */
-    lex1 stat |
+    compile_quad_input stat |
 
     /* function definition */
-    lex2 dell func |
+    compile_function_defn dell func |
 
     /* function prolog */
-    lex3 dell func |
+    compile_function_prolog dell func |
 
     /* function epilog */
-    lex4 dell func |
+    compile_function_epilog dell func |
 
     /* function body */
-    lex5 fstat ;
+    compile_function_body fstat ;
 
 /* function header */
 func:
@@ -115,7 +127,7 @@ func:
     {
         switch(context) {
 
-        case lex3:
+        case compile_function_prolog:
             name($$, AUTO);
             /* see comments in funcomp() concerning
              * label processing.
@@ -123,7 +135,7 @@ func:
             *ccharp++ = ELID;
             break;
 
-        case lex4:
+        case compile_function_epilog:
             ccharp2 = ccharp;
             *ccharp++ = EOL;
             name($$, RVAL);
@@ -134,9 +146,9 @@ func:
 
     header
     {
-        if(context == lex3) *ccharp++ = ELID;
+        if(context == compile_function_prolog) *ccharp++ = ELID;
 
-        if(context == lex4){
+        if(context == compile_function_epilog){
             *ccharp++ = EOL;      /* pop previous result */
             *ccharp++ = NILRET;   /* return empty result */
         }
@@ -145,7 +157,7 @@ func:
 header:
     args autos
     {
-        if (context == lex4) invert($$, $2);
+        if (context == compile_function_epilog) invert($$, $2);
     } ;
 
 args:
@@ -153,22 +165,22 @@ args:
     {
         switch(context) {
 
-        case lex0:
+        case compile_immed:
             name($2, NAME);
             break;
 
-        case lex2:
+        case compile_function_defn:
             $$ = ccharp;
             name($2, DF);
             break;
 
-        case lex3:
+        case compile_function_prolog:
             $$ = ccharp;
             name($3, ARG2);
             name($1, ARG1);
             break;
 
-        case lex4:
+        case compile_function_epilog:
             $$ = ccharp;
             name($1, REST);
             name($3, REST);
@@ -179,21 +191,21 @@ args:
     {
         switch(context) {
 
-        case lex0:
+        case compile_immed:
             name($1, NAME);
             break;
 
-        case lex2:
+        case compile_function_defn:
             $$ = ccharp;
             name($1, MF);
             break;
 
-        case lex3:
+        case compile_function_prolog:
             $$ = ccharp;
             name($2, ARG1);
             break;
 
-        case lex4:
+        case compile_function_epilog:
             $$ = ccharp;
             name($2, REST);
         }
@@ -203,16 +215,16 @@ args:
     {
         switch(context) {
 
-        case lex0:
+        case compile_immed:
             name($$, NAME);
             break;
 
-        case lex2:
+        case compile_function_defn:
             name($$, NF);
-            /* no break, fall through to lex3/4 */
+            /* no break, fall through to compile_function_prolog/4 */
 
-        case lex3:
-        case lex4:
+        case compile_function_prolog:
+        case compile_function_epilog:
             $$ = ccharp;
             break;
         }
@@ -224,11 +236,11 @@ autos:
         $$ = $3;
 
         switch(context) {
-            case lex3:
+            case compile_function_prolog:
                 name($2, AUTO);
                 break;
 
-            case lex4:
+            case compile_function_epilog:
                 ccharp2 = name($2, REST);
                 invert($$, ccharp2);
         }

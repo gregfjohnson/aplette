@@ -45,12 +45,12 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    lex0 = 258,
-    lex1 = 259,
-    lex2 = 260,
-    lex3 = 261,
-    lex4 = 262,
-    lex5 = 263,
+    compile_immed = 258,
+    compile_quad_input = 259,
+    compile_function_defn = 260,
+    compile_function_prolog = 261,
+    compile_function_epilog = 262,
+    compile_function_body = 263,
     lpar = 264,
     rpar = 265,
     lbkt = 266,
@@ -89,12 +89,12 @@ extern int yydebug;
   };
 #endif
 /* Tokens.  */
-#define lex0 258
-#define lex1 259
-#define lex2 260
-#define lex3 261
-#define lex4 262
-#define lex5 263
+#define compile_immed 258
+#define compile_quad_input 259
+#define compile_function_defn 260
+#define compile_function_prolog 261
+#define compile_function_epilog 262
+#define compile_function_body 263
 #define lpar 264
 #define rpar 265
 #define lbkt 266

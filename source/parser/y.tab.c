@@ -105,12 +105,12 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    lex0 = 258,
-    lex1 = 259,
-    lex2 = 260,
-    lex3 = 261,
-    lex4 = 262,
-    lex5 = 263,
+    compile_immed = 258,
+    compile_quad_input = 259,
+    compile_function_defn = 260,
+    compile_function_prolog = 261,
+    compile_function_epilog = 262,
+    compile_function_body = 263,
     lpar = 264,
     rpar = 265,
     lbkt = 266,
@@ -149,12 +149,12 @@ extern int yydebug;
   };
 #endif
 /* Tokens.  */
-#define lex0 258
-#define lex1 259
-#define lex2 260
-#define lex3 261
-#define lex4 262
-#define lex5 263
+#define compile_immed 258
+#define compile_quad_input 259
+#define compile_function_defn 260
+#define compile_function_prolog 261
+#define compile_function_epilog 262
+#define compile_function_body 263
 #define lpar 264
 #define rpar 265
 #define lbkt 266
@@ -519,17 +519,17 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    52,    52,    64,    71,    80,    88,    92,    98,   101,
-     104,   107,   110,   114,   135,   146,   152,   178,   202,   222,
-     237,   244,   250,   251,   252,   256,   257,   260,   264,   270,
-     276,   289,   293,   297,   301,   302,   305,   306,   309,   315,
-     321,   326,   333,   336,   337,   340,   343,   347,   350,   356,
-     357,   361,   367,   368,   377,   381,   385,   464,   470,   474,
-     481,   485,   491,   502,   509,   510,   517,   518,   525,   530,
-     535,   539,   545,   553,   554,   555,   561,   562,   569,   574,
-     579,   583,   589,   598,   607,   614,   614,   617,   617,   617,
-     617,   617,   617,   620,   620,   623,   623,   623,   626,   626,
-     629,   629,   629,   629
+       0,    64,    64,    76,    83,    92,   100,   104,   110,   113,
+     116,   119,   122,   126,   147,   158,   164,   190,   214,   234,
+     249,   256,   262,   263,   264,   268,   269,   272,   276,   282,
+     288,   301,   305,   309,   313,   314,   317,   318,   321,   327,
+     333,   338,   345,   348,   349,   352,   355,   359,   362,   368,
+     369,   373,   379,   380,   389,   393,   397,   476,   482,   486,
+     493,   497,   503,   514,   521,   522,   529,   530,   537,   542,
+     547,   551,   557,   565,   566,   567,   573,   574,   581,   586,
+     591,   595,   601,   610,   619,   626,   626,   629,   629,   629,
+     629,   629,   629,   632,   632,   635,   635,   635,   638,   638,
+     641,   641,   641,   641
 };
 #endif
 
@@ -538,17 +538,19 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "lex0", "lex1", "lex2", "lex3", "lex4",
-  "lex5", "lpar", "rpar", "lbkt", "rbkt", "eol", "unk", "dell", "null",
-  "dot", "colon", "semi", "comnt", "tran", "strng", "nam", "numb", "nfun",
-  "mfun", "dfun", "com", "com0", "q_var", "asg", "comnam", "comnull",
-  "comlist", "comExpr", "comExprOrNull", "dscal", "mdscal", "m", "d", "md",
-  "msub", "mdsub", "$accept", "line", "func", "header", "args", "autos",
-  "bcomand", "comand", "exprOrNull", "anylist", "fstat", "labels", "label",
-  "fstat0", "stat", "statement", "hprint", "output", "hsemi", "expr", "e1",
-  "e2", "vector", "number", "lsub", "subs", "sub", "monadic", "monad",
-  "smonad", "dyadic", "sdyad", "subr", "comp", "dyad", "mdcom", "mondya",
-  "scalar", "anyname", YY_NULLPTR
+  "$end", "error", "$undefined", "compile_immed", "compile_quad_input",
+  "compile_function_defn", "compile_function_prolog",
+  "compile_function_epilog", "compile_function_body", "lpar", "rpar",
+  "lbkt", "rbkt", "eol", "unk", "dell", "null", "dot", "colon", "semi",
+  "comnt", "tran", "strng", "nam", "numb", "nfun", "mfun", "dfun", "com",
+  "com0", "q_var", "asg", "comnam", "comnull", "comlist", "comExpr",
+  "comExprOrNull", "dscal", "mdscal", "m", "d", "md", "msub", "mdsub",
+  "$accept", "line", "func", "header", "args", "autos", "bcomand",
+  "comand", "exprOrNull", "anylist", "fstat", "labels", "label", "fstat0",
+  "stat", "statement", "hprint", "output", "hsemi", "expr", "e1", "e2",
+  "vector", "number", "lsub", "subs", "sub", "monadic", "monad", "smonad",
+  "dyadic", "sdyad", "subr", "comp", "dyad", "mdcom", "mondya", "scalar",
+  "anyname", YY_NULLPTR
 };
 #endif
 
@@ -1420,66 +1422,66 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 53 "apl.y" /* yacc.c:1646  */
+#line 65 "apl.y" /* yacc.c:1646  */
     {
         *ccharp = END;
         integ = lastCode(oline);
         if (integ != ASGN && integ != PRINT && integ != COMNT) *ccharp++ = PRINT;
         *ccharp++ = EOL;
     }
-#line 1431 "y.tab.c" /* yacc.c:1646  */
+#line 1433 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 65 "apl.y" /* yacc.c:1646  */
+#line 77 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = COMNT;
         *ccharp++ = EOL;
     }
-#line 1440 "y.tab.c" /* yacc.c:1646  */
+#line 1442 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 72 "apl.y" /* yacc.c:1646  */
+#line 84 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = IMMED;
         *ccharp++ = (yyvsp[-1].charval);
     }
-#line 1449 "y.tab.c" /* yacc.c:1646  */
+#line 1451 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 81 "apl.y" /* yacc.c:1646  */
+#line 93 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = IMMED;
         /* *ccharp++ = EDITF; */
         *ccharp++ = DELL;
     }
-#line 1459 "y.tab.c" /* yacc.c:1646  */
+#line 1461 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 89 "apl.y" /* yacc.c:1646  */
+#line 101 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = SICLR0;
     }
-#line 1467 "y.tab.c" /* yacc.c:1646  */
+#line 1469 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 93 "apl.y" /* yacc.c:1646  */
+#line 105 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = SICLR;
     }
-#line 1475 "y.tab.c" /* yacc.c:1646  */
+#line 1477 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 115 "apl.y" /* yacc.c:1646  */
+#line 127 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
-        case lex3:
+        case compile_function_prolog:
             name((yyval.charptr), AUTO);
             /* see comments in funcomp() concerning
              * label processing.
@@ -1487,7 +1489,7 @@ yyreduce:
             *ccharp++ = ELID;
             break;
 
-        case lex4:
+        case compile_function_epilog:
             ccharp2 = ccharp;
             *ccharp++ = EOL;
             name((yyval.charptr), RVAL);
@@ -1495,305 +1497,305 @@ yyreduce:
             invert((yyvsp[0].charptr), ccharp2);
         }
     }
-#line 1499 "y.tab.c" /* yacc.c:1646  */
+#line 1501 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 136 "apl.y" /* yacc.c:1646  */
+#line 148 "apl.y" /* yacc.c:1646  */
     {
-        if(context == lex3) *ccharp++ = ELID;
+        if(context == compile_function_prolog) *ccharp++ = ELID;
 
-        if(context == lex4){
+        if(context == compile_function_epilog){
             *ccharp++ = EOL;      /* pop previous result */
             *ccharp++ = NILRET;   /* return empty result */
         }
     }
-#line 1512 "y.tab.c" /* yacc.c:1646  */
+#line 1514 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 147 "apl.y" /* yacc.c:1646  */
+#line 159 "apl.y" /* yacc.c:1646  */
     {
-        if (context == lex4) invert((yyval.charptr), (yyvsp[0].charptr));
+        if (context == compile_function_epilog) invert((yyval.charptr), (yyvsp[0].charptr));
     }
-#line 1520 "y.tab.c" /* yacc.c:1646  */
+#line 1522 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 153 "apl.y" /* yacc.c:1646  */
+#line 165 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
-        case lex0:
+        case compile_immed:
             name((yyvsp[-1].charptr), NAME);
             break;
 
-        case lex2:
+        case compile_function_defn:
             (yyval.charptr) = ccharp;
             name((yyvsp[-1].charptr), DF);
             break;
 
-        case lex3:
+        case compile_function_prolog:
             (yyval.charptr) = ccharp;
             name((yyvsp[0].charptr), ARG2);
             name((yyvsp[-2].charptr), ARG1);
             break;
 
-        case lex4:
+        case compile_function_epilog:
             (yyval.charptr) = ccharp;
             name((yyvsp[-2].charptr), REST);
             name((yyvsp[0].charptr), REST);
         }
     }
-#line 1549 "y.tab.c" /* yacc.c:1646  */
+#line 1551 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 179 "apl.y" /* yacc.c:1646  */
+#line 191 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
-        case lex0:
+        case compile_immed:
             name((yyvsp[-1].charptr), NAME);
             break;
 
-        case lex2:
+        case compile_function_defn:
             (yyval.charptr) = ccharp;
             name((yyvsp[-1].charptr), MF);
             break;
 
-        case lex3:
+        case compile_function_prolog:
             (yyval.charptr) = ccharp;
             name((yyvsp[0].charptr), ARG1);
             break;
 
-        case lex4:
+        case compile_function_epilog:
             (yyval.charptr) = ccharp;
             name((yyvsp[0].charptr), REST);
         }
     }
-#line 1576 "y.tab.c" /* yacc.c:1646  */
+#line 1578 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 203 "apl.y" /* yacc.c:1646  */
+#line 215 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
-        case lex0:
+        case compile_immed:
             name((yyval.charptr), NAME);
             break;
 
-        case lex2:
+        case compile_function_defn:
             name((yyval.charptr), NF);
-            /* no break, fall through to lex3/4 */
+            /* no break, fall through to compile_function_prolog/4 */
 
-        case lex3:
-        case lex4:
+        case compile_function_prolog:
+        case compile_function_epilog:
             (yyval.charptr) = ccharp;
             break;
         }
     }
-#line 1598 "y.tab.c" /* yacc.c:1646  */
+#line 1600 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 223 "apl.y" /* yacc.c:1646  */
+#line 235 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
 
         switch(context) {
-            case lex3:
+            case compile_function_prolog:
                 name((yyvsp[-1].charptr), AUTO);
                 break;
 
-            case lex4:
+            case compile_function_epilog:
                 ccharp2 = name((yyvsp[-1].charptr), REST);
                 invert((yyval.charptr), ccharp2);
         }
     }
-#line 1616 "y.tab.c" /* yacc.c:1646  */
+#line 1618 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 238 "apl.y" /* yacc.c:1646  */
+#line 250 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
     }
-#line 1624 "y.tab.c" /* yacc.c:1646  */
+#line 1626 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 245 "apl.y" /* yacc.c:1646  */
+#line 257 "apl.y" /* yacc.c:1646  */
     {
         litflag = -1;
     }
-#line 1632 "y.tab.c" /* yacc.c:1646  */
+#line 1634 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 253 "apl.y" /* yacc.c:1646  */
+#line 265 "apl.y" /* yacc.c:1646  */
     {
         name((yyvsp[0].charptr), NAME);
     }
-#line 1640 "y.tab.c" /* yacc.c:1646  */
+#line 1642 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 261 "apl.y" /* yacc.c:1646  */
+#line 273 "apl.y" /* yacc.c:1646  */
     {
         exprOrNullFlag = 1;
     }
-#line 1648 "y.tab.c" /* yacc.c:1646  */
+#line 1650 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 264 "apl.y" /* yacc.c:1646  */
+#line 276 "apl.y" /* yacc.c:1646  */
     {
         exprOrNullFlag = 0;
     }
-#line 1656 "y.tab.c" /* yacc.c:1646  */
+#line 1658 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 271 "apl.y" /* yacc.c:1646  */
+#line 283 "apl.y" /* yacc.c:1646  */
     {
        *ccharp++ = IMMED;
        *ccharp++ = immedcmd;
        name((yyvsp[0].charptr), NAME);
     }
-#line 1666 "y.tab.c" /* yacc.c:1646  */
+#line 1668 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 277 "apl.y" /* yacc.c:1646  */
+#line 289 "apl.y" /* yacc.c:1646  */
     {
        name((yyvsp[0].charptr), NAME);
     }
-#line 1674 "y.tab.c" /* yacc.c:1646  */
+#line 1676 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 290 "apl.y" /* yacc.c:1646  */
+#line 302 "apl.y" /* yacc.c:1646  */
     {  
         *ccharp++ = COMNT;
     }
-#line 1682 "y.tab.c" /* yacc.c:1646  */
+#line 1684 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 294 "apl.y" /* yacc.c:1646  */
+#line 306 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = COMNT;
     }
-#line 1690 "y.tab.c" /* yacc.c:1646  */
+#line 1692 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 298 "apl.y" /* yacc.c:1646  */
+#line 310 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = COMNT;
     }
-#line 1698 "y.tab.c" /* yacc.c:1646  */
+#line 1700 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 310 "apl.y" /* yacc.c:1646  */
+#line 322 "apl.y" /* yacc.c:1646  */
     {
         if(labgen) genlab((SymTabEntry *) (yyvsp[-1].charptr));
     }
-#line 1706 "y.tab.c" /* yacc.c:1646  */
+#line 1708 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 316 "apl.y" /* yacc.c:1646  */
+#line 328 "apl.y" /* yacc.c:1646  */
     {
         *ccharp = END;
         integ = lastCode(oline);
         if (integ != ASGN && integ != PRINT && integ != COMNT) *ccharp++ = PRINT;
     }
-#line 1716 "y.tab.c" /* yacc.c:1646  */
+#line 1718 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 322 "apl.y" /* yacc.c:1646  */
+#line 334 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = BRAN0;
     }
-#line 1725 "y.tab.c" /* yacc.c:1646  */
+#line 1727 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 327 "apl.y" /* yacc.c:1646  */
+#line 339 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[-1].charptr);
         *ccharp++ = BRAN;
     }
-#line 1734 "y.tab.c" /* yacc.c:1646  */
+#line 1736 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 344 "apl.y" /* yacc.c:1646  */
+#line 356 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = PRINT;
     }
-#line 1742 "y.tab.c" /* yacc.c:1646  */
+#line 1744 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 351 "apl.y" /* yacc.c:1646  */
+#line 363 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = HPRINT;
     }
-#line 1750 "y.tab.c" /* yacc.c:1646  */
+#line 1752 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 358 "apl.y" /* yacc.c:1646  */
+#line 370 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[0].charptr));
     }
-#line 1758 "y.tab.c" /* yacc.c:1646  */
+#line 1760 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 362 "apl.y" /* yacc.c:1646  */
+#line 374 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[0].charptr));
     }
-#line 1766 "y.tab.c" /* yacc.c:1646  */
+#line 1768 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 369 "apl.y" /* yacc.c:1646  */
+#line 381 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[-1].charptr));
         *ccharp++ = INDEX;
         *ccharp++ = scount;
         scount = (yyvsp[-2].charval);
     }
-#line 1777 "y.tab.c" /* yacc.c:1646  */
+#line 1779 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 378 "apl.y" /* yacc.c:1646  */
+#line 390 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), FUN);
     }
-#line 1785 "y.tab.c" /* yacc.c:1646  */
+#line 1787 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 382 "apl.y" /* yacc.c:1646  */
+#line 394 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), NAME);
     }
-#line 1793 "y.tab.c" /* yacc.c:1646  */
+#line 1795 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 386 "apl.y" /* yacc.c:1646  */
+#line 398 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         ccharp += 2;
@@ -1872,215 +1874,215 @@ yyreduce:
         ((struct chrstrct *)(yyval.charptr))->c[0] = QUOT;
         ((struct chrstrct *)(yyval.charptr))->c[1] = vcount;
     }
-#line 1876 "y.tab.c" /* yacc.c:1646  */
+#line 1878 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 465 "apl.y" /* yacc.c:1646  */
+#line 477 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = CONST;
         *ccharp++ = vcount;
         invert((yyval.charptr), ccharp-2);
     }
-#line 1886 "y.tab.c" /* yacc.c:1646  */
+#line 1888 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 471 "apl.y" /* yacc.c:1646  */
+#line 483 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[-1].charptr);
     }
-#line 1894 "y.tab.c" /* yacc.c:1646  */
+#line 1896 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 475 "apl.y" /* yacc.c:1646  */
+#line 487 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval);
     }
-#line 1903 "y.tab.c" /* yacc.c:1646  */
+#line 1905 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 482 "apl.y" /* yacc.c:1646  */
+#line 494 "apl.y" /* yacc.c:1646  */
     {
         vcount++;
     }
-#line 1911 "y.tab.c" /* yacc.c:1646  */
+#line 1913 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 486 "apl.y" /* yacc.c:1646  */
+#line 498 "apl.y" /* yacc.c:1646  */
     {
         vcount = 1;
     }
-#line 1919 "y.tab.c" /* yacc.c:1646  */
+#line 1921 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 492 "apl.y" /* yacc.c:1646  */
+#line 504 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         ccharp += copy(DA, (char *) &datum, (char *) ccharp, 1);
     }
-#line 1928 "y.tab.c" /* yacc.c:1646  */
+#line 1930 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 503 "apl.y" /* yacc.c:1646  */
+#line 515 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval) = scount;
         scount = 1;
     }
-#line 1937 "y.tab.c" /* yacc.c:1646  */
+#line 1939 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 511 "apl.y" /* yacc.c:1646  */
+#line 523 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[0].charptr));
         scount++;
     }
-#line 1946 "y.tab.c" /* yacc.c:1646  */
+#line 1948 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 518 "apl.y" /* yacc.c:1646  */
+#line 530 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = ELID;
     }
-#line 1955 "y.tab.c" /* yacc.c:1646  */
+#line 1957 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 526 "apl.y" /* yacc.c:1646  */
+#line 538 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval);
     }
-#line 1964 "y.tab.c" /* yacc.c:1646  */
+#line 1966 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 531 "apl.y" /* yacc.c:1646  */
+#line 543 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
         *ccharp++ = (yyvsp[-1].charval)+1;
     }
-#line 1973 "y.tab.c" /* yacc.c:1646  */
+#line 1975 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 536 "apl.y" /* yacc.c:1646  */
+#line 548 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), FUN);
     }
-#line 1981 "y.tab.c" /* yacc.c:1646  */
+#line 1983 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 540 "apl.y" /* yacc.c:1646  */
+#line 552 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval)+1;
         *ccharp++ = (yyvsp[-1].charval);
     }
-#line 1991 "y.tab.c" /* yacc.c:1646  */
+#line 1993 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 546 "apl.y" /* yacc.c:1646  */
+#line 558 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
         *ccharp++ = (yyvsp[-1].charval)+3;
         *ccharp++ = (yyvsp[-2].charval);
     }
-#line 2001 "y.tab.c" /* yacc.c:1646  */
+#line 2003 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 556 "apl.y" /* yacc.c:1646  */
+#line 568 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval)++;
     }
-#line 2009 "y.tab.c" /* yacc.c:1646  */
+#line 2011 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 563 "apl.y" /* yacc.c:1646  */
+#line 575 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval) += 2;
     }
-#line 2017 "y.tab.c" /* yacc.c:1646  */
+#line 2019 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 570 "apl.y" /* yacc.c:1646  */
+#line 582 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval);
     }
-#line 2026 "y.tab.c" /* yacc.c:1646  */
+#line 2028 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 575 "apl.y" /* yacc.c:1646  */
+#line 587 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
         *ccharp++ = (yyvsp[-1].charval);
     }
-#line 2035 "y.tab.c" /* yacc.c:1646  */
+#line 2037 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 580 "apl.y" /* yacc.c:1646  */
+#line 592 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), FUN);
     }
-#line 2043 "y.tab.c" /* yacc.c:1646  */
+#line 2045 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 584 "apl.y" /* yacc.c:1646  */
+#line 596 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = OPROD;
         *ccharp++ = (yyvsp[0].charval);
     }
-#line 2053 "y.tab.c" /* yacc.c:1646  */
+#line 2055 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 590 "apl.y" /* yacc.c:1646  */
+#line 602 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = IPROD;
         *ccharp++ = (yyvsp[-2].charval);
         *ccharp++ = (yyvsp[0].charval);
     }
-#line 2064 "y.tab.c" /* yacc.c:1646  */
+#line 2066 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 599 "apl.y" /* yacc.c:1646  */
+#line 611 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval) += 2;
     }
-#line 2072 "y.tab.c" /* yacc.c:1646  */
+#line 2074 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 608 "apl.y" /* yacc.c:1646  */
+#line 620 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[-1].charptr);
     }
-#line 2080 "y.tab.c" /* yacc.c:1646  */
+#line 2082 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2084 "y.tab.c" /* yacc.c:1646  */
+#line 2086 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2308,5 +2310,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 631 "apl.y" /* yacc.c:1906  */
+#line 643 "apl.y" /* yacc.c:1906  */
 
