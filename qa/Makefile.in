@@ -16,6 +16,7 @@ OBJECTS = printing.dif quad_vars.dif2 \
 		  userfunc_shadow_arg.dif \
           userfunc_shadow_globals.dif \
           userfunc_shadow_undefined.dif \
+          userfunc_shadow2.dif \
 		  quad_fx.dif encode.dif \
 
 # Keep *.out files

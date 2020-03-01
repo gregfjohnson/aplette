@@ -1,0 +1,16 @@
+Gz { fac n
+}(n > 1) / big
+z { 1
+}0
+big: z { n X fac n-1
+G
+
+fac 4
+
+big { 47
+fac 4
+big
+
+n { 19
+fac 4
+n
