@@ -5,9 +5,20 @@
 #include <inttypes.h>
 #include "apl.h"
 
-char* ty[] = {
-    0, "DA", "CH", "LV", "QD", "QQ", "IN", "EL", "NF", "MF", "DF", "QC", "QV", "NIL", "QX", "LB",
-};
+static char* ty[] = {
+    "XX", "DA", "CH", "LV", "QD", "QQ", "IN", "EL",
+    "NF", "MF", "DF", "QC", "QV", "NIL", "QX", "LB",
+    "PT" };
+
+static char *bad_ItemType = "XX";
+
+char *ItemType_str(ItemType t) {
+    if (t >= 0 && t < NTYPES) {
+        return ty[t];
+    } else {
+        return bad_ItemType;
+    }
+}
 
 void stack_dump()
 {
@@ -31,7 +42,7 @@ void stack_dump()
 
             printf("    which is: type = ");
 
-            if ((i = (*p)->itemType) >= 0 && i <= LBL && ty[i]) {
+            if ((i = (*p)->itemType) >= 0 && i < NTYPES && ty[i]) {
                 printf("%s", ty[i]);
             } else {
                 printf("%d", (*p)->itemType);
@@ -47,14 +58,14 @@ void stack_dump()
                 printf(",  n = %s", sep->namep);
 
                 printf(", entryUse ");
-                if ((eu = sep->entryUse) >= 0 && eu <= LBL && ty[eu]) {
+                if ((eu = sep->entryUse) >= 0 && eu < NTYPES && ty[eu]) {
                     printf("%s", ty[eu]);
                 } else {
                     printf("%d", sep->entryUse);
                 }
 
                 printf(", itemType ");
-                if ((eu = sep->itemType) >= 0 && eu <= LBL && ty[eu]) {
+                if ((eu = sep->itemType) >= 0 && eu < NTYPES && ty[eu]) {
                     printf("%s", ty[eu]);
                 } else {
                     printf("%d", sep->itemType);
