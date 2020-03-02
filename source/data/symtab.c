@@ -49,7 +49,15 @@ SymTabEntry* symtabEntryCreate(char* name) {
     if (entry == NULL) { error(ERR_botch, "out of memory"); }
 
     memset(entry, 0, sizeof(SymTabEntry));
-    entry->namep = strdup(name);
+
+    // the distinguishing characteristic of SymTabEntries
+    // is that itemType == LV.
+    // item structs also have an itemType, but it is never LV.
+    //
+    entry->itemType = LV;
+
+    entry->namep = alloc(strlen(name) + 1);
+    strcpy(entry->namep, name);
 
     return entry;
 }
