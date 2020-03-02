@@ -8,7 +8,10 @@
 #include "local_parser.h"
 #include "data.h"
 #include "userfunc.h"
+#include "debug.h"
 #include "y.tab.h"
+
+// #define DEBUG
 
 extern struct COMM comtab[];
 #define lv yylval
@@ -31,6 +34,13 @@ int getnam(char ic) {
     } while (alpha(c) || digit(c) || c == (int) '_');
     *cp++ = 0;
 
+    #ifdef DEBUG
+        printf("yo from getnam.  context:  %d; name:  '%s'\n",
+               (int) context, name);
+        printf("\ncurrent symbol table:\n");
+        vars_dump();
+    #endif
+
     iline--;
 
     // commands
@@ -47,7 +57,28 @@ int getnam(char ic) {
     np = symtabFind(name);
 
     if (np != NULL) {
-        lv.charptr = (char*) np;
+        SymTabEntry* newSymTabEntry;
+
+        if (context == compile_function_defn
+            || context == compile_function_prolog
+            || context == compile_function_epilog)
+        {
+            newSymTabEntry = symtabEntryCreate(name);
+
+            #ifdef DEBUG
+                printf("getnam; found np %p; created new symtab entry %p for '%s'\n",
+                        np, (void *) newSymTabEntry, name);
+            #endif
+
+        } else {
+            newSymTabEntry = np;
+
+            #ifdef DEBUG
+                printf("getnam; found np %p for '%s'; using it..\n", np, name);
+            #endif
+        }
+
+        lv.charptr = (char*) newSymTabEntry;
 
         switch (np->entryUse) {
         case NF:
@@ -74,6 +105,11 @@ int getnam(char ic) {
     }
 
     np = symtabEntryCreate(name);
+
+    #ifdef DEBUG
+        printf("getnam; did not find np; created new symtab entry %p for '%s'\n",
+                (void *) np, name);
+    #endif
 
     np->itemType = LV;
     lv.charptr = (char *) np;

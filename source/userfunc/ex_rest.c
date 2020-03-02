@@ -50,8 +50,6 @@ void ex_rest() {
 
     gsip->ptr += copy(PTR, (char*) gsip->ptr, (char*)&np, 1);
 
-    symtabRemoveEntry(np);
-
     int i;
     for (i = 0; i < gsip->shadowedIdCount; ++i) {
         if (strcmp(gsip->shadowedIds[i]->namep, np->namep) == 0) {
@@ -60,6 +58,10 @@ void ex_rest() {
         }
     }
     if (restoreEntry == NULL) error(ERR_botch,"restore error");
+
+    // memory leak; use  aplfree(np->itemp);
+    //                   symtabDelete(np);
+    symtabRemoveEntry(np);
 
     if (restoreEntry->entryUse != UNKNOWN) {
         symtabEntryInsert(restoreEntry);

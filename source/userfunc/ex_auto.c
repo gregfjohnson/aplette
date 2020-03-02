@@ -11,15 +11,20 @@
 void ex_auto()
 {
     SymTabEntry* np;
-    SymTabEntry* newEntry;
+    SymTabEntry* oldEntry;
 
     gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
+
+    oldEntry = symtabFind(np->namep);
+    if (oldEntry == NULL) {
+        oldEntry = symtabEntryCreate(np->namep);
+    }
+
     checksp();
 
-    Context_addShadowedId(gsip, np);
+    Context_addShadowedId(gsip, oldEntry);
 
-    symtabRemoveEntry(np);
-    newEntry = symtabInsert(np->namep);
+    symtabRemoveEntry(oldEntry);
 
-    newEntry->itemType = LV;
+    symtabInsert(np->namep);
 }

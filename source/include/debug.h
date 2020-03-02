@@ -9,10 +9,13 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
+#include "apl.h"
+
 void vars_dump();
 void mem_dump();
 void code_dump(char* cp, int flag);
 void stack_dump();
 void parseDump(char* line, int len);
+char *ItemType_str(ItemType t);
 
 #endif

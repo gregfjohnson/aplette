@@ -22,7 +22,7 @@ void pop() {
     if (p) {
         switch (p->itemType) {
         default:
-            printf("[bad type: %d]\n", p->itemType);
+            printf("[bad type: %s]\n", ItemType_str(p->itemType));
             error(ERR_botch, "pop - unrecognised type");
             break;
 

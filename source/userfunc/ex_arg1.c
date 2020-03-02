@@ -10,18 +10,24 @@
 void ex_arg1() {
     struct item* p;
     SymTabEntry* np;
+    SymTabEntry* oldEntry;
     SymTabEntry* newEntry;
 
     gsip->ptr += copy(PTR, (char*) gsip->ptr, (char*) &np, 1);
+
+    oldEntry = symtabFind(np->namep);
+    if (oldEntry == NULL) {
+        oldEntry = symtabEntryCreate(np->namep);
+    }
+
     p = fetch(sp[-1]);
     --sp;
 
-    Context_addShadowedId(gsip, np);
+    Context_addShadowedId(gsip, oldEntry);
 
-    symtabRemoveEntry(np);
+    symtabRemoveEntry(oldEntry);
     newEntry = symtabInsert(np->namep);
 
     newEntry->itemp = p;
-    newEntry->itemType = LV;
-    newEntry->entryUse = DA; // ???
+    newEntry->entryUse = DA;
 }

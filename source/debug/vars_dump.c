@@ -13,18 +13,21 @@
 #include <inttypes.h>
 #include "apl.h"
 #include "data.h"
+#include "debug.h"
 
 void vars_dump()
 {
     SymTabEntry* n;
 
+    printf("=== symbol table start ===\n");
     symtabIterateInit();
     while ((n = symtabIterate()) != NULL) {
         printf("%p:", (void *) n);
         printf(" namep=%s", n->namep);
         printf(" itemp=%p", (void *)n->itemp);
-        printf(" use=%d", n->entryUse);
-        printf(" itemType=%d", n->itemType);
+        printf(" use=%s", ItemType_str(n->entryUse));
+        printf(" itemType=%s", ItemType_str(n->itemType));
         printf("\n");
     }
+    printf("=== symbol table end ===\n\n");
 }

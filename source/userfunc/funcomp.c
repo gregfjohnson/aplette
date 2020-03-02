@@ -96,6 +96,14 @@ void funcomp(SymTabEntry* np) {
         goto out;
     }
 
+    if (code_trace) {
+        printf("current symtab:\n");
+        vars_dump();
+        printf("compiled prolog vvv\n");
+        code_dump(Prologue->pcode, 0);
+        printf("compiled prolog ^^^\n");
+    }
+
     /* Phase 2 compiles the body of the function */
     if (code_trace) {
         fprintf(stderr, "Phase 2 \n");
