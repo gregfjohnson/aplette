@@ -519,17 +519,17 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    64,    64,    76,    83,    92,   100,   104,   110,   113,
-     116,   119,   122,   126,   147,   158,   164,   190,   214,   234,
-     249,   256,   262,   263,   264,   268,   269,   272,   276,   282,
-     288,   301,   305,   309,   313,   314,   317,   318,   321,   327,
-     333,   338,   345,   348,   349,   352,   355,   359,   362,   368,
-     369,   373,   379,   380,   389,   393,   397,   476,   482,   486,
-     493,   497,   503,   514,   521,   522,   529,   530,   537,   542,
-     547,   551,   557,   565,   566,   567,   573,   574,   581,   586,
-     591,   595,   601,   610,   619,   626,   626,   629,   629,   629,
-     629,   629,   629,   632,   632,   635,   635,   635,   638,   638,
-     641,   641,   641,   641
+       0,    67,    67,    79,    86,    95,   103,   107,   113,   116,
+     119,   122,   125,   129,   150,   161,   167,   193,   217,   237,
+     252,   259,   265,   266,   267,   271,   272,   275,   279,   285,
+     291,   304,   308,   312,   316,   317,   320,   321,   324,   330,
+     336,   341,   348,   351,   352,   355,   358,   362,   365,   371,
+     372,   376,   382,   383,   392,   396,   400,   479,   485,   489,
+     496,   500,   506,   517,   524,   525,   532,   533,   540,   545,
+     550,   554,   560,   568,   569,   570,   576,   577,   584,   589,
+     594,   598,   604,   613,   622,   629,   629,   632,   632,   632,
+     632,   632,   632,   635,   635,   638,   638,   638,   641,   641,
+     644,   644,   644,   644
 };
 #endif
 
@@ -545,8 +545,8 @@ static const char *const yytname[] =
   "comnt", "tran", "strng", "nam", "numb", "nfun", "mfun", "dfun", "com",
   "com0", "q_var", "asg", "comnam", "comnull", "comlist", "comExpr",
   "comExprOrNull", "dscal", "mdscal", "m", "d", "md", "msub", "mdsub",
-  "$accept", "line", "func", "header", "args", "autos", "bcomand",
-  "comand", "exprOrNull", "anylist", "fstat", "labels", "label", "fstat0",
+  "$accept", "line", "func", "header", "args", "autos", "bcommand",
+  "command", "exprOrNull", "anylist", "fstat", "labels", "label", "fstat0",
   "stat", "statement", "hprint", "output", "hsemi", "expr", "e1", "e2",
   "vector", "number", "lsub", "subs", "sub", "monadic", "monad", "smonad",
   "dyadic", "sdyad", "subr", "comp", "dyad", "mdcom", "mondya", "scalar",
@@ -1422,7 +1422,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 65 "apl.y" /* yacc.c:1646  */
+#line 68 "apl.y" /* yacc.c:1646  */
     {
         *ccharp = END;
         integ = lastCode(oline);
@@ -1433,7 +1433,7 @@ yyreduce:
     break;
 
   case 3:
-#line 77 "apl.y" /* yacc.c:1646  */
+#line 80 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = COMNT;
         *ccharp++ = EOL;
@@ -1442,7 +1442,7 @@ yyreduce:
     break;
 
   case 4:
-#line 84 "apl.y" /* yacc.c:1646  */
+#line 87 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = IMMED;
         *ccharp++ = (yyvsp[-1].charval);
@@ -1451,7 +1451,7 @@ yyreduce:
     break;
 
   case 5:
-#line 93 "apl.y" /* yacc.c:1646  */
+#line 96 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = IMMED;
         /* *ccharp++ = EDITF; */
@@ -1461,7 +1461,7 @@ yyreduce:
     break;
 
   case 6:
-#line 101 "apl.y" /* yacc.c:1646  */
+#line 104 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = SICLR0;
     }
@@ -1469,7 +1469,7 @@ yyreduce:
     break;
 
   case 7:
-#line 105 "apl.y" /* yacc.c:1646  */
+#line 108 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = SICLR;
     }
@@ -1477,7 +1477,7 @@ yyreduce:
     break;
 
   case 13:
-#line 127 "apl.y" /* yacc.c:1646  */
+#line 130 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
@@ -1501,7 +1501,7 @@ yyreduce:
     break;
 
   case 14:
-#line 148 "apl.y" /* yacc.c:1646  */
+#line 151 "apl.y" /* yacc.c:1646  */
     {
         if(context == compile_function_prolog) *ccharp++ = ELID;
 
@@ -1514,7 +1514,7 @@ yyreduce:
     break;
 
   case 15:
-#line 159 "apl.y" /* yacc.c:1646  */
+#line 162 "apl.y" /* yacc.c:1646  */
     {
         if (context == compile_function_epilog) invert((yyval.charptr), (yyvsp[0].charptr));
     }
@@ -1522,7 +1522,7 @@ yyreduce:
     break;
 
   case 16:
-#line 165 "apl.y" /* yacc.c:1646  */
+#line 168 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
@@ -1551,7 +1551,7 @@ yyreduce:
     break;
 
   case 17:
-#line 191 "apl.y" /* yacc.c:1646  */
+#line 194 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
@@ -1578,7 +1578,7 @@ yyreduce:
     break;
 
   case 18:
-#line 215 "apl.y" /* yacc.c:1646  */
+#line 218 "apl.y" /* yacc.c:1646  */
     {
         switch(context) {
 
@@ -1588,7 +1588,7 @@ yyreduce:
 
         case compile_function_defn:
             name((yyval.charptr), NF);
-            /* no break, fall through to compile_function_prolog/4 */
+            /* no break, fall through to compile_function_prolog/epilog4 */
 
         case compile_function_prolog:
         case compile_function_epilog:
@@ -1600,7 +1600,7 @@ yyreduce:
     break;
 
   case 19:
-#line 235 "apl.y" /* yacc.c:1646  */
+#line 238 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
 
@@ -1618,7 +1618,7 @@ yyreduce:
     break;
 
   case 20:
-#line 250 "apl.y" /* yacc.c:1646  */
+#line 253 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
     }
@@ -1626,7 +1626,7 @@ yyreduce:
     break;
 
   case 21:
-#line 257 "apl.y" /* yacc.c:1646  */
+#line 260 "apl.y" /* yacc.c:1646  */
     {
         litflag = -1;
     }
@@ -1634,7 +1634,7 @@ yyreduce:
     break;
 
   case 24:
-#line 265 "apl.y" /* yacc.c:1646  */
+#line 268 "apl.y" /* yacc.c:1646  */
     {
         name((yyvsp[0].charptr), NAME);
     }
@@ -1642,7 +1642,7 @@ yyreduce:
     break;
 
   case 27:
-#line 273 "apl.y" /* yacc.c:1646  */
+#line 276 "apl.y" /* yacc.c:1646  */
     {
         exprOrNullFlag = 1;
     }
@@ -1650,7 +1650,7 @@ yyreduce:
     break;
 
   case 28:
-#line 276 "apl.y" /* yacc.c:1646  */
+#line 279 "apl.y" /* yacc.c:1646  */
     {
         exprOrNullFlag = 0;
     }
@@ -1658,7 +1658,7 @@ yyreduce:
     break;
 
   case 29:
-#line 283 "apl.y" /* yacc.c:1646  */
+#line 286 "apl.y" /* yacc.c:1646  */
     {
        *ccharp++ = IMMED;
        *ccharp++ = immedcmd;
@@ -1668,7 +1668,7 @@ yyreduce:
     break;
 
   case 30:
-#line 289 "apl.y" /* yacc.c:1646  */
+#line 292 "apl.y" /* yacc.c:1646  */
     {
        name((yyvsp[0].charptr), NAME);
     }
@@ -1676,7 +1676,7 @@ yyreduce:
     break;
 
   case 31:
-#line 302 "apl.y" /* yacc.c:1646  */
+#line 305 "apl.y" /* yacc.c:1646  */
     {  
         *ccharp++ = COMNT;
     }
@@ -1684,7 +1684,7 @@ yyreduce:
     break;
 
   case 32:
-#line 306 "apl.y" /* yacc.c:1646  */
+#line 309 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = COMNT;
     }
@@ -1692,7 +1692,7 @@ yyreduce:
     break;
 
   case 33:
-#line 310 "apl.y" /* yacc.c:1646  */
+#line 313 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = COMNT;
     }
@@ -1700,7 +1700,7 @@ yyreduce:
     break;
 
   case 38:
-#line 322 "apl.y" /* yacc.c:1646  */
+#line 325 "apl.y" /* yacc.c:1646  */
     {
         if(labgen) genlab((SymTabEntry *) (yyvsp[-1].charptr));
     }
@@ -1708,7 +1708,7 @@ yyreduce:
     break;
 
   case 39:
-#line 328 "apl.y" /* yacc.c:1646  */
+#line 331 "apl.y" /* yacc.c:1646  */
     {
         *ccharp = END;
         integ = lastCode(oline);
@@ -1718,7 +1718,7 @@ yyreduce:
     break;
 
   case 40:
-#line 334 "apl.y" /* yacc.c:1646  */
+#line 337 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = BRAN0;
@@ -1727,7 +1727,7 @@ yyreduce:
     break;
 
   case 41:
-#line 339 "apl.y" /* yacc.c:1646  */
+#line 342 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[-1].charptr);
         *ccharp++ = BRAN;
@@ -1736,7 +1736,7 @@ yyreduce:
     break;
 
   case 46:
-#line 356 "apl.y" /* yacc.c:1646  */
+#line 359 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = PRINT;
     }
@@ -1744,7 +1744,7 @@ yyreduce:
     break;
 
   case 48:
-#line 363 "apl.y" /* yacc.c:1646  */
+#line 366 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = HPRINT;
     }
@@ -1752,7 +1752,7 @@ yyreduce:
     break;
 
   case 50:
-#line 370 "apl.y" /* yacc.c:1646  */
+#line 373 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[0].charptr));
     }
@@ -1760,7 +1760,7 @@ yyreduce:
     break;
 
   case 51:
-#line 374 "apl.y" /* yacc.c:1646  */
+#line 377 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[0].charptr));
     }
@@ -1768,7 +1768,7 @@ yyreduce:
     break;
 
   case 53:
-#line 381 "apl.y" /* yacc.c:1646  */
+#line 384 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[-1].charptr));
         *ccharp++ = INDEX;
@@ -1779,7 +1779,7 @@ yyreduce:
     break;
 
   case 54:
-#line 390 "apl.y" /* yacc.c:1646  */
+#line 393 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), FUN);
     }
@@ -1787,7 +1787,7 @@ yyreduce:
     break;
 
   case 55:
-#line 394 "apl.y" /* yacc.c:1646  */
+#line 397 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), NAME);
     }
@@ -1795,7 +1795,7 @@ yyreduce:
     break;
 
   case 56:
-#line 398 "apl.y" /* yacc.c:1646  */
+#line 401 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         ccharp += 2;
@@ -1878,7 +1878,7 @@ yyreduce:
     break;
 
   case 57:
-#line 477 "apl.y" /* yacc.c:1646  */
+#line 480 "apl.y" /* yacc.c:1646  */
     {
         *ccharp++ = CONST;
         *ccharp++ = vcount;
@@ -1888,7 +1888,7 @@ yyreduce:
     break;
 
   case 58:
-#line 483 "apl.y" /* yacc.c:1646  */
+#line 486 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[-1].charptr);
     }
@@ -1896,7 +1896,7 @@ yyreduce:
     break;
 
   case 59:
-#line 487 "apl.y" /* yacc.c:1646  */
+#line 490 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval);
@@ -1905,7 +1905,7 @@ yyreduce:
     break;
 
   case 60:
-#line 494 "apl.y" /* yacc.c:1646  */
+#line 497 "apl.y" /* yacc.c:1646  */
     {
         vcount++;
     }
@@ -1913,7 +1913,7 @@ yyreduce:
     break;
 
   case 61:
-#line 498 "apl.y" /* yacc.c:1646  */
+#line 501 "apl.y" /* yacc.c:1646  */
     {
         vcount = 1;
     }
@@ -1921,7 +1921,7 @@ yyreduce:
     break;
 
   case 62:
-#line 504 "apl.y" /* yacc.c:1646  */
+#line 507 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         ccharp += copy(DA, (char *) &datum, (char *) ccharp, 1);
@@ -1930,7 +1930,7 @@ yyreduce:
     break;
 
   case 63:
-#line 515 "apl.y" /* yacc.c:1646  */
+#line 518 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval) = scount;
         scount = 1;
@@ -1939,7 +1939,7 @@ yyreduce:
     break;
 
   case 65:
-#line 523 "apl.y" /* yacc.c:1646  */
+#line 526 "apl.y" /* yacc.c:1646  */
     {
         invert((yyval.charptr), (yyvsp[0].charptr));
         scount++;
@@ -1948,7 +1948,7 @@ yyreduce:
     break;
 
   case 67:
-#line 530 "apl.y" /* yacc.c:1646  */
+#line 533 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = ELID;
@@ -1957,7 +1957,7 @@ yyreduce:
     break;
 
   case 68:
-#line 538 "apl.y" /* yacc.c:1646  */
+#line 541 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval);
@@ -1966,7 +1966,7 @@ yyreduce:
     break;
 
   case 69:
-#line 543 "apl.y" /* yacc.c:1646  */
+#line 546 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
         *ccharp++ = (yyvsp[-1].charval)+1;
@@ -1975,7 +1975,7 @@ yyreduce:
     break;
 
   case 70:
-#line 548 "apl.y" /* yacc.c:1646  */
+#line 551 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), FUN);
     }
@@ -1983,7 +1983,7 @@ yyreduce:
     break;
 
   case 71:
-#line 552 "apl.y" /* yacc.c:1646  */
+#line 555 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval)+1;
@@ -1993,7 +1993,7 @@ yyreduce:
     break;
 
   case 72:
-#line 558 "apl.y" /* yacc.c:1646  */
+#line 561 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
         *ccharp++ = (yyvsp[-1].charval)+3;
@@ -2003,7 +2003,7 @@ yyreduce:
     break;
 
   case 75:
-#line 568 "apl.y" /* yacc.c:1646  */
+#line 571 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval)++;
     }
@@ -2011,7 +2011,7 @@ yyreduce:
     break;
 
   case 77:
-#line 575 "apl.y" /* yacc.c:1646  */
+#line 578 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval) += 2;
     }
@@ -2019,7 +2019,7 @@ yyreduce:
     break;
 
   case 78:
-#line 582 "apl.y" /* yacc.c:1646  */
+#line 585 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = (yyvsp[0].charval);
@@ -2028,7 +2028,7 @@ yyreduce:
     break;
 
   case 79:
-#line 587 "apl.y" /* yacc.c:1646  */
+#line 590 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[0].charptr);
         *ccharp++ = (yyvsp[-1].charval);
@@ -2037,7 +2037,7 @@ yyreduce:
     break;
 
   case 80:
-#line 592 "apl.y" /* yacc.c:1646  */
+#line 595 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = name((yyval.charptr), FUN);
     }
@@ -2045,7 +2045,7 @@ yyreduce:
     break;
 
   case 81:
-#line 596 "apl.y" /* yacc.c:1646  */
+#line 599 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = OPROD;
@@ -2055,7 +2055,7 @@ yyreduce:
     break;
 
   case 82:
-#line 602 "apl.y" /* yacc.c:1646  */
+#line 605 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = ccharp;
         *ccharp++ = IPROD;
@@ -2066,7 +2066,7 @@ yyreduce:
     break;
 
   case 83:
-#line 611 "apl.y" /* yacc.c:1646  */
+#line 614 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charval) += 2;
     }
@@ -2074,7 +2074,7 @@ yyreduce:
     break;
 
   case 84:
-#line 620 "apl.y" /* yacc.c:1646  */
+#line 623 "apl.y" /* yacc.c:1646  */
     {
         (yyval.charptr) = (yyvsp[-1].charptr);
     }
@@ -2310,5 +2310,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 643 "apl.y" /* yacc.c:1906  */
+#line 646 "apl.y" /* yacc.c:1906  */
 

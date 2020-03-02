@@ -45,22 +45,25 @@
 %type <charptr> fstat fstat0 stat statement output expr
 %type <charptr> e1 e2 number subs sub monadic
 %type <charptr> dyadic subr anyname hprint
-%type <charval> comand lsub monad smonad sdyad
+%type <charval> command lsub monad smonad sdyad
 %type <charval> comp dyad mdcom mondya scalar
 
 /******************** grammar specification *****************/
 /***************** line-at-a-time APL compiler **************/
 /*
- * first lexical character gives context.
+ * first lexical character is a fake character created by
+ * callers of compile_{old,new}.c to give context.
+ * (compile executable expression, function header, function
+ * body expression, etc.)
  */
 
 %%
 
 line:
     /* The top level definition of a line:
-    * if its not an assignment, a comment or already printed
-    * then print it.
-    */
+     * if its not an assignment, a comment or already printed
+     * then print it.
+     */
     compile_immed stat
     {
         *ccharp = END;
@@ -70,9 +73,9 @@ line:
     } |
 
     /* normally blank lines are not sent to the parser
-    * but a line containing only a comment looks like
-    * a blank line because lex discards all its contents
-    */
+     * but a line containing only a comment looks like
+     * a blank line because lex discards all its contents
+     */
     compile_immed eol
     {
         *ccharp++ = COMNT;
@@ -80,7 +83,7 @@ line:
     } |
    
     /* system commands are unlike ordinary expressions */
-    compile_immed bcomand comand eol
+    compile_immed bcommand command eol
     {
         *ccharp++ = IMMED;
         *ccharp++ = $3;
@@ -221,7 +224,7 @@ args:
 
         case compile_function_defn:
             name($$, NF);
-            /* no break, fall through to compile_function_prolog/4 */
+            /* no break, fall through to compile_function_prolog/epilog4 */
 
         case compile_function_prolog:
         case compile_function_epilog:
@@ -252,13 +255,13 @@ autos:
     } ;
 
 /* system commands */
-bcomand:
+bcommand:
     rpar
     {
         litflag = -1;
     } ;
 
-comand:
+command:
     comExprOrNull exprOrNull |
     comExpr expr |
     comnam anyname

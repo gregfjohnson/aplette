@@ -71,7 +71,6 @@ int getnam(char ic) {
         default:
             return (nam);
         }
-        return (nam);
     }
 
     np = symtabEntryCreate(name);
