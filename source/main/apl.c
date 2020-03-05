@@ -209,7 +209,10 @@ int main(int argc, char** argv)
             exit(1);
         }
         quadInput = fdopen(stdin_fd, "r");
-        rl_instream = quadInput;
+
+        #ifdef HAVE_LIBREADLINE
+            rl_instream = quadInput;
+        #endif
     }
 
     /* 'apl filename' is not supposed to be done directly from the command line
@@ -260,7 +263,10 @@ int main(int argc, char** argv)
             while ((c = getchar() != '\n') && c != EOF);
 
             quadInput = fdopen(stdin_fd, "r");
-            rl_instream = quadInput;
+
+            #ifdef HAVE_LIBREADLINE
+                rl_instream = quadInput;
+            #endif
         }
     }
 

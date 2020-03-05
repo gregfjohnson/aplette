@@ -73,6 +73,7 @@ char* getinput(char* prompt) {
     else {
 #else
     #warning Readline support has not been included!
+    {
 #endif
         if (stdin_isatty) {
             printf("%s", prompt);
@@ -136,6 +137,7 @@ char* get_QuadInput(char* prompt) {
     else {
 #else
     #warning Readline support has not been included!
+    {
 #endif
         if (stdin_isatty) {
             printf("%s", prompt);
