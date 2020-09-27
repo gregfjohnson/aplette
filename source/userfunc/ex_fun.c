@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <strings.h>
 #include "apl.h"
 #include "data.h"
 #include "utility.h"
@@ -32,6 +33,7 @@ void ex_fun()
     lineArray = np->functionLines;
 
     thisContext = (Context*) alloc(sizeof(Context));
+    bzero(thisContext, sizeof(*thisContext));
     thisContext->prev = gsip; /* setup new state indicator */
     thisContext->Mode = deffun;
     thisContext->np = np;
