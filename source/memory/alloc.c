@@ -3,6 +3,7 @@
  * subject to the conditions expressed in the file "License".
  */
 
+#include <strings.h>
 #include <stdlib.h>
 #include <inttypes.h>
 #include "apl.h"
@@ -30,6 +31,8 @@ void *alloc(unsigned nbytes) {
 
     if (newblock->block == 0)
         goto failed;
+
+    bzero(newblock->block, nbytes);
 
     if (mem_trace) {
         printf(", %d bytes at %p (data)]\n",
