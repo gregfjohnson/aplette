@@ -89,10 +89,12 @@ void execute() {
 
         case EQ: /* 9.8.1999/tyl  */
         case NE:
+            // for these two operators only, allow arguments
+            // to have different types.
             data_fn = (data (*)()) exop[opcode];
             p = fetch2();
             p1 = sp[-2];
-            ex_dscal(2, data_fn, p, p1);
+            ex_dscal(2 /* allow different types */, data_fn, p, p1);
             break;
 
         case PLUS:
