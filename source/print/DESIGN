@@ -4,8 +4,8 @@ The entry points for most print tasks are ex_print and
 ex_hprint.  These call print() which coordinates most of
 the real work.  
 
-Stage 1.  The top of the stack is fetch()'ed - so it
-stays on the stack and if it is a quad function or
+Stage 1.  The top of the expr_stack is fetch()'ed - so it
+stays on the expr_stack and if it is a quad function or
 variable, fetch() will convert it into a number.  For
 data types, fpt_size() is called with every member of the 
 item as an argument.  The goal of this process is to

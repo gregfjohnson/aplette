@@ -68,7 +68,7 @@ void ex_ddom()
     char* al;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
 
     if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "domino - incorrect types");
@@ -140,9 +140,9 @@ void ex_ddom()
     if (result)
         error(ERR, "domino - could not solve");
 
-    sp--;
+    expr_stack_ptr--;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
     p->dim[0] = cols;
     p->size = cols * lhs_cols;
 }

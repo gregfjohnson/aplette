@@ -9,7 +9,7 @@
 void sichk(SymTabEntry* n) {
     Context* p;
 
-    p = gsip;
+    p = state_indicator_ptr;
     while (p) {
         if (n == p->np)
             error(ERR, "si damage -- type ')sic'");

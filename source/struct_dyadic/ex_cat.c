@@ -18,7 +18,7 @@ void ex_cat()
     int k;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     k = p->rank;
     if (p->itemType != q->itemType)
         error(ERR_domain, "");
@@ -30,7 +30,7 @@ void ex_cat()
         putdat(r, getdat(q));
         pop();
         pop();
-        *sp++ = r;
+        *expr_stack_ptr++ = r;
     }
     else
         cat0(k - 1);
@@ -56,8 +56,8 @@ static void cat0(int k)
     struct item *p, *q, *r;
     int i, a, b;
 
-    p = sp[-1];
-    q = sp[-2];
+    p = expr_stack_ptr[-1];
+    q = expr_stack_ptr[-2];
     i = k;
     if (p->itemType != q->itemType)
         error(ERR_domain, "");
@@ -86,7 +86,7 @@ static void cat0(int k)
     }
     pop();
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }
 
 static int cat1(struct item* ip, int k)
@@ -121,8 +121,8 @@ static void lam0(double d)
     struct item *p, *q, *r;
     int i, j, k;
 
-    p = sp[-1];
-    q = sp[-2];
+    p = expr_stack_ptr[-1];
+    q = expr_stack_ptr[-2];
     if (p->itemType != q->itemType)
         error(ERR_domain, "");
     if (q->rank > p->rank)
@@ -146,10 +146,10 @@ static void lam0(double d)
     r = newdat(idx.type, idx.rank, idx.size);
     copy(IN, (char*)idx.dim, (char*)r->dim, idx.rank);
     copy(idx.type, (char*)p->datap, (char*)r->datap, r->size);
-    if (p == sp[-1])
-        sp[-1] = r;
+    if (p == expr_stack_ptr[-1])
+        expr_stack_ptr[-1] = r;
     else
-        sp[-2] = r;
+        expr_stack_ptr[-2] = r;
     aplfree(p);
     cat0(k);
 }

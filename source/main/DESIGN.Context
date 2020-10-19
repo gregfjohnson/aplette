@@ -22,9 +22,9 @@ previous, this allows the linked list to be used for:
 When a new Context is created, it is locally called
 "thisContext".
 
-The global variable gsip "Global State Indicator Pointer"
+The global variable state_indicator_ptr "Global State Indicator Pointer"
 points to the currently running(or compiling) Context.
-"gsip" is not always the same as "thisContext" - "gsip"
+"state_indicator_ptr" is not always the same as "thisContext" - "state_indicator_ptr"
 is used as a global so that it is preserved at the end
 of error processing.
 
@@ -35,15 +35,15 @@ Refer to userfunc/ex_ibr[0].c for this process.
 
 -----------
 The context structure was previously called the state indicator
-and pointed to by the global state indicator pointer "gsip".
-The old documentation had this to say about gsip:
+and pointed to by the global state indicator pointer "state_indicator_ptr".
+The old documentation had this to say about state_indicator_ptr:
 
-(gsip == 0) implies
-an empty list, (gsip->sip == 0) implies the end of the list,
-and (gsip->np == 0) implies a state indicator seperator.
+(state_indicator_ptr == 0) implies
+an empty list, (state_indicator_ptr->sip == 0) implies the end of the list,
+and (state_indicator_ptr->np == 0) implies a state indicator seperator.
 (A new function was evoked with an old one pending.)
 
-Note that "gsip->funlc" is the same as the old global
+Note that "state_indicator_ptr->funlc" is the same as the old global
 variable "funlc", and 
 
-(gsip && gsip->sip ? gsip->sip->funlc : 0)
+(state_indicator_ptr && state_indicator_ptr->sip ? state_indicator_ptr->sip->funlc : 0)

@@ -42,7 +42,7 @@ struct item* ex_qio(io) int io; /* 0 = source, 1 = sink */
             iorigin = (data)i;
         else
             error(ERR_domain, "assign value not 0 or 1");
-        sp[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (struct item*)p;
         return (0);
     };
 }

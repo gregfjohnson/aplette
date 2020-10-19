@@ -19,16 +19,16 @@ void ex_label() {
     SymTabEntry* newEntry;
 
     // create a new symtab entry..
-    n = (SymTabEntry*) sp[-1];
+    n = (SymTabEntry*) expr_stack_ptr[-1];
     symtabRemoveEntry(n);
     newEntry = symtabInsert(n->namep);
     newEntry->itemType = LV;
 
-    sp[-1] = (struct item *) newEntry;
+    expr_stack_ptr[-1] = (struct item *) newEntry;
     ex_asgn();
 
     // lock out assignments
     newEntry->itemp->itemType = LBL;
 
-    sp--;
+    expr_stack_ptr--;
 }

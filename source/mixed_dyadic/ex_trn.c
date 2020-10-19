@@ -15,7 +15,7 @@ void ex_dtrn()
     int i;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     if (p->rank > 1 || p->size != q->rank)
         error(ERR_rank, "");
     for (i = 0; i < p->size; i++)
@@ -42,7 +42,7 @@ void trn0()
     int i, j;
     int d[MRANK], r[MRANK];
 
-    bidx(sp[-1]);
+    bidx(expr_stack_ptr[-1]);
     for (i = 0; i < idx.rank; i++)
         d[i] = -1;
     for (i = 0; i < idx.rank; i++) {

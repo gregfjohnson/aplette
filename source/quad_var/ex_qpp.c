@@ -46,7 +46,7 @@ struct item* ex_qpp(io) int io; /* 0 = source, 1 = sink */
         pop();
         p = fetch1();
         updatePrintP(p);
-        sp[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (struct item*)p;
         return (0);
     };
 }

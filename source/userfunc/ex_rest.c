@@ -10,7 +10,7 @@
 void ex_rest() {
     SymTabEntry *np, *restoreEntry = NULL;
 
-    //valueFromLastExecutedLine = sp[-1];
+    //valueFromLastExecutedLine = expr_stack_ptr[-1];
     /*
     * the following is commented out because
     * of an obscure bug in the parser, which is
@@ -25,7 +25,7 @@ void ex_rest() {
     *
     * the "eol rval-result" pops off the previous result, and
     * puts a "fetched" version of the returned value (result)
-    * onto the stack.  The bug is that the "eol rval." should
+    * onto the expr_stack.  The bug is that the "eol rval." should
     * be output at the beginning of the fn epilog.
     * The following two lines used to be a simple
     * "p = fetch(p)", which is used to disallow
@@ -48,12 +48,12 @@ void ex_rest() {
     if(p->type == LV) error(ERR_botch,"rest B");
     */
 
-    gsip->ptr += copy(PTR, (char*) gsip->ptr, (char*)&np, 1);
+    state_indicator_ptr->ptr += copy(PTR, (char*) state_indicator_ptr->ptr, (char*)&np, 1);
 
     int i;
-    for (i = 0; i < gsip->shadowedIdCount; ++i) {
-        if (strcmp(gsip->shadowedIds[i]->namep, np->namep) == 0) {
-            restoreEntry = gsip->shadowedIds[i];
+    for (i = 0; i < state_indicator_ptr->shadowedIdCount; ++i) {
+        if (strcmp(state_indicator_ptr->shadowedIds[i]->namep, np->namep) == 0) {
+            restoreEntry = state_indicator_ptr->shadowedIds[i];
             break;
         }
     }

@@ -52,7 +52,7 @@ struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
         erase(n);
         n->entryUse = DA;
         n->itemp = q;
-        sp[-1] = (struct item*)n;
+        expr_stack_ptr[-1] = (struct item*)n;
 
         return (0);
     };

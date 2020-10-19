@@ -7,6 +7,6 @@
 
 void checksp()
 {
-    if (sp >= &stack[STKS])
-        error(ERR, "stack overflow");
+    if (expr_stack_ptr >= &expr_stack[STKS])
+        error(ERR, "expr_stack overflow");
 }

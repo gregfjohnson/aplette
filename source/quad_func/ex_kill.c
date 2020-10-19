@@ -16,5 +16,5 @@ void ex_kill()
     pid = topfix();
     signo = topfix();
     kill(pid, signo);
-    *sp++ = newdat(DA, 1, 0);
+    *expr_stack_ptr++ = newdat(DA, 1, 0);
 }

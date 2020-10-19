@@ -48,5 +48,5 @@ void ex_mdyad(data (*f)(), struct item* argptr0, struct item* argptr1) {
 
     pop();
     pop();
-    *sp++ = result;
+    *expr_stack_ptr++ = result;
 }

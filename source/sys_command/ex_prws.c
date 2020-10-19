@@ -33,7 +33,7 @@ void ex_prws()
                     printf("%d ", ip->dim[i]);
                 printf(S_RHO "\n");
             }
-            *sp++ = (struct item*)np;
+            *expr_stack_ptr++ = (struct item*)np;
             ex_print();
             pop();
             putchar('\n');
@@ -42,7 +42,7 @@ void ex_prws()
         case NF:
         case MF:
         case DF:
-            *sp++ = (struct item*)np;
+            *expr_stack_ptr++ = (struct item*)np;
             ex_list();
             putchar('\n');
             break;

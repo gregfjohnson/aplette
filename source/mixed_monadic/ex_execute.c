@@ -33,28 +33,28 @@ void ex_execute()
     dim1 = p->rank < 2 ? p->size : p->dim[1];
 
     thisContext = (Context*)alloc(sizeof(Context));
-    thisContext->prev = gsip; /* setup new context */
+    thisContext->prev = state_indicator_ptr; /* setup new context */
     thisContext->text = (char*)alloc(dim1 + 1);
     thisContext->Mode = exec;
-    thisContext->sp = sp;
+    thisContext->expr_stack_ptr = expr_stack_ptr;
     thisContext->suspended = 0;
-    gsip = thisContext;
+    state_indicator_ptr = thisContext;
 
     for (i = 0; i < dim0; i++) {
-        copy(CH, b, gsip->text, dim1);
-        gsip->text[dim1] = '\n';
+        copy(CH, b, state_indicator_ptr->text, dim1);
+        state_indicator_ptr->text[dim1] = '\n';
         compile_new(CompileQuadInput);
 
-        if (gsip->pcode != 0) {
-            gsip->ptr = gsip->pcode;
-            gsip->sp = sp;
+        if (state_indicator_ptr->pcode != 0) {
+            state_indicator_ptr->ptr = state_indicator_ptr->pcode;
+            state_indicator_ptr->expr_stack_ptr = expr_stack_ptr;
             execute();
-            aplfree((int*)gsip->pcode);
-            if (gsip->sp == sp)
+            aplfree((int*)state_indicator_ptr->pcode);
+            if (state_indicator_ptr->expr_stack_ptr == expr_stack_ptr)
                 ex_nilret();
         }
         else {
-            gsip = thisContext->prev; /* restore previous context */
+            state_indicator_ptr = thisContext->prev; /* restore previous context */
             aplfree((int*)thisContext->text);
             aplfree((int*)thisContext);
 
@@ -65,9 +65,9 @@ void ex_execute()
             pop();
     }
     aplfree((int*)thisContext->text);
-    gsip = thisContext->prev; /* restore previous context */
+    state_indicator_ptr = thisContext->prev; /* restore previous context */
     aplfree((int*)thisContext);
-    p = *--sp;
+    p = *--expr_stack_ptr;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

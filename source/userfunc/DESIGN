@@ -8,17 +8,17 @@ vectors by compile_new.
 
 During execution, when the function prolog is processed shadowed
 identifiers have their symbol table pointers pushed on the arithmetic
-runtime stack.
+runtime expr_stack.
 
 Better?  put list of shadowed identifiers (pointers to their symbol
 table entries) into the "global state indicator pointer".  (Also,
-rename "gsip" to "activation record".)  Among other things, that
-will make the process of unwinding and disposing stack cleaner.
+rename "state_indicator_ptr" to "activation record".)  Among other things, that
+will make the process of unwinding and disposing expr_stack cleaner.
 
 execute() is the code that goes over a line of APL translated into pcode.
 execute() assumes that global state indicator pointer is pointing at
-a Context with gsip->pcode ready to go, and it assigns
-gsip->ptr = gsip->pcode.
+a Context with state_indicator_ptr->pcode ready to go, and it assigns
+state_indicator_ptr->ptr = state_indicator_ptr->pcode.
 
 ex_fun.c is the code that runs user-defined functions.
 every time a function runs, each line is run through
@@ -59,7 +59,7 @@ SymTabEntry.functionLines[functionLineLength-1] is the "close down shop"
 epilog code.
 ************/
 
-gsip is a "global status indicator pointer" pointing at a Context
+state_indicator_ptr is a "global status indicator pointer" pointing at a Context
 struct describing the current function activation record.
 The co
 into the current byte code array, which points at

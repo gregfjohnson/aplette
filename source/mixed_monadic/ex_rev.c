@@ -36,7 +36,7 @@ void revk(int k)
 {
     int o;
 
-    bidx(sp[-1]);
+    bidx(expr_stack_ptr[-1]);
     if (k < 0 || k >= idx.rank)
         error(ERR_index, "");
     o = idx.del[k] * (idx.dim[k] - 1);

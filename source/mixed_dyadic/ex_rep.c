@@ -14,7 +14,7 @@ void ex_rep()
     data *p1, *p2, *p3;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     /*
      * first map 1 element vectors to scalars:
     *
@@ -39,5 +39,5 @@ void ex_rep()
     }
     pop();
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }

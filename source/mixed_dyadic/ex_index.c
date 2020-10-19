@@ -16,11 +16,11 @@ void ex_index()
     struct item *p, *q;
     int i, j, f, n;
 
-    n = *gsip->ptr++;
-    f = *gsip->ptr;
-    p = sp[-1];
+    n = *state_indicator_ptr->ptr++;
+    f = *state_indicator_ptr->ptr;
+    p = expr_stack_ptr[-1];
     if (f == ASGN) {
-        gsip->ptr++;
+        state_indicator_ptr->ptr++;
         if (p->itemType != LV)
             error(ERR_value, "not a local variable");
         if (((SymTabEntry*)p)->entryUse != DA)
@@ -33,20 +33,20 @@ void ex_index()
         error(ERR_index, "");
     idx.rank = 0;
     for (i = 0; i < n; i++) {
-        p = sp[-i - 2];
+        p = expr_stack_ptr[-i - 2];
         if (p->itemType == EL) {
             idx.dim[idx.rank++] = q->dim[i];
             continue;
         }
         p = fetch(p);
-        sp[-i - 2] = p;
+        expr_stack_ptr[-i - 2] = p;
         for (j = 0; j < p->rank; j++)
             idx.dim[idx.rank++] = p->dim[j];
     }
     size();
     if (f == ASGN) {
-        p = fetch(sp[-n - 2]);
-        sp[-n - 2] = p;
+        p = fetch(expr_stack_ptr[-n - 2]);
+        expr_stack_ptr[-n - 2] = p;
         if (p->size > 1) {
             if (idx.size != p->size)
                 error(ERR_length, "");
@@ -66,21 +66,21 @@ void ex_index()
     } else {
         p = newdat(q->itemType, idx.rank, idx.size);
         copy(IN, (char*)idx.dim, (char*)p->dim, idx.rank);
-        *sp++ = p;
+        *expr_stack_ptr++ = p;
         f = 0; /* v[i] */
     }
     bidx(q);
     index1(0, f);
     if (f == 0) {
-        p = sp[-1];
-        sp--;
+        p = expr_stack_ptr[-1];
+        expr_stack_ptr--;
         for (i = 0; i <= n; i++)
             pop();
-        *sp++ = p;
+        *expr_stack_ptr++ = p;
     }
     else {
         pop(); /* pop ELID */
-        sp--;  /* skip over LV */
+        expr_stack_ptr--;  /* skip over LV */
         for (i = 0; i < n; i++)
             pop();
     }
@@ -88,7 +88,7 @@ void ex_index()
 
 void ex_elid()
 {
-    *sp++ = newdat(EL, 0, 0);
+    *expr_stack_ptr++ = newdat(EL, 0, 0);
 }
 
 void index1(int i, int f)
@@ -100,22 +100,22 @@ void index1(int i, int f)
         switch (f) {
 
         case 0:
-            p = sp[-2];
+            p = expr_stack_ptr[-2];
             p->index = access();
-            putdat(sp[-1], getdat(p));
+            putdat(expr_stack_ptr[-1], getdat(p));
             return;
 
         case 1:
-            datum = getdat(sp[-idx.rank - 3]);
+            datum = getdat(expr_stack_ptr[-idx.rank - 3]);
 
         case 2:
-            p = ((SymTabEntry*)sp[-2])->itemp;
+            p = ((SymTabEntry*)expr_stack_ptr[-2])->itemp;
             p->index = access();
             putdat(p, datum);
             return;
         }
     }
-    p = sp[-i - 3];
+    p = expr_stack_ptr[-i - 3];
     if (p->itemType == EL) {
         for (j = 0; j < idx.dim[i]; j++) {
             idx.idx[i] = j;

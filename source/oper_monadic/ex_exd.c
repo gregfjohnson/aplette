@@ -33,7 +33,7 @@ void ex_exd()
     struct item* q;
 
     fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     exdk(q->rank - 1);
 }
 
@@ -42,8 +42,8 @@ void exdk(int k)
     struct item* p;
     int i, dk;
 
-    p = sp[-1];
-    bidx(sp[-2]);
+    p = expr_stack_ptr[-1];
+    bidx(expr_stack_ptr[-2]);
     if (k < 0 || k >= idx.rank)
         error(ERR_index, "");
     dk = 0;
@@ -56,30 +56,30 @@ void exdk(int k)
     size();
     p = newdat(idx.type, idx.rank, idx.size);
     copy(IN, (char*)idx.dim, (char*)p->dim, idx.rank);
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {
         exd1(k);
     }
 
-    sp--;
+    expr_stack_ptr--;
     pop();
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }
 
 void exd1(int k)
 {
     struct item* p;
 
-    p = sp[-2];
+    p = expr_stack_ptr[-2];
     p->index = idx.idx[k];
     if (getdat(p))
-        datum = getdat(sp[-3]);
+        datum = getdat(expr_stack_ptr[-3]);
     else if (idx.type == DA)
         datum = zero;
     else
         datum = ' ';
-    putdat(sp[-1], datum);
+    putdat(expr_stack_ptr[-1], datum);
 }

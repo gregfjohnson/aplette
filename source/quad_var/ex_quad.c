@@ -29,26 +29,26 @@ struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
 
     if (io == 0) {
         thisContext = (Context*)alloc(sizeof(Context));
-        thisContext->prev = gsip; /* setup new context */
+        thisContext->prev = state_indicator_ptr; /* setup new context */
         thisContext->Mode = deffun;
-        thisContext->sp = 0;
+        thisContext->expr_stack_ptr = 0;
 
-        gsip = thisContext;
+        state_indicator_ptr = thisContext;
         do {
-            gsip->text = get_QuadInput(S_QUAD_ASCII ":      ");
+            state_indicator_ptr->text = get_QuadInput(S_QUAD_ASCII ":      ");
 
-            if (gsip->text == NULL)
+            if (state_indicator_ptr->text == NULL)
                 error(ERR, "user input was null");
 
             compile_new(CompileQuadInput);
-        } while (gsip->pcode == 0); /* do it at least once */
+        } while (state_indicator_ptr->pcode == 0); /* do it at least once */
 
-        gsip->ptr = gsip->pcode;
+        state_indicator_ptr->ptr = state_indicator_ptr->pcode;
 
         execute();
 
-        p = *--sp;
-        gsip = thisContext->prev; /* restore previous context */
+        p = *--expr_stack_ptr;
+        state_indicator_ptr = thisContext->prev; /* restore previous context */
 
         aplfree((int*)thisContext->text);
         aplfree((int*)thisContext->pcode);

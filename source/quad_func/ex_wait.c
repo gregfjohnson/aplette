@@ -25,5 +25,5 @@ void ex_wait()
     p->datap[1] = s & 0377;
     p->datap[2] = (s >> 8) & 0377;
     pop(); /* dummy arg */
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

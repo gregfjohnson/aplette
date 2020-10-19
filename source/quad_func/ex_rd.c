@@ -32,5 +32,5 @@ void ex_rd()
     }
     else
         p = newdat(CH, 1, 0);
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

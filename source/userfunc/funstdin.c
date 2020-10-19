@@ -26,7 +26,7 @@ void funstdin() {
 
     pop();
 
-    p2 = compile_old(gsip->text, CompileFunctionDefn);
+    p2 = compile_old(state_indicator_ptr->text, CompileFunctionDefn);
     if (p2 == NULL) {
         error(ERR_implicit, "string does not contain a valid function header");
     }
@@ -51,7 +51,7 @@ void funstdin() {
 
     lineCount = 0;
 
-    linePtr = gsip->text;
+    linePtr = state_indicator_ptr->text;
 
     while (1) {
         copy(CH, linePtr, (char *) functionLine, strlen(linePtr)+1);

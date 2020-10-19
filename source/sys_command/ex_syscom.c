@@ -32,7 +32,7 @@ void ex_syscom()
     char *cp, *vfname();
     int nameLen;
 
-    i = *gsip->ptr++;
+    i = *state_indicator_ptr->ptr++;
     switch (i) {
 
     default:
@@ -72,8 +72,8 @@ void ex_syscom()
 
     case DIGITS:
         if (exprOrNullFlag) {
-            p = sp[-1];
-            sp--;
+            p = expr_stack_ptr[-1];
+            expr_stack_ptr--;
             updatePrintP(p);
             outputPrintP();
 
@@ -108,8 +108,8 @@ void ex_syscom()
         return;
 
     case ERASE:
-        p = sp[-1];
-        sp--;
+        p = expr_stack_ptr[-1];
+        expr_stack_ptr--;
         erase((SymTabEntry*) p);
         if (vars_trace)
             vars_dump();
@@ -168,8 +168,8 @@ void ex_syscom()
         return;
 
     case CODE:
-        n = (SymTabEntry*)sp[-1];
-        sp--;
+        n = (SymTabEntry*)expr_stack_ptr[-1];
+        expr_stack_ptr--;
         switch (n->entryUse) {
         default:
             error(ERR_implicit, "function name not found");
@@ -192,7 +192,7 @@ void ex_syscom()
         return;
 
     case SICLEAR:
-        while (gsip != &prime_context) {
+        while (state_indicator_ptr != &prime_context) {
             ex_ibr0();
         }
         longjmp(cold_restart, 0);
@@ -219,17 +219,17 @@ void ex_syscom()
        * procedures are guaranteed to fail (miserably).
        *      --jjb 1/78
        */
-        sp = stack;
+        expr_stack_ptr = expr_stack;
         longjmp(cold_restart, 0);
     //longjmp(reset_env, 0);
-    //longjmp(gsip->env, 0);
+    //longjmp(state_indicator_ptr->env, 0);
 
     case LIB:
         listdir();
         return;
 
     case COPY:
-        if (gsip != &prime_context) {
+        if (state_indicator_ptr != &prime_context) {
             error(ERR_implicit, "si damage -- type ')sic'");
         }
         wsload(opn(vfname(fname), 0));
@@ -296,8 +296,8 @@ char* vfname(char* array) {
     SymTabEntry* n;
     char* p;
 
-    n = (SymTabEntry*)sp[-1];
-    sp--;
+    n = (SymTabEntry*)expr_stack_ptr[-1];
+    expr_stack_ptr--;
 
     if (n->itemType != LV) {
         error(ERR_value, "not a local variable");

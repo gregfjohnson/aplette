@@ -11,7 +11,7 @@ void clear()
     symtab_clear();
 
     afreset(); /* release all dynamic memory */
-    gsip = 0;  /* reset state indicator */
+    state_indicator_ptr = 0;  /* reset state indicator */
 
     iorigin = INITIAL_iorigin;
     pagewidth = INITIAL_pagewidth;

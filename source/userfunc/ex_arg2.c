@@ -15,7 +15,7 @@ void ex_arg2()
     SymTabEntry *oldEntry1, *oldEntry2;
 
     // get first argument's name
-    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np2, 1);
+    state_indicator_ptr->ptr += copy(PTR, (char*)state_indicator_ptr->ptr, (char*)&np2, 1);
 
     oldEntry2 = symtabFind(np2->namep);
     if (oldEntry2 == NULL) {
@@ -23,10 +23,10 @@ void ex_arg2()
     }
 
     // skip over ARG1
-    gsip->ptr++;
+    state_indicator_ptr->ptr++;
 
     // get second arg's name
-    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np1, 1);
+    state_indicator_ptr->ptr += copy(PTR, (char*)state_indicator_ptr->ptr, (char*)&np1, 1);
 
     oldEntry1 = symtabFind(np1->namep);
     if (oldEntry1 == NULL) {
@@ -34,15 +34,15 @@ void ex_arg2()
     }
 
     // get first expr to be bound to arg
-    p1 = fetch(sp[-1]);
-    --sp;
+    p1 = fetch(expr_stack_ptr[-1]);
+    --expr_stack_ptr;
 
     // get second one
-    p2 = fetch(sp[-1]);
-    --sp;
+    p2 = fetch(expr_stack_ptr[-1]);
+    --expr_stack_ptr;
 
-    Context_addShadowedId(gsip, oldEntry2);
-    Context_addShadowedId(gsip, oldEntry1);
+    Context_addShadowedId(state_indicator_ptr, oldEntry2);
+    Context_addShadowedId(state_indicator_ptr, oldEntry1);
 
     symtabRemoveEntry(oldEntry2);
     newEntry2 = symtabInsert(np2->namep);

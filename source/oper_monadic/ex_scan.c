@@ -53,7 +53,7 @@ void scan0(int k)
         q = newdat(DA, 0, 1);
         q->dim[0] = 1;
 
-        switch (*gsip->ptr++) {
+        switch (*state_indicator_ptr->ptr++) {
         case ADD:
         case SUB:
         case OR:
@@ -79,12 +79,12 @@ void scan0(int k)
         }
 
         pop();
-        *sp++ = q;
+        *expr_stack_ptr++ = q;
 
         return;
     }
 
-    fn = (data (*)(data, data))exop[(uint32_t) *gsip->ptr++];
+    fn = (data (*)(data, data))exop[(uint32_t) *state_indicator_ptr->ptr++];
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {

@@ -47,7 +47,7 @@ void ex_take() {
     map(o);
 
     if (fflg) {
-        bidx(sp[-1]);
+        bidx(expr_stack_ptr[-1]);
         indexIterateInit(&idx);
         while (indexIterate(&idx)) {
             takezr(fill);
@@ -81,7 +81,7 @@ static int td1(int tdmode) {
     int r; /* set to 1 if take > array dim */
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
 
     r = !q->size;       /* Weird stuff for null items */
 
@@ -90,7 +90,7 @@ static int td1(int tdmode) {
         nq = newdat(q->itemType, p->size, 1);
         *nq->datap = *q->datap;
         pop();
-        *sp++ = q = nq;
+        *expr_stack_ptr++ = q = nq;
         for (i = 0; i < p->size; i++)
             q->dim[i] = 1;
     }
@@ -128,7 +128,7 @@ static void takezr(int* fill) {
 
     for (i = 0; i < idx.rank; i++) {
         if ((fill[i] > 0 && idx.idx[i] >= fill[i]) || (fill[i] < 0 && idx.idx[i] < -fill[i])) {
-            p = sp[-1];
+            p = expr_stack_ptr[-1];
             p->index = access();
             putdat(p, (p->itemType == DA) ? zero : (data) ' ');
             return;

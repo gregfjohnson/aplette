@@ -37,7 +37,7 @@ struct item* ex_qpw(io) int io; /* 0 = source, 1 = sink */
         if (i < 10 || i > 132)
             error(ERR_limit, S_QUAD_ASCII "pw range is 20 to 132");
         pagewidth = i;
-        sp[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (struct item*)p;
         return (0);
     };
 }

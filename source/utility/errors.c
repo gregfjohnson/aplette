@@ -122,11 +122,11 @@ void error(int type, char* diagnostic)
     /* produce traceback and mark state indicator */
     tback(0);
 
-    if (gsip->Mode == deffun) {
-        gsip->suspended = 1;
+    if (state_indicator_ptr->Mode == deffun) {
+        state_indicator_ptr->suspended = 1;
     }
     else {
-        while (sp > stack)
+        while (expr_stack_ptr > expr_stack)
             pop(); /* zap garbage */
     }
     mainloop();

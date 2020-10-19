@@ -13,8 +13,8 @@ int funread(char* fname) {
     struct item* p;
     int f;
 
-    p = sp[-1];
-    sp--;
+    p = expr_stack_ptr[-1];
+    expr_stack_ptr--;
 
     if (p->itemType != LV) { error(ERR_value, "not a local variable"); }
 

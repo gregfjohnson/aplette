@@ -83,5 +83,5 @@ void ex_nl()
     }
 
     pop();
-    *sp++ = ip;
+    *expr_stack_ptr++ = ip;
 }

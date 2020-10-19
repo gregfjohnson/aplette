@@ -14,7 +14,7 @@ void ex_eps()
     data d;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     r = newdat(DA, p->rank, p->size);
     copy(IN, (char*)p->dim, (char*)r->dim, p->rank);
     for (i = 0; i < p->size; i++) {
@@ -31,5 +31,5 @@ void ex_eps()
     }
     pop();
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }

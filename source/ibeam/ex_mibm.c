@@ -26,7 +26,7 @@ void ex_mibm() {
             code_trace = !code_trace;
             break;
 
-        case 2: /* toggle stack trace */
+        case 2: /* toggle expr_stack trace */
             datum = stack_trace;
             stack_trace = !stack_trace;
             break;
@@ -56,22 +56,22 @@ void ex_mibm() {
             break;
 
         case 26: /* current line */
-            if (gsip->Mode == deffun)
-                datum = gsip->funlc - 1;
+            if (state_indicator_ptr->Mode == deffun)
+                datum = state_indicator_ptr->funlc - 1;
             else
                 datum = 0;
             break;
 
         case 27: /* vector of line numbers of fn activations # */
             i = 0;
-            gp = gsip;
+            gp = state_indicator_ptr;
             while (gp) {
                 if (gp->np)
                     i++;
                 gp = gp->prev;
             }
             p = newdat(DA, 1, i);
-            gp = gsip;
+            gp = state_indicator_ptr;
             i = 0;
             while (gp) {
                 if (gp->np)
@@ -79,7 +79,7 @@ void ex_mibm() {
                 p->datap[i++] = gp->funlc - 1;
                 gp = gp->prev;
             }
-            *sp++ = p;
+            *expr_stack_ptr++ = p;
             return;
 
         /*
@@ -91,8 +91,8 @@ void ex_mibm() {
             break;
 
         case 36: /* 2nd element of ib27 */
-            if ((gsip->Mode == deffun) && gsip->prev->Mode == deffun)
-                datum = gsip->prev->funlc - 1;
+            if ((state_indicator_ptr->Mode == deffun) && state_indicator_ptr->prev->Mode == deffun)
+                datum = state_indicator_ptr->prev->funlc - 1;
             else
                 datum = 0;
             break;
@@ -124,5 +124,5 @@ void ex_mibm() {
     }
     p = newdat(DA, 0, 1);
     p->datap[0] = datum;
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

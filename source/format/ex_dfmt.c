@@ -21,7 +21,7 @@ void ex_dfmt()
     struct item *rp, *lp, *q;
 
     lp = fetch2();
-    rp = sp[-2];
+    rp = expr_stack_ptr[-2];
 
     switch (lp->itemType) {
     case DA:
@@ -41,7 +41,7 @@ void ex_dfmt()
         q = fp_dfmt(lp, rp);
         pop();
         pop();
-        *sp++ = q; // put it onto the stack
+        *expr_stack_ptr++ = q; // put it onto the expr_stack
         break;
 
     case CH:

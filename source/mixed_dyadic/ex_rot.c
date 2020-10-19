@@ -29,7 +29,7 @@ void ex_rot()
     struct item* p;
 
     fetch2();
-    p = sp[-2];
+    p = expr_stack_ptr[-2];
     rotk(p->rank - 1);
 }
 
@@ -38,8 +38,8 @@ static void rotk(int k)
     struct item* p;
     int isDyadicRotate;
 
-    p = sp[-1];
-    bidx(sp[-2]);
+    p = expr_stack_ptr[-1];
+    bidx(expr_stack_ptr[-2]);
     if (k < 0 || k >= idx.rank)
         error(ERR_index, "");
     isDyadicRotate = 0;
@@ -51,7 +51,7 @@ static void rotk(int k)
         datum = getdat(p);
     }
     p = newdat(idx.type, 1, idx.dimk);
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {
@@ -69,12 +69,12 @@ static void rot1(int k)
     int o, n;
 
     if (k == 0)
-        datum = getdat(sp[-2]);
+        datum = getdat(expr_stack_ptr[-2]);
     o = fix(datum);
     if (o < 0)
         o = idx.dimk - (-o % idx.dimk);
-    q = sp[-1];
-    p = sp[-3];
+    q = expr_stack_ptr[-1];
+    p = expr_stack_ptr[-3];
     q->index = 0;
     n = access();
     for (i = 0; i < idx.dimk; i++) {

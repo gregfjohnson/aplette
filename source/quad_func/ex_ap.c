@@ -22,5 +22,5 @@ void ex_ap()
     if (p->rank == 1)
         writeErrorOnFailure(fd, "\n", 1);
     pop();
-    *sp++ = newdat(DA, 1, 0);
+    *expr_stack_ptr++ = newdat(DA, 1, 0);
 }

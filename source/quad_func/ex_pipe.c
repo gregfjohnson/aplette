@@ -22,5 +22,5 @@ void ex_pipe()
         p->datap[1] = pp[1];
     }
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

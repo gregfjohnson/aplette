@@ -20,7 +20,7 @@ void ex_base()
     data d1, d2;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "base - incorrect types");
     if (p->rank > 1)
@@ -32,8 +32,8 @@ void ex_base()
             i = q->size;
         q = extend(DA, i, p->datap[0]);
         pop();
-        *sp++ = p = q;
-        q = sp[-2];
+        *expr_stack_ptr++ = p = q;
+        q = expr_stack_ptr[-2];
     }
     d1 = p->datap[p->size - 1];
     p->datap[p->size - 1] = 1.0;
@@ -42,8 +42,8 @@ void ex_base()
         p->datap[i] = d1;
         d1 *= d2;
     }
-    savptr = gsip->ptr;
-    gsip->ptr = base_com;
+    savptr = state_indicator_ptr->ptr;
+    state_indicator_ptr->ptr = base_com;
     ex_iprod();
-    gsip->ptr = savptr;
+    state_indicator_ptr->ptr = savptr;
 }

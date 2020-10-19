@@ -16,10 +16,10 @@ void tback(int flag)
     Context* thisContext;
     int i;
 
-    if (gsip == &prime_context)
+    if (state_indicator_ptr == &prime_context)
         return; /* don't attempt to trace state zero */
     else
-        thisContext = gsip;
+        thisContext = state_indicator_ptr;
 
     i = 0;
     if (flag)

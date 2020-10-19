@@ -39,5 +39,5 @@ void ex_dibm() {
 
     p = newdat(DA, 0, 1);
     p->datap[0] = datum;
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

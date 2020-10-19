@@ -17,5 +17,5 @@ void ex_mrho()
     for (i = 0; i < p->rank; i++)
         *dp++ = p->dim[i];
     pop();
-    *sp++ = q;
+    *expr_stack_ptr++ = q;
 }

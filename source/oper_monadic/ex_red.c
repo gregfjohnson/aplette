@@ -55,7 +55,7 @@ void red0(int k)
  */
         q = newdat(DA, 0, 1);
         q->dim[0] = 1;
-        switch (*gsip->ptr++) {
+        switch (*state_indicator_ptr->ptr++) {
         case ADD:
         case SUB:
         case OR:
@@ -80,10 +80,10 @@ void red0(int k)
             error(ERR_implicit, "cannot reduce using this function");
         }
         pop();
-        *sp++ = q;
+        *expr_stack_ptr++ = q;
         return;
     }
-    fn = (data (*)(data, data))exop[(uint32_t) *gsip->ptr++];
+    fn = (data (*)(data, data))exop[(uint32_t) *state_indicator_ptr->ptr++];
 
     q = newdat(idx.type, idx.rank, idx.size);
     copy(IN, (char*)idx.dim, (char*)q->dim, idx.rank);
@@ -94,7 +94,7 @@ void red0(int k)
     }
 
     pop();
-    *sp++ = q;
+    *expr_stack_ptr++ = q;
 }
 
 void red1(data* dp, struct item* result, data (*f)(data, data))

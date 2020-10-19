@@ -14,11 +14,11 @@ void ex_br()
     p = fetch1();
     if (p->size == 0)
         return;
-    gsip->funlc = fix(getdat(p));
+    state_indicator_ptr->funlc = fix(getdat(p));
 }
 
 void ex_br0()
 {
-    gsip->funlc = 0;
+    state_indicator_ptr->funlc = 0;
     ex_elid();
 }

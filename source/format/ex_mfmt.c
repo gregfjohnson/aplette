@@ -26,7 +26,7 @@ void ex_mfmt()
         /* convert p from numeric to a literal array */
         q = fp_mfmt(p);
         pop();
-        *sp++ = q; // put it onto the stack
+        *expr_stack_ptr++ = q; // put it onto the expr_stack
         break;
 
     case CH:

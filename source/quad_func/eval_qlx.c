@@ -19,11 +19,11 @@ void eval_qlx()
     struct item* p;
 
     if ((n = nlook(S_QUAD "lx")) && n->itemp->itemType == CH && n->itemp->size) {
-        *sp++ = dupdat(n->itemp);
+        *expr_stack_ptr++ = dupdat(n->itemp);
         sandbox = 1;
         ex_execute();
         sandbox = sandboxflg;
-        p = sp[-1];
+        p = expr_stack_ptr[-1];
         if (p->itemType != EL && p->itemType != NIL)
             ex_print();
         pop();

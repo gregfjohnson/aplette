@@ -21,19 +21,19 @@ void map(int o) {
     p = newdat(idx.type, idx.rank, n);
 
     copy(IN, (char*)idx.dim, (char*)p->dim, idx.rank);
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 
     if (n != 0) {
-        struct item* p = sp[-2];
+        struct item* p = expr_stack_ptr[-2];
 
         indexIterateInit(&idx);
         while (indexIterate(&idx)) {
             p->index = access() + o;
-            putdat(sp[-1], getdat(p));
+            putdat(expr_stack_ptr[-1], getdat(p));
         }
     }
 
-    sp--;
+    expr_stack_ptr--;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

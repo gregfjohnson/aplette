@@ -13,18 +13,18 @@
 
 /* The fetch routines are used to convert dummy types into 
  * real data.  For instance, a quad variable may be put
- * onto the stack, when it comes time to use it, fetch()
+ * onto the expr_stack, when it comes time to use it, fetch()
  * will convert it into a float (ie DA) or character (ie CH).
  * fetch1() and fetch2() are used to deal with the top and
- * top two stack entries respectively. - bb
+ * top two expr_stack entries respectively. - bb
  */
 
 struct item* fetch1()
 {
     struct item* p;
 
-    p = fetch(sp[-1]);
-    sp[-1] = p;
+    p = fetch(expr_stack_ptr[-1]);
+    expr_stack_ptr[-1] = p;
     return (p);
 }
 
@@ -32,9 +32,9 @@ struct item* fetch2()
 {
     struct item* p;
 
-    sp[-2] = fetch(sp[-2]);
-    p = fetch(sp[-1]);
-    sp[-1] = p;
+    expr_stack_ptr[-2] = fetch(expr_stack_ptr[-2]);
+    p = fetch(expr_stack_ptr[-1]);
+    expr_stack_ptr[-1] = p;
     return (p);
 }
 
@@ -75,20 +75,20 @@ loop:
        *
        * Currently, if something prevents APL from completing
        * execution of line 0 of a function, it leaves with
-       * the stack in an unknown state and "gsip->oldsp" is
+       * the expr_stack in an unknown state and "state_indicator_ptr->oldsp" is
        * zero.  This is nasty because there is no way to
        * reset out of it.  The principal cause of error
        * exits from line 0 is the fetch of an undefined
        * function argument.  The following code attempts
        * to fix this by setting an error flag and creating
-       * a dummy variable for the stack if "used before set"
+       * a dummy variable for the expr_stack if "used before set"
        * occurs in the function header.  "ex_fun" then will
        * note that the flag is high and cause an error exit
        * AFTER all header processing has been completed.
        */
 
         if (((SymTabEntry*)p)->entryUse != DA) {
-            if ((gsip->Mode != deffun) || gsip->funlc != 1)
+            if ((state_indicator_ptr->Mode != deffun) || state_indicator_ptr->funlc != 1)
                 error(ERR_value, "undefined variable");
             q = newdat(DA, 0, 1); /* Dummy */
             q->datap[0] = 0;

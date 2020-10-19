@@ -16,9 +16,9 @@ void ex_asgn()
     SymTabEntry* symtabLhsEntry;
     int i;
 
-    p = (SymTabEntry*)sp[-1];
+    p = (SymTabEntry*)expr_stack_ptr[-1];
 
-    q = (struct item *) sp[-1]; /* just to get item->index
+    q = (struct item *) expr_stack_ptr[-1]; /* just to get item->index
                                  * further down, q is reassigned */
 
     switch (p->itemType) {
@@ -50,13 +50,13 @@ void ex_asgn()
     }
 
     if (p->entryUse != UNKNOWN && p->entryUse != DA) { error(ERR_domain, "asgn"); }
-    sp--;
+    expr_stack_ptr--;
     q = fetch1();
     erase(p);
     symtabLhsEntry->entryUse = DA;
     symtabLhsEntry->itemp = q;
 
-    sp[-1] = (struct item*) symtabLhsEntry;
+    expr_stack_ptr[-1] = (struct item*) symtabLhsEntry;
 
     if (vars_trace) {
         vars_dump();

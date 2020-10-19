@@ -9,11 +9,11 @@
 
 /* ex_nilret() is called when a user defined function
  * does not return a value.  It just puts an empty vector
- * onto the stack
+ * onto the expr_stack
  */
 
 void ex_nilret()
 {
     checksp();
-    *sp++ = newdat(NIL, 0, 0);
+    *expr_stack_ptr++ = newdat(NIL, 0, 0);
 }

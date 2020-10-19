@@ -50,5 +50,5 @@ void ex_exec()
     execv(argv[0], &argv[1]);
     pop();
     p = newdat(DA, 0, 0);
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

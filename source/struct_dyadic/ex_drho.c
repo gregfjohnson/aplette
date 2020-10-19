@@ -14,7 +14,7 @@ void ex_drho()
     char* cp;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
 
     /* addition of a special case 9.8.1999/tyl
     * handle spec. case where left arg is null vector
@@ -66,6 +66,6 @@ null_ok:
 end:
     pop();
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
     return;
 }

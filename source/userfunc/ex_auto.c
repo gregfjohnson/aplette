@@ -13,7 +13,7 @@ void ex_auto()
     SymTabEntry* np;
     SymTabEntry* oldEntry;
 
-    gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&np, 1);
+    state_indicator_ptr->ptr += copy(PTR, (char*)state_indicator_ptr->ptr, (char*)&np, 1);
 
     oldEntry = symtabFind(np->namep);
     if (oldEntry == NULL) {
@@ -22,7 +22,7 @@ void ex_auto()
 
     checksp();
 
-    Context_addShadowedId(gsip, oldEntry);
+    Context_addShadowedId(state_indicator_ptr, oldEntry);
 
     symtabRemoveEntry(oldEntry);
 

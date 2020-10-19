@@ -70,7 +70,7 @@ int mem_trace;
 int stack_trace;
 int vars_trace;
 DataIterator idx;
-Context *gsip, prime_context;
+Context *state_indicator_ptr, prime_context;
 
 FILE *quadInput = NULL;
 
@@ -138,7 +138,7 @@ int main(int argc, char** argv)
     vars_trace  = 0;   /* variables */
     mem_trace   = 0;   /* dynamic memory allocation */
     code_trace  = 0;   /* pseudo code */
-    stack_trace = 0;   /* local stack */
+    stack_trace = 0;   /* local expr_stack */
     funtrace    = 0;   /* function execution trace */
 
     while ((opt = getopt(argc, argv, "acdef:hrstw:")) != -1) {
@@ -195,7 +195,7 @@ int main(int argc, char** argv)
         catchsigs(); /*   Catch signals  */
     fppinit(0);
 
-    sp = stack;
+    expr_stack_ptr = expr_stack;
     ifile = 0;
     if (signal(SIGINT, intr) == SIG_ERR) {
         signal(SIGINT, SIG_IGN);
@@ -318,14 +318,14 @@ int main(int argc, char** argv)
     setjmp(cold_restart);
 
     memset(&prime_context, 0, sizeof(prime_context));
-    gsip = &prime_context; /* global state indicator */
-    gsip->Mode = immed;
-    gsip->suspended = 0;
-    gsip->prev = (Context*)NULL;
-    gsip->sp = 0;
-    gsip->ptr = 0;
-    gsip->text = (char*)NULL;
-    gsip->pcode = (char*)NULL;
+    state_indicator_ptr = &prime_context; /* global state indicator */
+    state_indicator_ptr->Mode = immed;
+    state_indicator_ptr->suspended = 0;
+    state_indicator_ptr->prev = (Context*)NULL;
+    state_indicator_ptr->expr_stack_ptr = 0;
+    state_indicator_ptr->ptr = 0;
+    state_indicator_ptr->text = (char*)NULL;
+    state_indicator_ptr->pcode = (char*)NULL;
 
     mainloop();
 }

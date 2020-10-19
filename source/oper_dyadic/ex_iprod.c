@@ -29,11 +29,11 @@ void ex_iprod()
     int commonDimension;
     int a = 0, b = 0, resultIndex = 0;
 
-    fnleft = (data (*)(data, data)) exop[(uint32_t) *gsip->ptr++];
-    fnright = (data (*)(data, data)) exop[(uint32_t) *gsip->ptr++];
+    fnleft = (data (*)(data, data)) exop[(uint32_t) *state_indicator_ptr->ptr++];
+    fnright = (data (*)(data, data)) exop[(uint32_t) *state_indicator_ptr->ptr++];
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
 
     if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "not numeric data");
@@ -47,13 +47,13 @@ void ex_iprod()
         }
         r = extend(DA, q->dim[0], p->datap[0]);
         pop();
-        *sp++ = p = r;
+        *expr_stack_ptr++ = p = r;
     }
 
     if (scalar(q)) {
         r = extend(DA, p->dim[p->rank - 1], q->datap[0]);
-        aplfree(sp[-2]);
-        sp[-2] = q = r;
+        aplfree(expr_stack_ptr[-2]);
+        expr_stack_ptr[-2] = q = r;
     }
 
     bidx(p);
@@ -98,7 +98,7 @@ out:
     */
     if (r->rank == 1 && r->size == 1)
         r->rank = 0;
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }
 
 void ipr1(data (*f1)(data, data),

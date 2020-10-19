@@ -42,7 +42,7 @@ void ex_fdef() {
     * allow quad-FX to be used freely without disastrous side-
     * effects.
     *
-   if(gsip) error(ERR,"si damage -- type ')sic'");
+   if(state_indicator_ptr) error(ERR,"si damage -- type ')sic'");
     */
 
     dim0 = p->dim[0];
@@ -115,5 +115,5 @@ void ex_fdef() {
     symtabLhsEntry->sourceCodeCount = lineCount;
 
     pop();
-    *sp++ = newdat(DA, 1, 0);
+    *expr_stack_ptr++ = newdat(DA, 1, 0);
 }

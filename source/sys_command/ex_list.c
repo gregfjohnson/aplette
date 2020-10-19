@@ -21,7 +21,7 @@ void ex_list() {
 
     /* Check for valid function */
 
-    function = (SymTabEntry*)*--sp;
+    function = (SymTabEntry*)*--expr_stack_ptr;
     if (function->itemType != LV)
         error(ERR_value, "function name not defined");
 

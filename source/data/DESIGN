@@ -14,24 +14,24 @@ aplfree() which is the complement of alloc.  Aplfree calls
 free() which is the complement of malloc.
 
 By the way, in addition to pop(), in some places pushing and
-popping of stack items is done by direct increment/decrement of
-"sp".  
+popping of expr_stack items is done by direct increment/decrement of
+"expr_stack_ptr".  
 
 Another thing to watch out for is that the clients call pop()
 after they have used the item pointed to at the top of the 
-stack.  
+expr_stack.  
 
 
 Care and Feeding of the Stack
 -----------------------------
-The stack is a static array of fixed length declared in apl.h .
-The stack contains pointers to data entities of type "item".
-The stack pointer "sp" points to these (hence double pointer
-**sp).  "sp" points to the next unallocated value - in effect,
-the top of the stack is the item below it at sp[-1] .  As each
-line of pseudo code is executed the stack may grow or shrink.  At
+The expr_stack is a static array of fixed length declared in apl.h .
+The expr_stack contains pointers to data entities of type "item".
+The expr_stack pointer "expr_stack_ptr" points to these (hence double pointer
+**expr_stack_ptr).  "expr_stack_ptr" points to the next unallocated value - in effect,
+the top of the expr_stack is the item below it at expr_stack_ptr[-1] .  As each
+line of pseudo code is executed the expr_stack may grow or shrink.  At
 the end of execution it must be back to zero, otherwise an error
-has occurred.  You can watch this by turning on the stack trace
+has occurred.  You can watch this by turning on the expr_stack trace
 with Ibeams 1 and 2.
 
 User Defined Names

@@ -37,8 +37,8 @@ void funwrite(char* fname) {
     SymTabEntry* n;
     int line, fd1;
 
-    n = (SymTabEntry *) sp[-1];
-    sp--;
+    n = (SymTabEntry *) expr_stack_ptr[-1];
+    expr_stack_ptr--;
 
     if (n->itemType != LV)
         error(ERR_botch, "fnwrite");
@@ -58,7 +58,7 @@ void funwrite(char* fname) {
          * []lx or downtack-jot, the input line would not be
          * current_line and the following would break.
          */
-        write_line(fd1, gsip->text);
+        write_line(fd1, state_indicator_ptr->text);
 
         break;
     }

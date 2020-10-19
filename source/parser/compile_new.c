@@ -42,7 +42,7 @@ int ilex[] = {
 char* compile_new(int f) {
     char *p, *q;
 
-    iline = gsip->text;
+    iline = state_indicator_ptr->text;
     ccharp = oline;
     litflag = 0;
     nlexsym = ilex[f];
@@ -57,7 +57,7 @@ char* compile_new(int f) {
 
     if (yyparse()) {
         //print line and error pointer
-        pline(gsip->text, iline - (gsip->text), lineNumber);
+        pline(state_indicator_ptr->text, iline - (state_indicator_ptr->text), lineNumber);
         return (0);
     }
 
@@ -71,7 +71,7 @@ char* compile_new(int f) {
     for (q = oline; q < ccharp; ++q)
         *p++ = *q;
 
-    gsip->pcode = iline;
+    state_indicator_ptr->pcode = iline;
 
     return (iline);
 }

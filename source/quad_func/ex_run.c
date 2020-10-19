@@ -27,5 +27,5 @@ void ex_run()
     p = newdat(DA, 0, 1);
     p->datap[0] = (data)val;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

@@ -12,5 +12,5 @@ void iodone(int ok)
 
     p = newdat(DA, 0, 1);
     p->datap[0] = ok;
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

@@ -24,12 +24,12 @@ void stack_dump()
 {
     struct item** p;
     int i, eu, n;
-    printf("---- stack top ----\n");
+    printf("---- expr_stack top ----\n");
 
-    // printf("Stack limits are %x and %x \n", stack, stack + STKS - 1 );
+    // printf("Stack limits are %x and %x \n", expr_stack, expr_stack + STKS - 1 );
 
-    for (p = sp - 1, n = -1; p >= stack; p--, n--) {
-        printf("sp[%d]=%p\n", n, (void *) p);
+    for (p = expr_stack_ptr - 1, n = -1; p >= expr_stack; p--, n--) {
+        printf("expr_stack_ptr[%d]=%p\n", n, (void *) p);
 
         if (n == 0) {
             printf("\n");
@@ -108,5 +108,5 @@ void stack_dump()
             }
         }
     }
-    printf("---- stack end ----\n");
+    printf("---- expr_stack end ----\n");
 }

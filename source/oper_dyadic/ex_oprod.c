@@ -14,9 +14,9 @@ void ex_oprod()
     struct item *p, *q, *r;
     data (*f)();
 
-    f = (data(*)()) exop[(uint32_t) *gsip->ptr++];
+    f = (data(*)()) exop[(uint32_t) *state_indicator_ptr->ptr++];
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     if (p->itemType != DA || q->itemType != DA)
         error(ERR_domain, "not numeric data");
     /*
@@ -40,5 +40,5 @@ void ex_oprod()
     }
     pop();
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }

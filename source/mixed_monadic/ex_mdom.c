@@ -21,7 +21,7 @@ void ex_mdom()
     q = newdat(DA, 2, a * a);
     q->dim[0] = a;
     q->dim[1] = a;
-    *sp++ = q;
+    *expr_stack_ptr++ = q;
     dp = q->datap;
     for (i = 0; i < a; i++) {
         for (j = 0; j < a; j++) {

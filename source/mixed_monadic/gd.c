@@ -18,12 +18,12 @@ void gd0(int k, int (*f)(const void*, const void*))
     struct item* p;
     int* intvec;
 
-    bidx(sp[-1]);
+    bidx(expr_stack_ptr[-1]);
     if (k < 0 || k >= idx.rank)
         error(ERR_index, "");
     p = newdat(DA, idx.rank, idx.size);
     copy(IN, (char*)idx.dim, (char*)p->dim, idx.rank);
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
     colapse(k);
 
     intvec = (int*)alloc(idx.dimk * SINT);
@@ -34,10 +34,10 @@ void gd0(int k, int (*f)(const void*, const void*))
     }
 
     aplfree(intvec);
-    p = sp[-1];
-    sp--;
+    p = expr_stack_ptr[-1];
+    expr_stack_ptr--;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }
 
 static void gd1(int* m, int (*f)(const void*, const void*))
@@ -50,7 +50,7 @@ static void gd1(int* m, int (*f)(const void*, const void*))
     for (i = 0; i < idx.dimk; i++)
         *m1++ = i;
     qsort(m, idx.dimk, SINT, (int (*)(const void*, const void*))f);
-    p = sp[-1];
+    p = expr_stack_ptr[-1];
     for (i = 0; i < idx.dimk; i++) {
         p->index = integ;
         datum = *m++ + iorigin;

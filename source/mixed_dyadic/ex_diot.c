@@ -13,7 +13,7 @@ void ex_diot()
     int i, j;
 
     p = fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     r = newdat(DA, q->rank, q->size);
     copy(IN, (char*)q->dim, (char*)r->dim, q->rank);
     for (i = 0; i < q->size; i++) {
@@ -27,5 +27,5 @@ void ex_diot()
     }
     pop();
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }

@@ -17,10 +17,10 @@ void execute() {
     data (*data_fn)();
     extern char* opname[];
 
-    gsip->ptr = gsip->pcode;
+    state_indicator_ptr->ptr = state_indicator_ptr->pcode;
 
     if (code_trace) {
-        code_dump(gsip->ptr, 0);
+        code_dump(state_indicator_ptr->ptr, 0);
     }
 
     while (1) {
@@ -29,7 +29,7 @@ void execute() {
             stack_dump();
         }
 
-        opcode = *gsip->ptr++;
+        opcode = *state_indicator_ptr->ptr++;
         opcode &= 0377;
         lastop = opcode;
         if (opcode > OPT_MAX) {
@@ -53,7 +53,7 @@ void execute() {
             break;
 
         case COMNT:
-            *sp++ = newdat(DA, 1, 0);
+            *expr_stack_ptr++ = newdat(DA, 1, 0);
             break;
 
         case ADD:
@@ -73,7 +73,7 @@ void execute() {
         case NOR:
             data_fn = (data (*)()) exop[opcode];
             p = fetch2();
-            p1 = sp[-2];
+            p1 = expr_stack_ptr[-2];
             ex_dscal(0, data_fn, p, p1);
             break;
 
@@ -83,7 +83,7 @@ void execute() {
         case GT:
             data_fn = (data (*)()) exop[opcode];
             p = fetch2();
-            p1 = sp[-2];
+            p1 = expr_stack_ptr[-2];
             ex_dscal(1, data_fn, p, p1);
             break;
 
@@ -93,7 +93,7 @@ void execute() {
             // to have different types.
             data_fn = (data (*)()) exop[opcode];
             p = fetch2();
-            p1 = sp[-2];
+            p1 = expr_stack_ptr[-2];
             ex_dscal(2 /* allow different types */, data_fn, p, p1);
             break;
 
@@ -219,7 +219,7 @@ void execute() {
 
         case RVAL: { /* de-referenced LVAL */
             SymTabEntry *entry;
-            gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)&entry, 1);
+            state_indicator_ptr->ptr += copy(PTR, (char*)state_indicator_ptr->ptr, (char*)&entry, 1);
 
             entry = symtabFind(entry->namep);
 
@@ -227,15 +227,15 @@ void execute() {
                 ex_nilret(); /* no fn rslt */
 
             } else {
-                *sp = fetch(entry);
-                sp++;
+                *expr_stack_ptr = fetch(entry);
+                expr_stack_ptr++;
             }
             break;
         }
 
         case NAME:
-            gsip->ptr += copy(PTR, (char*)gsip->ptr, (char*)sp, 1);
-            sp++;
+            state_indicator_ptr->ptr += copy(PTR, (char*)state_indicator_ptr->ptr, (char*)expr_stack_ptr, 1);
+            expr_stack_ptr++;
             break;
 
         case QUOT:
@@ -246,20 +246,20 @@ void execute() {
 	         * the legacy of the string length prefix remains
 	         * and should be removed from apl.y
 	         */
-            gsip->ptr++; /* throw away vcount */
-            opcode = strlen(gsip->ptr);
+            state_indicator_ptr->ptr++; /* throw away vcount */
+            opcode = strlen(state_indicator_ptr->ptr);
             p = newdat(CH, opcode == 1 ? 0 : 1, opcode);
-            gsip->ptr += copy(CH, (char*)gsip->ptr, (char*)p->datap, opcode);
-            gsip->ptr++; /* jump past the null termination */
-            *sp++ = p;
+            state_indicator_ptr->ptr += copy(CH, (char*)state_indicator_ptr->ptr, (char*)p->datap, opcode);
+            state_indicator_ptr->ptr++; /* jump past the null termination */
+            *expr_stack_ptr++ = p;
             break;
 
         case CONST:
 
-            opcode = *gsip->ptr++;
+            opcode = *state_indicator_ptr->ptr++;
             p = newdat(DA, opcode == 1 ? 0 : 1, opcode);
-            gsip->ptr += copy(DA, (char*)gsip->ptr, (char*)p->datap, opcode);
-            *sp++ = p;
+            state_indicator_ptr->ptr += copy(DA, (char*)state_indicator_ptr->ptr, (char*)p->datap, opcode);
+            *expr_stack_ptr++ = p;
             break;
 
         case QUAD:
@@ -275,7 +275,7 @@ void execute() {
         case QARGV:
             p = newdat(QV, 0, 0);
             p->index = opcode;
-            *sp++ = p;
+            *expr_stack_ptr++ = p;
             break;
         }
     }

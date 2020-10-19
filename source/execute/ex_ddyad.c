@@ -41,10 +41,10 @@ void ex_ddyad(data (*f)(), struct item* ap, struct item* ap1)
         return;
     }
     if (p1->rank < 2 && p1->size == 1) {
-        sp--;
+        expr_stack_ptr--;
         d = p1->datap[0];
         pop();
-        *sp++ = p;
+        *expr_stack_ptr++ = p;
         dp = p->datap;
         for (i = 0; i < p->size; i++) {
             *dp = (*f)(*dp, d);

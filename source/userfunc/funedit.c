@@ -28,7 +28,7 @@ void funedit(char* fname) {
     #define CMD_LEN 256
     char cmd[CMD_LEN];
 
-    p = (SymTabEntry *) sp[-1];
+    p = (SymTabEntry *) expr_stack_ptr[-1];
     if (p->itemType != LV)
         error(ERR_value, "function name not found");
     sichk(p);

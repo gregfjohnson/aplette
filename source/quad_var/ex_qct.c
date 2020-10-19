@@ -40,7 +40,7 @@ struct item* ex_qct(io) int io; /* 0 = source, 1 = sink */
         if (f < 0)
             f = -f;
         tolerance = f;
-        sp[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (struct item*)p;
         return (0);
     };
 }

@@ -50,5 +50,5 @@ void ex_ex(void)
         ip->datap[j] = i;
     }
     pop();
-    *sp++ = ip;
+    *expr_stack_ptr++ = ip;
 }

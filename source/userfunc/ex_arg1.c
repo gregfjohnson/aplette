@@ -13,17 +13,17 @@ void ex_arg1() {
     SymTabEntry* oldEntry;
     SymTabEntry* newEntry;
 
-    gsip->ptr += copy(PTR, (char*) gsip->ptr, (char*) &np, 1);
+    state_indicator_ptr->ptr += copy(PTR, (char*) state_indicator_ptr->ptr, (char*) &np, 1);
 
     oldEntry = symtabFind(np->namep);
     if (oldEntry == NULL) {
         oldEntry = symtabEntryCreate(np->namep);
     }
 
-    p = fetch(sp[-1]);
-    --sp;
+    p = fetch(expr_stack_ptr[-1]);
+    --expr_stack_ptr;
 
-    Context_addShadowedId(gsip, oldEntry);
+    Context_addShadowedId(state_indicator_ptr, oldEntry);
 
     symtabRemoveEntry(oldEntry);
     newEntry = symtabInsert(np->namep);

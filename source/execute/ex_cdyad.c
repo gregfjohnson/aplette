@@ -33,10 +33,10 @@ void ex_cdyad(data (*f)(), struct item* ap, struct item* ap1)
         }
     }
     else if (p1->rank == 0 || p1->size == 1) {
-        sp--;
+        expr_stack_ptr--;
         d1 = ((struct chrstrct*)p1->datap)->c[0];
         pop();
-        *sp++ = p;
+        *expr_stack_ptr++ = p;
         cp = (char*)p->datap;
         for (i = 0; i < p->size; i++) {
             d2 = *cp;
@@ -74,5 +74,5 @@ void ex_cdyad(data (*f)(), struct item* ap, struct item* ap1)
     for (i = 0; i < p->size; i++)
         p->datap[i] = (*cp++) & 0377;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

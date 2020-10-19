@@ -29,56 +29,63 @@ void mainloop()
         /* if a function has been suspended
          * then create a new context
          */
-        if (gsip->Mode != immed) {
+        if (state_indicator_ptr->Mode != immed) {
             thisContext = (Context*)alloc(sizeof(Context));
             thisContext->Mode = immed;
             thisContext->suspended = 0;
-            thisContext->prev = gsip;
+            thisContext->prev = state_indicator_ptr;
             thisContext->text = (char*)NULL;
             thisContext->pcode = (char*)NULL;
             //thisContext->xref=(char *)NULL;
             //setjmp(thisContext->env);    /* come back here after longjmp() */
-            thisContext->sp = sp;
-            gsip = thisContext;
+            thisContext->expr_stack_ptr = expr_stack_ptr;
+            state_indicator_ptr = thisContext;
         }
 
-        gsip->Mode = immed;
-        if (gsip->pcode)
-            aplfree((int*)gsip->pcode);
-        gsip->pcode = (char*)NULL;
-        if (gsip->text)
-            aplfree((int*)gsip->text);
-        gsip->text = (char*)NULL;
+        state_indicator_ptr->Mode = immed;
+        if (state_indicator_ptr->pcode)
+            aplfree((int*)state_indicator_ptr->pcode);
+        state_indicator_ptr->pcode = (char*)NULL;
+        if (state_indicator_ptr->text)
+            aplfree((int*)state_indicator_ptr->text);
+        state_indicator_ptr->text = (char*)NULL;
 
         lineNumber = -1;
         if (echoflg)
             echoflg = 1; /* enabled echo echo suppress off */
-        checksp();       /* check for stack overflow */
+        checksp();       /* check for expr_stack overflow */
         if (intflg)
             error(ERR_interrupt, "");
 
         /*  get a line of input */
         if (isatty(0))
-            gsip->text = getinput("        ");
+            state_indicator_ptr->text = getinput("        ");
         else
-            gsip->text = getinput("");
+            state_indicator_ptr->text = getinput("");
         /* getinput will return NULL at eof but only if input is not
        * from the keyboard.  The following will cause an exit
        * when input is from a file or a pipe
        */
-        if (gsip->text == NULL)
+        if (state_indicator_ptr->text == NULL)
             Exit(0);
         if (echoflg)
-            printLine(gsip->text);
+            printLine(state_indicator_ptr->text);
 
         /* compile the input */
         sandbox = sandboxflg;
         compile_new(CompileImmediate);
-        if (gsip->pcode == 0)
+        if (state_indicator_ptr->pcode == 0)
             error(ERR_syntax, ""); //control returns to top of this file
 
         /* execute the compiled pseudo code */
         column = 0; /* prepare to print the results */
         execute();
+
+        if (state_indicator_ptr->pcode)
+            aplfree((int*)state_indicator_ptr->pcode);
+        state_indicator_ptr->pcode = (char*)NULL;
+        if (state_indicator_ptr->text)
+            aplfree((int*)state_indicator_ptr->text);
+        state_indicator_ptr->text = (char*)NULL;
     }
 }

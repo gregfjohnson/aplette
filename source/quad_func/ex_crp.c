@@ -84,6 +84,6 @@ void ex_crp() {
         }
     }
 
-    // put the new array on the stack
-    *sp++ = p;
+    // put the new array on the expr_stack
+    *expr_stack_ptr++ = p;
 }

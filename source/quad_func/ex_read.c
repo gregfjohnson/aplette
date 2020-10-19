@@ -29,5 +29,5 @@ void ex_read()
         }
         aplfree(q);
     }
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

@@ -4,6 +4,7 @@
  */
 #include "apl.h"
 #include "memory.h"
+#include "data.h"
 #include "utility.h"
 
 void erase(SymTabEntry* np)
@@ -42,5 +43,6 @@ void erase(SymTabEntry* np)
             break;
         }
         np->entryUse = UNKNOWN;
+        symtabDelete(np);
     }
 }

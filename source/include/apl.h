@@ -15,7 +15,7 @@
 /* Magic Numbers */
 #define NFDS 20         /* Number of available file descriptors */
 #define MRANK 8         /* maximum rank, ie number of dimensions */
-#define STKS 500        /* stack size */
+#define STKS 500        /* expr_stack size */
 #define SYM_TAB_MAX 200 /* number of local symbols, \
                          * ie varables and user functions, see symbolTable[SYM_TAB_MAX] */
 #define NAMS 40         /* maximum size of variable and user function names */
@@ -139,7 +139,7 @@ typedef enum {
     CH = 2,      /* character data */
     LV = 3,      /* Local Variable */
     IN = 6,      /* used only as first arg of copy(), for "integer type" */
-    EL = 7,      /* indexed assignment stack marker */
+    EL = 7,      /* indexed assignment expr_stack marker */
     NF = 8,      /* niladic function */
     MF = 9,      /* monadic function */
     DF = 10,     /* dyadic function */
@@ -162,11 +162,11 @@ typedef enum {
 
 extern CompilePhase compilePhase;
 
-/* NOTE:  The expression stack is a stack
+/* NOTE:  The expression expr_stack is a expr_stack
  * of pointers.  It is declared to point to
  * "struct item"'s, but via pointer casting it
  * can also point at "SymTabEntry" structs.
- * It would be better to have each stack entry
+ * It would be better to have each expr_stack entry
  * be self-describing, with a field indicating
  * the type of object it describes, and then a
  * union of pointers to different types.
@@ -187,8 +187,8 @@ extern CompilePhase compilePhase;
  *
  * A null item is a vector(!), and is rank==1, size==0.
  *
- * the stack is the operand stack, and sp is the pointer to the
- * top of the stack.
+ * the expr_stack is the operand expr_stack, and expr_stack_ptr is the pointer to the
+ * top of the expr_stack.
  */
 
 struct item {
@@ -235,7 +235,7 @@ typedef struct {
     char **functionSourceCode;
 } SymTabEntry;
 
-struct item *stack[STKS], **sp;
+struct item *expr_stack[STKS], **expr_stack_ptr;
 
 /* The context structure
  * pointed to by the State Indicator
@@ -261,11 +261,11 @@ typedef struct _Context {
     int shadowedIdSize;        /* size of the list */
     int shadowedIdCount;       /* length of the list */
     int funlc;                 /* current fn current line number */
-    struct item** sp;          /* top of operand stack upon fn entry */
+    struct item** expr_stack_ptr;          /* top of operand expr_stack upon fn entry */
     jmp_buf env;               /* to restore local fn activation record */
 } Context;
 
-extern Context *gsip, prime_context;
+extern Context *state_indicator_ptr, prime_context;
 
 /* exop[i] is the address of the i'th action routine.
  * Because of a "symbol table overflow" problem with C,

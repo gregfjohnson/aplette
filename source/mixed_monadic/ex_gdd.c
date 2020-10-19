@@ -31,7 +31,7 @@ int gdd(int* p1, int* p2)
     struct item* p;
     data d1, d2;
 
-    p = sp[-2];
+    p = expr_stack_ptr[-2];
     p->index = integ + *p1 * idx.delk;
     d1 = getdat(p);
     p->index = integ + *p2 * idx.delk;

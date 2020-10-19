@@ -19,7 +19,7 @@ void ex_rav()
         r = newdat(p->itemType, 1, 1);
         putdat(r, getdat(p));
         pop();
-        *sp++ = r;
+        *expr_stack_ptr++ = r;
         return;
     }
     rav0(p->rank - 1);
@@ -38,7 +38,7 @@ static void rav0(int k)
 {
     struct item *p, *r;
 
-    p = sp[-1];
+    p = expr_stack_ptr[-1];
     bidx(p);
     colapse(k);
     r = newdat(p->itemType, 1, p->size);
@@ -49,7 +49,7 @@ static void rav0(int k)
     }
 
     pop();
-    *sp++ = r;
+    *expr_stack_ptr++ = r;
 }
 
 static void rav1(struct item* p, struct item* dest)

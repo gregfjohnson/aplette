@@ -30,7 +30,7 @@ void ex_com()
     struct item* q;
 
     fetch2();
-    q = sp[-2];
+    q = expr_stack_ptr[-2];
     comk(q->rank - 1);
 }
 
@@ -40,15 +40,15 @@ void comk(int k)
     data d;
     int i, dk, ndk;
 
-    p = sp[-1];
-    bidx(sp[-2]);
+    p = expr_stack_ptr[-1];
+    bidx(expr_stack_ptr[-2]);
 
     /* "getdat" returns the value of the data item which
     * it is called to fetch.  If this is non-zero, just
-    * use the existing data on the stack (an example in
+    * use the existing data on the expr_stack (an example in
     * APL would be "x/y" where x != 0.  If this is zero,
     * the result is the null item, which is created by
-    * "newdat" and pushed on the stack.
+    * "newdat" and pushed on the expr_stack.
     */
 
     if (p->rank == 0 || (p->rank == 1 && p->size == 1)) {
@@ -59,7 +59,7 @@ void comk(int k)
         p = newdat(idx.type, 1, 0);
         pop();
         pop();
-        *sp++ = p;
+        *expr_stack_ptr++ = p;
         return;
     }
 
@@ -72,12 +72,12 @@ void comk(int k)
                 ndk++;
         }
         p = newdat(idx.type, 1, ndk);
-        d = getdat(sp[-2]);
+        d = getdat(expr_stack_ptr[-2]);
         for (i = 0; i < ndk; i++)
             putdat(p, d);
         pop();
         pop();
-        *sp++ = p;
+        *expr_stack_ptr++ = p;
         return;
     }
     if (k < 0 || k >= idx.rank)
@@ -93,28 +93,28 @@ void comk(int k)
     p = newdat(idx.type, idx.rank, (idx.size / dk) * ndk);
     copy(IN, (char*)idx.dim, (char*)p->dim, idx.rank);
     p->dim[k] = ndk;
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 
     indexIterateInit(&idx);
     while (indexIterate(&idx)) {
         com1(k);
     }
 
-    sp--;
+    expr_stack_ptr--;
     pop();
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }
 
 void com1(int k)
 {
     struct item* p;
 
-    p = sp[-2];
+    p = expr_stack_ptr[-2];
     p->index = idx.idx[k];
     if (getdat(p)) {
-        p = sp[-3];
+        p = expr_stack_ptr[-3];
         p->index = access();
-        putdat(sp[-1], getdat(p));
+        putdat(expr_stack_ptr[-1], getdat(p));
     }
 }

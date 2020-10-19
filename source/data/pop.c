@@ -12,13 +12,13 @@ void pop() {
     struct item* p;
 
     if (stack_trace) {
-        printf("pop stack..\n");
+        printf("pop expr_stack..\n");
     }
 
-    if (sp <= stack) {
-        error(ERR_botch, "pop - stack underflow");
+    if (expr_stack_ptr <= expr_stack) {
+        error(ERR_botch, "pop - expr_stack underflow");
     }
-    p = sp[-1];
+    p = expr_stack_ptr[-1];
     if (p) {
         switch (p->itemType) {
         default:
@@ -48,5 +48,5 @@ void pop() {
             aplfree(p);
         }
     }
-    sp--;
+    expr_stack_ptr--;
 }

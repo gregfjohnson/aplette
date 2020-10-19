@@ -47,5 +47,5 @@ void ex_nc()
     p = newdat(DA, 0, 1);
     p->datap[0] = i;
     pop();
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

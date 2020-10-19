@@ -31,15 +31,15 @@ of the error handlers just before abnormal exit.
 
 If you really want to see what is going on inside the interpreter,
 turn on Ibeams 1,2 and 3.  Then as each token in every line of APL
-is executed, observe the effects of the stack, the allocation and 
+is executed, observe the effects of the expr_stack, the allocation and 
 deallocation of memory blocks and the contents of dynamic memory.
 
 Diagnostics
 -----------
-As each line of code is executed, the stack grows and shrinks.
-Eventually there is only one item left on the stack, this is 
-finally pop()'ed from the stack by the "eol" op-code.  If you see
-more than one item left on the stack before the "eol" (ie the 
+As each line of code is executed, the expr_stack grows and shrinks.
+Eventually there is only one item left on the expr_stack, this is 
+finally pop()'ed from the expr_stack by the "eol" op-code.  If you see
+more than one item left on the expr_stack before the "eol" (ie the 
 [-1]th item) then suspect a problem.
 
 Unless some data is assigned to a variable, in most simple 

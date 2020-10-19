@@ -42,10 +42,10 @@ void funcomp(SymTabEntry* np) {
     Context **functionLines;
     int dbLineNum = 0;
 
-    /* as gsip is used during compilation, we have to save the original
+    /* as state_indicator_ptr is used during compilation, we have to save the original
     * and restore it upon exit
     */
-    original_gsip = gsip;
+    original_gsip = state_indicator_ptr;
     err_code = 0;
     err_msg = "";
 
@@ -66,7 +66,7 @@ void funcomp(SymTabEntry* np) {
     Prologue->prev = 0;
     Prologue->text = NULL;
     Prologue->pcode = NULL;
-    Prologue->sp = 0;
+    Prologue->expr_stack_ptr = 0;
 
     /* get the first line */
     if (dbLineNum < np->sourceCodeCount) {
@@ -85,12 +85,12 @@ void funcomp(SymTabEntry* np) {
     }
 
     Prologue->text = strdupNoEoln(iline);
-    gsip = Prologue;
+    state_indicator_ptr = Prologue;
     labgen = 0;
 
     compile_new(CompileFunctionProlog);
 
-    if (gsip->pcode == 0) {
+    if (state_indicator_ptr->pcode == 0) {
         err_code = ERR_implicit;
         err_msg = "invalid header line";
         goto out;
@@ -131,13 +131,13 @@ void funcomp(SymTabEntry* np) {
         functionLine = (Context*)alloc(sizeof(Context));
         functionLine->Mode = deffun;
         functionLine->suspended = 0;
-        functionLine->prev = gsip; /* link to previous */
+        functionLine->prev = state_indicator_ptr; /* link to previous */
         functionLine->pcode = NULL;
-        functionLine->sp = 0;
+        functionLine->expr_stack_ptr = 0;
         functionLine->text = strdupNoEoln(iline);
 
         lineNumber++;
-        gsip = functionLine;
+        state_indicator_ptr = functionLine;
         compile_new(CompileFunctionBody);
 
         if (MAXLAB <= (labcpe - labe) / 5 + 1) {
@@ -146,7 +146,7 @@ void funcomp(SymTabEntry* np) {
             goto out;
         }
 
-        if (gsip->pcode == 0) {
+        if (state_indicator_ptr->pcode == 0) {
             err++;
         }
     }
@@ -198,16 +198,16 @@ void funcomp(SymTabEntry* np) {
     Epilogue = (Context*)alloc(sizeof(Context));
     Epilogue->Mode = deffun;
     Epilogue->suspended = 0;
-    Epilogue->prev = gsip;
+    Epilogue->prev = state_indicator_ptr;
     Epilogue->text = strdupNoEoln(iline);
     Epilogue->pcode = NULL;
-    Epilogue->sp = 0;
+    Epilogue->expr_stack_ptr = 0;
     labgen = 0;
-    gsip = Epilogue;
+    state_indicator_ptr = Epilogue;
 
     compile_new(CompileFunctionEpilog);
 
-    if (gsip->pcode == 0) {
+    if (state_indicator_ptr->pcode == 0) {
         err_code = ERR_implicit;
         err_msg = "invalid header line";
         goto out;
@@ -289,8 +289,8 @@ void funcomp(SymTabEntry* np) {
     /* put the result into effect */
 
     // functionLineCount is one larger than the APL function line number
-    // of the last line of this function.  i.e., if gsip->funlc >= functionLineCount
-    // or gsip->funlc <= 0, the function is done and should exit.
+    // of the last line of this function.  i.e., if state_indicator_ptr->funlc >= functionLineCount
+    // or state_indicator_ptr->funlc <= 0, the function is done and should exit.
     // if the function body goes from [1] to [N], we will have read N+1 lines
     // counting the function header.  So, N+1 is the number we are looking for.
 
@@ -305,7 +305,7 @@ out:
         fprintf(stderr, "Phase out \n");
     }
 
-    gsip = original_gsip;
+    state_indicator_ptr = original_gsip;
     if (err_code) {
         if (np->namep)
             printf("%s in function %s\n", phase, np->namep);

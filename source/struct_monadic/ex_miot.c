@@ -14,7 +14,7 @@ void ex_miot()
 
     i = topfix();
     if (i < 0) { /* must allocate something to ")sic" properly */
-        *sp++ = newdat(DA, 1, 0);
+        *expr_stack_ptr++ = newdat(DA, 1, 0);
         error(ERR_domain, "right value is less than 0");
     }
     p = newdat(DA, 1, i);
@@ -24,5 +24,5 @@ void ex_miot()
         *dp++ = datum;
         datum += one;
     }
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

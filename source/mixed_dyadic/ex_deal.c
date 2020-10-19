@@ -47,5 +47,5 @@ void ex_deal()
             putdat(p, d1);
         }
     }
-    *sp++ = p;
+    *expr_stack_ptr++ = p;
 }

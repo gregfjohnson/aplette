@@ -75,6 +75,7 @@ void symtabDelete(char* name) {
     entry.namep = name;
     found = rbtree_delete(&rbSymbolTable, &entry);
     if (found) {
+        aplfree(found->namep);
         aplfree(found);
     }
 }
