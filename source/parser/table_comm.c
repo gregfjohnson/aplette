@@ -37,5 +37,6 @@ struct COMM comtab[] = {
     { "prws", comnull, PRWS },
     { "memory", comnull, MEMORY },
     { "digits", comExprOrNull, DIGITS },
+    { "width", comExprOrNull, WIDTH },
     { 0, unk }
 };

@@ -193,3 +193,4 @@
 #define MEMORY 32
 #define DIGITS 33
 #define FONT 34
+#define WIDTH 35

@@ -82,6 +82,18 @@ void ex_syscom()
         }
         return;
 
+    case WIDTH:
+        if (exprOrNullFlag) {
+            p = expr_stack_ptr[-1];
+            expr_stack_ptr--;
+            updatePageWidth(p);
+            outputPageWidth();
+
+        } else {
+            outputPageWidth();
+        }
+        return;
+
     case TRACE:
         funtrace = 1;
         return;
@@ -115,14 +127,15 @@ void ex_syscom()
             vars_dump();
         return;
 
+    case FONT:
+        font_map_print();
+        return;
+
     case CONTIN:
         i = opn("continue", 0644);
         wssave(i);
         printf(" continue");
-
-    case FONT:
-        font_map_print();
-        return;
+        Exit(0);
 
     case OFF:
         Exit(0);

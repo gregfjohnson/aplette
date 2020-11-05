@@ -14,4 +14,7 @@
 void outputPrintP();
 void updatePrintP(struct item *p);
 
+void outputPageWidth();
+void updatePageWidth(struct item *p);
+
 #endif // QUAD_VAR_H

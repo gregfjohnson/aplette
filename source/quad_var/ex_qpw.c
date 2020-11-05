@@ -16,6 +16,23 @@
 #include "utility.h"
 #include "char.h"
 
+void outputPageWidth() {
+    printf("width %d\n", pagewidth);
+}
+
+void updatePageWidth(struct item *p) {
+    int i;
+
+    if (p->itemType != DA)
+        error(ERR_domain, "assign value not numeric");
+    if (p->rank != 0)
+        error(ERR_rank, "assign value not scalar");
+    i = p->datap[0];
+        if (i < 10 || i > 132)
+            error(ERR_limit, "width range is 10 to 132");
+    pagewidth = i;
+}
+
 struct item* ex_qpw(io) int io; /* 0 = source, 1 = sink */
 {
     struct item* p;
