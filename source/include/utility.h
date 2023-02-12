@@ -24,6 +24,7 @@ void map(int o);
 void iodone(int ok);
 int empty(int fd);
 int opn(char file[], int rw);
+double gamma(double arg);
 
 void intr(int s);
 void panic(int signum);
