@@ -5,7 +5,14 @@ Aplette is a slimmed down, skinny APL interpreter derived from openApl.
 On linux, you will need to install bison and libreadline.
 
 For example, on Ubuntu:
-    sudo apt-get install libreadline6 libreadline6-dev bison
+    sudo apt-get install bison
+    sudo apt-get install libreadline8 libreadline-dev bison
+
+annoyingly, libreadline keeps getting renamed, with new numbers.
+You may need to do something like the following to find the current
+version of libreadline:
+
+    apt list 2> /dev/null | egrep 'libreadline[0-9]/' 
 
 On Windows, I have tested with cygwin only.  In your cygwin installation,
 you will need to include gcc, gnu make, libreadline_devel, and bison.
@@ -22,6 +29,8 @@ You can test your installation as follows:
 
 
 aplette uses an ASCII/APL character mapping dubbed APL-touchtype.
+The command ")font" will print the APL-touchtype characters in
+tabular form.
 
 If you can write APL with your eyes closed, you can use
 APL-touchtype. "rho" is "R", "iota" is "I", etc. Trig is "O". Log is
