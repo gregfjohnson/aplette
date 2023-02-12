@@ -17,9 +17,9 @@
 #include "data.h"
 #include "utility.h"
 
-struct item* ex_qio(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qio(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     int i;
 
     if (io == 0) {
@@ -42,7 +42,7 @@ struct item* ex_qio(io) int io; /* 0 = source, 1 = sink */
             iorigin = (data)i;
         else
             error(ERR_domain, "assign value not 0 or 1");
-        expr_stack_ptr[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (item_t*)p;
         return (0);
     };
 }

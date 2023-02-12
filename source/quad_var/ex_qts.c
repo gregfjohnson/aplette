@@ -16,9 +16,9 @@
 #include "utility.h"
 #include "data.h"
 
-struct item* ex_qts(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qts(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     struct tm* tp;
     struct timeval tv;
     struct timezone tz;

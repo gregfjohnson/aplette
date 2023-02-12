@@ -15,7 +15,7 @@
  * * ex_ddyad - floating point dyadic (ie type d)
  * * ex_mdyad - mixed dyadic
  */
-void ex_dscal(int m, data (*f)(), struct item* p1, struct item* p2)
+void ex_dscal(int m, data (*f)(), item_t* p1, item_t* p2)
 {
     if (p1->itemType != p2->itemType) {
         if (m == 2) {

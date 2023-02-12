@@ -8,7 +8,7 @@
 
 void ex_miot()
 {
-    struct item* p;
+    item_t* p;
     data* dp;
     int i;
 

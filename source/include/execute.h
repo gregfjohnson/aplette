@@ -11,10 +11,10 @@
 #include "apl.h"
 
 void execute();
-void ex_dscal(int m, data (*f)(), struct item* p1, struct item* p2);
+void ex_dscal(int m, data (*f)(), item_t* p1, item_t* p2);
 
-void ex_cdyad(data (*f)(), struct item* ap, struct item* ap1);
-void ex_mdyad(data (*f)(), struct item* ap, struct item* ap1);
-void ex_ddyad(data (*f)(), struct item* ap, struct item* ap1);
+void ex_cdyad(data (*f)(), item_t* ap, item_t* ap1);
+void ex_mdyad(data (*f)(), item_t* ap, item_t* ap1);
+void ex_ddyad(data (*f)(), item_t* ap, item_t* ap1);
 
 #endif

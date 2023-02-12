@@ -3,7 +3,7 @@
 include ../include/makefile.common
 CFLAGS += -I../include
 
-OBJECTS =  afreset.o alloc.o aplfree.o
+OBJECTS =  afreset.o alloc.o aplfree.o memory.o
 
 all : Q.o
 

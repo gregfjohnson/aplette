@@ -11,7 +11,7 @@ static void trn0();
 
 void ex_dtrn()
 {
-    struct item *p, *q;
+    item_t *p, *q;
     int i;
 
     p = fetch2();
@@ -26,7 +26,7 @@ void ex_dtrn()
 
 void ex_mtrn()
 {
-    struct item* p;
+    item_t* p;
     int i;
 
     p = fetch1();

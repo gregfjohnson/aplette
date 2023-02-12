@@ -23,7 +23,7 @@ clean:	tidy
 tidy:
 	rm -f $(OBJECTS) core */*.o
 
-debug/Q.o:	debug/*.c debug/*.h
+debug/Q.o:	debug/*.c
 	cd debug ; $(MAKE)
 
 data/Q.o:	data/*.c

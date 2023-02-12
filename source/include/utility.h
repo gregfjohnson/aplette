@@ -14,7 +14,7 @@
 
 void error(int type, char* diagnostic);
 int topfix();
-int scalar(struct item* aip);
+int scalar(item_t* aip);
 void pline(char* str, int loc, int ln);
 int fix(data d);
 void checksp();
@@ -29,7 +29,7 @@ void intr(int s);
 void panic(int signum);
 void catchsigs();
 
-void fappend(int fd, struct item* ap);
+void fappend(int fd, item_t* ap);
 char* readLine(char* title, char* xLine, int xLineLength, FILE* xInfile);
 
 #endif // UTILITY_H

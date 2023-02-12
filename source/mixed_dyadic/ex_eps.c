@@ -9,7 +9,7 @@
 
 void ex_eps()
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     int i, j;
     data d;
 

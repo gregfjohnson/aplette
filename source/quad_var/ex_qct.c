@@ -16,9 +16,9 @@
 #include "utility.h"
 #include "char.h"
 
-struct item* ex_qct(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qct(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     data f;
 
     if (io == 0) {
@@ -40,7 +40,7 @@ struct item* ex_qct(io) int io; /* 0 = source, 1 = sink */
         if (f < 0)
             f = -f;
         tolerance = f;
-        expr_stack_ptr[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (item_t*)p;
         return (0);
     };
 }

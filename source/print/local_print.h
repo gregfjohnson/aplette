@@ -12,7 +12,7 @@
 #include "apl.h"
 
 int print();
-int fp_print(struct item* p);
-int lt_print(struct item* p);
+int fp_print(item_t* p);
+int lt_print(item_t* p);
 
 #endif

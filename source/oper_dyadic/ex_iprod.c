@@ -23,7 +23,7 @@ void ipr1(data (*f1)(data, data),
 void ex_iprod()
 {
     int i;
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     data (*fnleft)(data, data);
     data (*fnright)(data, data);
     int commonDimension;

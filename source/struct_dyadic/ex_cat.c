@@ -9,12 +9,12 @@
 #include "memory.h"
 
 static void cat0(int k);
-static int cat1(struct item* ip, int k);
+static int cat1(item_t* ip, int k);
 static void lam0(double d);
 
 void ex_cat()
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     int k;
 
     p = fetch2();
@@ -53,7 +53,7 @@ void ex_catk()
 
 static void cat0(int k)
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     int i, a, b;
 
     p = expr_stack_ptr[-1];
@@ -89,9 +89,9 @@ static void cat0(int k)
     *expr_stack_ptr++ = r;
 }
 
-static int cat1(struct item* ip, int k)
+static int cat1(item_t* ip, int k)
 {
-    struct item* p;
+    item_t* p;
     int i, j, a;
 
     if (k < 0 || k >= idx.rank)
@@ -118,7 +118,7 @@ static int cat1(struct item* ip, int k)
 
 static void lam0(double d)
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     int i, j, k;
 
     p = expr_stack_ptr[-1];

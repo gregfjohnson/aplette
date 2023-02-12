@@ -16,7 +16,7 @@
 void ex_crp() {
     char name[NAMS], *iline, *c, *c2, *dp;
     SymTabEntry* np;
-    struct item* p;
+    item_t* p;
     int len, dim0, dim1, i;
     int lineNumber;
 

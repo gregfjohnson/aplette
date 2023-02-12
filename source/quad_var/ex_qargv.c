@@ -17,9 +17,9 @@
 #include "char.h"
 #include "main.h"
 
-struct item* ex_qargv(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qargv(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     int i;
     int row, col;
     char* n;

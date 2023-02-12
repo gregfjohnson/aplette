@@ -7,8 +7,8 @@
 #include "memory.h"
 
 // allowed types:
-struct item* newdat(ItemType type, int rank, int size) {
-    struct item* p;
+item_t* newdat(ItemType type, int rank, int size) {
+    item_t* p;
     void* q = NULL;
 
     /* Allocate a new data item.  I have searched the specifications
@@ -47,7 +47,7 @@ struct item* newdat(ItemType type, int rank, int size) {
         break;
     }
 
-    p = (struct item*)alloc(sizeof(*p));
+    p = (item_t*)alloc(sizeof(*p));
     /* populate it */
     p->rank = rank;
     p->itemType = type;

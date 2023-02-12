@@ -74,7 +74,7 @@ struct chrstrct {
 };
 
 /* Global storage for the last reported Error Message */
-struct {
+typedef struct {
     int type;
     int maxlength;
     int caret;
@@ -164,7 +164,7 @@ extern CompilePhase compilePhase;
 
 /* NOTE:  The expression expr_stack is a expr_stack
  * of pointers.  It is declared to point to
- * "struct item"'s, but via pointer casting it
+ * "item_t"'s, but via pointer casting it
  * can also point at "SymTabEntry" structs.
  * It would be better to have each expr_stack entry
  * be self-describing, with a field indicating
@@ -191,7 +191,7 @@ extern CompilePhase compilePhase;
  * top of the expr_stack.
  */
 
-struct item {
+typedef struct {
     ItemType itemType;
 
     int rank;
@@ -199,7 +199,7 @@ struct item {
     int index;
     data* datap;
     int dim[MRANK];
-};
+} item_t;
 
 struct _Context;
 
@@ -224,7 +224,7 @@ typedef struct {
     ItemType itemType;
 
     ItemType entryUse;
-    struct item* itemp;
+    item_t* itemp;
     char* namep;
 
     int label;
@@ -235,7 +235,7 @@ typedef struct {
     char **functionSourceCode;
 } SymTabEntry;
 
-struct item *expr_stack[STKS], **expr_stack_ptr;
+extern item_t *expr_stack[STKS], **expr_stack_ptr;
 
 /* The context structure
  * pointed to by the State Indicator
@@ -261,7 +261,7 @@ typedef struct _Context {
     int shadowedIdSize;        /* size of the list */
     int shadowedIdCount;       /* length of the list */
     int funlc;                 /* current fn current line number */
-    struct item** expr_stack_ptr;          /* top of operand expr_stack upon fn entry */
+    item_t** expr_stack_ptr;          /* top of operand expr_stack upon fn entry */
     jmp_buf env;               /* to restore local fn activation record */
 } Context;
 
@@ -277,7 +277,7 @@ extern int (*exop[])();
 double ltod();
 char* compile();
 SymTabEntry* nlook();
-struct item *fetch(), *fetch1(), *fetch2(), *extend();
+item_t *fetch(), *fetch1(), *fetch2(), *extend();
 
 extern int integ;
 extern int signgamma;

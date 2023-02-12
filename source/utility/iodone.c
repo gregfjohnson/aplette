@@ -8,7 +8,7 @@
 
 void iodone(int ok)
 {
-    struct item* p;
+    item_t* p;
 
     p = newdat(DA, 0, 1);
     p->datap[0] = ok;

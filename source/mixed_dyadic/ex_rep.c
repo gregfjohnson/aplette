@@ -9,7 +9,7 @@ double floor();
 
 void ex_rep()
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     double d1, d2, d3;
     data *p1, *p2, *p3;
 

@@ -15,7 +15,7 @@
 #include "work_space.h"
 
 void ex_fdef() {
-    struct item *p;
+    item_t *p;
     char *iline, *p2;
     SymTabEntry *np, *symtabLhsEntry;
     char functionLine[LINEMAX];

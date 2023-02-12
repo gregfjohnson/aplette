@@ -11,7 +11,7 @@
 
 void ex_wait()
 {
-    struct item* p;
+    item_t* p;
     void (*sig)(int);
     pid_t pid;
     int s;

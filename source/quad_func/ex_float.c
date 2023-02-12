@@ -14,7 +14,7 @@ void ex_float()
     * changing the data type and size declarations.
     */
 
-    struct item* p;
+    item_t* p;
 
     p = fetch1(); /* Get variable descriptor */
 

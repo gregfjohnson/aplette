@@ -43,7 +43,7 @@ int labgen;           /* label processing being done */
 jmp_buf cold_restart; /* Used for setexit/reset */
 
 int integ;
-int signgamma;
+// int signgamma;
 int column;
 int intflg;
 int echoflg = 0;
@@ -96,6 +96,7 @@ static void usage() {
 int gbl_argc;
 char **gbl_argv;
 int gbl_optind;
+item_t *expr_stack[STKS], **expr_stack_ptr;
 
 int main(int argc, char** argv)
 {

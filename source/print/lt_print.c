@@ -16,7 +16,7 @@
 #include "main.h"
 
 /* Print literals */
-int lt_print(struct item* p)
+int lt_print(item_t* p)
 {
     int i, j;
 

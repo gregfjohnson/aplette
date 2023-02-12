@@ -16,7 +16,7 @@ void ex_rd()
     * no '\n' chars are returned.
     */
     char buf[200];
-    struct item* p;
+    item_t* p;
     int fd, i;
 
     SECURITY_CHECK;

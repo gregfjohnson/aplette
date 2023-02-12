@@ -10,7 +10,7 @@
 #include "data.h"
 
 void red0(int k);
-void red1(data* dp, struct item* result, data (*f)(data, data));
+void red1(data* dp, item_t* result, data (*f)(data, data));
 
 void ex_red0()
 {
@@ -20,7 +20,7 @@ void ex_red0()
 
 void ex_red()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
     red0(p->rank - 1);
@@ -37,7 +37,7 @@ void ex_redk()
 
 void red0(int k)
 {
-    struct item *p, *q;
+    item_t *p, *q;
     data (*fn)(data, data);
 
     p = fetch1();
@@ -97,7 +97,7 @@ void red0(int k)
     *expr_stack_ptr++ = q;
 }
 
-void red1(data* dp, struct item* result, data (*f)(data, data))
+void red1(data* dp, item_t* result, data (*f)(data, data))
 {
     register int i;
     data d;

@@ -12,7 +12,7 @@ void ex_mdom()
 {
     data* dp;
     int a, i, j;
-    struct item *p, *q;
+    item_t *p, *q;
 
     p = fetch1();
     if (p->rank != 2)

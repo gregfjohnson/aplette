@@ -8,7 +8,7 @@
 
 int topfix()
 {
-    struct item* p;
+    item_t* p;
     int i;
 
     p = fetch1();

@@ -11,7 +11,7 @@
 void ex_nl()
 {
 
-    struct item* ip;
+    item_t* ip;
     SymTabEntry* np;
     data* dp;
     char *cp, *cp2, tlist[NTYPES];

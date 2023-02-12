@@ -8,11 +8,11 @@
 #include "utility.h"
 
 static void rav0(int k);
-static void rav1(struct item* p, struct item* dest);
+static void rav1(item_t* p, item_t* dest);
 
 void ex_rav()
 {
-    struct item *p, *r;
+    item_t *p, *r;
 
     p = fetch1();
     if (p->rank == 0) {
@@ -36,7 +36,7 @@ void ex_ravk()
 
 static void rav0(int k)
 {
-    struct item *p, *r;
+    item_t *p, *r;
 
     p = expr_stack_ptr[-1];
     bidx(p);
@@ -52,7 +52,7 @@ static void rav0(int k)
     *expr_stack_ptr++ = r;
 }
 
-static void rav1(struct item* p, struct item* dest)
+static void rav1(item_t* p, item_t* dest)
 {
     int i, n;
 

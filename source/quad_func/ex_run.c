@@ -11,7 +11,7 @@
 
 void ex_run()
 {
-    struct item* p;
+    item_t* p;
     char ebuf[100];
     int val;
 

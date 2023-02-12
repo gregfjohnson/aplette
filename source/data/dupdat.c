@@ -5,8 +5,8 @@
 #include "apl.h"
 #include "data.h"
 
-struct item* dupdat(struct item* ap) {
-    struct item *p1, *p2;
+item_t* dupdat(item_t* ap) {
+    item_t *p1, *p2;
     int i;
 
     p1 = ap;

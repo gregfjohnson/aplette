@@ -9,7 +9,7 @@
 
 void ex_br()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
     if (p->size == 0)

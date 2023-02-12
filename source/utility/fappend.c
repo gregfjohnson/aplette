@@ -9,9 +9,9 @@
 #include "utility.h"
 #include "work_space.h"
 
-void fappend(int fd, struct item* ap)
+void fappend(int fd, item_t* ap)
 {
-    struct item* p;
+    item_t* p;
     char* p1;
     int i, dim0, dim1;
     char b[200];

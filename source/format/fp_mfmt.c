@@ -17,10 +17,10 @@
 
 /* monadic format for floating point data */
 
-struct item* fp_mfmt(struct item* p)
+item_t* fp_mfmt(item_t* p)
 {
     char *charptr, *buffer;
-    struct item* q;
+    item_t* q;
     int i, j, k, total, ncol, nrow, rowsz;
     struct FORMAT *format_list, *format, *format_next;
     data* dp;

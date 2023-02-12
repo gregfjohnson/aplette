@@ -47,7 +47,7 @@ static void saveWorkspaceInformation(int ffile) {
 static int nsave(int ffile, SymTabEntry* an) {
     char buffer[64];
     int i, size;
-    struct item* p;
+    item_t* p;
 
     if (an->entryUse == UNKNOWN || (an->entryUse == DA && an->itemp == 0))
         return 0;

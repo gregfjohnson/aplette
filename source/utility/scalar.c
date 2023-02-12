@@ -7,7 +7,7 @@
 /*
  * scalar -- return true if arg is a scalar 
  */
-int scalar(struct item* aip)
+int scalar(item_t* aip)
 {
     return (aip->size == 1);
 }

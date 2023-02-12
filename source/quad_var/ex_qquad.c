@@ -18,10 +18,10 @@
 #include "memory.h"
 #include "getinput.h"
 
-struct item* ex_qquad(int io)
+item_t* ex_qquad(int io)
 {
     int i;
-    struct item* p;
+    item_t* p;
     char *iline;
 
     switch (io) {

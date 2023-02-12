@@ -16,9 +16,9 @@
 #include "data.h"
 #include "char.h"
 
-struct item* ex_qav(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qav(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     int i;
     char* n;
 

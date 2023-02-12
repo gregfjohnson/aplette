@@ -26,7 +26,7 @@ void ex_revk()
 
 void ex_rev()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
     revk(p->rank - 1);

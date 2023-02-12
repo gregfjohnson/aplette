@@ -6,8 +6,8 @@
 #include "utility.h"
 #include "data.h"
 
-data getdat(struct item* ip) {
-    struct item* p;
+data getdat(item_t* ip) {
+    item_t* p;
     int i;
     data d;
 

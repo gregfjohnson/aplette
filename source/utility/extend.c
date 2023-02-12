@@ -7,11 +7,11 @@
 #include "data.h"
 
 /* extend - used by ex_base and ex_iprod */
-struct item*
+item_t*
 extend(int ty, int n, data d)
 {
     int i;
-    struct item* q;
+    item_t* q;
 
     if (ty != DA)
         error(ERR_domain, "not numeric type");

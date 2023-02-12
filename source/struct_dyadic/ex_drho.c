@@ -8,7 +8,7 @@
 
 void ex_drho()
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     int s, i;
     data* dp;
     char* cp;

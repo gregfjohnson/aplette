@@ -5,9 +5,9 @@
 #include "apl.h"
 #include "data.h"
 
-void bidx(struct item* ip)
+void bidx(item_t* ip)
 {
-    struct item* p;
+    item_t* p;
 
     p = ip;
     idx.type = p->itemType;

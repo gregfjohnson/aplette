@@ -5,9 +5,9 @@
 #include "apl.h"
 #include "utility.h"
 
-void putdat(struct item* ip, data d)
+void putdat(item_t* ip, data d)
 {
-    struct item* p;
+    item_t* p;
     int i;
 
     p = ip;

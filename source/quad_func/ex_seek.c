@@ -11,7 +11,7 @@
 
 void ex_seek()
 {
-    struct item* p;
+    item_t* p;
     int k1, k3;
     long k2;
 

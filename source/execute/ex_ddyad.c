@@ -11,11 +11,11 @@
  * it adjusts the shape of the arguments as required
  */
 
-void ex_ddyad(data (*f)(), struct item* ap, struct item* ap1)
+void ex_ddyad(data (*f)(), item_t* ap, item_t* ap1)
 {
     int i;
-    struct item* p;
-    struct item* p1;
+    item_t* p;
+    item_t* p1;
     data *dp, d;
 
     /* Conform arguments to function if necessary.  If they

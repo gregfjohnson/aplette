@@ -26,7 +26,7 @@ static int nextMultOfEight(int n);
 void ex_syscom()
 {
     int i, j;
-    struct item* p;
+    item_t* p;
     SymTabEntry* n;
     char fname[64]; /* Array for filename */
     char *cp, *vfname();

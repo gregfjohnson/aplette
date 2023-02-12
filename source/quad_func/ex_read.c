@@ -11,7 +11,7 @@
 
 void ex_read()
 {
-    struct item *p, *q;
+    item_t *p, *q;
     int fd, nb, c;
 
     SECURITY_CHECK;

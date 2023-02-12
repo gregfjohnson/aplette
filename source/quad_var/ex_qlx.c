@@ -20,9 +20,9 @@
 // workspace is loaded.
 // Example:  Llx { '''Hello.  Welcome to this workspace.'''
 //
-struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qlx(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item *p, *q;
+    item_t *p, *q;
     SymTabEntry* n;
 
     if (io == 0) {
@@ -52,7 +52,7 @@ struct item* ex_qlx(io) int io; /* 0 = source, 1 = sink */
         erase(n);
         n->entryUse = DA;
         n->itemp = q;
-        expr_stack_ptr[-1] = (struct item*)n;
+        expr_stack_ptr[-1] = (item_t*)n;
 
         return (0);
     };

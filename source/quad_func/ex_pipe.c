@@ -10,7 +10,7 @@
 
 void ex_pipe()
 {
-    struct item* p;
+    item_t* p;
     int pp[2];
 
     SECURITY_CHECK;

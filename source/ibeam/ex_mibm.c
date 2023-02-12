@@ -13,7 +13,7 @@ int afnfree, afnused;
 void ex_mibm() {
     struct tm* localtime();
     Context* gp;
-    struct item* p;
+    item_t* p;
     int i;
     struct tms t;
 

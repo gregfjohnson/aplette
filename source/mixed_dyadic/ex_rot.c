@@ -26,7 +26,7 @@ void ex_rotk()
 
 void ex_rot()
 {
-    struct item* p;
+    item_t* p;
 
     fetch2();
     p = expr_stack_ptr[-2];
@@ -35,7 +35,7 @@ void ex_rot()
 
 static void rotk(int k)
 {
-    struct item* p;
+    item_t* p;
     int isDyadicRotate;
 
     p = expr_stack_ptr[-1];
@@ -64,7 +64,7 @@ static void rotk(int k)
 
 static void rot1(int k)
 {
-    struct item *p, *q;
+    item_t *p, *q;
     int i;
     int o, n;
 

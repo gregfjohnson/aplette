@@ -9,7 +9,7 @@
 #include "debug.h"
 
 void pop() {
-    struct item* p;
+    item_t* p;
 
     if (stack_trace) {
         printf("pop expr_stack..\n");

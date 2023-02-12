@@ -18,7 +18,7 @@
 /* monadic format */
 void ex_mfmt()
 {
-    struct item *p, *q;
+    item_t *p, *q;
 
     p = fetch1();
     switch (p->itemType) {

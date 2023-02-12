@@ -15,9 +15,11 @@
 #include "format.h"
 #include "local_print.h"
 
+char format_buffer[80];
+
 int print()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
 

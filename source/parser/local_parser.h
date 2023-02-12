@@ -8,18 +8,19 @@
 #include <stdbool.h>
 #include "../include/apl.h"
 
-int vcount;
-int scount;
-int litflag;
-int exprOrNullFlag;
-int nlexsym;
-int context;
-char* iline;
-char *ccharp, *ccharp2;
-data lnumb;   /* current label number */
-char* labcpp; /* label prologue */
-char* labcpe; /* label epilogue */
-int immedcmd; /* immediate command number */
+extern int vcount;
+extern int scount;
+extern int litflag;
+extern int exprOrNullFlag;
+extern int nlexsym;
+extern int context;
+extern char* iline;
+extern char *ccharp, *ccharp2;
+extern data lnumb;   /* current label number */
+extern char* labcpp; /* label prologue */
+extern char* labcpe; /* label epilogue */
+extern int immedcmd; /* immediate command number */
+extern char oline[OBJS];
 
 int yylex();
 
@@ -34,8 +35,6 @@ void invert(char* a, char* b);
 int getnum(char ic);
 int getnam(char ic);
 int lastCode(char* s);
-
-char oline[OBJS];
 
 struct OPER {
     int input;

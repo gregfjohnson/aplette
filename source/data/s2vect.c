@@ -5,10 +5,10 @@
 #include "apl.h"
 #include "data.h"
 
-struct item*
-    s2vect(ap) struct item* ap;
+item_t*
+    s2vect(ap) item_t* ap;
 {
-    struct item *p, *q;
+    item_t *p, *q;
 
     p = ap;
     q = newdat(p->itemType, 1, 1);

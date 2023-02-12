@@ -20,7 +20,7 @@ void ex_scn0()
 
 void ex_scan()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
     scan0(p->rank - 1);
@@ -36,7 +36,7 @@ void ex_scnk()
 
 void scan0(int k)
 {
-    struct item *p, *q;
+    item_t *p, *q;
     data (*fn)(data, data);
 
     p = fetch1();

@@ -13,6 +13,7 @@
 #include "userfunc.h"
 #include "debug.h"
 #include "data.h"
+#include "local_parser.h"
 
 static char *strdupNoEoln(char *in);
 static void reverse(char* s);
@@ -29,7 +30,7 @@ static char* catcode();
 
 #define LABEL_PROLOG_LEN (1 + SPTR + 1 + 1 + SDAT + 1 + SPTR + 1 + 1)
 #define LABEL_EPILOG_LEN (1 + SPTR + 1)
-char *labcpp, *labcpe;
+// char *labcpp, *labcpe;
 
 void funcomp(SymTabEntry* np) {
     int linesRead = 0;

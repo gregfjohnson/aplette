@@ -11,7 +11,7 @@ int gdu(const int* p1, const int* p2);
 
 void ex_gdu()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
     gd0(p->rank - 1, (int (*)(const void*, const void*))gdu);
@@ -28,7 +28,7 @@ void ex_gduk()
 
 int gdu(const int* p1, const int* p2)
 {
-    struct item* p;
+    item_t* p;
     data d1, d2;
 
     p = expr_stack_ptr[-2];

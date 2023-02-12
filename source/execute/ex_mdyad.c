@@ -11,10 +11,10 @@
  */
 
 /* function added by tyl */
-void ex_mdyad(data (*f)(), struct item* argptr0, struct item* argptr1) {
+void ex_mdyad(data (*f)(), item_t* argptr0, item_t* argptr1) {
     int i;
-    struct item *use_dims;
-    struct item *result;
+    item_t *use_dims;
+    item_t *result;
 
     if (argptr0->rank == 0 || argptr0->size == 1) {
         use_dims = argptr1;

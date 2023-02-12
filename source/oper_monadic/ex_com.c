@@ -27,7 +27,7 @@ void ex_comk()
 
 void ex_com()
 {
-    struct item* q;
+    item_t* q;
 
     fetch2();
     q = expr_stack_ptr[-2];
@@ -36,7 +36,7 @@ void ex_com()
 
 void comk(int k)
 {
-    struct item* p;
+    item_t* p;
     data d;
     int i, dk, ndk;
 
@@ -108,7 +108,7 @@ void comk(int k)
 
 void com1(int k)
 {
-    struct item* p;
+    item_t* p;
 
     p = expr_stack_ptr[-2];
     p->index = idx.idx[k];

@@ -11,7 +11,7 @@
 void ex_nc()
 {
     SymTabEntry* np;
-    struct item* p;
+    item_t* p;
     int i;
     char buf[40];
 

@@ -8,7 +8,7 @@ OBJECTS = alpha.o genlab.o getquad.o name.o \
 	digit.o getnum.o yylex.o \
     font_map.o \
 	table_oper.o table_comm.o table_quad.o \
-	lastcode.o y.tab.o
+	lastcode.o y.tab.o local_parser.o
 
 all: Q.o
 

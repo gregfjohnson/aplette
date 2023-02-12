@@ -33,15 +33,14 @@ that are defined.  I believe that the following is the worst
 case.  If your compiler doesn't mess this up, it probably 
 won't mess up the other structures.  
 
-struct item
-{
+typedef struct {
 int   rank;
 int   type;
 int   size;
 int   index;
 data *datap;
 int   dim[MRANK];
-};
+} item_t;
 
 Trivial types use only an item descriptor - the above structure.
 Types DA and CH (double float and character) also use a data

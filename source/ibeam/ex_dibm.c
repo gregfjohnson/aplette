@@ -10,7 +10,7 @@
 
 void ex_dibm() {
     int arg;
-    struct item* p;
+    item_t* p;
 
     /* Dyadic i-beam functions.  I-beam 63 assumes that the
     * "empty" system call (check whether pipe empty) has been

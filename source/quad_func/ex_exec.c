@@ -13,7 +13,7 @@
 
 void ex_exec()
 {
-    struct item* p;
+    item_t* p;
     int i, j;
     char *cp, *argv[MAXP + 1];
 

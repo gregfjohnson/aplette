@@ -20,7 +20,7 @@ void outputPageWidth() {
     printf("width %d\n", pagewidth);
 }
 
-void updatePageWidth(struct item *p) {
+void updatePageWidth(item_t *p) {
     int i;
 
     if (p->itemType != DA)
@@ -33,9 +33,9 @@ void updatePageWidth(struct item *p) {
     pagewidth = i;
 }
 
-struct item* ex_qpw(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qpw(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     int i;
 
     if (io == 0) {
@@ -54,7 +54,7 @@ struct item* ex_qpw(io) int io; /* 0 = source, 1 = sink */
         if (i < 10 || i > 132)
             error(ERR_limit, S_QUAD_ASCII "pw range is 20 to 132");
         pagewidth = i;
-        expr_stack_ptr[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (item_t*)p;
         return (0);
     };
 }

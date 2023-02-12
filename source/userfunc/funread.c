@@ -10,7 +10,7 @@
 #include "userfunc.h"
 
 int funread(char* fname) {
-    struct item* p;
+    item_t* p;
     int f;
 
     p = expr_stack_ptr[-1];

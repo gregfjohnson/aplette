@@ -18,7 +18,7 @@
 /* dyadic format */
 void ex_dfmt()
 {
-    struct item *rp, *lp, *q;
+    item_t *rp, *lp, *q;
 
     lp = fetch2();
     rp = expr_stack_ptr[-2];

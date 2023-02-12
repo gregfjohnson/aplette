@@ -13,7 +13,7 @@
 void execute() {
     int opcode, i;
     data* dp;
-    struct item *p, *p1;
+    item_t *p, *p1;
     data (*data_fn)();
     extern char* opname[];
 

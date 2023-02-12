@@ -10,7 +10,7 @@
  */
 
 void map(int o) {
-    struct item* p;
+    item_t* p;
     int n, i;
 
     n = 1;
@@ -24,7 +24,7 @@ void map(int o) {
     *expr_stack_ptr++ = p;
 
     if (n != 0) {
-        struct item* p = expr_stack_ptr[-2];
+        item_t* p = expr_stack_ptr[-2];
 
         indexIterateInit(&idx);
         while (indexIterate(&idx)) {

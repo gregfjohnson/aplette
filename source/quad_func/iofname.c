@@ -10,7 +10,7 @@ static char b[200];
 
 char* iofname(int m)
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch1();
     if (p->itemType != CH || p->rank > 1)

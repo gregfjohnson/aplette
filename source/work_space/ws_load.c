@@ -35,7 +35,7 @@ void wsload(int ffile)
     char buffer[64], *gettoken();
     int use, size, rank, i, dim[MRANK];
     SymTabEntry* n;
-    struct item* p;
+    item_t* p;
 
     gettoken(ffile, buffer);
     if (!equal(buffer, "apl\\11"))

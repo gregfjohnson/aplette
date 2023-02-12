@@ -12,9 +12,9 @@
 #include "apl.h"
 
 void outputPrintP();
-void updatePrintP(struct item *p);
+void updatePrintP(item_t *p);
 
 void outputPageWidth();
-void updatePageWidth(struct item *p);
+void updatePageWidth(item_t *p);
 
 #endif // QUAD_VAR_H

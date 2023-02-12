@@ -18,10 +18,10 @@
 #include "utility.h"
 #include "data.h"
 
-struct item* ex_qai(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qai(io) int io; /* 0 = source, 1 = sink */
 {
     struct tms t;
-    struct item* p;
+    item_t* p;
     long tv;
 
     if (io == 0) {

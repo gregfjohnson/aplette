@@ -11,7 +11,7 @@ void ex_oprod()
 {
     int i, j;
     data *dp, *dp1, *dp2;
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     data (*f)();
 
     f = (data(*)()) exop[(uint32_t) *state_indicator_ptr->ptr++];

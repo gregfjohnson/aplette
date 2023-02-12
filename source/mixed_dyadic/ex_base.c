@@ -13,8 +13,8 @@ char base_com[] = { ADD, MUL };
 
 void ex_base()
 {
-    struct item* extend();
-    struct item *p, *q;
+    item_t* extend();
+    item_t *p, *q;
     int i;
     char* savptr;
     data d1, d2;

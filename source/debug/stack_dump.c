@@ -22,7 +22,7 @@ char *ItemType_str(ItemType t) {
 
 void stack_dump()
 {
-    struct item** p;
+    item_t** p;
     int i, eu, n;
     printf("---- expr_stack top ----\n");
 

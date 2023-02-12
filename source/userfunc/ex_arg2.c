@@ -9,7 +9,7 @@
 
 void ex_arg2()
 {
-    struct item *p1, *p2;
+    item_t *p1, *p2;
     SymTabEntry *np1, *np2;
     SymTabEntry *newEntry1, *newEntry2;
     SymTabEntry *oldEntry1, *oldEntry2;

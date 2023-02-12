@@ -28,11 +28,11 @@ struct FORMAT {
     struct FORMAT* next; /* linked list forward pointer */
 };
 
-char format_buffer[80];
+extern char format_buffer[80];
 void fp_digits(data d, struct FORMAT* format);
 char* fp2char(data d, struct FORMAT* format);
 char* fp2char_paded(data d, struct FORMAT* format);
-struct item* fp_mfmt(struct item* p);
-struct item* fp_dfmt(struct item* f, struct item* p);
+item_t* fp_mfmt(item_t* p);
+item_t* fp_dfmt(item_t* f, item_t* p);
 
 #endif

@@ -15,7 +15,7 @@ $(OBJECTS):	../include/apl.h
 # Things that depend on characters
 code_dump.o:	../include/char.h ../include/opt_codes.h
 
-mem_dump.o:	memory.h
+mem_dump.o:	../include/memory.h
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

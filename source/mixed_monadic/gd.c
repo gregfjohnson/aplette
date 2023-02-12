@@ -15,7 +15,7 @@ static void gd1(int* m, int (*f)(const void*, const void*));
 
 void gd0(int k, int (*f)(const void*, const void*))
 {
-    struct item* p;
+    item_t* p;
     int* intvec;
 
     bidx(expr_stack_ptr[-1]);
@@ -42,7 +42,7 @@ void gd0(int k, int (*f)(const void*, const void*))
 
 static void gd1(int* m, int (*f)(const void*, const void*))
 {
-    struct item* p;
+    item_t* p;
     int i, *m1;
 
     integ = access();

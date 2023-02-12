@@ -76,7 +76,7 @@ void ex_drop() {
 }
 
 static int td1(int tdmode) {
-    struct item *p, *q, *nq;
+    item_t *p, *q, *nq;
     int i, k;
     int r; /* set to 1 if take > array dim */
 
@@ -123,7 +123,7 @@ static int td1(int tdmode) {
 }
 
 static void takezr(int* fill) {
-    struct item* p;
+    item_t* p;
     int i;
 
     for (i = 0; i < idx.rank; i++) {

@@ -17,7 +17,7 @@
 
 /* print floating point */
 
-int fp_print(struct item* p)
+int fp_print(item_t* p)
 {
     data* dp;
     int i, j, k, ncol;

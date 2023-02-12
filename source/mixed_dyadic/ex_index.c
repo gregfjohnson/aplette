@@ -13,7 +13,7 @@ void index1(int i, int f);
 
 void ex_index()
 {
-    struct item *p, *q;
+    item_t *p, *q;
     int i, j, f, n;
 
     n = *state_indicator_ptr->ptr++;
@@ -93,7 +93,7 @@ void ex_elid()
 
 void index1(int i, int f)
 {
-    struct item* p;
+    item_t* p;
     int j, k;
 
     if (i >= idx.rank) {

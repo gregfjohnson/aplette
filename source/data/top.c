@@ -8,7 +8,7 @@
 
 double top()
 {
-    struct item* p;
+    item_t* p;
     double d;
 
     p = fetch1();

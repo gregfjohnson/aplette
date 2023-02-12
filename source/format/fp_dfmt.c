@@ -18,10 +18,10 @@
 
 /* dyadic format for floating point data */
 
-struct item* fp_dfmt(struct item* f, struct item* p)
+item_t* fp_dfmt(item_t* f, item_t* p)
 {
     char *charptr, *buffer;
-    struct item* q;
+    item_t* q;
     int i, j, k, total, ncol, nrow, rowsz;
     struct FORMAT *format_list, *format, *format_next;
     data *dp, *df;

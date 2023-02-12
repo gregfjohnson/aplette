@@ -14,7 +14,7 @@
 void ex_prws()
 {
     SymTabEntry* np;
-    struct item* ip;
+    item_t* ip;
     int i;
 
     printf(S_QUAD_ASCII "io " S_LEFTARROW " %d\n", iorigin);
@@ -33,7 +33,7 @@ void ex_prws()
                     printf("%d ", ip->dim[i]);
                 printf(S_RHO "\n");
             }
-            *expr_stack_ptr++ = (struct item*)np;
+            *expr_stack_ptr++ = (item_t*)np;
             ex_print();
             pop();
             putchar('\n');
@@ -42,7 +42,7 @@ void ex_prws()
         case NF:
         case MF:
         case DF:
-            *expr_stack_ptr++ = (struct item*)np;
+            *expr_stack_ptr++ = (item_t*)np;
             ex_list();
             putchar('\n');
             break;

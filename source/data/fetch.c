@@ -19,18 +19,18 @@
  * top two expr_stack entries respectively. - bb
  */
 
-struct item* fetch1()
+item_t* fetch1()
 {
-    struct item* p;
+    item_t* p;
 
     p = fetch(expr_stack_ptr[-1]);
     expr_stack_ptr[-1] = p;
     return (p);
 }
 
-struct item* fetch2()
+item_t* fetch2()
 {
-    struct item* p;
+    item_t* p;
 
     expr_stack_ptr[-2] = fetch(expr_stack_ptr[-2]);
     p = fetch(expr_stack_ptr[-1]);
@@ -38,9 +38,9 @@ struct item* fetch2()
     return (p);
 }
 
-struct item* fetch(struct item* ip)
+item_t* fetch(item_t* ip)
 {
-    struct item *p, *q;
+    item_t *p, *q;
     int i;
     extern int prolgerr;
 
@@ -55,11 +55,11 @@ loop:
         return (p);
 
     case QV: {        /* Quad Variables */
-        struct item *(*quadServiceRoutine)(int);
+        item_t *(*quadServiceRoutine)(int);
 
         i = p->index; /* get the pointer to applicable quad service routine */
         aplfree(p);
-        quadServiceRoutine = (struct item *(*)(int)) exop[i];
+        quadServiceRoutine = (item_t *(*)(int)) exop[i];
         p = quadServiceRoutine(0);
         goto loop;
     }

@@ -7,7 +7,7 @@
 
 void ex_mrho()
 {
-    struct item *p, *q;
+    item_t *p, *q;
     data* dp;
     int i;
 

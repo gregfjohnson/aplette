@@ -12,7 +12,7 @@
 void ex_write()
 {
     int fd, m;
-    struct item* p;
+    item_t* p;
     int mult; /* Multiplier (data size) */
 
     SECURITY_CHECK;

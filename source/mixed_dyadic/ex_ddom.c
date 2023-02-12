@@ -62,7 +62,7 @@ static void solve(int m, int n, data* dmn, data* dn2, int* in,
 
 void ex_ddom()
 {
-    struct item *p, *q;
+    item_t *p, *q;
     int row, col, m, rows, cols, lhs_cols, *in;
     data *d1, *dmn, *dn1, *dn2, *vec2_cols, *dm;
     char* al;

@@ -20,7 +20,7 @@ void outputPrintP() {
     printf("digits %d\n", PrintP);
 }
 
-void updatePrintP(struct item *p) {
+void updatePrintP(item_t *p) {
     int i;
 
     if (p->itemType != DA)
@@ -33,9 +33,9 @@ void updatePrintP(struct item *p) {
     PrintP = i;
 }
 
-struct item* ex_qpp(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_qpp(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
 
     if (io == 0) {
         p = newdat(DA, 0, 1);
@@ -46,7 +46,7 @@ struct item* ex_qpp(io) int io; /* 0 = source, 1 = sink */
         pop();
         p = fetch1();
         updatePrintP(p);
-        expr_stack_ptr[-1] = (struct item*)p;
+        expr_stack_ptr[-1] = (item_t*)p;
         return (0);
     };
 }

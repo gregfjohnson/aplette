@@ -16,7 +16,7 @@
 void eval_qlx()
 {
     SymTabEntry* n;
-    struct item* p;
+    item_t* p;
 
     if ((n = nlook(S_QUAD "lx")) && n->itemp->itemType == CH && n->itemp->size) {
         *expr_stack_ptr++ = dupdat(n->itemp);

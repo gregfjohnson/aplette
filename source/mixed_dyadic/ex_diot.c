@@ -9,7 +9,7 @@
 
 void ex_diot()
 {
-    struct item *p, *q, *r;
+    item_t *p, *q, *r;
     int i, j;
 
     p = fetch2();

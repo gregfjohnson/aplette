@@ -8,7 +8,7 @@
 #include "userfunc.h"
 
 void ex_arg1() {
-    struct item* p;
+    item_t* p;
     SymTabEntry* np;
     SymTabEntry* oldEntry;
     SymTabEntry* newEntry;

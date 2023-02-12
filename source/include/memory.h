@@ -5,13 +5,13 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-struct memblock {
+typedef struct memblock {
     int* block;
     unsigned nbytes;
     struct memblock* next;
-};
+} memblock_t;
 
-struct memblock* firstblock;
+extern memblock_t *firstblock;
 extern int mem_trace;
 
 void afreset();

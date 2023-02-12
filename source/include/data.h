@@ -14,10 +14,10 @@
 
 int access();
 
-void bidx(struct item* ip);
+void bidx(item_t* ip);
 int copy(int type, char* from, char* to, int size);
 void colapse(int k);
-void putdat(struct item* ip, data d);
+void putdat(item_t* ip, data d);
 void pop();
 int size();
 
@@ -26,8 +26,8 @@ bool indexIterate(DataIterator* iter);
 
 void erase(SymTabEntry* np);
 
-struct item* newdat(ItemType type, int rank, int size);
-struct item* dupdat(struct item* ap);
+item_t* newdat(ItemType type, int rank, int size);
+item_t* dupdat(item_t* ap);
 
 void symtab_init();
 void symtab_clear();

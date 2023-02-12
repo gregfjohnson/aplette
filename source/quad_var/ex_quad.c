@@ -22,9 +22,9 @@
 #include "print.h"
 #include "getinput.h"
 
-struct item* ex_quad(io) int io; /* 0 = source, 1 = sink */
+item_t* ex_quad(io) int io; /* 0 = source, 1 = sink */
 {
-    struct item* p;
+    item_t* p;
     Context* thisContext;
 
     if (io == 0) {

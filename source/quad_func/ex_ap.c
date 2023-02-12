@@ -12,7 +12,7 @@
 void ex_ap()
 {
     int fd;
-    struct item* p;
+    item_t* p;
 
     SECURITY_CHECK;
     fd = topfix();

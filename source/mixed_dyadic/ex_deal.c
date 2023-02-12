@@ -11,7 +11,7 @@
 
 void ex_deal()
 {
-    struct item* p;
+    item_t* p;
     int m, n;
     double f;
     data d1, d2;
