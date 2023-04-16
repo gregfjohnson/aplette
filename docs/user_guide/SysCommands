@@ -154,3 +154,5 @@ allocation.
 As recommended by the GNU General Public License (GPL), this command
 will display the copyright notice and a pointer to the GPL. 
 
+)width N
+Set the terminal width to N characters.
